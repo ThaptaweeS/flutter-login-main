@@ -39,7 +39,7 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
     // Send the data to the API endpoint
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:1111/setting'),
+        Uri.parse('http://172.23.10.51:1111/setting'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(requestData),
       );

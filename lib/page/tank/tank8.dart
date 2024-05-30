@@ -39,7 +39,7 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
         child: Column(
           children: [
             Text(
-        'Tank8 : Data',
+        'Tank8 : Surface condition',
         style: TextStyle(fontSize: 20),
       ), 
             buildTable2(), // Your table widget
@@ -192,7 +192,7 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/Tank8task';
+    final url = 'http://172.23.10.51:1111/Tank8task';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

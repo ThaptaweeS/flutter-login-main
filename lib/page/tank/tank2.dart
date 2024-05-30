@@ -35,7 +35,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
         child: Column(
           children: [
             Text(
-              'Tank2 : Data',
+              'Tank2 : Degreasing',
               style: TextStyle(fontSize: 20),
             ),
             ElevatedButton(
@@ -194,7 +194,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/tank2task';
+    final url = 'http://172.23.10.51:1111/tank2task';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

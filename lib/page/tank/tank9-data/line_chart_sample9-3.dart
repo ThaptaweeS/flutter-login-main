@@ -589,10 +589,16 @@ class _LineChartSample32State extends State<LineChartSample32> {
         text = '3'; // Customize this text for value 3
         break;
       case 5:
-        text = '5.5(LSL)'; // Customize this text for value 5
+        text = '5'; // Customize this text for value 5
+        break;
+      case 6:
+        text = '6'; // Customize this text for value 5
+        break;
+      case 7:
+        text = '7';
         break;
       case 8:
-        text = '7.5(USL)'; // Customize this text for value 5
+        text = '8'; // Customize this text for value 5
         break;
       default:
         return Container();
@@ -731,24 +737,24 @@ class _LineChartSample32State extends State<LineChartSample32> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 0),
-            FlSpot(28, 0),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
-          ),
-          barWidth: 2,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 0),
+        //     FlSpot(28, 0),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       Colors.yellow,
+        //       Colors.yellow
+        //     ], // Customize colors as needed
+        //   ),
+        //   barWidth: 2,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        // ),
         LineChartBarData(
           spots: const [
             FlSpot(0, 5.5),

@@ -138,7 +138,7 @@ class _LoginSignin extends StatelessWidget {
           child: const Align(
             alignment: Alignment.center,
             child: Text(
-              "Sign IN",
+              "LOGIN",
               style: TextStyle(
                 fontFamily: 'Mitr',
                 color: Colors.black,
@@ -155,7 +155,7 @@ class _LoginSignin extends StatelessWidget {
 
 // Future<void> sendLoginRequest(String username, String password) async {
 //   final url = Uri.parse(
-//       'http://127.0.0.1:1111/login'); // Replace with your API endpoint
+//       'http://172.23.10.51:1111/login'); // Replace with your API endpoint
 
 //   try {
 //     final response = await http.post(

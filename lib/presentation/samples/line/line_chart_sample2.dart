@@ -1288,6 +1288,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
           dotData: const FlDotData(
             show: false,
           ),
+          
         ),
         LineChartBarData(
           spots: const [

@@ -166,17 +166,17 @@ class _LineChartSample23State extends State<LineChartSample23> {
       case 0:
         text = '0'; // Customize this text for value 1
         break;
-      case 2:
-        text = '2(LSL)'; // Customize this text for value 1
-        break;
       case 4:
-        text = '4'; // Customize this text for value 10
+        text = '4'; // Customize this text for value 1
+        break;
+      case 5:
+        text = '5'; // Customize this text for value 10
         break;
       case 6:
         text = '6'; // Customize this text for value 3
         break;
-      case 8:
-        text = '8(USL)'; // Customize this text for value 5
+      case 7:
+        text = '7'; // Customize this text for value 5
         break;
       case 10:
         text = '10'; // Customize this text for value 10
@@ -261,8 +261,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 0,
-      maxY: 10,
+      minY: 4,
+      maxY: 7,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -390,28 +390,28 @@ class _LineChartSample23State extends State<LineChartSample23> {
         //     show: false,
         //   ),
         // ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 0),
+        //     FlSpot(28, 0),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       Colors.yellow,
+        //       Colors.yellow
+        //     ], // Customize colors as needed
+        //   ),
+        //   barWidth: 2,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        // ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 0),
-            FlSpot(28, 0),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
-          ),
-          barWidth: 2,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 2),
-            FlSpot(28, 2),
+            FlSpot(0, 4.8),
+            FlSpot(28, 4.8),
           ],
           isCurved: false,
           gradient: LinearGradient(
@@ -425,8 +425,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
         ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 8),
-            FlSpot(28, 8),
+            FlSpot(0, 6.5),
+            FlSpot(28, 6.5),
           ],
           isCurved: false,
           gradient: LinearGradient(

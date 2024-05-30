@@ -585,35 +585,32 @@ class _LineChartSample22State extends State<LineChartSample22> {
       case 0:
         text = '0'; // Customize this text for value 1
         break;
+      case 2:
+        text = '2'; // Customize this text for value 3
+        break;
+      case 4:
+        text = '4'; // Customize this text for value 5
+        break;
+      case 6:
+        text = '6'; // Customize this text for value 5
+        break;
+      case 8:
+        text = '8'; // Customize this text for value 5
+        break;
       case 10:
-        text = '10'; // Customize this text for value 3
+        text = '10(LSL)'; // Customize this text for value 5
+        break;
+      case 12:
+        text = '12.5(UCL)'; // Customize this text for value 10
+        break;
+      case 14:
+        text = '14'; // Customize this text for value 10
         break;
       case 15:
-        text = '15'; // Customize this text for value 5
+        text = '15(USL)'; // Customize this text for value 10
         break;
       case 20:
-        text = '20'; // Customize this text for value 5
-        break;
-      case 26:
-        text = '26(LSL)'; // Customize this text for value 5
-        break;
-      case 28:
-        text = '28(UCL)'; // Customize this text for value 5
-        break;
-      case 30:
-        text = '30(USL)'; // Customize this text for value 10
-        break;
-      case 45:
-        text = '45'; // Customize this text for value 10
-        break;
-      case 50:
-        text = '50'; // Customize this text for value 10
-        break;
-      case 60:
-        text = '60'; // Customize this text for value 10
-        break;
-      case 70:
-        text = '70'; // Customize this text for value 10
+        text = '20'; // Customize this text for value 10
         break;
       default:
         return Container();
@@ -695,8 +692,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 20,
-      maxY: 35,
+      minY: 0,
+      maxY: 20,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -754,8 +751,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 28),
-            FlSpot(28, 28),
+            FlSpot(0, 12.5),
+            FlSpot(28,12.5),
           ],
           isCurved: false,
           gradient: LinearGradient(
@@ -772,8 +769,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 30),
-            FlSpot(28, 30),
+            FlSpot(0, 15),
+            FlSpot(28, 15),
           ],
           isCurved: false,
           gradient: LinearGradient(
@@ -787,8 +784,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 26),
-            FlSpot(28, 26),
+            FlSpot(0, 10),
+            FlSpot(28, 10),
           ],
           isCurved: false,
           gradient: LinearGradient(
@@ -876,7 +873,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
       minX: 0,
       maxX: 12,
       minY: 0,
-      maxY: 12,
+      maxY: 20,
       lineBarsData: [
         LineChartBarData(
           spots: const [

@@ -109,7 +109,7 @@ class Chart133 extends StatefulWidget {
 class _Chart133State extends State<Chart133> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1111/tank2-fal'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank2-fal'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -203,7 +203,7 @@ class Chart13 extends StatefulWidget {
 class _Chart13State extends State<Chart13> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1111/tank2-temp'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank2-temp'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -374,7 +374,7 @@ class _BarChartBodyState extends State<BarChartBody> {
 
   Future<void> fetchData() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:1111/chem-feed2'),
+      Uri.parse('http://172.23.10.51:1111/chem-feed2'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

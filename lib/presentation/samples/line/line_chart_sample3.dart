@@ -210,7 +210,7 @@ class _LineChartSample3State extends State<LineChartSample3> {
                     }).toList();
                   },
                   touchTooltipData: LineTouchTooltipData(
-                    tooltipBgColor: widget.tooltipBgColor,
+                   // tooltipBgColor: widget.tooltipBgColor,
                     getTooltipItems: (List<LineBarSpot> touchedBarSpots) {
                       return touchedBarSpots.map((barSpot) {
                         final flSpot = barSpot;

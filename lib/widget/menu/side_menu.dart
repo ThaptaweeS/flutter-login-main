@@ -56,10 +56,46 @@ class SideMenu extends StatelessWidget {
         "accessLevel": 2
       },
       {
+        "title": "Dashboard",
+        "svgSrc": "assets/icons/menu_dashboard.svg",
+        "page": Page01(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Production Monitor",
+        "svgSrc": "assets/icons/menu_monitor.svg",
+        "page": Page00(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Data Input",
+        "svgSrc": "assets/icons/menu_tran.svg",
+        "page": Page02(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Task",
+        "svgSrc": "assets/icons/menu_task.svg",
+        "page": Page3(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Alarm Feed",
+        "svgSrc": "assets/icons/menu_alert.svg",
+        "page": ManualfeedUser(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Settings",
+        "svgSrc": "assets/icons/menu_setting.svg",
+        "page": PasswordSettingPage(),
+        "accessLevel": 9
+      },
+      {
         "title": "Notification",
         "svgSrc": "assets/icons/menu_notification.svg",
         "page": null,
-        "accessLevel": [2, 5]
+        "accessLevel": [2, 5, 9]
       },
       {
         "title": "Settings",
@@ -77,20 +113,20 @@ class SideMenu extends StatelessWidget {
         "title": "Logout",
         "svgSrc": "assets/icons/logout-svgrepo-com.svg",
         "page": null,
-        "accessLevel": [2, 5]
+        "accessLevel": [2, 5, 9]
       },
-      {
-        "title": "About",
-        "svgSrc": "assets/icons/menu_about.svg",
-        "page": null,
-        "accessLevel": 2
-      },
-      {
-        "title": "About",
-        "svgSrc": "assets/icons/menu_about.svg",
-        "page": null,
-        "accessLevel": 5
-      },
+      // {
+      //   "title": "About",
+      //   "svgSrc": "assets/icons/menu_about.svg",
+      //   "page": null,
+      //   "accessLevel": 2
+      // },
+      // {
+      //   "title": "About",
+      //   "svgSrc": "assets/icons/menu_about.svg",
+      //   "page": null,
+      //   "accessLevel": 5
+      // },
     ];
 
     // Filter the menu items based on the user's access level
@@ -108,7 +144,7 @@ class SideMenu extends StatelessWidget {
     return SizedBox(
       width: 250, // Set the desired width here
       child: Drawer(
-        child: ListView(
+        child: Column(
           children: [
             DrawerHeader(
               child: Container(
@@ -117,52 +153,63 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             // Build DrawerListTile widgets for visible menu items
-            for (var item in visibleMenuItems)
-              DrawerListTile(
-                title: item["title"],
-                svgSrc: item["svgSrc"],
-                press: () {
-                  if (item["page"] != null) {
-                    CuPage = item["page"];
-                    CuPageLV = item["accessLevel"];
-                    MainBodyContext.read<ChangePage_Bloc>().add(ChangePage());
-                  } else if (item["title"] == "Logout") {
-                    LoginContext.read<Login_Bloc>().add(Logout());
-                  } else if (item["title"] == "About") {
-                    _showAboutPopup(MenuContext);
-                  }
-                },
-                textSize: 15.0,
+            Flexible(
+              child: ListView(
+                children: [
+                  for (var item in visibleMenuItems)
+                    DrawerListTile(
+                      title: item["title"],
+                      svgSrc: item["svgSrc"],
+                      press: () {
+                        if (item["page"] != null) {
+                          CuPage = item["page"];
+                          CuPageLV = item["accessLevel"];
+                          MainBodyContext.read<ChangePage_Bloc>().add(ChangePage());
+                        } else if (item["title"] == "Logout") {
+                          LoginContext.read<Login_Bloc>().add(Logout());
+                        }
+                      },
+                      textSize: 15.0,
+                    ),
+                ],
               ),
+            ),
+            ListTile(
+              title: Text('Version : 1.0.7\nDate modify : 2024-May-22',
+              style: TextStyle(fontSize: 10.0),
+              ),
+              leading: Icon(Icons.info),
+            ),
           ],
         ),
       ),
     );
   }
-
-  void _showAboutPopup(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('About'),
-          content: Text(
-            'Developer by Automation Team. \n © 2020 Thai Parkerizing Co., Ltd. All rights reserved.',
-            style: TextStyle(fontSize: 16.0),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('Close'),
-            ),
-          ],
-        );
-      },
-    );
-  }
 }
+
+  // void _showAboutPopup(BuildContext context) {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('About'),
+  //         content: Text(
+  //           'Web application V.1.0.6 \n Developer by Automation Team.',
+  //           style: TextStyle(fontSize: 14.0),
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop();
+  //             },
+  //             child: Text('Close'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({

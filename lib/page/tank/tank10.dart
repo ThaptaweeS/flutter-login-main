@@ -39,7 +39,7 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
         child: Column(
           children: [
             Text(
-        'Tank10 : Data',
+        'Tank10 : Zinc Phosphate(PB-181X)',
         style: TextStyle(fontSize: 20),
       ), 
             buildTable2(), // Your table widget
@@ -192,7 +192,7 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/Tank10task';
+    final url = 'http://172.23.10.51:1111/Tank10task';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

@@ -34,7 +34,7 @@ class _Tank1419AfterPageState extends State<Tank1419AfterPage> {
   void fetchRoundValue() async {
     try {
       final response = await http
-          .post(Uri.parse('http://127.0.0.1:1111/tank14Aftercheck19'));
+          .post(Uri.parse('http://172.23.10.51:1111/tank14Aftercheck19'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -222,7 +222,7 @@ class _Tank1419AfterPageState extends State<Tank1419AfterPage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1111/t1419a';
+    final url = 'http://172.23.10.51:1111/t1419a';
     final ConValue = ConController.text;
     final tempValue = tempController.text;
     final FAValue = FAController.text;
@@ -417,7 +417,7 @@ class _Tank1419AfterPageState extends State<Tank1419AfterPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/tank14Afterdata19';
+    final url = 'http://172.23.10.51:1111/tank14Afterdata19';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

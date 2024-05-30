@@ -66,7 +66,7 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/manual-feed';
+    final url = 'http://172.23.10.51:1111/manual-feed';
     try {
       final response = await http.post(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -163,7 +163,7 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
   Future<void> _callAPI(String endpoint, int id) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:1111/$endpoint'),
+        Uri.parse('http://172.23.10.51:1111/$endpoint'),
         body: {'id': id.toString()},
       );
       if (response.statusCode == 200) {
@@ -199,7 +199,7 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
                   color: Colors.white,
                 ),
                 title: Text(
-                  'Manual Feed Chemical : Dashboard',
+                  'Order Feed Chemical : Dashboard',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),

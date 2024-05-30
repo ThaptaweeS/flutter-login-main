@@ -39,7 +39,7 @@ class _Tank13BodyPageState extends State<Tank13BodyPage> {
         child: Column(
           children: [
             Text(
-        'Tank13 : Data',
+        'Tank13 : Lubricant',
         style: TextStyle(fontSize: 20),
       ), 
             buildTable2(), // Your table widget
@@ -192,7 +192,7 @@ class _Tank13BodyPageState extends State<Tank13BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/Tank13task';
+    final url = 'http://172.23.10.51:1111/Tank13task';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

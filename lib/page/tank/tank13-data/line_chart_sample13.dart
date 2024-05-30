@@ -677,8 +677,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 25,
-      maxY: 40,
+      minY: 0,
+      maxY: 4,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {

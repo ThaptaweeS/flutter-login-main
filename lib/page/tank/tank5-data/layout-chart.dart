@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:newmaster/responsive.dart';
-import 'package:newmaster/page/tank/tank9-data/line_chart_sample9-2.dart';
-import 'package:newmaster/page/tank/tank9-data/line_chart_sample9.dart';
+import 'package:newmaster/page/tank/tank5-data/line_chart_sample5-2.dart';
+import 'package:newmaster/page/tank/tank5-data/line_chart_sample5.dart';
 
 
 List<HistoryChartModel> output = [];
@@ -61,7 +61,7 @@ class Chart133 extends StatefulWidget {
 class _Chart133State extends State<Chart133> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1111/tank5-con'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank5-con'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -155,7 +155,7 @@ class Chart13 extends StatefulWidget {
 class _Chart13State extends State<Chart13> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1111/tank5-fe'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank5-fe'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -287,7 +287,7 @@ class _BarChartBodyState extends State<BarChartBody> {
 
   Future<void> fetchData() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:1111/chem-feed5'),
+      Uri.parse('http://172.23.10.51:1111/chem-feed5'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

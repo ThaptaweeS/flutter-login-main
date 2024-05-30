@@ -181,7 +181,7 @@ class _LineChartSample5State extends State<LineChartSample5> {
                   }).toList();
                 },
                 touchTooltipData: LineTouchTooltipData(
-                  tooltipBgColor: Colors.pink,
+                  //tooltipBgColor: Colors.pink,
                   tooltipRoundedRadius: 8,
                   getTooltipItems: (List<LineBarSpot> lineBarsSpot) {
                     return lineBarsSpot.map((lineBarSpot) {

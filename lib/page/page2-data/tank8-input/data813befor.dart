@@ -32,7 +32,7 @@ class _Tank813BeforePageState extends State<Tank813BeforePage> {
   void fetchRoundValue() async {
     try {
       final response =
-          await http.post(Uri.parse('http://127.0.0.1:1111/tank8beforecheck13'));
+          await http.post(Uri.parse('http://172.23.10.51:1111/tank8beforecheck13'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -190,7 +190,7 @@ class _Tank813BeforePageState extends State<Tank813BeforePage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1111/t813b';
+    final url = 'http://172.23.10.51:1111/t813b';
     final TAIValue = TAIController.text;
     final pHValue = pHController.text;
     final Round = roundValue.toString(); // Convert to string
@@ -382,7 +382,7 @@ class _Tank813BeforePageState extends State<Tank813BeforePage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1111/tank8beforedata13';
+    final url = 'http://172.23.10.51:1111/tank8beforedata13';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

@@ -55,8 +55,8 @@ class ChartSamples {
       PieChartSample(3, (context) => const PieChartSample3()),
     ],
     ChartType.scatter: [
-      ScatterChartSample(1, (context) => ScatterChartSample1()),
-      ScatterChartSample(2, (context) => const ScatterChartSample2()),
+     // ScatterChartSample(1, (context) => ScatterChartSample1()),
+      //ScatterChartSample(2, (context) => const ScatterChartSample2()),
     ],
     ChartType.radar: [
       RadarChartSample(1, (context) => RadarChartSample1()),

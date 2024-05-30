@@ -64,7 +64,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank9Body> {
                   color: const Color.fromARGB(255, 255, 255, 255),
                 ),
                 title: Text(
-                  'Zinc Phosphate (6700L) : Dashboard',
+                  'Zinc Phosphate(PB-3650X(6700L)) : Dashboard',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),

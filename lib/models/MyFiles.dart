@@ -96,7 +96,7 @@ List<CloudStorageInfo> demoMyFiles = [
 Future<void> fetchStatusAndUpdateColors() async {
   try {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:1111/status'),
+      Uri.parse('http://172.23.10.51:1111/status'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

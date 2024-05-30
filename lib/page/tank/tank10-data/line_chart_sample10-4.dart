@@ -169,6 +169,9 @@ class _LineChartSample23State extends State<LineChartSample23> {
       case 1:
         text = '1.0(USL)'; // Customize this text for value 3
         break;
+       case 2:
+        text = '2.0(UCL)'; // Customize this text for value 3
+        break;  
       case 3:
         text = '3.0USL)'; // Customize this text for value 5
         break;
@@ -383,8 +386,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
         // ),
         LineChartBarData(
           spots: const [
-            FlSpot(0, 1.5),
-            FlSpot(28, 1.5),
+            FlSpot(0, 2),
+            FlSpot(28, 2),
           ],
           isCurved: false,
           gradient: LinearGradient(

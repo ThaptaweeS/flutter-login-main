@@ -64,7 +64,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank14Body> {
                   color: const Color.fromARGB(255, 255, 255, 255),
                 ),
                 title: Text(
-                  'Lubricant (5000L) : Dashboard',
+                  'Lubricant (Lub-235 (5000L)) : Dashboard',
                   style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),

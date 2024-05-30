@@ -1135,21 +1135,24 @@ class _LineChartSample33State extends State<LineChartSample33> {
     String text;
     switch (value.toInt()) {
       case 60:
-        text = '65'; // Customize this text for value 1
+        text = '60'; // Customize this text for value 1
         break;
       case 65:
-        text = '70'; // Customize this text for value 3
+        text = '65'; // Customize this text for value 3
         break;
       case 70:
-        text = '75(LSL)'; // Customize this text for value 5
+        text = '70'; // Customize this text for value 5
         break;
       case 75:
-        text = '80(UCL)'; // Customize this text for value 5
+        text = '75\n(LSL)'; // Customize this text for value 5
         break;
       case 80:
-        text = '85(USL)'; // Customize this text for value 5
+        text = '80\n(UCL)'; // Customize this text for value 5
         break;
       case 85:
+        text = '85\n(USL)'; // Customize this text for value 5
+        break;
+      case 90:
         text = '90'; // Customize this text for value 5
         break;
       default:

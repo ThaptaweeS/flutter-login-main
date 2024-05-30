@@ -11,7 +11,7 @@ import 'package:newmaster/main.dart';
 
 import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../mainBody.dart';
-
+import '../../page/page2-data/manual-process-user.dart';
 //---------------------------------------------
 
 String pageactive = '';
@@ -128,7 +128,7 @@ class _IconBellState extends State<IconBell> {
   Future<void> fetchData() async {
     try {
       // Make a GET request to the API
-      final response = await http.post(Uri.parse('http://127.0.0.1:1111/notify'));
+      final response = await http.post(Uri.parse('http://172.23.10.51:1111/notify'));
 
       if (response.statusCode == 200) {
         // Parse the response body
@@ -157,11 +157,54 @@ class _IconBellState extends State<IconBell> {
         children: [
           SizedBox(width: 4),
           IconButton(
-            onPressed: () {},
-            icon: hasData
-                ? Image.asset("assets/icons/icon-notifications2.png")
-                : Image.asset("assets/icons/icon-notifications.png"),
+ onPressed: () {
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text('แจ้งเตือน'),
+        content: Text('ได้รับข้อมูลเคมีที่ต้องเติมเพิ่มจาก QC'),
+        actions: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.end, // Align buttons to the right
+            children: [
+              TextButton(
+                onPressed: () {
+                  Navigator.pushNamed(context, 'manual-process-user');
+                  print('Go');
+                },
+                child: Row(
+                  children: [
+                    Icon(Icons.double_arrow_outlined),
+                    SizedBox(width: 5), // Add some spacing between the icon and the text
+                    Text('Go to'),
+                  ],
+                ),
+              ),
+              SizedBox(width: 8), // Add some spacing between the buttons
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('Close'),
+              ),
+            ],
           ),
+        ],
+      );
+    },
+  );
+},
+  icon: hasData
+      ? Tooltip(
+          message: 'แจ้งเตือน\nคุณมีคำสั่งเติมสารเคมีใหม่จาก QC',
+          child: Image.asset("assets/icons/icon-notifications2.png"),
+        )
+      : Tooltip(
+          message: 'ไม่มีข้อมูลใหม่',
+          child: Image.asset("assets/icons/icon-notifications.png"),
+        ),
+),
           SizedBox(width: 3),
           Text(
             USERDATA.NAME,
@@ -186,12 +229,7 @@ class IconProfile extends StatelessWidget {
       onTap: () {
         LoginContext.read<Login_Bloc>().add(Logout());
       },
-      child: Container(
-          width: 24,
-          height: 24,
-          decoration: new BoxDecoration(
-              borderRadius: BorderRadius.circular(8),
-              color: Colors.brown.shade300)),
+      child: Icon(Icons.logout),
     );
   }
 }

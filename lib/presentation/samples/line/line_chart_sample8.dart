@@ -238,7 +238,7 @@ class _LineChartSample8State extends State<LineChartSample8> {
           }).toList();
         },
         touchTooltipData: const LineTouchTooltipData(
-          tooltipBgColor: AppColors.contentColorBlue,
+          //tooltipBgColor: AppColors.contentColorBlue,
         ),
       ),
       borderData: FlBorderData(

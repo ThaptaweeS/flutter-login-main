@@ -3,8 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
 import 'package:newmaster/responsive.dart';
-import 'package:newmaster/page/tank/tank9-data/line_chart_sample9-2.dart';
-import 'package:newmaster/page/tank/tank9-data/line_chart_sample9.dart';
+import 'package:newmaster/page/tank/tank8-data/line_chart_sample8-2.dart';
+import 'package:newmaster/page/tank/tank8-data/line_chart_sample8.dart';
 
 
 List<HistoryChartModel> output = [];
@@ -100,7 +100,7 @@ class _BarChartBodyState extends State<BarChartBody> {
 
   Future<void> fetchData() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:1111/chem-feed92'),
+      Uri.parse('http://172.23.10.51:1111/chem-feed92'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },

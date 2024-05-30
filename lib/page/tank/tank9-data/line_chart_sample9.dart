@@ -582,21 +582,24 @@ class _LineChartSample22State extends State<LineChartSample22> {
     );
     String text;
     switch (value.toInt()) {
-      case 24:
-        text = '24'; // Customize this text for value 1
+      case 20:
+        text = '20'; // Customize this text for value 3
+        break;
+      case 25:
+        text = '25'; // Customize this text for value 3
         break;
       case 26:
-        text = '26(LSL)'; // Customize this text for value 3
+        text = '26(LSL)'; // Customize this text for value 10
         break;
-      case 26:
-        text = '28(UCL)'; // Customize this text for value 3
+      case 28:
+        text = '28(UCL)'; // Customize this text for value 10
         break;
       case 30:
-        text = '30(USL)'; // Customize this text for value 5
+        text = '30(USL)'; // Customize this text for value 10
         break;
-      case 32:
-        text = '32'; // Customize this text for value 10
-        break;
+      case 35:
+        text = '35'; // Customize this text for value 10
+        break;  
       default:
         return Container();
     }
@@ -677,8 +680,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 24,
-      maxY: 32,
+      minY: 20,
+      maxY: 35,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -734,24 +737,24 @@ class _LineChartSample22State extends State<LineChartSample22> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 28),
-            FlSpot(28, 28),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
-          ),
-          barWidth: 2,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
+       LineChartBarData(
+       spots: const [
+        FlSpot(0, 28),
+        FlSpot(28, 28),
+         ],
+         isCurved: false,
+         gradient: LinearGradient(
+         colors: [
+          Colors.yellow,
+            Colors.yellow
+          ], // Customize colors as needed
         ),
+         barWidth: 2,
+          isStrokeCapRound: true,
+         dotData: const FlDotData(
+           show: false,
+         ),
+       ),
         LineChartBarData(
           spots: const [
             FlSpot(0, 26),

@@ -586,7 +586,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
         text = '1'; // Customize this text for value 1
         break;
       case 2:
-        text = '2.1(UCL)'; // Customize this text for value 3
+        text = '2'; // Customize this text for value 3
         break;
       case 3:
         text = '3'; // Customize this text for value 5
@@ -671,8 +671,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 25,
-      maxY: 40,
+      minY: 1,
+      maxY: 3,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
