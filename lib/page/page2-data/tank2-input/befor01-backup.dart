@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 class Tank2BeforePage extends StatefulWidget {
@@ -38,12 +39,14 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
                     // Save values to API
                     saveValuesToAPI(context);
                   } else {
-                    // Show popup for invalid values
+                    // Show popup for Invalid Values',
+
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Invalid Values'),
+                          title: Text('Invalid Values',
+                              style: TextStyle(color: Colors.black)),
                           content: Text(
                               'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 and 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 and 70.'),
                           actions: <Widget>[
@@ -269,8 +272,9 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:newmaster/responsive.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/page/tank/tank5-data/line_chart_sample5-2.dart';
 import 'package:newmaster/page/tank/tank5-data/line_chart_sample5.dart';
-
+import 'package:newmaster/responsive.dart';
 
 List<HistoryChartModel> output = [];
 String test = "";
@@ -103,12 +103,14 @@ class _Chart133State extends State<Chart133> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Concentration (%) Chart",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 14, // Set your desired font size here
+                          fontSize: 20,
+                          color:
+                              Colors.black, // Set your desired font size here
                         ),
                   ),
                 ],
@@ -197,12 +199,13 @@ class _Chart13State extends State<Chart13> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("F.E. (Point) Chart",
-                      style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 14,
-                          )),
+                      style: Theme.of(context)
+                          .textTheme
+                          .titleMedium
+                          ?.copyWith(fontSize: 20, color: Colors.black)),
                 ],
               ),
               SizedBox(
@@ -246,11 +249,12 @@ class Chart21 extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Feed Chart",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 20,
+                      color: Colors.black,
                     )),
           ],
         ),
@@ -340,7 +344,11 @@ class SimpleBarChart extends StatelessWidget {
       ],
       animate: true,
       behaviors: [
-        charts.SeriesLegend(),
+        charts.SeriesLegend(
+          entryTextStyle: charts.TextStyleSpec(
+            color: charts.ColorUtil.fromDartColor(Colors.black),
+          ),
+        ),
         charts.LinePointHighlighter(
           showHorizontalFollowLine:
               charts.LinePointHighlighterFollowLineType.none,
@@ -361,14 +369,14 @@ class SimpleBarChart extends StatelessWidget {
       primaryMeasureAxis: charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Colors.white),
+            color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
         ),
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Colors.white),
+            color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
         ),
       ),
@@ -391,6 +399,3 @@ class ChartData {
     );
   }
 }
-
-
-

@@ -1,17 +1,18 @@
-import 'package:flutter/material.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
+
 import 'bloc/Observe/appBlocObserver.dart';
 import 'bloc/cubit/Rebuild.dart';
-import 'mainBody.dart';
 import 'constants.dart';
-import 'package:google_fonts/google_fonts.dart';
-
+import 'mainBody.dart';
 
 final lightTheme = ThemeData(
   primarySwatch: Colors.blue,
+  brightness: Brightness.light,
 );
 
 final darkTheme = ThemeData(
@@ -35,12 +36,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(providers: [
-      BlocProvider<BlocPageRebuild>(
-        create: (BuildContext context) =>
-            BlocPageRebuild(), //For rebuild only page inside without app bar/left menu
-      ),
-    ], child: const MainContext());
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<BlocPageRebuild>(
+          create: (BuildContext context) =>
+              BlocPageRebuild(), // For rebuild only page inside without app bar/left menu
+        ),
+      ],
+      child: const MainContext(),
+    );
   }
 }
 
@@ -52,11 +56,18 @@ class MainContext extends StatefulWidget {
 }
 
 class _MainContextState extends State<MainContext> {
-  bool isDarkMode = true;
+  bool isDarkMode = false;
+  bool isLightMode = true;
 
   void toggleDarkMode() {
     setState(() {
       isDarkMode = !isDarkMode;
+    });
+  }
+
+  void toggleLightMode() {
+    setState(() {
+      isLightMode = !isLightMode;
     });
   }
 
@@ -66,14 +77,13 @@ class _MainContextState extends State<MainContext> {
       builder: (_, e) {
         return MaterialApp(
           title: 'Web Application',
-          theme: ThemeData.dark().copyWith(
+          theme: ThemeData.light().copyWith(
             scaffoldBackgroundColor: bgColor,
             textTheme: GoogleFonts.poppinsTextTheme(Theme.of(context).textTheme)
                 .apply(bodyColor: Colors.white),
             canvasColor: secondaryColor,
           ),
           home: const MainBlocRebuild(),
-          // Use a Scaffold to add the button
         );
       },
     );

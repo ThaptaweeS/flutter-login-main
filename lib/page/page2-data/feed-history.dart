@@ -1,4 +1,5 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -23,6 +24,7 @@ class FeedHistory extends StatelessWidget {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
+        title: Text("Feed History"),
       ),
       body: FeedHistoryBody(),
     );
@@ -102,21 +104,29 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
 
     return SafeArea(
       child: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
         alignment: Alignment.topLeft,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-              ListTile(
-                leading: Icon(
-                  Icons.heat_pump,
-                  size: 36.0,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Feed History : Dashboard',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
-                ),
+            ListTile(
+              leading: Icon(
+                Icons.heat_pump,
+                size: 36.0,
+                color: Colors.white,
               ),
+              title: Text(
+                'Feed History : Dashboard',
+                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+              ),
+            ),
             // Dropdown for filtering by tank value
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -269,8 +279,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                               Text(filteredData[index]['tank'].toString())),
                           DataCell(
                               Text(filteredData[index]['detail'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['lot'].toString())),
+                          DataCell(Text(filteredData[index]['lot'].toString())),
                           DataCell(
                               Text(filteredData[index]['name'].toString())),
                           DataCell(

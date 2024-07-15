@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -31,8 +32,8 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://172.23.10.51:1111/tank2beforecheck7'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank2beforecheck7'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -54,25 +55,34 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
       appBar: AppBar(
         title: Text('Tank2 : Degreasing | 07:00 (Before)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  saveValuesToAPI(context);
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    sendDataToAPI(context);
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -118,8 +128,10 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -134,11 +146,19 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text((index + 1).toString()),
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             onChanged: (value) {
@@ -146,38 +166,13 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
                 roundValue = value!;
               });
             },
+            dropdownColor:
+                Colors.white, // Set dropdown background color to white
+            style: TextStyle(
+                color: Colors.black), // Set selected item text color to black
           ),
         ),
       ),
-    );
-  }
-
-  TableRow buildTableRow(String label, TextEditingController controller) {
-    return TableRow(
-      children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(label),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 200,
-              child: TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Enter value',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -189,97 +184,109 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
         (tempValue >= 55.0 && tempValue <= 75.0);
   }
 
-  void saveValuesToAPI(BuildContext context) async {
-  // Create a dialog to confirm sending data to the API
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Confirm'),
-        content: Text('F.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.'),
-        actions: <Widget>[
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the dialog
-            },
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () {
-              // Close the dialog and proceed to send data to the API
-              Navigator.of(context).pop();
-              sendDataToAPI(context);
-            },
-            child: Text('Confirm'),
-          ),
-        ],
+  // void saveValuesToAPI(BuildContext context) async {
+  //   // Create a dialog to confirm sending data to the API
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Confirm'),
+  //         content: Text(
+  //             'F.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.'),
+  //         actions: <Widget>[
+  //           TextButton(
+  //             onPressed: () {
+  //               Navigator.of(context).pop(); // Close the dialog
+  //             },
+  //             child: Text('Cancel'),
+  //           ),
+  //           TextButton(
+  //             onPressed: () {
+  //               // Close the dialog and proceed to send data to the API
+  //               Navigator.of(context).pop();
+  //               sendDataToAPI(context);
+  //             },
+  //             child: Text('Confirm'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+  void sendDataToAPI(BuildContext context) async {
+    final url = 'http://172.23.10.51:1111/t27b';
+    final FAlValue = FAlController.text;
+    final tempValue = tempController.text;
+    final Round = roundValue.toString(); // Convert to string
+    final Name = USERDATA.NAME;
+
+    final response = await http.post(
+      Uri.parse(url),
+      body: {
+        'F_Al': FAlValue,
+        'Temp': tempValue,
+        'Name': Name,
+        'Round': Round,
+      },
+    );
+    if (response.statusCode == 200) {
+      // Clear text input fields
+      FAlController.clear();
+      tempController.clear();
+
+      // Show success popup
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Success',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: Text(
+              'บันทึกค่าสำเร็จ',
+              style: TextStyle(color: Colors.black),
+            ),
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).popUntil(ModalRoute.withName(
+                      '/')); // Navigate back to the home page
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
       );
-    },
-  );
-}
-
-void sendDataToAPI(BuildContext context) async {
-  final url = 'http://172.23.10.51:1111/t27b';
-  final FAlValue = FAlController.text;
-  final tempValue = tempController.text;
-  final Round = roundValue.toString(); // Convert to string
-  final Name = USERDATA.NAME;
-
-  final response = await http.post(
-    Uri.parse(url),
-    body: {
-      'F_Al': FAlValue,
-      'Temp': tempValue,
-      'Name': Name,
-      'Round': Round,
-    },
-  );
-  if (response.statusCode == 200) {
-    // Clear text input fields
-    FAlController.clear();
-    tempController.clear();
-
-    // Show success popup
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text('บันทึกค่าสำเร็จ'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).popUntil(ModalRoute.withName(
-                    '/')); // Navigate back to the home page
-              },
-              child: Text('OK'),
+    } else {
+      // Show error popup
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.black),
             ),
-          ],
-        );
-      },
-    );
-  } else {
-    // Show error popup
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text('Failed to save values to the API.'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK'),
+            content: Text(
+              'Failed to save values to the API.',
+              style: TextStyle(color: Colors.black),
             ),
-          ],
-        );
-      },
-    );
+            actions: <Widget>[
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK'),
+              ),
+            ],
+          );
+        },
+      );
+    }
   }
-}
-
 
   Widget buildTable2() {
     // Filter the table data based on the entered round number
@@ -295,10 +302,13 @@ void sendDataToAPI(BuildContext context) async {
           child: TextField(
             controller: roundFilterController,
             decoration: InputDecoration(
-              labelText: 'Filter Round',
-              hintText: 'Enter round number',
-              prefixIcon: Icon(Icons.filter_list),
+              labelText: 'Filter',
+              labelStyle: TextStyle(color: Colors.black),
+              hintText: 'Enter Detail',
+              hintStyle: TextStyle(color: Colors.black),
+              prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
+            style: TextStyle(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes
@@ -324,27 +334,33 @@ void sendDataToAPI(BuildContext context) async {
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -372,39 +388,41 @@ void sendDataToAPI(BuildContext context) async {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? ''),
+            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? ''),
+            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? ''),
+            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
       ],
@@ -436,9 +454,14 @@ void sendDataToAPI(BuildContext context) async {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.black),
+            ),
             content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
+              'Failed to fetch data from the API. Status code: ${response.statusCode}',
+              style: TextStyle(color: Colors.black),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

@@ -129,7 +129,9 @@ class Page02Autobody extends StatelessWidget {
                                 .add(ChangePage_nodrower());
 
                             BlocProvider.of<BlocNotification>(contextGB)
-                                .UpdateNotification("Success", "บันทึกข้อมูลสำเร็จ",
+                                .UpdateNotification(
+                                    "Success",
+                                    "บันทึกข้อมูลสำเร็จ",
                                     enumNotificationlist.Information);
                           },
                           child: Text("Confirm"),
@@ -143,12 +145,14 @@ class Page02Autobody extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title: Text("Error"),
+                      title:
+                          Text("Error", style: TextStyle(color: Colors.black)),
                       content: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
-                          Text("กรุณากรอกข้อมูลในช่องด้านล่างให้ครบถ้วน"),
+                          Text("กรุณากรอกข้อมูลในช่องด้านล่างให้ครบถ้วน",
+                              style: TextStyle(color: Colors.black)),
                           for (String fieldName in missingFields)
                             Text("$fieldName"),
                         ],

@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../../bloc/BlocEvent/ChangePageEvent.dart';
+import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../data/global.dart';
+import '../../mainBody.dart';
 import '../../page/page00.dart';
 import '../../page/page01.dart';
 import '../../page/page02.dart';
-import '../../page/page3.dart';
-import '../../bloc/BlocEvent/ChangePageEvent.dart';
-import '../../bloc/BlocEvent/LoginEvent.dart';
-import '../../mainBody.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import '../../page/page2-data/manual-process-user.dart';
+import '../../page/page3.dart';
 import '../../page/settings.dart';
 
 late BuildContext MenuContext;
@@ -164,7 +165,8 @@ class SideMenu extends StatelessWidget {
                         if (item["page"] != null) {
                           CuPage = item["page"];
                           CuPageLV = item["accessLevel"];
-                          MainBodyContext.read<ChangePage_Bloc>().add(ChangePage());
+                          MainBodyContext.read<ChangePage_Bloc>()
+                              .add(ChangePage());
                         } else if (item["title"] == "Logout") {
                           LoginContext.read<Login_Bloc>().add(Logout());
                         }
@@ -175,8 +177,9 @@ class SideMenu extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text('Version : 1.0.7\nDate modify : 2024-May-22',
-              style: TextStyle(fontSize: 10.0),
+              title: Text(
+                'Version : 1.0.7\nDate modify : 2024-June-22',
+                style: TextStyle(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),
             ),
@@ -187,29 +190,28 @@ class SideMenu extends StatelessWidget {
   }
 }
 
-  // void _showAboutPopup(BuildContext context) {
-  //   showDialog(
-  //     context: context,
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('About'),
-  //         content: Text(
-  //           'Web application V.1.0.6 \n Developer by Automation Team.',
-  //           style: TextStyle(fontSize: 14.0),
-  //         ),
-  //         actions: [
-  //           TextButton(
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //             child: Text('Close'),
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
+// void _showAboutPopup(BuildContext context) {
+//   showDialog(
+//     context: context,
+//     builder: (BuildContext context) {
+//       return AlertDialog(
+//         title: Text('About'),
+//         content: Text(
+//           'Web application V.1.0.6 \n Developer by Automation Team.',
+//           style: TextStyle(fontSize: 14.0),
+//         ),
+//         actions: [
+//           TextButton(
+//             onPressed: () {
+//               Navigator.of(context).pop();
+//             },
+//             child: Text('Close'),
+//           ),
+//         ],
+//       );
+//     },
+//   );
+// }
 
 class DrawerListTile extends StatelessWidget {
   const DrawerListTile({
@@ -232,7 +234,7 @@ class DrawerListTile extends StatelessWidget {
       leading: SvgPicture.asset(
         svgSrc,
         colorFilter: ColorFilter.mode(
-          Color.fromARGB(184, 255, 255, 255),
+          Color.fromARGB(250, 0, 0, 0),
           BlendMode.srcIn,
         ),
         height: 16,
@@ -240,7 +242,7 @@ class DrawerListTile extends StatelessWidget {
       title: Text(
         title,
         style: TextStyle(
-          color: Colors.white54,
+          color: Color.fromARGB(250, 0, 0, 0),
           fontSize: textSize, // Set the text size here
         ),
       ),

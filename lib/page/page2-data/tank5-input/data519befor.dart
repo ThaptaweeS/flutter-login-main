@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -54,25 +55,34 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
       appBar: AppBar(
         title: Text('Tank5 : Acid Picking No.1 | 19:00 (Before)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  saveValuesToAPI(context);
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    sendDataToAPI(context);
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -118,8 +128,10 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -134,11 +146,19 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text((index + 1).toString()),
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             onChanged: (value) {
@@ -146,6 +166,10 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
                 roundValue = value!;
               });
             },
+            dropdownColor:
+                Colors.white, // Set dropdown background color to white
+            style: TextStyle(
+                color: Colors.black), // Set selected item text color to black
           ),
         ),
       ),
@@ -189,7 +213,7 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         (FeValue >= 0.1 && FeValue <= 80.0);
   }
 
-  void saveValuesToAPI(BuildContext context) async {
+  void sendDataToAPI(BuildContext context) async {
     final url = 'http://172.23.10.51:1111/t519b';
     final ConValue = ConController.text;
     final FeValue = FeController.text;
@@ -215,8 +239,14 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text(
+              'Success',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: Text(
+              'บันทึกค่าสำเร็จ',
+              style: TextStyle(color: Colors.black),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -235,8 +265,14 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to save values to the API.'),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.black),
+            ),
+            content: Text(
+              'Failed to save values to the API.',
+              style: TextStyle(color: Colors.black),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -266,9 +302,12 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
-              hintText: 'Enter round number',
-              prefixIcon: Icon(Icons.filter_list),
+              labelStyle: TextStyle(color: Colors.black),
+              hintText: 'Enter round Detail',
+              hintStyle: TextStyle(color: Colors.black),
+              prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
+            style: TextStyle(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes
@@ -294,27 +333,33 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -342,39 +387,41 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? ''),
+            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? ''),
+            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? ''),
+            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
       ],
@@ -406,9 +453,14 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text(
+              'Error',
+              style: TextStyle(color: Colors.black),
+            ),
             content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
+              'Failed to fetch data from the API. Status code: ${response.statusCode}',
+              style: TextStyle(color: Colors.black),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

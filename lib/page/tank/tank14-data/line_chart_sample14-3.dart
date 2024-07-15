@@ -1,9 +1,8 @@
 import 'dart:convert';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:newmaster/presentation/resources/app_resources.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
+import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class LineChartSample2 extends StatefulWidget {
   const LineChartSample2(
@@ -438,8 +437,8 @@ class LineChartSample32 extends StatefulWidget {
 
 class _LineChartSample32State extends State<LineChartSample32> {
   List<Color> gradientColors = [
-    Color.fromARGB(255, 163, 226, 61),
-    Color.fromARGB(255, 163, 226, 61),
+    Colors.blue,
+    Colors.blue,
   ];
 
   bool showAvg = false;
@@ -463,24 +462,30 @@ class _LineChartSample32State extends State<LineChartSample32> {
             ),
           ),
         ),
-        // SizedBox(
-        //   width: 60,
-        //   height: 34,
-        //   child: TextButton(
-        //     onPressed: () {
-        //       setState(() {
-        //         showAvg = !showAvg;
-        //       });
-        //     },
-        //     child: Text(
-        //       '',
-        //       style: TextStyle(
-        //         fontSize: 12,
-        //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Positioned(
+          top: 50,
+          right: 55,
+          child: Text(
+            'USL: 7.5',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 295,
+          right: 55,
+          child: Text(
+            'LSL: 5.5',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -579,6 +584,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 10,
+      color: Colors.black,
     );
     String text;
     switch (value.toInt()) {
@@ -589,10 +595,16 @@ class _LineChartSample32State extends State<LineChartSample32> {
         text = '3'; // Customize this text for value 3
         break;
       case 5:
-        text = '5.5(LSL)'; // Customize this text for value 5
+        text = '5'; // Customize this text for value 5
+        break;
+      case 6:
+        text = '6'; // Customize this text for value 5
+        break;
+      case 7:
+        text = '7';
         break;
       case 8:
-        text = '7.5(USL)'; // Customize this text for value 5
+        text = '8'; // Customize this text for value 5
         break;
       default:
         return Container();
@@ -604,7 +616,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
+        show: false,
         drawVerticalLine: true,
         horizontalInterval: 100,
         verticalInterval: 3.7,
@@ -646,7 +658,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -670,7 +682,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: Color.fromARGB(255, 161, 32, 180)),
+        border: Border.all(color: Colors.black, width: 3),
       ),
       minX: 0,
       maxX: 28,
@@ -714,10 +726,10 @@ class _LineChartSample32State extends State<LineChartSample32> {
               final radius = 1.5; // Adjust the size of the dots here
               return FlDotCirclePainter(
                 radius: radius,
-                color: Color.fromRGBO(229, 80, 255,
-                    1), // You can also adjust the color of the dots if needed
-                strokeColor: Color.fromRGBO(229, 80, 255,
-                    1), // If you want to add border color to the dots
+                color: Colors.blue,
+                // You can also adjust the color of the dots if needed
+                strokeColor:
+                    Colors.blue, // If you want to add border color to the dots
                 strokeWidth: 2, // If you want to add border to the dots
               );
             },
@@ -731,24 +743,24 @@ class _LineChartSample32State extends State<LineChartSample32> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 0),
-            FlSpot(28, 0),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
-          ),
-          barWidth: 2,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 0),
+        //     FlSpot(28, 0),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [
+        //       Colors.yellow,
+        //       Colors.yellow
+        //     ], // Customize colors as needed
+        //   ),
+        //   barWidth: 2,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        // ),
         LineChartBarData(
           spots: const [
             FlSpot(0, 5.5),
@@ -763,6 +775,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
           dotData: const FlDotData(
             show: false,
           ),
+          dashArray: [5, 5],
         ),
         LineChartBarData(
           spots: const [
@@ -778,6 +791,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
           dotData: const FlDotData(
             show: false,
           ),
+          dashArray: [5, 5],
         ),
       ],
     );
@@ -990,8 +1004,8 @@ class LineChartSample33 extends StatefulWidget {
 
 class _LineChartSample33State extends State<LineChartSample33> {
   List<Color> gradientColors = [
-    Color.fromARGB(255, 163, 226, 61),
-    Color.fromARGB(255, 163, 226, 61),
+    Colors.blue,
+    Colors.blue,
   ];
 
   bool showAvg = false;
@@ -1015,24 +1029,42 @@ class _LineChartSample33State extends State<LineChartSample33> {
             ),
           ),
         ),
-        // SizedBox(
-        //   width: 60,
-        //   height: 34,
-        //   child: TextButton(
-        //     onPressed: () {
-        //       setState(() {
-        //         showAvg = !showAvg;
-        //       });
-        //     },
-        //     child: Text(
-        //       '',
-        //       style: TextStyle(
-        //         fontSize: 12,
-        //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Positioned(
+          top: 80,
+          right: 55,
+          child: Text(
+            'USL: 80',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 265,
+          right: 55,
+          child: Text(
+            'LSL: 70',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 170,
+          right: 55,
+          child: Text(
+            'UCL: 75',
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -1129,27 +1161,28 @@ class _LineChartSample33State extends State<LineChartSample33> {
 
   Widget leftTitleWidgets(double value, TitleMeta meta) {
     const style = TextStyle(
-      fontWeight: FontWeight.bold,
-      fontSize: 10,
-    );
+        fontWeight: FontWeight.bold, fontSize: 10, color: Colors.black);
     String text;
     switch (value.toInt()) {
       case 60:
-        text = '65'; // Customize this text for value 1
+        text = '60'; // Customize this text for value 1
         break;
       case 65:
-        text = '70'; // Customize this text for value 3
+        text = '65'; // Customize this text for value 3
         break;
       case 70:
-        text = '75(LSL)'; // Customize this text for value 5
+        text = '70'; // Customize this text for value 5
         break;
       case 75:
-        text = '80(UCL)'; // Customize this text for value 5
+        text = '75'; // Customize this text for value 5
         break;
       case 80:
-        text = '85(USL)'; // Customize this text for value 5
+        text = '80'; // Customize this text for value 5
         break;
       case 85:
+        text = '85'; // Customize this text for value 5
+        break;
+      case 90:
         text = '90'; // Customize this text for value 5
         break;
       default:
@@ -1162,7 +1195,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
+        show: false,
         drawVerticalLine: true,
         horizontalInterval: 100,
         verticalInterval: 3.7,
@@ -1204,7 +1237,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -1228,12 +1261,12 @@ class _LineChartSample33State extends State<LineChartSample33> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: Color.fromARGB(255, 161, 32, 180)),
+        border: Border.all(color: Colors.black, width: 3),
       ),
       minX: 0,
       maxX: 28,
-      minY: 60,
-      maxY: 90,
+      minY: 65,
+      maxY: 85,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -1272,10 +1305,10 @@ class _LineChartSample33State extends State<LineChartSample33> {
               final radius = 1.5; // Adjust the size of the dots here
               return FlDotCirclePainter(
                 radius: radius,
-                color: Color.fromRGBO(229, 80, 255,
-                    1), // You can also adjust the color of the dots if needed
-                strokeColor: Color.fromRGBO(229, 80, 255,
-                    1), // If you want to add border color to the dots
+                color: Colors
+                    .blue, // You can also adjust the color of the dots if needed
+                strokeColor:
+                    Colors.blue, // If you want to add border color to the dots
                 strokeWidth: 2, // If you want to add border to the dots
               );
             },
@@ -1296,12 +1329,9 @@ class _LineChartSample33State extends State<LineChartSample33> {
           ],
           isCurved: false,
           gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
+            colors: [Colors.green, Colors.green], // Customize colors as needed
           ),
-          barWidth: 2,
+          barWidth: 1,
           isStrokeCapRound: true,
           dotData: const FlDotData(
             show: false,
@@ -1321,6 +1351,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
           dotData: const FlDotData(
             show: false,
           ),
+          dashArray: [5, 5],
         ),
         LineChartBarData(
           spots: const [
@@ -1336,6 +1367,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
           dotData: const FlDotData(
             show: false,
           ),
+          dashArray: [5, 5],
         ),
       ],
     );
@@ -1412,8 +1444,8 @@ class _LineChartSample33State extends State<LineChartSample33> {
       ),
       minX: 0,
       maxX: 12,
-      minY: 60,
-      maxY: 90,
+      minY: 0,
+      maxY: 12,
       lineBarsData: [
         LineChartBarData(
           spots: const [

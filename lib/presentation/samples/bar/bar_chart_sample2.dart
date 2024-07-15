@@ -274,7 +274,6 @@ class BarChartSample2State extends State<BarChartSample2> {
   }
 }
 
-
 class BarTest extends StatefulWidget {
   @override
   _BarTestState createState() => _BarTestState();
@@ -314,7 +313,7 @@ class _BarTestState extends State<BarTest> {
       body: Center(
         // child: data.isEmpty
         //     ? CircularProgressIndicator()
-           child: SimpleBarChart(data),
+        child: SimpleBarChart(data),
       ),
     );
   }
@@ -360,8 +359,10 @@ class SimpleBarChart extends StatelessWidget {
 
   static void _onSelectionChanged(charts.SelectionModel model) {
     if (model.hasDatumSelection) {
-      print(model.selectedSeries[0].measureFn(model.selectedDatum[0].index)); // Value
-      print(model.selectedSeries[0].domainFn(model.selectedDatum[0].index)); // Time
+      print(model.selectedSeries[0]
+          .measureFn(model.selectedDatum[0].index)); // Value
+      print(model.selectedSeries[0]
+          .domainFn(model.selectedDatum[0].index)); // Time
       print(model.selectedSeries[0].id); // Lot
     }
   }

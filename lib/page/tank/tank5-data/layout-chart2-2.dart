@@ -6,7 +6,6 @@ import 'package:newmaster/responsive.dart';
 import 'package:newmaster/page/tank/tank5-data/line_chart_sample5-2.dart';
 import 'package:newmaster/page/tank/tank5-data/line_chart_sample5.dart';
 
-
 List<HistoryChartModel> output = [];
 String test = "";
 
@@ -48,6 +47,7 @@ class Chart11 extends StatelessWidget {
     );
   }
 }
+
 class Chart25 extends StatelessWidget {
   Chart25({
     Key? key,
@@ -204,6 +204,3 @@ class ChartData {
     );
   }
 }
-
-
-

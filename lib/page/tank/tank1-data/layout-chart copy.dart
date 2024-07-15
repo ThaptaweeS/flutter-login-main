@@ -13,8 +13,8 @@ import 'package:newmaster/widget/appbar/AppBar.dart';
 import 'package:newmaster/widget/common/Radiobutton.dart';
 import 'package:newmaster/widget/menu/side_menu.dart';
 
- List<HistoryChartModel> output = [];
-  String test = "";
+List<HistoryChartModel> output = [];
+String test = "";
 
 class Chart11 extends StatelessWidget {
   Chart11({
@@ -54,12 +54,13 @@ class Chart11 extends StatelessWidget {
     );
   }
 }
+
 class Chart12 extends StatelessWidget {
   Chart12({
     Key? key,
   }) : super(key: key);
 
-  @override 
+  @override
   Widget build(BuildContext context) {
     final Size _size = MediaQuery.of(context).size;
     return Column(
@@ -92,6 +93,7 @@ class Chart12 extends StatelessWidget {
     );
   }
 }
+
 class Chart13 extends StatefulWidget {
   Chart13({
     Key? key,
@@ -103,11 +105,13 @@ class Chart13 extends StatefulWidget {
 
 class _Chart13State extends State<Chart13> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
-    final response = await http.post(Uri.parse('http://172.23.10.51:1111/tank2aftercheck'));
+    final response =
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank2aftercheck'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
-      final List<Map<String, dynamic>> data = responseData.cast<Map<String, dynamic>>();
-      
+      final List<Map<String, dynamic>> data =
+          responseData.cast<Map<String, dynamic>>();
+
       return data;
     } else {
       throw Exception('Failed to fetch data');
@@ -131,7 +135,8 @@ class _Chart13State extends State<Chart13> {
               id: input[i]["id"] ?? "",
               custFull: input[i]["CustFull"] ?? "",
               sampleName: input[i]["SampleName"] ?? "",
-              samplingDate: "${input[i]["date"] ?? ""}t${input[i]["time"] ?? ""}",
+              samplingDate:
+                  "${input[i]["date"] ?? ""}t${input[i]["time"] ?? ""}",
               stdMax: input[i]["StdMax"] ?? "0",
               stdMin: input[i]["StdMin"] ?? "0",
               resultApprove: input[i]["value"] ?? "",
@@ -154,15 +159,20 @@ class _Chart13State extends State<Chart13> {
               Responsive(
                 mobile: LineChartSample22(
                   crossAxisCount: _size.width < 650 ? 2 : 4,
-                  childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1, historyChartData: output,
+                  childAspectRatio:
+                      _size.width < 650 && _size.width > 350 ? 1.3 : 1,
+                  historyChartData: output,
                 ),
                 tablet: LineChartSample22(
                   crossAxisCount: _size.width < 650 ? 2 : 4,
-                  childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1, historyChartData: output,
+                  childAspectRatio:
+                      _size.width < 650 && _size.width > 350 ? 1.3 : 1,
+                  historyChartData: output,
                 ),
                 desktop: LineChartSample22(
                   childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
-                  crossAxisCount: _size.width < 800 ? 2 : 4, historyChartData: output,
+                  crossAxisCount: _size.width < 800 ? 2 : 4,
+                  historyChartData: output,
                 ),
               ),
             ],
@@ -172,6 +182,7 @@ class _Chart13State extends State<Chart13> {
     );
   }
 }
+
 class Chart21 extends StatelessWidget {
   Chart21({
     Key? key,

@@ -1,12 +1,11 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:newmaster/components/storage_details.dart';
+import 'package:http/http.dart' as http;
+import 'package:newmaster/constants.dart';
 import 'package:newmaster/models/MyFiles.dart';
 import 'package:newmaster/responsive.dart';
-import 'package:newmaster/constants.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
 import 'file_info_card.dart';
 
@@ -78,14 +77,17 @@ class _MyFilesState extends State<MyFiles> {
         return AlertDialog(
           title: Text('แจ้งเตือน'),
           content: Text('ได้รับข้อมูลเคมีที่ต้องเติมเพิ่ม'),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ยืนยัน'),
+            ),
+          ],
         );
       },
     );
-
-    // Close the popup after 10 seconds
-    Future.delayed(Duration(seconds: 10), () {
-      Navigator.of(context).pop();
-    });
   }
 
   @override
@@ -99,7 +101,7 @@ class _MyFilesState extends State<MyFiles> {
             Row(
               children: [
                 Text(
-                  "Production Monitor",
+                  "Select Tank",
                   style: Theme.of(context).textTheme.titleLarge,
                 ),
                 SizedBox(width: 25), // Add spacing between text and icons
@@ -198,7 +200,7 @@ class FileInfoCardGridView extends StatelessWidget {
           info: demoMyFiles[index],
           tapping: (v) {
             // Show popup here based on some condition
-        
+
             // Call the provided taptap function if available
             if (taptap != null) {
               taptap!(demoMyFiles[index]);

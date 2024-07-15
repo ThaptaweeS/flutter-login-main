@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -34,17 +35,25 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
     fetchDataFromAPI();
   }
 
-  // Method to fetch roundValue from the API
+  @override
+  void dispose() {
+    ACController.dispose();
+    tempController.dispose();
+    TAIController.dispose();
+    FAController.dispose();
+    ARController.dispose();
+    roundFilterController.dispose();
+    super.dispose();
+  }
+
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://172.23.10.51:1111/tank10aftercheck7'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank10aftercheck7'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
-          // Set roundValue based on the length of the data array
-          roundValue =
-              data.length + 1; // Increment by 1 to set the default value
+          roundValue = data.length + 1;
         });
       } else {
         throw Exception('Failed to load data');
@@ -58,50 +67,46 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Tank10 : Phosphate | 07:00 (After)'),
+        title: Text('Tank10 : Phosphate | 07:00 (After)',
+            style: TextStyle(color: Colors.black)),
+        iconTheme: IconThemeData(color: Colors.black),
+        // backgroundColor: Colors.white,
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (validateValues()) {
-                    // Save values to API
-                    saveValuesToAPI(context);
-                  } else {
-                    // Show popup for invalid values
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Invalid Values'),
-                          content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (validateValues()) {
+                      saveValuesToAPI(context);
+                    } else {
+                      showInvalidValuesDialog(context);
+                    }
+                  },
+                  child: Text(
+                    'Save Values',
+                  ),
+                  style: ElevatedButton.styleFrom(),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -148,11 +153,13 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
           child: TextFormField(
             controller: ARController,
             keyboardType: TextInputType.number,
-            readOnly: true, // Set readOnly to true
+            readOnly: true,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -170,14 +177,15 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
             keyboardType: TextInputType.number,
             onChanged: (_) {
               if (label == "F.A (Point)" || label == "T.A (Point)") {
-                // Call the method to update AR value when FA or TA changes
                 updateARValue();
               }
             },
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -185,16 +193,10 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
   }
 
   void updateARValue() {
-    // Get values from controllers
     double TAValue = double.tryParse(TAIController.text) ?? 0.0;
     double FAValue = double.tryParse(FAController.text) ?? 0.0;
-
-    // Perform calculation
     double ARValue = TAValue / FAValue;
-
-    // Update AR controller
-    ARController.text =
-        ARValue.toStringAsFixed(2); // Update AR value with 2 decimal places
+    ARController.text = ARValue.toStringAsFixed(2);
   }
 
   Widget buildRoundTableRow() {
@@ -205,11 +207,19 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text((index + 1).toString()),
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             onChanged: (value) {
@@ -217,38 +227,11 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
                 roundValue = value!;
               });
             },
+            dropdownColor: Colors.white,
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
-    );
-  }
-
-  TableRow buildTableRow(String label, TextEditingController controller) {
-    return TableRow(
-      children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(label),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 200,
-              child: TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Enter value',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -273,72 +256,102 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
     final FAValue = FAController.text;
     final ARValue = ARController.text;
     final ACValue = ACController.text;
-    final Round = roundValue.toString(); // Convert to string
-    final Name = USERDATA.NAME;
+    final round = roundValue.toString();
+    final name = USERDATA.NAME;
 
-    final response = await http.post(
-      Uri.parse(url),
-      body: {
-        'T_AI': TAIValue,
-        'Temp': tempValue,
-        'FA': FAValue,
-        'AR': ARValue,
-        'AC': ACValue,
-        'Name': Name,
-        'Round': Round,
-      },
-    );
-    if (response.statusCode == 200) {
-      // Clear text input fields
-      TAIController.clear();
-      tempController.clear();
-      FAController.clear();
-      ARController.clear();
-      ACController.clear();
-
-      // Show success popup
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).popUntil(ModalRoute.withName(
-                      '/')); // Navigate back to the home page
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: {
+          'T_AI': TAIValue,
+          'Temp': tempValue,
+          'FA': FAValue,
+          'AR': ARValue,
+          'AC': ACValue,
+          'Name': name,
+          'Round': round,
         },
       );
-    } else {
-      // Show error popup
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to save values to the API.'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+
+      if (response.statusCode == 200) {
+        TAIController.clear();
+        tempController.clear();
+        FAController.clear();
+        ARController.clear();
+        ACController.clear();
+        showSuccessDialog(context);
+      } else {
+        showErrorDialog(context, 'Failed to save values to the API.');
+      }
+    } catch (error) {
+      showErrorDialog(context, 'Error: $error');
     }
   }
 
+  void showInvalidValuesDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Invalid Values', style: TextStyle(color: Colors.black)),
+          content: Text(
+              'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.8 ถึง 6.5.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 30 ถึง 36.',
+              style: TextStyle(color: Colors.black)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK', style: TextStyle(color: Colors.black)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showSuccessDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Success', style: TextStyle(color: Colors.black)),
+          content:
+              Text('บันทึกค่าสำเร็จ', style: TextStyle(color: Colors.black)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).popUntil(ModalRoute.withName('/'));
+              },
+              child: Text('OK', style: TextStyle(color: Colors.black)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void showErrorDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error', style: TextStyle(color: Colors.black)),
+          content: Text(message, style: TextStyle(color: Colors.black)),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK', style: TextStyle(color: Colors.black)),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
   Widget buildTable2() {
-    // Filter the table data based on the entered round number
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
       String round = roundFilterController.text.toLowerCase();
       return data['round'].toString().toLowerCase().contains(round);
@@ -352,17 +365,17 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
+              labelStyle: TextStyle(color: Colors.black),
               hintText: 'Enter round number',
-              prefixIcon: Icon(Icons.filter_list),
+              hintStyle: TextStyle(color: Colors.black),
+              prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
+            style: TextStyle(color: Colors.black),
             onChanged: (value) {
-              setState(() {
-                // Update the UI when the filter text changes
-              });
+              setState(() {});
             },
           ),
         ),
-        // Display the filtered table data
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
@@ -377,135 +390,90 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
           children: [
             TableRow(
               children: [
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                buildHeaderCell("Round"),
+                buildHeaderCell("Detail"),
+                buildHeaderCell("Value"),
+                buildHeaderCell("Username"),
+                buildHeaderCell("Time"),
+                buildHeaderCell("Date"),
               ],
             ),
-            // Map each data entry to a TableRow widget
-            ...filteredData.map((data) => buildTableRow2(
-                data['round'],
-                data['detail'],
-                data['value'],
-                data['Username'],
-                data['time'],
-                data['date'])),
+            ...filteredData.map((data) => buildDataRow(
+                  data['round'],
+                  data['detail'],
+                  data['value'],
+                  data['Username'],
+                  data['time'],
+                  data['date'],
+                )),
           ],
         ),
       ],
     );
   }
 
-  TableRow buildTableRow2(String? round, String? detail, String? value,
+  TableCell buildHeaderCell(String text) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text, style: TextStyle(color: Colors.black)),
+      ),
+    );
+  }
+
+  TableRow buildDataRow(String? round, String? detail, String? value,
       String? username, String? time, String? date) {
-    // Define date and time format
     final dateFormat = DateFormat('dd-MM-yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
 
     return TableRow(
       children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : ''),
-          ),
-        ),
+        buildDataCell(round),
+        buildDataCell(detail),
+        buildDataCell(value),
+        buildDataCell(username),
+        buildDataCell(
+            time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+        buildDataCell(
+            date != null ? dateFormat.format(DateTime.parse(date)) : ''),
       ],
+    );
+  }
+
+  TableCell buildDataCell(String? text) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(text ?? '', style: TextStyle(color: Colors.black)),
+      ),
     );
   }
 
   void fetchDataFromAPI() async {
     final url = 'http://172.23.10.51:1111/tank10afterdata7';
-    final response = await http.post(Uri.parse(url));
-
-    if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      setState(() {
-        tableData = decodedData
-            .where((entry) => entry['data'] == 'after')
-            .map((entry) => {
-                  'round': entry['round'] ?? '',
-                  'detail': entry['detail'] ?? '',
-                  'value': entry['value']?.toString() ?? '',
-                  'Username': entry['username'] ?? '',
-                  'time': entry['time'] ?? '',
-                  'date': entry['date'] ?? '',
-                })
-            .toList();
-      });
-    } else {
-      // Handle error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
-        },
-      );
+    try {
+      final response = await http.post(Uri.parse(url));
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedData = json.decode(response.body);
+        setState(() {
+          tableData = decodedData
+              .where((entry) => entry['data'] == 'after')
+              .map((entry) => {
+                    'round': entry['round'] ?? '',
+                    'detail': entry['detail'] ?? '',
+                    'value': entry['value']?.toString() ?? '',
+                    'Username': entry['username'] ?? '',
+                    'time': entry['time'] ?? '',
+                    'date': entry['date'] ?? '',
+                  })
+              .toList();
+        });
+      } else {
+        showErrorDialog(context,
+            'Failed to fetch data from the API. Status code: ${response.statusCode}');
+      }
+    } catch (error) {
+      showErrorDialog(context, 'Error: $error');
     }
   }
 }

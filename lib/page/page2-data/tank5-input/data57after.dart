@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -32,7 +33,7 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
   void fetchRoundValue() async {
     try {
       final response = await http
-          .post(Uri.parse('http://172.23.10.51:1111/tank2aftercheck7'));
+          .post(Uri.parse('http://172.23.10.51:1111/tank5aftercheck7'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -54,48 +55,60 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
       appBar: AppBar(
         title: Text('Tank5 : Acid Picking No.1 | 07:00 (after)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (validateValues()) {
-                    // Save values to API
-                    saveValuesToAPI(context);
-                  } else {
-                    // Show popup for invalid values
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Invalid Values'),
-                          content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (validateValues()) {
+                      // Save values to API
+                      saveValuesToAPI(context);
+                    } else {
+                      // Show popup for Invalid Values',
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Invalid Values',
+                                style: TextStyle(color: Colors.black)),
+                            content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.',
+                                style: TextStyle(color: Colors.black)),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -123,7 +136,6 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
         ),
         TableRow(
           children: [
-  
             buildRoundTableRow(),
           ],
         ),
@@ -142,8 +154,10 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -158,11 +172,19 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text((index + 1).toString()),
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             onChanged: (value) {
@@ -170,6 +192,8 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
                 roundValue = value!;
               });
             },
+            dropdownColor: Colors.white,
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -209,9 +233,8 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
     double ConValue = double.tryParse(ConController.text) ?? 0.0;
     double FeValue = double.tryParse(FeController.text) ?? 0.0;
 
-
     return (ConValue >= 10.0 && ConValue <= 15.0) &&
-        (FeValue >= 0.1 && FeValue <= 80.0) ;
+        (FeValue >= 0.1 && FeValue <= 80.0);
   }
 
   void saveValuesToAPI(BuildContext context) async {
@@ -240,15 +263,16 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -286,10 +310,8 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
     return Column(
       children: [
         Container(
-     
           width: 620,
           child: TextField(
-          
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
@@ -318,16 +340,46 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
           children: [
             TableRow(
               children: [
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Round"))),
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Detail"))),
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Value"))),
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Username"))),
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Time"))),
-                TableCell(child: Padding(padding: const EdgeInsets.all(8.0), child: Text("Date"))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
-            ...filteredData.map((data) => buildTableRow2(data['round'], data['detail'], data['value'], data['Username'], data['time'], data['date'])),
+            ...filteredData.map((data) => buildTableRow2(
+                data['round'],
+                data['detail'],
+                data['value'],
+                data['Username'],
+                data['time'],
+                data['date'])),
           ],
         ),
       ],
@@ -335,54 +387,56 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
   }
 
   TableRow buildTableRow2(String? round, String? detail, String? value,
-    String? username, String? time, String? date) {
-  // Define date and time format
-  final dateFormat = DateFormat('dd-MM-yyyy');
-  final timeFormat = DateFormat('HH:mm:ss');
+      String? username, String? time, String? date) {
+    // Define date and time format
+    final dateFormat = DateFormat('dd-MM-yyyy');
+    final timeFormat = DateFormat('HH:mm:ss');
 
-  return TableRow(
-    children: [
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(round ?? ''),
+    return TableRow(
+      children: [
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(detail ?? ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(value ?? ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(username ?? ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-              time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-      TableCell(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Text(
-              date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
+          ),
         ),
-      ),
-    ],
-  );
-}
+      ],
+    );
+  }
 
   void fetchDataFromAPI() async {
     final url = 'http://172.23.10.51:1111/tank5afterdata7';

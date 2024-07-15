@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -37,8 +38,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://172.23.10.51:1111/tank10aftercheck'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank10aftercheck'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -60,48 +61,58 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
       appBar: AppBar(
         title: Text('Tank10 : Phosphate | 01:00 (After)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (validateValues()) {
-                    // Save values to API
-                    saveValuesToAPI(context);
-                  } else {
-                    // Show popup for invalid values
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Invalid Values'),
-                          content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (validateValues()) {
+                      // Save values to API
+                      saveValuesToAPI(context);
+                    } else {
+                      // Show popup for Invalid Values
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Invalid Values',
+                                style: TextStyle(color: Colors.black)),
+                            content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.'),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -152,7 +163,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             decoration: InputDecoration(
               labelText: label,
               border: OutlineInputBorder(),
+              labelStyle: TextStyle(color: Colors.black),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -177,7 +190,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             decoration: InputDecoration(
               labelText: label,
               border: OutlineInputBorder(),
+              labelStyle: TextStyle(color: Colors.black),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -217,6 +232,15 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 roundValue = value!;
               });
             },
+            dropdownColor:
+                Colors.white, // Set dropdown background color to white
+            style: TextStyle(
+                color: Colors.black), // Set selected item text color to black
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
           ),
         ),
       ),
@@ -229,7 +253,7 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(label),
+            child: Text(label, style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -243,7 +267,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 decoration: InputDecoration(
                   hintText: 'Enter value',
                   border: OutlineInputBorder(),
+                  hintStyle: TextStyle(color: Colors.black),
                 ),
+                style: TextStyle(color: Colors.black),
               ),
             ),
           ),
@@ -301,8 +327,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -321,8 +348,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to save values to the API.'),
+            title: Text('Error', style: TextStyle(color: Colors.black)),
+            content: Text('Failed to save values to the API.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -380,27 +407,33 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -428,39 +461,39 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? ''),
+            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? ''),
+            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? ''),
+            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '', style: TextStyle(color: Colors.black)),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                date != null ? dateFormat.format(DateTime.parse(date)) : '', style: TextStyle(color: Colors.black)),
           ),
         ),
       ],

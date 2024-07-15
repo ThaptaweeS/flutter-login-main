@@ -1,19 +1,13 @@
+import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newmaster/components/recent_files.dart';
-import 'package:newmaster/constants.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
-import 'package:newmaster/page/page02.dart';
 import 'package:newmaster/page/page2-data/autofeed-input.dart';
-import 'package:newmaster/widget/appbar/AppBar.dart';
-import 'package:newmaster/widget/menu/side_menu.dart';
-import '../../bloc/BlocEvent/ChangePageEvent.dart';
-import '../../bloc/cubit/NotificationEvent.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
 
+import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import 'tank10-input/data1019after.dart';
 import 'tank10-input/data1019befor.dart';
 import 'tank13-input/data1319after.dart';
@@ -22,8 +16,6 @@ import 'tank14-input/data1419after.dart';
 import 'tank14-input/data1419befor.dart';
 import 'tank2-input/data219after.dart';
 import 'tank2-input/data219befor.dart';
-import 'tank2-input/data21after.dart';
-import 'tank2-input/data21befor.dart';
 import 'tank5-input/data519after.dart';
 import 'tank5-input/data519befor.dart';
 import 'tank8-input/data819after.dart';
@@ -43,168 +35,115 @@ class Page055Autobody extends StatelessWidget {
           onPressed: () {
             CuPage = Page02Autobody();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
-
-            // Handle back button click
           },
         ),
-        title: Text("Select Tank"),
+        title: Text("Select Tank | 19:00"),
       ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: SingleChildScrollView(
-          child: Center(
-            child: Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder.all(),
-              columnWidths: {
-                0: FixedColumnWidth(400.0),
-                1: FixedColumnWidth(220.0),
-                2: FixedColumnWidth(220.0),
-              },
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: SingleChildScrollView(
+            child: Column(
               children: [
-                buildTableRow(
-                  "Tank2 : Degreasing",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.blue,
-                  Tank219BeforePage(),
-                  Tank219AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank2before19",
-                  "http://172.23.10.51:1111/tank2after19",
+                Center(
+                  child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                    border: TableBorder.all(),
+                    columnWidths: {
+                      0: FixedColumnWidth(400.0),
+                      1: FixedColumnWidth(220.0),
+                      2: FixedColumnWidth(220.0),
+                    },
+                    children: [
+                      buildTableRow(
+                        "Tank2 : Degreasing",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.blue,
+                        Tank219BeforePage(),
+                        Tank219AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank2before19",
+                        "http://172.23.10.51:1111/tank2after19",
+                      ),
+                      buildTableRow(
+                        "Tank5 : Acid picking No.1",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.green,
+                        Tank519BeforePage(),
+                        Tank519AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank5before19",
+                        "http://172.23.10.51:1111/tank5after19",
+                      ),
+                      buildTableRow(
+                        "Tank8 : Surface condition",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.blue,
+                        Tank819BeforePage(),
+                        Tank819AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank8before19",
+                        "http://172.23.10.51:1111/tank8after19",
+                      ),
+                      buildTableRow(
+                        "Tank9 : Phosphate",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.orange,
+                        Tank919BeforePage(),
+                        Tank919AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank9before19",
+                        "http://172.23.10.51:1111/tank9after19",
+                      ),
+                      buildTableRow(
+                        "Tank10 : Phosphate",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.grey,
+                        Tank1019BeforePage(),
+                        Tank1019AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank10before19",
+                        "http://172.23.10.51:1111/tank10after19",
+                      ),
+                      buildTableRow(
+                        "Tank13 : Lubricant",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.green,
+                        Tank1319BeforePage(),
+                        Tank1319AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank13before19",
+                        "http://172.23.10.51:1111/tank13after19",
+                      ),
+                      buildTableRow(
+                        "Tank14 : Lubricant",
+                        Icons.add_chart_outlined,
+                        Icons.add_box_outlined,
+                        Colors.blue,
+                        Tank1419BeforePage(),
+                        Tank1419AfterPage(),
+                        context,
+                        "http://172.23.10.51:1111/tank14before19",
+                        "http://172.23.10.51:1111/tank14after19",
+                      ),
+                    ],
+                  ),
                 ),
-                // buildTableRow(
-                //   "Tank3 : Water Rise No.1",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.green,
-                //   Tank3BeforePage(),
-                //   Tank3AfterPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank3before19",
-                //   "http://172.23.10.51:1111/tank3after19",
-                // ),
-                buildTableRow(
-                  "Tank5 : Acid picking No.1",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.green,
-                  Tank519BeforePage(),
-                  Tank519AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank5before19",
-                  "http://172.23.10.51:1111/tank5after19",
-                ),
-                // buildTableRow(
-                //   "Tank4 : Water Rise No.2",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.orange,
-                //   BlankPage(),
-                //   BlankPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank4before19",
-                //   "http://172.23.10.51:1111/tank4after19",
-                // ),
-                // buildTableRow(
-                //   "Tank6 : Water Rise No.3",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.grey,
-                //   BlankPage(),
-                //   BlankPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank6before19",
-                //   "http://172.23.10.51:1111/tank6after19",
-                // ),
-                // buildTableRow(
-                //   "Tank7 : Water Rise No.4",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.blue,
-                //   BlankPage(),
-                //   BlankPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank7before19",
-                //   "http://172.23.10.51:1111/tank7after19",
-                // ),
-                buildTableRow(
-                  "Tank8 : Surface condition",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.blue,
-                  Tank819BeforePage(),
-                  Tank819AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank8before19",
-                  "http://172.23.10.51:1111/tank8after19",
-                ),
-                buildTableRow(
-                  "Tank9 : Phosphate",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.orange,
-                  Tank919BeforePage(),
-                  Tank919AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank9before19",
-                  "http://172.23.10.51:1111/tank9after19",
-                ),
-                buildTableRow(
-                  "Tank10 : Phosphate",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.grey,
-                  Tank1019BeforePage(),
-                  Tank1019AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank10before19",
-                  "http://172.23.10.51:1111/tank10after19",
-                ),
-                // buildTableRow(
-                //   "Tank11 : Water Rise No.5",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.green,
-                //   BlankPage(),
-                //   BlankPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank11before19",
-                //   "http://172.23.10.51:1111/tank11after19",
-                // ),
-                // buildTableRow(
-                //   "Tank12 : Hot D.I.",
-                //   Icons.add_chart_outlined,
-                //   Icons.add_box_outlined,
-                //   Colors.blue,
-                //   BlankPage(),
-                //   BlankPage(),
-                //   context,
-                //   "http://172.23.10.51:1111/tank12before19",
-                //   "http://172.23.10.51:1111/tank12after19",
-                // ),
-                buildTableRow(
-                  "Tank13 : Lubricant",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.green,
-                  Tank1319BeforePage(),
-                  Tank1319AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank13before19",
-                  "http://172.23.10.51:1111/tank13after19",
-                ),
-                buildTableRow(
-                  "Tank14 : Lubricant",
-                  Icons.add_chart_outlined,
-                  Icons.add_box_outlined,
-                  Colors.blue,
-                  Tank1419BeforePage(),
-                  Tank1419AfterPage(),
-                  context,
-                  "http://172.23.10.51:1111/tank14before19",
-                  "http://172.23.10.51:1111/tank14after19",
-                ),
+                SizedBox(height: 168),
               ],
             ),
           ),
@@ -256,7 +195,7 @@ class Page055Autobody extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error'),
+              title: Text('Error', style: TextStyle(color: Colors.black)),
               content: Text(message),
               actions: <Widget>[
                 TextButton(
@@ -275,8 +214,9 @@ class Page055Autobody extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to call API'),
+            title: Text('Error', style: TextStyle(color: Colors.black)),
+            content: Text('Failed to call API',
+                style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -329,9 +269,11 @@ class Page055Autobody extends StatelessWidget {
   Widget buildTextWithIcon(String text, IconData icon) {
     return Row(
       children: [
-        Text(text),
+        Text(
+          text,
+          style: TextStyle(color: Colors.black), // Set text color to black
+        ),
         SizedBox(width: 5), // Add space between text and icon
-        // Icon(Icons.arrow_circle_up, color: Colors.red),
       ],
     );
   }

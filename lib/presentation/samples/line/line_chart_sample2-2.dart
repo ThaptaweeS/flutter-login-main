@@ -1,9 +1,7 @@
 import 'dart:convert';
-import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:newmaster/presentation/resources/app_resources.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 
 class LineChartSample23 extends StatefulWidget {
   LineChartSample23({
@@ -19,8 +17,8 @@ class LineChartSample23 extends StatefulWidget {
 
 class _LineChartSample23State extends State<LineChartSample23> {
   List<Color> gradientColors = [
-    Color.fromARGB(255, 104, 112, 218),
-    Color.fromARGB(255, 104, 112, 218),
+    Colors.blue,
+    Colors.blue,
   ];
 
   bool showAvg = false;
@@ -44,24 +42,42 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        // SizedBox(
-        //   width: 60,
-        //   height: 34,
-        //   child: TextButton(
-        //     onPressed: () {
-        //       setState(() {
-        //         showAvg = !showAvg;
-        //       });
-        //     },
-        //     child: Text(
-        //       '',
-        //       style: TextStyle(
-        //         fontSize: 12,
-        //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
-        //       ),
-        //     ),
-        //   ),
-        // ),
+        Positioned(
+          top: 50,
+          right: 50,
+          child: Text(
+            'USL: 75',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 295,
+          right: 50,
+          child: Text(
+            'LSL: 55',
+            style: TextStyle(
+              color: Colors.red,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        Positioned(
+          top: 170,
+          right: 50,
+          child: Text(
+            'UCL: 65',
+            style: TextStyle(
+              color: Colors.green,
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
       ],
     );
   }
@@ -160,6 +176,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
     const style = TextStyle(
       fontWeight: FontWeight.bold,
       fontSize: 9,
+      color: Colors.black,
     );
     String text;
     switch (value.toInt()) {
@@ -182,19 +199,19 @@ class _LineChartSample23State extends State<LineChartSample23> {
         text = '50'; // Customize this text for value 10
         break;
       case 55:
-        text = '55(USL)'; // Customize this text for value 10
+        text = '55'; // Customize this text for value 10
         break;
       case 60:
         text = '60'; // Customize this text for value 10
         break;
       case 65:
-        text = '65(UCL)'; // Customize this text for value 10
+        text = '65'; // Customize this text for value 10
         break;
       case 70:
         text = '70'; // Customize this text for value 10
         break;
       case 75:
-        text = '75(USL)'; // Customize this text for value 10
+        text = '75'; // Customize this text for value 10
         break;
       case 80:
         text = '80'; // Customize this text for value 10
@@ -209,19 +226,21 @@ class _LineChartSample23State extends State<LineChartSample23> {
   LineChartData mainData() {
     return LineChartData(
       gridData: FlGridData(
-        show: true,
+        show: false,
         drawVerticalLine: true,
         horizontalInterval: 100,
         verticalInterval: 3.7,
         getDrawingHorizontalLine: (value) {
           return const FlLine(
-            color: Colors.red,
+            color: Colors.black,
+            dashArray: [5, 5],
             strokeWidth: 1,
           );
         },
         getDrawingVerticalLine: (value) {
           return const FlLine(
-            color: Colors.blue,
+            color: Colors.black,
+            dashArray: [5, 5],
             strokeWidth: 1,
           );
         },
@@ -251,7 +270,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10),
+                      style: TextStyle(fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -275,12 +294,12 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       borderData: FlBorderData(
         show: true,
-        border: Border.all(color: Color.fromARGB(255, 116, 105, 231)),
+        border: Border.all(color: Colors.black, width: 3),
       ),
       minX: 0,
       maxX: 28,
-      minY: 40,
-      maxY: 85,
+      minY: 50,
+      maxY: 80,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -319,10 +338,10 @@ class _LineChartSample23State extends State<LineChartSample23> {
               final radius = 1.5; // Adjust the size of the dots here
               return FlDotCirclePainter(
                 radius: radius,
-                color: Color.fromARGB(255, 104, 112,
-                    218), // You can also adjust the color of the dots if needed
-                strokeColor: Color.fromARGB(255, 104, 112,
-                    218), // If you want to add border color to the dots
+                color: Colors.blue,
+                // You can also adjust the color of the dots if needed
+                strokeColor: Colors.blue,
+                // If you want to add border color to the dots
                 strokeWidth: 2, // If you want to add border to the dots
               );
             },
@@ -336,78 +355,6 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        // LineChartBarData(
-        //   isCurved: false,
-        //   /* colors: const [Color(0xff27b6fc)], */
-        //   color: Colors.blue,
-        //   barWidth: 3,
-        //   isStrokeCapRound: false,
-        //   dotData: FlDotData(show: false),
-        //   belowBarData: BarAreaData(show: false),
-        /* spots: [for (final node in HistoryChartData) FlSpot(node.timestamp.toDouble(), node.rawValue)
-        ], */
-        //   spots: ((() {
-        //     if (widget.historyChartData.length == 1 &&
-        //         double.parse(
-        //                 ConverstStr(widget.historyChartData[0].resultApprove)) >
-        //             0) {
-        //       //for (int i = 0; i < historyChartData.length; i++)
-        //       print("addddddd");
-        //       return [
-        //         FlSpot(
-        //             1,
-        //             (double.parse(
-        //                 ConverstStr(widget.historyChartData[0].resultApprove))))
-        //       ];
-        //     } else {
-        //       List<FlSpot> buff = [];
-        //       for (int i = 0; i < widget.historyChartData.length; i++) {
-        //         buff.add(FlSpot(
-        //             i.toDouble(),
-        //             (double.parse(ConverstStr(
-        //                 widget.historyChartData[i].resultApprove)))));
-        //       }
-        //       return buff;
-        //     }
-        //   }())),
-        // ),
-        // Add another line here
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 75),
-        //     FlSpot(24, 75),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Colors.orange,
-        //       Colors.orange
-        //     ], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 55),
-        //     FlSpot(24, 55),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Colors.orange,
-        //       Colors.orange
-        //     ], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
         LineChartBarData(
           spots: const [
             FlSpot(0, 65),
@@ -415,12 +362,9 @@ class _LineChartSample23State extends State<LineChartSample23> {
           ],
           isCurved: false,
           gradient: LinearGradient(
-            colors: [
-              Colors.yellow,
-              Colors.yellow
-            ], // Customize colors as needed
+            colors: [Colors.green, Colors.green], // Customize colors as needed
           ),
-          barWidth: 2,
+          barWidth: 1,
           isStrokeCapRound: true,
           dotData: const FlDotData(
             show: false,
@@ -433,13 +377,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
           ],
           isCurved: false,
           gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
+            colors: [Colors.red, Colors.red],
+            // Customize colors as needed
           ),
           barWidth: 1,
           isStrokeCapRound: true,
           dotData: const FlDotData(
             show: false,
           ),
+          belowBarData: BarAreaData(
+            show: false,
+          ),
+          dashArray: [5, 5], // This will create a dashed line
         ),
         LineChartBarData(
           spots: const [
@@ -455,6 +404,10 @@ class _LineChartSample23State extends State<LineChartSample23> {
           dotData: const FlDotData(
             show: false,
           ),
+          belowBarData: BarAreaData(
+            show: false,
+          ),
+          dashArray: [5, 5], // This will create a dashed line
         ),
       ],
     );

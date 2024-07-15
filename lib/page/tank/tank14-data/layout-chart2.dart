@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/responsive.dart';
 
 import 'line_chart_sample14-3.dart';
@@ -392,7 +393,6 @@ class ChartData {
   }
 }
 
-
 class Chart136 extends StatefulWidget {
   Chart136({
     Key? key,
@@ -447,12 +447,13 @@ class _Chart136State extends State<Chart136> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Temp.(°C) Chart",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 14, // Set your desired font size here
+                        fontSize: 20,
+                        color: Colors.black // Set your desired font size here
                         ),
                   ),
                 ],

@@ -1,7 +1,7 @@
 import 'dart:convert';
-import 'dart:ui';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 class CloudStorageInfo {
   final String? svgSrc, title, totalStorage, numOfFiles;
@@ -18,15 +18,47 @@ class CloudStorageInfo {
     this.id,
     this.color2,
   });
+
+  get statusColor => null;
 }
 
 List<CloudStorageInfo> demoMyFiles = [
   CloudStorageInfo(
-    id: 4,
-    title: "Tank2 : Degreasing",
+    id: 1,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank1",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 2,
+    title: " Tank2 : Degreasing",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank01.svg",
-    totalStorage: "(3-2) 6700 liter",
+    totalStorage: "(3-2) FC-4360",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 3,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank3",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 4,
+    title: "ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank01.svg",
+    totalStorage: "Tank4",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -36,7 +68,27 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank5 : Acid Picking No.1",
     numOfFiles: "2 Times/day",
     svgSrc: "assets/icons/tank3.svg",
-    totalStorage: "(3-5) 5000 liter",
+    totalStorage: "(3-5) HCl 35 %",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 6,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank6",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 7,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank7",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -46,7 +98,7 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank8 : Surface condition",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank6.svg",
-    totalStorage: "(3-8) 5100 liter",
+    totalStorage: "(3-8) PL-ZN",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -56,7 +108,7 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank9 : Phosphate",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank3.svg",
-    totalStorage: "(3-9) 5100 liter",
+    totalStorage: "(3-9) PB-3650XM",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -66,7 +118,27 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank10 : Phosphate",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank3.svg",
-    totalStorage: "(3-10) 5100 liter",
+    totalStorage: "(3-10) PB-181X(M)",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 11,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank11",
+    color: Color.fromARGB(255, 127, 138, 152),
+    percentage: 99,
+    color2: Colors.transparent, // Initialize color2 to a default value
+  ),
+  CloudStorageInfo(
+    id: 12,
+    title: " ยังไม่เปิดการใช้งาน",
+    // numOfFiles: "4 Times/day",
+    // svgSrc: "assets/icons/tank3.svg",
+    totalStorage: "Tank12",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -76,7 +148,7 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank13 : Lubricant",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank4.svg",
-    totalStorage: "(3-13) 5100 liter",
+    totalStorage: "(3-13) LUB-4618",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -86,7 +158,7 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank14 : Lubricant",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank4.svg",
-    totalStorage: "(3-14) 5100 liter",
+    totalStorage: "(3-14) LUB-235",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent, // Initialize color2 to a default value
@@ -149,4 +221,20 @@ Future<void> fetchStatusAndUpdateColors() async {
     // Handle network error
     print('Error: $e');
   }
+}
+
+class MyFile {
+  final String title;
+  final String svgSrc;
+  final int numOfFiles;
+  final double percentage;
+  final Color color;
+
+  MyFile({
+    required this.title,
+    required this.svgSrc,
+    required this.numOfFiles,
+    required this.percentage,
+    required this.color,
+  });
 }

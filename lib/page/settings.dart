@@ -1,6 +1,8 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+
 import '../data/global.dart';
 
 class PasswordSettingPage extends StatefulWidget {
@@ -47,18 +49,18 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
       if (response.statusCode == 200) {
         // Handle success
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Password settings saved successfully'),
+          content: Text('Password settings saved successfully', style: TextStyle(color: Colors.black)),
         ));
       } else {
         // Handle error
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Failed to save password settings'),
+          content: Text('Failed to save password settings', style: TextStyle(color: Colors.black)),
         ));
       }
     } catch (e) {
       // Handle error
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('An error occurred while connecting to the server'),
+        content: Text('An error occurred while connecting to the server', style: TextStyle(color: Colors.black)),
       ));
     }
   }

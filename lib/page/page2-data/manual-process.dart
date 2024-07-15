@@ -1,26 +1,10 @@
 import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newmaster/components/chart2.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/page/page02.dart';
-import 'package:newmaster/page/page2-data/text-card.dart';
-import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
-import 'package:newmaster/components/recent_files.dart';
-import 'package:newmaster/constants.dart';
-import 'package:newmaster/page/tank/tank1-data/layout-history.dart';
-import 'package:newmaster/page/tank/tank1-data/pump.dart';
-import 'package:newmaster/presentation/samples/bar/bar_chart_sample1.dart';
-import 'package:newmaster/presentation/samples/bar/bar_chart_sample2.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample2.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample3.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample4.dart';
-import 'package:newmaster/responsive.dart';
-import 'package:newmaster/widget/appbar/AppBar.dart';
-import 'package:newmaster/widget/common/Radiobutton.dart';
-import 'package:newmaster/widget/menu/side_menu.dart';
-import 'package:newmaster/page/tank/tank1-data/layout-chart.dart';
-import 'package:http/http.dart' as http;
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../mainBody.dart';
@@ -43,6 +27,7 @@ class Manualfeed extends StatelessWidget {
                   .add(ChangePage_nodrower());
             },
           ),
+          title: Text('Manual Feed'),
         ),
         body: ManualfeedBody());
   }
@@ -52,10 +37,10 @@ class ManualfeedBody extends StatefulWidget {
   const ManualfeedBody({super.key});
 
   @override
-  State<ManualfeedBody> createState() => _P1DASHBOARDMAINState2();
+  State<ManualfeedBody> createState() => _ManualfeedBodyState();
 }
 
-class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
+class _ManualfeedBodyState extends State<ManualfeedBody> {
   late List<Map<String, dynamic>> tableData = [];
   late List<bool> showDetails = [];
 
@@ -100,7 +85,7 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Details'),
+              Text('Details', style: TextStyle(color: Colors.black)),
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
@@ -113,8 +98,10 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
             crossAxisAlignment: CrossAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              Text('Chemicals: ${tableData[index]['Detail']}'),
-              Text('Feed : ${tableData[index]['Solv']}'),
+              Text('Chemicals: ${tableData[index]['Detail']}',
+                  style: TextStyle(color: Colors.black)),
+              Text('Feed : ${tableData[index]['Solv']}',
+                  style: TextStyle(color: Colors.black)),
             ],
           ),
           actions: [
@@ -184,85 +171,150 @@ class _P1DASHBOARDMAINState2 extends State<ManualfeedBody> {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: SingleChildScrollView(
-        primary: false,
-        padding: EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            InkWell(
-              onTap: () {},
-              child: ListTile(
-                leading: Icon(
-                  Icons.heat_pump,
-                  size: 36.0,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Order Feed Chemical : Dashboard',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+    return Container(
+      height: MediaQuery.of(context).size.height,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, Colors.blue[100]!],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: SafeArea(
+        child: SingleChildScrollView(
+          primary: false,
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              InkWell(
+                onTap: () {},
+                child: ListTile(
+                  leading: Icon(
+                    Icons.heat_pump,
+                    size: 36.0,
+                    color: Colors.blue,
+                  ),
+                  title: Text(
+                    'Order Feed Chemical : Dashboard',
+                    style:
+                        TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  ),
                 ),
               ),
-            ),
-            SizedBox(height: 16.0),
-            DataTable(
-              columns: [
-                DataColumn(label: Text('No.')),
-                DataColumn(label: Text('Process')),
-                DataColumn(label: Text('Item Check')),
-                DataColumn(label: Text('Specification')),
-                DataColumn(label: Text('Setpoint')),
-                DataColumn(label: Text('Actual')),
-                DataColumn(label: Text('Time')),
-                DataColumn(label: Text('Status')),
-                DataColumn(label: Text('')),
-              ],
-              rows: List.generate(tableData.length, (index) {
-                String statusText = '';
-                Color statusColor = Colors.black;
-                switch (tableData[index]['Status']) {
-                  case 0:
-                    statusText = 'Waiting';
-                    statusColor = Colors.red;
-                    break;
-                  case 1:
-                    statusText = 'Send Data';
-                    statusColor = Colors.orange;
-                    break;
-                  case 2:
-                    statusText = 'Feed';
-                    statusColor = Colors.blue;
-                    break;
-                  default:
-                    statusText = 'Unknown';
-                }
-
-                return DataRow(
-                  cells: [
-                    DataCell(Text(tableData[index]['No'].toString())),
-                    DataCell(Text(tableData[index]['Process'].toString())),
-                    DataCell(Text(tableData[index]['Item'].toString())),
-                    DataCell(Text(tableData[index]['Spec'].toString())),
-                    DataCell(Text(tableData[index]['SetPoint'].toString())),
-                    DataCell(Text(tableData[index]['Actual'].toString())),
-                    DataCell(Text(tableData[index]['Time'].toString())),
-                    DataCell(
-                      Text(
-                        statusText,
-                        style: TextStyle(color: statusColor),
-                      ),
-                    ),
-                    DataCell(ElevatedButton(
-                      onPressed: () {
-                        showDetailPopup(index);
-                      },
-                      child: Text('Action'),
-                    )),
+              SizedBox(height: 16.0),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  gradient: LinearGradient(
+                    colors: [Colors.blue[50]!, Colors.blue[100]!],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
+                ),
+                child: DataTable(
+                  columns: [
+                    DataColumn(
+                        label: Text('No.',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Process',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Item Check',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Specification',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Setpoint',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Actual',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Time',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('Status',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
+                        label: Text('',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
                   ],
-                );
-              }),
-            ),
-          ],
+                  rows: List.generate(tableData.length, (index) {
+                    String statusText = '';
+                    Color statusColor = Colors.black;
+                    switch (tableData[index]['Status']) {
+                      case 0:
+                        statusText = 'Waiting';
+                        statusColor = Colors.red;
+                        break;
+                      case 1:
+                        statusText = 'Send Data';
+                        statusColor = Colors.orange;
+                        break;
+                      case 2:
+                        statusText = 'Feed';
+                        statusColor = Colors.blue;
+                        break;
+                      default:
+                        statusText = 'Unknown';
+                    }
+
+                    return DataRow(
+                      cells: [
+                        DataCell(Text(tableData[index]['No'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Process'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Item'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Spec'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['SetPoint'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Actual'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Time'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(
+                          Text(
+                            statusText,
+                            style: TextStyle(color: statusColor),
+                          ),
+                        ),
+                        DataCell(ElevatedButton(
+                          onPressed: () {
+                            showDetailPopup(index);
+                          },
+                          child: Text('Action'),
+                        )),
+                      ],
+                    );
+                  }),
+                ),
+              ),
+              SizedBox(height: 168), // Adjust this size based on your need
+            ],
+          ),
         ),
       ),
     );

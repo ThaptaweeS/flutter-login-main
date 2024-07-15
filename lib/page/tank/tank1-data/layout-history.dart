@@ -1,19 +1,10 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
-import 'package:newmaster/components/chart2.dart';
-import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
-import 'package:newmaster/components/recent_files.dart';
-import 'package:newmaster/constants.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample2.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample3.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample4.dart';
-import 'package:newmaster/responsive.dart';
-import 'package:newmaster/widget/appbar/AppBar.dart';
-import 'package:newmaster/widget/common/Radiobutton.dart';
-import 'package:newmaster/widget/menu/side_menu.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
+import 'package:newmaster/responsive.dart';
 
 import '../../../data/global.dart';
 
@@ -321,8 +312,9 @@ class _DataHistory2State extends State<DataHistory2> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -358,102 +350,103 @@ class _DataHistory2State extends State<DataHistory2> {
   }
 
   Widget buildTable2() {
-  // Define date format
-  final dateFormat = DateFormat('dd-MM-yyyy');
+    // Define date format
+    final dateFormat = DateFormat('dd-MM-yyyy');
 
-  // Filter the table data based on the entered round number
-  List<Map<String, dynamic>> filteredData = tableData.where((data) {
-    String round = roundFilterController.text.toLowerCase();
-    return data['round'].toString().toLowerCase().contains(round);
-  }).toList();
+    // Filter the table data based on the entered round number
+    List<Map<String, dynamic>> filteredData = tableData.where((data) {
+      String round = roundFilterController.text.toLowerCase();
+      return data['round'].toString().toLowerCase().contains(round);
+    }).toList();
 
-  return SingleChildScrollView(
-    child: Column(
-      children: [
-        Container(
-          width: 620,
-          child: TextField(
-            controller: roundFilterController,
-            decoration: InputDecoration(
-              labelText: 'Filter Round',
-              hintText: 'Enter round number',
-              prefixIcon: Icon(Icons.filter_list),
+    return SingleChildScrollView(
+      child: Column(
+        children: [
+          Container(
+            width: 620,
+            child: TextField(
+              controller: roundFilterController,
+              decoration: InputDecoration(
+                labelText: 'Filter Round',
+                hintText: 'Enter round number',
+                prefixIcon: Icon(Icons.filter_list),
+              ),
+              onChanged: (value) {
+                setState(() {
+                  // Update the UI when the filter text changes
+                });
+              },
             ),
-            onChanged: (value) {
-              setState(() {
-                // Update the UI when the filter text changes
-              });
+          ),
+          // Display the filtered table data with maximum 7 rows
+          ListView.builder(
+            shrinkWrap: true,
+            physics: NeverScrollableScrollPhysics(), // Disable scrolling
+            itemCount: filteredData.length > 20 ? 20 : filteredData.length,
+            itemBuilder: (context, index) {
+              return Table(
+                defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+                border: TableBorder.all(),
+                columnWidths: {
+                  0: FixedColumnWidth(80.0),
+                  1: FixedColumnWidth(120.0),
+                  2: FixedColumnWidth(80.0),
+                  3: FixedColumnWidth(120.0),
+                  4: FixedColumnWidth(100.0),
+                  5: FixedColumnWidth(120.0),
+                },
+                children: [
+                  TableRow(
+                    children: [
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['round'] ?? ''),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['detail'] ?? ''),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['value'] ?? ''),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['Username'] ?? ''),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['time'] ?? ''),
+                        ),
+                      ),
+                      TableCell(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(filteredData[index]['date'] != null
+                              ? dateFormat.format(
+                                  DateTime.parse(filteredData[index]['date']))
+                              : ''),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              );
             },
           ),
-        ),
-        // Display the filtered table data with maximum 7 rows
-        ListView.builder(
-          shrinkWrap: true,
-          physics: NeverScrollableScrollPhysics(), // Disable scrolling
-          itemCount: filteredData.length > 20 ? 20 : filteredData.length,
-          itemBuilder: (context, index) {
-            return Table(
-              defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-              border: TableBorder.all(),
-              columnWidths: {
-                0: FixedColumnWidth(80.0),
-                1: FixedColumnWidth(120.0),
-                2: FixedColumnWidth(80.0),
-                3: FixedColumnWidth(120.0),
-                4: FixedColumnWidth(100.0),
-                5: FixedColumnWidth(120.0),
-              },
-              children: [
-                TableRow(
-                  children: [
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['round'] ?? ''),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['detail'] ?? ''),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['value'] ?? ''),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['Username'] ?? ''),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['time'] ?? ''),
-                      ),
-                    ),
-                    TableCell(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(filteredData[index]['date'] != null
-                            ? dateFormat.format(DateTime.parse(filteredData[index]['date']))
-                            : ''),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            );
-          },
-        ),
-      ],
-    ),
-  );
-}
+        ],
+      ),
+    );
+  }
 
   TableRow buildTableRow2(String? round, String? detail, String? value,
       String? username, String? time, String? date) {

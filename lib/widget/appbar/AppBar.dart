@@ -1,17 +1,17 @@
-import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 import 'dart:async';
 import 'dart:convert';
-import 'package:http/http.dart' as http;
 
+import 'package:flutter/material.dart';
 //--------------------------------------------- Bloc
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
-import 'package:newmaster/main.dart';
+import 'package:newmaster/page/page2-data/manual-process-user.dart';
 
 import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../mainBody.dart';
-import '../../page/page2-data/manual-process-user.dart';
 //---------------------------------------------
 
 String pageactive = '';
@@ -74,11 +74,11 @@ class Logo1 extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 1),
       child: Container(
-        color: Color.fromRGBO(255, 255, 255, 0),
+        color: Color.fromRGBO(0, 0, 0, 0),
         child: Text(
           "Chemical Control Monitoring",
           style: TextStyle(
-            color: Color.fromRGBO(252, 242, 242, 1),
+            color: Color.fromRGBO(0, 0, 0, 1),
             fontSize: 20,
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.normal,
@@ -120,7 +120,7 @@ class _IconBellState extends State<IconBell> {
   void initState() {
     super.initState();
     fetchData(); // Fetch data when the widget is initialized
-    Timer.periodic(Duration(minutes: 1), (timer) {
+    Timer.periodic(Duration(seconds: 1), (timer) {
       fetchData(); // Fetch data every 3 minutes
     });
   }
@@ -128,8 +128,10 @@ class _IconBellState extends State<IconBell> {
   Future<void> fetchData() async {
     try {
       // Make a GET request to the API
-      final response = await http.post(Uri.parse('http://172.23.10.51:1111/notify'));
-
+      final response =
+          // await http.post(Uri.parse('http://172.23.10.51:1111/notify'));
+          await http
+              .post(Uri.parse('http://172.23.10.51:1111/manual-feed-user'));
       if (response.statusCode == 200) {
         // Parse the response body
         final jsonData = jsonDecode(response.body);
@@ -157,60 +159,70 @@ class _IconBellState extends State<IconBell> {
         children: [
           SizedBox(width: 4),
           IconButton(
- onPressed: () {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('แจ้งเตือน'),
-        content: Text('ได้รับข้อมูลเคมีที่ต้องเติมเพิ่มจาก QC'),
-        actions: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end, // Align buttons to the right
-            children: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, 'manual-process-user');
-                  print('Go');
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('แจ้งเตือน',
+                        style: TextStyle(color: Colors.black)),
+                    content: Text('ได้รับข้อมูลเคมีที่ต้องเติมเพิ่มจาก QC',
+                        style: TextStyle(color: Colors.black)),
+                    backgroundColor: Colors.white,
+                    actions: [
+                      Row(
+                        mainAxisAlignment:
+                            MainAxisAlignment.end, // Align buttons to the right
+                        children: [
+                          TextButton(
+                            onPressed: () {
+                              CuPage = ManualfeedUser();
+                              MainBodyContext.read<ChangePage_Bloc>()
+                                  .add(ChangePage_nodrower());
+                              Navigator.of(context).pop();
+                              print('Go');
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.double_arrow_outlined),
+                                SizedBox(
+                                    width:
+                                        5), // Add some spacing between the icon and the text
+                                Text('Go to'),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                              width: 8), // Add some spacing between the buttons
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
                 },
-                child: Row(
-                  children: [
-                    Icon(Icons.double_arrow_outlined),
-                    SizedBox(width: 5), // Add some spacing between the icon and the text
-                    Text('Go to'),
-                  ],
-                ),
-              ),
-              SizedBox(width: 8), // Add some spacing between the buttons
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('Close'),
-              ),
-            ],
+              );
+            },
+            icon: hasData
+                ? Tooltip(
+                    message: 'แจ้งเตือน\nคุณมีคำสั่งเติมสารเคมีใหม่จาก QC',
+                    child: Image.asset("assets/icons/icon-notifications2.png"),
+                  )
+                : Tooltip(
+                    message: 'ไม่มีข้อมูลใหม่',
+                    child: Image.asset("assets/icons/icon-notifications.png"),
+                  ),
           ),
-        ],
-      );
-    },
-  );
-},
-  icon: hasData
-      ? Tooltip(
-          message: 'แจ้งเตือน\nคุณมีคำสั่งเติมสารเคมีใหม่จาก QC',
-          child: Image.asset("assets/icons/icon-notifications2.png"),
-        )
-      : Tooltip(
-          message: 'ไม่มีข้อมูลใหม่',
-          child: Image.asset("assets/icons/icon-notifications.png"),
-        ),
-),
           SizedBox(width: 3),
           Text(
             USERDATA.NAME,
             style: TextStyle(
               fontFamily: 'Mitr',
-              color: Colors.white,
+              color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.w600,
               fontStyle: FontStyle.normal,
@@ -253,7 +265,7 @@ class _Time_State extends State<Time_> {
             DateFormat('MMM dd, yyyy hh:mm a').format(now),
             style: TextStyle(
               fontFamily: 'Mitr',
-              color: Colors.white,
+              color: Color.fromARGB(255, 0, 0, 0),
               fontSize: 14,
               fontWeight: FontWeight.w400,
               fontStyle: FontStyle.normal,

@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -60,48 +61,59 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
       appBar: AppBar(
         title: Text('Tank9 : Phosphate | 01:00 (After)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (validateValues()) {
-                    // Save values to API
-                    saveValuesToAPI(context);
-                  } else {
-                    // Show popup for invalid values
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Invalid Values'),
-                          content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (validateValues()) {
+                      // Save values to API
+                      saveValuesToAPI(context);
+                    } else {
+                      // Show popup for invalid values
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Invalid Values',
+                                style: TextStyle(color: Colors.black)),
+                            content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
+                                style: TextStyle(color: Colors.black)),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -217,6 +229,9 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                 roundValue = value!;
               });
             },
+            dropdownColor:
+                Colors.white, // Set dropdown background color to white
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -301,8 +316,9 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -321,8 +337,9 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
-            content: Text('Failed to save values to the API.'),
+            title: Text('Error', style: TextStyle(color: Colors.black)),
+            content: Text('Failed to save values to the API.',
+                style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -380,27 +397,33 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -492,9 +515,11 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error'),
+            title: Text('Error', style: TextStyle(color: Colors.black)),
             content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
+              'Failed to fetch data from the API. Status code: ${response.statusCode}',
+              style: TextStyle(color: Colors.black),
+            ),
             actions: <Widget>[
               TextButton(
                 onPressed: () {

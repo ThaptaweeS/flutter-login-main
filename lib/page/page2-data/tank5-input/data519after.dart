@@ -1,6 +1,7 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
 import '../../../data/global.dart';
@@ -54,48 +55,60 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
       appBar: AppBar(
         title: Text('Tank5 : Acid Picking No.1 | 19:00 (after)'),
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              buildTable(),
-              SizedBox(height: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (validateValues()) {
-                    // Save values to API
-                    saveValuesToAPI(context);
-                  } else {
-                    // Show popup for invalid values
-                    showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          title: Text('Invalid Values'),
-                          content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.'),
-                          actions: <Widget>[
-                            TextButton(
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                              child: Text('OK'),
-                            ),
-                          ],
-                        );
-                      },
-                    );
-                  }
-                },
-                child: Text('Save Values'),
-              ),
-              Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.white, Colors.blue[100]!],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Center(
+          child: Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Column(
+              children: [
+                buildTable(),
+                SizedBox(height: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (validateValues()) {
+                      // Save values to API
+                      saveValuesToAPI(context);
+                    } else {
+                      // Show popup for Invalid Values',
+
+                      showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            title: Text('Invalid Values',
+                                style: TextStyle(color: Colors.black)),
+                            content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.',
+                                style: TextStyle(color: Colors.black)),
+                            actions: <Widget>[
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: Text('OK'),
+                              ),
+                            ],
+                          );
+                        },
+                      );
+                    }
+                  },
+                  child: Text('Save Values'),
                 ),
-              ),
-            ],
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: buildTable2(),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -141,8 +154,10 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -157,11 +172,19 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: TextStyle(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text((index + 1).toString()),
+                child: Text(
+                  (index + 1).toString(),
+                  style: TextStyle(color: Colors.black),
+                ),
               ),
             ),
             onChanged: (value) {
@@ -169,6 +192,8 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
                 roundValue = value!;
               });
             },
+            dropdownColor: Colors.white,
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -208,9 +233,8 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
     double ConValue = double.tryParse(ConController.text) ?? 0.0;
     double FeValue = double.tryParse(FeController.text) ?? 0.0;
 
-
     return (ConValue >= 10.0 && ConValue <= 15.0) &&
-        (FeValue >= 0.1 && FeValue <= 80.0) ;
+        (FeValue >= 0.1 && FeValue <= 80.0);
   }
 
   void saveValuesToAPI(BuildContext context) async {
@@ -239,15 +263,16 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success'),
-            content: Text('บันทึกค่าสำเร็จ.'),
+            title: Text('Success', style: TextStyle(color: Colors.black)),
+            content:
+                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -318,27 +343,33 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Round"))),
+                        child: Text("Round",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Detail"))),
+                        child: Text("Detail",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Value"))),
+                        child: Text("Value",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Username"))),
+                        child: Text("Username",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Time"))),
+                        child: Text("Time",
+                            style: TextStyle(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Text("Date"))),
+                        child: Text("Date",
+                            style: TextStyle(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -366,39 +397,41 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? ''),
+            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? ''),
+            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? ''),
+            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? ''),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
       ],

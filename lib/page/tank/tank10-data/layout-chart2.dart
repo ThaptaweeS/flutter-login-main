@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/responsive.dart';
 
 import 'line_chart_sample10-3.dart';
@@ -103,12 +104,14 @@ class _Chart134State extends State<Chart134> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "A.R.(Point) Chart",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 14, // Set your desired font size here
+                          fontSize: 20,
+                          color:
+                              Colors.black, // Set your desired font size here
                         ),
                   ),
                 ],
@@ -197,11 +200,12 @@ class _Chart135State extends State<Chart135> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("A.C. (Point) Chart",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 20,
+                            color: Colors.black,
                           )),
                 ],
               ),
@@ -246,11 +250,12 @@ class Chart221 extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Feed Chart",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 20,
+                      color: Colors.black,
                     )),
           ],
         ),
@@ -392,7 +397,6 @@ class ChartData {
   }
 }
 
-
 class Chart136 extends StatefulWidget {
   Chart136({
     Key? key,
@@ -447,12 +451,13 @@ class _Chart136State extends State<Chart136> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Temp.(°C) Chart",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 14, // Set your desired font size here
+                        fontSize: 20,
+                        color: Colors.black // Set your desired font size here
                         ),
                   ),
                 ],

@@ -1,9 +1,5 @@
 
-import 'package:newmaster/responsive.dart';
-import 'package:flutter/material.dart';
-import 'package:newmaster/models/MyFiles.dart';
-import '../../../constants.dart';
-import 'file_info_card.dart';
+
 
 // class MyFiles extends StatelessWidget {
 //   const MyFiles({

@@ -392,7 +392,6 @@ class ChartData {
   }
 }
 
-
 class Chart136 extends StatefulWidget {
   Chart136({
     Key? key,

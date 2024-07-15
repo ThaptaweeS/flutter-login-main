@@ -1,23 +1,19 @@
 import 'dart:convert';
-import 'package:http/http.dart' as http;
+
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:flutter/material.dart';
-import 'package:newmaster/components/chart2.dart';
-import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
-import 'package:newmaster/components/recent_files.dart';
+import 'package:http/http.dart' as http;
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/presentation/samples/line/line_chart_sample2.dart';
 import 'package:newmaster/presentation/samples/line/line_chart_sample3.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample4.dart';
 import 'package:newmaster/responsive.dart';
-import 'package:newmaster/widget/appbar/AppBar.dart';
-import 'package:newmaster/widget/common/Radiobutton.dart';
-import 'package:newmaster/widget/menu/side_menu.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../presentation/samples/line/line_chart_sample2-2.dart';
 
 List<HistoryChartModel> output = [];
 String test = "";
+List<double> _falValues = List.filled(8, 0.0);
 
 class Chart11 extends StatelessWidget {
   Chart11({
@@ -69,7 +65,7 @@ class Chart12 extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(
               "F.Al Chart",
@@ -114,6 +110,14 @@ class _Chart133State extends State<Chart133> {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
           responseData.cast<Map<String, dynamic>>();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setString('falData', json.encode(data));
+      print(123123);
+
+      // setState(() {
+      //   _falValues =
+      //       data.map((item) => (item['value'] ?? 0.0) as double).toList();
+      // });
 
       return data;
     } else {
@@ -151,12 +155,13 @@ class _Chart133State extends State<Chart133> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "F.Al.(Point) Chart",
                     style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                          fontSize: 14, // Set your desired font size here
+                          fontSize: 20,
+                          color: Colors.black, // Set your desired color here
                         ),
                   ),
                 ],
@@ -245,11 +250,12 @@ class _Chart13State extends State<Chart13> {
           return Column(
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text("Temp.(°C) Chart",
                       style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                            fontSize: 14,
+                            fontSize: 20,
+                            color: Colors.black,
                           )),
                 ],
               ),
@@ -333,11 +339,12 @@ class Chart21 extends StatelessWidget {
     return Column(
       children: [
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text("Feed Chart",
                 style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontSize: 14,
+                      fontSize: 20,
+                      color: Colors.black,
                     )),
           ],
         ),
@@ -427,7 +434,11 @@ class SimpleBarChart extends StatelessWidget {
       ],
       animate: true,
       behaviors: [
-        charts.SeriesLegend(),
+        charts.SeriesLegend(
+          entryTextStyle: charts.TextStyleSpec(
+            color: charts.ColorUtil.fromDartColor(Colors.black),
+          ),
+        ),
         charts.LinePointHighlighter(
           showHorizontalFollowLine:
               charts.LinePointHighlighterFollowLineType.none,
@@ -448,14 +459,14 @@ class SimpleBarChart extends StatelessWidget {
       primaryMeasureAxis: charts.NumericAxisSpec(
         renderSpec: charts.GridlineRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Colors.white),
+            color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
         ),
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
           labelStyle: charts.TextStyleSpec(
-            color: charts.ColorUtil.fromDartColor(Colors.white),
+            color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
         ),
       ),
