@@ -24,7 +24,11 @@ class FeedHistory extends StatelessWidget {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
-        title: Text("Feed History"),
+        title: Text("Feed History", style: TextStyle(color: Colors.black)),
+        backgroundColor:
+            Colors.white, // Optional: To make the AppBar background white
+        iconTheme: IconThemeData(
+            color: Colors.black), // Change the color of the leading icon
       ),
       body: FeedHistoryBody(),
     );
@@ -120,11 +124,14 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
               leading: Icon(
                 Icons.heat_pump,
                 size: 36.0,
-                color: Colors.white,
+                color: Colors.blue,
               ),
               title: Text(
                 'Feed History : Dashboard',
-                style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                style: TextStyle(
+                    fontSize: 18.0,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black),
               ),
             ),
             // Dropdown for filtering by tank value
@@ -137,13 +144,33 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                     selectedTank = newValue!;
                   });
                 },
-                items: <String>['', '1', '2'] // Add other tank values here
+                items: <String>[
+                  '',
+                  '1',
+                  '2',
+                  '3',
+                  '4',
+                  '5',
+                  '6',
+                  '7',
+                  '8',
+                  '9',
+                  '10',
+                  '11',
+                  '12',
+                  '13',
+                  '14'
+                ] // Add other tank values here
                     .map<DropdownMenuItem<String>>((String value) {
                   return DropdownMenuItem<String>(
                     value: value,
-                    child: Text('Tank $value'),
+                    child: Text('Tank $value',
+                        style: TextStyle(color: Colors.black)),
                   );
                 }).toList(),
+                dropdownColor:
+                    Colors.white, // Set dropdown background color to white
+                style: TextStyle(color: Colors.black),
               ),
             ),
             Row(
@@ -166,9 +193,13 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         .map<DropdownMenuItem<String>>((String? value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value ?? 'All'),
+                        child: Text(value ?? 'All',
+                            style: TextStyle(color: Colors.black)),
                       );
                     }).toList(),
+                    dropdownColor:
+                        Colors.white, // Set dropdown background color to white
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
                 // Dropdown for selecting month
@@ -199,9 +230,13 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         .map<DropdownMenuItem<String>>((String? value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value ?? 'All'),
+                        child: Text(value ?? 'All',
+                            style: TextStyle(color: Colors.black)),
                       );
                     }).toList(),
+                    dropdownColor:
+                        Colors.white, // Set dropdown background color to white
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
                 // Dropdown for selecting day
@@ -251,9 +286,13 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         .map<DropdownMenuItem<String>>((String? value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value ?? 'All'),
+                        child: Text(value ?? 'All',
+                            style: TextStyle(color: Colors.black)),
                       );
                     }).toList(),
+                    dropdownColor:
+                        Colors.white, // Set dropdown background color to white
+                    style: TextStyle(color: Colors.black),
                   ),
                 ),
               ],
@@ -264,30 +303,46 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                   primary: false,
                   child: DataTable(
                     columns: [
-                      DataColumn(label: Text('Tank')),
-                      DataColumn(label: Text('Detail')),
-                      DataColumn(label: Text('Lot')),
-                      DataColumn(label: Text('Name')),
-                      DataColumn(label: Text('Value(Kg)')),
-                      DataColumn(label: Text('Date')),
-                      DataColumn(label: Text('Time')),
+                      DataColumn(
+                          label: Text('Tank',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Detail',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Lot',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Name',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Value(Kg)',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Date',
+                              style: TextStyle(color: Colors.black))),
+                      DataColumn(
+                          label: Text('Time',
+                              style: TextStyle(color: Colors.black))),
                     ],
                     rows: List<DataRow>.generate(filteredData.length, (index) {
                       return DataRow(
                         cells: [
-                          DataCell(
-                              Text(filteredData[index]['tank'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['detail'].toString())),
-                          DataCell(Text(filteredData[index]['lot'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['name'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['value'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['date'].toString())),
-                          DataCell(
-                              Text(filteredData[index]['time'].toString())),
+                          DataCell(Text(filteredData[index]['tank'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(
+                              filteredData[index]['detail'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(filteredData[index]['lot'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(filteredData[index]['name'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(filteredData[index]['value'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(filteredData[index]['date'].toString(),
+                              style: TextStyle(color: Colors.black))),
+                          DataCell(Text(filteredData[index]['time'].toString(),
+                              style: TextStyle(color: Colors.black))),
                         ],
                       );
                     }),

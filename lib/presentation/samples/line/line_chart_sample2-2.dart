@@ -32,11 +32,11 @@ class _LineChartSample23State extends State<LineChartSample23> {
           aspectRatio: 1.40,
           child: Padding(
             padding: const EdgeInsets.only(
-                // right: 18,
-                // left: 12,
-                // top: 24,
-                // bottom: 12,
-                ),
+              // right: 18,
+              // left: 12,
+              // top: 24,
+              // bottom: 12,
+            ),
             child: LineChart(
               showAvg ? avgData() : mainData(),
             ),

@@ -292,7 +292,7 @@ class _BarChartBodyState extends State<BarChartBody> {
 
   Future<void> fetchData() async {
     final response = await http.post(
-      Uri.parse('http://172.23.10.51:1111/chem-feed91'),
+      Uri.parse('http://172.23.10.51:1111/chem-feed101'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -343,7 +343,7 @@ class SimpleBarChart extends StatelessWidget {
           },
         )
       ],
-     animate: true,
+      animate: true,
       behaviors: [
         charts.SeriesLegend(
           entryTextStyle: charts.TextStyleSpec(
@@ -384,7 +384,6 @@ class SimpleBarChart extends StatelessWidget {
     );
   }
 }
-
 
 class ChartData {
   final String date;

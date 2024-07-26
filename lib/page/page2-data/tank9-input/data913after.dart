@@ -150,14 +150,15 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
             readOnly: true,
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
     );
   }
-
   Widget buildTableCell(String label, TextEditingController controller) {
     return TableCell(
       child: Padding(
@@ -174,8 +175,10 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
             },
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),

@@ -30,14 +30,20 @@ class SideMenu extends StatelessWidget {
         "title": "Dashboard",
         "svgSrc": "assets/icons/menu_dashboard.svg",
         "page": Page01(),
-        "accessLevel": 5
-      },
-      {
-        "title": "Production Monitor",
-        "svgSrc": "assets/icons/menu_monitor.svg",
-        "page": Page00(),
         "accessLevel": 2
       },
+      {
+        "title": "Dashboard",
+        "svgSrc": "assets/icons/menu_dashboard.svg",
+        "page": Page01(),
+        "accessLevel": 5
+      },
+      // {
+      //   "title": "Production Monitor",
+      //   "svgSrc": "assets/icons/menu_monitor.svg",
+      //   "page": Page00(),
+      //   "accessLevel": 2
+      // },
       {
         "title": "Data Input",
         "svgSrc": "assets/icons/menu_tran.svg",
@@ -62,12 +68,12 @@ class SideMenu extends StatelessWidget {
         "page": Page01(),
         "accessLevel": 9
       },
-      {
-        "title": "Production Monitor",
-        "svgSrc": "assets/icons/menu_monitor.svg",
-        "page": Page00(),
-        "accessLevel": 9
-      },
+      // {
+      //   "title": "Production Monitor",
+      //   "svgSrc": "assets/icons/menu_monitor.svg",
+      //   "page": Page00(),
+      //   "accessLevel": 9
+      // },
       {
         "title": "Data Input",
         "svgSrc": "assets/icons/menu_tran.svg",

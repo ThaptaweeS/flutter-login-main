@@ -138,8 +138,10 @@ class _Tank101BeforePageState extends State<Tank101BeforePage> {
             readOnly: true, // Set readOnly to true
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -163,8 +165,10 @@ class _Tank101BeforePageState extends State<Tank101BeforePage> {
             },
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -451,14 +455,16 @@ class _Tank101BeforePageState extends State<Tank101BeforePage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : '', style: TextStyle(color: Colors.black)),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : '', style: TextStyle(color: Colors.black)),
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
       ],

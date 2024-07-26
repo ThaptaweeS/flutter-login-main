@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/models/MyFiles.dart';
@@ -95,19 +96,22 @@ class _MyFilesState extends State<MyFiles> {
         Responsive(
           mobile: FileInfoCardGridView(
             taptap: widget.taptaptap,
-            crossAxisCount: _size.width < 650 ? 2 : 4,
-            childAspectRatio: _size.width < 650 && _size.width > 350 ? 1.3 : 1,
+            crossAxisCount: 2,
+            childAspectRatio: _size.width < 350 ? 1 : 1.3,
             visibilityStates: _visibilityStates,
             toggleVisibility: _toggleVisibility,
           ),
           tablet: FileInfoCardGridView(
             taptap: widget.taptaptap,
+            crossAxisCount: 4,
+            childAspectRatio: 1.4,
             visibilityStates: _visibilityStates,
             toggleVisibility: _toggleVisibility,
           ),
           desktop: FileInfoCardGridView(
             taptap: widget.taptaptap,
-            childAspectRatio: _size.width < 1400 ? 1.1 : 1.4,
+            crossAxisCount: 6,
+            childAspectRatio: 1.5,
             visibilityStates: _visibilityStates,
             toggleVisibility: _toggleVisibility,
           ),
@@ -126,8 +130,8 @@ class _MyFilesState extends State<MyFiles> {
 class FileInfoCardGridView extends StatelessWidget {
   FileInfoCardGridView({
     Key? key,
-    this.crossAxisCount = 7,
-    this.childAspectRatio = 1,
+    required this.crossAxisCount,
+    required this.childAspectRatio,
     this.taptap,
     required this.visibilityStates,
     required this.toggleVisibility,
@@ -160,6 +164,7 @@ class FileInfoCardGridView extends StatelessWidget {
             }),
           ),
         ),
+        SizedBox(height: defaultPadding),
         GridView.builder(
           physics: NeverScrollableScrollPhysics(),
           shrinkWrap: true,
@@ -180,6 +185,7 @@ class FileInfoCardGridView extends StatelessWidget {
                   }
                 },
                 child: Container(
+                  // ลบความสูงที่กำหนดไว้เพื่อให้การ์ดมีความสูงแบบไดนามิก
                   padding: const EdgeInsets.all(defaultPadding),
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -221,12 +227,136 @@ class FileInfoCardGridView extends StatelessWidget {
                           color: Colors.black,
                         ),
                       ),
+                      if (demoMyFiles[index].falValue != null &&
+                          demoMyFiles[index].tempValue != null)
+                        Column(
+                          children: [
+                            SizedBox(height: defaultPadding),
+                            SizedBox(
+                              height: 100,
+                              width: double.infinity,
+                              child: PieChart(
+                                PieChartData(
+                                  sections: [
+                                    PieChartSectionData(
+                                      value: demoMyFiles[index].falValue,
+                                      title:
+                                          '${demoMyFiles[index].falValue} Point',
+                                      color: Colors.lightBlueAccent,
+                                      titleStyle: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    PieChartSectionData(
+                                      value: demoMyFiles[index].tempValue,
+                                      title:
+                                          '${demoMyFiles[index].tempValue} °C',
+                                      color: Colors.greenAccent,
+                                      titleStyle: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 20,
+                                  borderData: FlBorderData(show: false),
+                                  pieTouchData: PieTouchData(enabled: false),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: defaultPadding),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildLegendItem(
+                                    Colors.lightBlueAccent, 'FAL Value'),
+                                SizedBox(height: 5),
+                                _buildLegendItem(
+                                    Colors.greenAccent, 'Temperature Value'),
+                              ],
+                            ),
+                          ],
+                        ),
+                      if (demoMyFiles[index].feValue != null &&
+                          demoMyFiles[index].conValue != null)
+                        Column(
+                          children: [
+                            SizedBox(height: defaultPadding),
+                            SizedBox(
+                              height: 100,
+                              width: double.infinity,
+                              child: PieChart(
+                                PieChartData(
+                                  sections: [
+                                    PieChartSectionData(
+                                      value: demoMyFiles[index].feValue,
+                                      title:
+                                          '${demoMyFiles[index].feValue} Point',
+                                      color: Colors.redAccent,
+                                      titleStyle: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                    PieChartSectionData(
+                                      value: demoMyFiles[index].conValue,
+                                      title:
+                                          '${demoMyFiles[index].conValue} °C',
+                                      color: Colors.orangeAccent,
+                                      titleStyle: TextStyle(
+                                        fontSize: 10,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.black,
+                                      ),
+                                    ),
+                                  ],
+                                  sectionsSpace: 0,
+                                  centerSpaceRadius: 20,
+                                  borderData: FlBorderData(show: false),
+                                  pieTouchData: PieTouchData(enabled: false),
+                                ),
+                              ),
+                            ),
+                            SizedBox(height: defaultPadding),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                _buildLegendItem(Colors.redAccent, 'Fe Value'),
+                                SizedBox(height: 5),
+                                _buildLegendItem(
+                                    Colors.orangeAccent, 'Concentration Value'),
+                              ],
+                            ),
+                          ],
+                        ),
                     ],
                   ),
                 ),
               ),
             );
           },
+        ),
+      ],
+    );
+  }
+
+  Widget _buildLegendItem(Color color, String text) {
+    return Row(
+      children: [
+        Container(
+          width: 10,
+          height: 10,
+          color: color,
+        ),
+        SizedBox(width: 5),
+        Text(
+          text,
+          style: TextStyle(fontSize: 12, color: Colors.black),
         ),
       ],
     );

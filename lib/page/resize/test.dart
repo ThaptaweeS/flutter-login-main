@@ -1,7 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:auto_size_widget/auto_size_widget.dart';
-import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
-
+import 'package:flutter/material.dart';
 
 class AutoSizeWidgetExample extends StatelessWidget {
   const AutoSizeWidgetExample({Key? key});
@@ -10,7 +8,6 @@ class AutoSizeWidgetExample extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-  
         body: Padding(
           padding: const EdgeInsets.all(8.0),
           child: SingleChildScrollView(

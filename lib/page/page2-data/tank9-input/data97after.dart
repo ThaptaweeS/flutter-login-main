@@ -148,16 +148,17 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
             controller: ARController,
             keyboardType: TextInputType.number,
             readOnly: true,
-            decoration: InputDecoration(
+           decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
     );
   }
-
   Widget buildTableCell(String label, TextEditingController controller) {
     return TableCell(
       child: Padding(
@@ -172,10 +173,12 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
                 updateARValue();
               }
             },
-            decoration: InputDecoration(
+          decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),

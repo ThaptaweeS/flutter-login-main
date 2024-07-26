@@ -136,10 +136,12 @@ class _Tank1013BeforePageState extends State<Tank1013BeforePage> {
             controller: ARController,
             keyboardType: TextInputType.number,
             readOnly: true, // Set readOnly to true
-            decoration: InputDecoration(
+           decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -163,8 +165,10 @@ class _Tank1013BeforePageState extends State<Tank1013BeforePage> {
             },
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),

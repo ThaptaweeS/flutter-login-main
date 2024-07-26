@@ -3,9 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../data/global.dart';
 import '../../page/page0.dart';
-import '../../page/page00.dart';
 import '../../page/page01.dart';
-
 import '../../widget/menu/side_menu.dart';
 import '../cubit/NotificationEvent.dart';
 //-------------------------------------------------
@@ -27,10 +25,10 @@ class ChangePage_Bloc extends Bloc<ChangePage_Event, Widget> {
   }
 
   static Widget _getInitialPage() {
-    if (USERDATA.UserLV >= 3) {
-      return  Page01body();
+    if (USERDATA.UserLV >= 2) {
+      return Page01body();
     } else {
-      return  Page00body();
+      return Page01body();
     }
   }
 

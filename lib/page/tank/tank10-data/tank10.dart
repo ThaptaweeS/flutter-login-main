@@ -44,6 +44,8 @@ class Tank10Body extends StatefulWidget {
 }
 
 class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
+  OverlayEntry? _overlayEntry;
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -140,9 +142,14 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
                         ),
                         ElevatedButton.icon(
                           onPressed: () {
-                            CuPage = Page02Autobody();
-                            MainBodyContext.read<ChangePage_Bloc>()
-                                .add(ChangePage_nodrower());
+                            if (USERDATA.UserLV >= 3) {
+                              CuPage = Page02Autobody();
+                              MainBodyContext.read<ChangePage_Bloc>()
+                                  .add(ChangePage_nodrower());
+                            } else {
+                              _showStatusNotification(
+                                  context, "Error", "No have permission");
+                            }
                           },
                           icon: Icon(Icons.add_to_photos_outlined),
                           label: Text('Data Input'),
@@ -205,27 +212,104 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
       ),
     );
   }
-}
 
-void _showTextPopup(BuildContext context) {
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return AlertDialog(
-        title: Text('Detail'),
-        content: Text(
-            // 'Process : Fine Cleaner \nTank Capacity : 6000 Litters \nChemicals : FC-4360 \n:: Replenishing :: \nFC-4360= 6.6 kgs./1 pt\n FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day ',
-            '',
-            style: TextStyle(fontSize: 13.0)),
-        actions: [
-          TextButton(
-            onPressed: () {
-              Navigator.of(context).pop();
-            },
-            child: Text('OK'),
+  void _showTextPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Detail'),
+          content: Text(
+              // 'Process : Fine Cleaner \nTank Capacity : 6000 Litters \nChemicals : FC-4360 \n:: Replenishing :: \nFC-4360= 6.6 kgs./1 pt\n FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day ',
+              '',
+              style: TextStyle(fontSize: 13.0)),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void _showStatusNotification(
+      BuildContext context, String title, String message) {
+    final TextStyle costomtext = const TextStyle(
+      color: Colors.black87,
+      fontSize: 12,
+      fontFamily: 'Mitr',
+    );
+
+    final Icon _ShowIconStatus = Icon(
+      Icons.error,
+      color: Colors.red,
+      size: 24,
+    );
+
+    final Text _ShowMsg_status_notification = Text(title,
+        style: TextStyle(
+            fontWeight: FontWeight.bold,
+            color: Colors.red,
+            fontFamily: 'Mitr'));
+
+    final SizedBox _ShowMsg_Expand = SizedBox(
+      child: SizedBox(
+        child: Text(message, style: costomtext),
+        width: 267,
+      ),
+    );
+
+    final overlay = Overlay.of(context);
+    final overlayEntry = OverlayEntry(
+      builder: (context) => Positioned(
+        top: 50,
+        right: 20,
+        child: Material(
+          color: Colors.transparent,
+          child: Container(
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+            decoration: BoxDecoration(
+              color: Color.fromARGB(255, 255, 235, 238),
+              borderRadius: BorderRadius.circular(10),
+              border: Border.all(color: Colors.red, width: 2),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.1),
+                  spreadRadius: 5,
+                  blurRadius: 7,
+                  offset: Offset(0, 3),
+                ),
+              ],
+            ),
+            child: IntrinsicWidth(
+              child: Row(
+                children: [
+                  _ShowIconStatus,
+                  SizedBox(width: 8),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _ShowMsg_status_notification,
+                      _ShowMsg_Expand,
+                    ],
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
           ),
-        ],
-      );
-    },
-  );
+        ),
+      ),
+    );
+
+    overlay?.insert(overlayEntry);
+
+    Future.delayed(Duration(seconds: 3), () {
+      overlayEntry.remove();
+    });
+  }
 }

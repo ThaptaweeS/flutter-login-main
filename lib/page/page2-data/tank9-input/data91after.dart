@@ -163,8 +163,10 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
             readOnly: true, // Set readOnly to true
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),
@@ -188,8 +190,10 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
             },
             decoration: InputDecoration(
               labelText: label,
+              labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
             ),
+            style: TextStyle(color: Colors.black),
           ),
         ),
       ),

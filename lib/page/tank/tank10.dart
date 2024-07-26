@@ -28,62 +28,73 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: [
-            Text(
-              'Tank10 : Zinc Phosphate(PB-181X)',
-              style: TextStyle(fontSize: 20, color: Colors.black),
-            ),
-            SizedBox(height: 10),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Container(
-                  width: 300, // Set the width of the TextField
-                  child: Padding(
-                    padding: const EdgeInsets.all(16.0),
-                    child: TextField(
-                      controller: roundFilterController,
-                      decoration: InputDecoration(
-                        prefixIcon: Icon(Icons.filter_list),
-                        suffixIcon: Icon(Icons.clear),
-                        labelText: 'Filter',
-                        hintText: 'Enter detail',
-                        filled: true,
-                        fillColor: Colors.black12,
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.white, Colors.blue[100]!],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                'Tank10 : Zinc Phosphate(PB-181X)',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 300,
+                    child: Padding(
+                      padding: const EdgeInsets.all(16.0),
+                      child: TextField(
+                        controller: roundFilterController,
+                        decoration: InputDecoration(
+                          prefixIcon: Icon(Icons.filter_list),
+                          suffixIcon: IconButton(
+                            icon: Icon(Icons.clear),
+                            onPressed: () {
+                              roundFilterController.clear();
+                              setState(() {});
+                            },
+                          ),
+                          labelText: 'Filter',
+                          hintText: 'Enter detail',
+                          filled: true,
+                          fillColor: Colors.black12,
+                        ),
+                        onChanged: (value) {
+                          setState(() {});
+                        },
+                        style: TextStyle(color: Colors.black),
                       ),
-                      onChanged: (value) {
-                        setState(() {
-                          // Update the UI when the filter text changes
-                        });
-                      },
-                      style: TextStyle(
-                          color: Colors.black), // Set the text color to black
                     ),
                   ),
-                ),
-                SizedBox(width: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    // Add your export to CSV logic here
-                  },
-                  child: Text('Export to Excel'),
-                ),
-              ],
-            ),
-            SizedBox(height: 10),
-            buildTable2(), // Your table widget
-          ],
+                  SizedBox(width: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      // Add your export to CSV logic here
+                    },
+                    child: Text('Export to Excel'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              buildTable2(),
+            ],
+          ),
         ),
       ),
     );
   }
 
   Widget buildTable2() {
-    // Filter the table data based on the entered round number
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
       String round = roundFilterController.text.toLowerCase();
       return data['detail'].toString().toLowerCase().contains(round);
@@ -92,7 +103,6 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
     return Column(
       children: [
         SizedBox(height: 10),
-        // Display the filtered table data
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
@@ -159,7 +169,6 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
                         ))),
               ],
             ),
-            // Map each data entry to a TableRow widget
             ...filteredData.map((data) => buildTableRow2(
                 data['round'],
                 data['data'],
@@ -176,7 +185,6 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
 
   TableRow buildTableRow2(String? round, String? data, String? detail,
       String? value, String? username, String? time, String? date) {
-    // Define date and time format
     final dateFormat = DateFormat('dd-MM-yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
 
@@ -185,45 +193,64 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? '', style: TextStyle(color: Colors.black),),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(data ?? '', style: TextStyle(color: Colors.black),),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? '', style: TextStyle(color: Colors.black),),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? '', style: TextStyle(color: Colors.black),),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? '', style: TextStyle(color: Colors.black),),
+            child: Text(
+              round ?? '',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : '', style: TextStyle(color: Colors.black),),
+              data ?? '',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : '', style: TextStyle(color: Colors.black),),
+              detail ?? '',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              value ?? '',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              username ?? '',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              time != null ? timeFormat.format(DateTime.parse(time)) : '',
+              style: TextStyle(color: Colors.black),
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              date != null ? dateFormat.format(DateTime.parse(date)) : '',
+              style: TextStyle(color: Colors.black),
+            ),
           ),
         ),
       ],
@@ -250,7 +277,6 @@ class _Tank10BodyPageState extends State<Tank10BodyPage> {
             .toList();
       });
     } else {
-      // Handle error
       showDialog(
         context: context,
         builder: (BuildContext context) {

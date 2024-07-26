@@ -33,6 +33,10 @@ class P1DASHBOARDMAIN extends StatefulWidget {
 
 class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   late Timer _timer;
+  double falValue = 0;
+  double tempValue = 0;
+  double feValue = 0;
+  double conValue = 0;
 
   @override
   void initState() {
@@ -52,11 +56,6 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   void _toggleVisibility(int id) {
     setState(() {
       visibilityStates[id] = !visibilityStates[id]!;
-      void _toggleVisibility(int id) {
-        setState(() {
-          visibilityStates[id] = !visibilityStates[id]!;
-        });
-      }
     });
   }
 
@@ -65,6 +64,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
       case 1:
         CuPage = Tank1();
         P3TANKMASTERvar.SelectPage = 3;
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 2:
         CuPage = Tank1();
@@ -73,9 +73,11 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
         break;
       case 3:
         CuPage = Tank3();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 4:
         CuPage = Tank4();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 5:
         CuPage = Tank5();
@@ -84,9 +86,11 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
         break;
       case 6:
         CuPage = Tank6();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 7:
         CuPage = Tank7();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 8:
         CuPage = Tank8();
@@ -105,24 +109,26 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
         break;
       case 11:
         CuPage = Tank11();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 12:
         CuPage = Tank12();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 13:
-        CuPage = Tank13(); // Example page
+        CuPage = Tank13();
         P3TANKMASTERvar.SelectPage = 12;
         MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       case 14:
-        CuPage = Tank14(); // Example page
+        CuPage = Tank14();
         P3TANKMASTERvar.SelectPage = 13;
         MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
         break;
       default:
         CuPage = P1DASHBOARDMAIN();
+        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
     }
-    MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
   }
 
   @override
@@ -135,9 +141,12 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
 
     return SafeArea(
       child: Scaffold(
-        backgroundColor: Colors.transparent,
         appBar: AppBar(
-          title: const Text('Chemical Control Monitoring'),
+          shadowColor: Colors.transparent,
+          backgroundColor: Colors.white,
+          title: Center(
+            child: const Text('Dashboard'),
+          ),
           actions: [
             IconButton(
               icon: Icon(Icons.settings),
@@ -149,15 +158,18 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
           height: MediaQuery.of(context).size.height,
           decoration: BoxDecoration(
             gradient: LinearGradient(
-              colors: [Colors.white, Colors.blue[100]!],
+              colors: [Colors.blue[100]!, Colors.white],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
           ),
           child: LayoutBuilder(
             builder: (context, constraints) {
-              int crossAxisCount = (constraints.maxWidth / 200)
-                  .floor(); // Adjust the item width as needed
+              int crossAxisCount = (constraints.maxWidth / 200).floor();
+              double cardWidth =
+                  constraints.maxWidth / crossAxisCount - defaultPadding;
+              double cardHeight = 350; // Set a fixed height or adjust as needed
+
               return SingleChildScrollView(
                 padding: const EdgeInsets.all(defaultPadding),
                 child: Column(
@@ -172,16 +184,27 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                         crossAxisCount: crossAxisCount,
                         crossAxisSpacing: defaultPadding,
                         mainAxisSpacing: defaultPadding,
-                        childAspectRatio:
-                            1, // Adjust the aspect ratio as needed
+                        childAspectRatio: cardWidth / cardHeight,
                       ),
                       itemBuilder: (context, index) {
                         int id = visibleKeys[index];
                         return FileInfoCard(
                           info: demoMyFiles[id - 1],
                           onTap: () => _navigateToTank(id),
+                          width: cardWidth,
+                          height: cardHeight,
                         );
                       },
+                    ),
+                    SizedBox(height: defaultPadding),
+                    Container(
+                      // height: 250,
+                      alignment: Alignment.bottomCenter,
+                      color: Colors.transparent,
+                      child: Image.asset(
+                        "assets/images/city5_photoroom.png",
+                        fit: BoxFit.fill,
+                      ),
                     ),
                   ],
                 ),
@@ -202,8 +225,8 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Toggle Tanks Visibility',
-              style: TextStyle(color: Colors.black)),
+          title:
+              Text('Tanks Visibility', style: TextStyle(color: Colors.black)),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -217,7 +240,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                         onChanged: (bool value) {
                           _toggleVisibility(id);
                           Navigator.of(context).pop();
-                          _showSettingsDialog(context); // Refresh dialog
+                          _showSettingsDialog(context);
                         },
                       ),
                     ],
