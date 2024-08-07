@@ -22,6 +22,7 @@ class Tank8 extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
+          backgroundColor: Colors.blue[100],
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -50,7 +51,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank8Body> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue[100]!],
+          colors: [Colors.blue[100]!, Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),

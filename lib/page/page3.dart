@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'P3TANKMASTER/P3TANKMASTERmain.dart';
-import 'tank/tank1-backup.dart';
-import 'tank/tank2.dart';
 
 int _SelectPage = 0;
 
@@ -26,5 +24,5 @@ class _Page3BodyState extends State<Page3Body> {
   @override
   Widget build(BuildContext context) {
     return P3TANKMASTERMAIN();
-}
+  }
 }

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newmaster/page/page2-data/feed-history.dart';
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../data/global.dart';
 import '../../mainBody.dart';
-import '../../page/page00.dart';
 import '../../page/page01.dart';
 import '../../page/page02.dart';
 import '../../page/page2-data/manual-process-user.dart';
@@ -81,8 +81,9 @@ class SideMenu extends StatelessWidget {
         "accessLevel": 9
       },
       {
-        "title": "Task",
+        "title": "Data History",
         "svgSrc": "assets/icons/menu_task.svg",
+        // "page": (),
         "page": Page3(),
         "accessLevel": 9
       },
@@ -93,17 +94,36 @@ class SideMenu extends StatelessWidget {
         "accessLevel": 9
       },
       {
+        "title": "Feed History",
+        "svgSrc": "assets/icons/pump.svg",
+        "page": FeedHistory(),
+        "accessLevel": 2
+      },
+      {
+        "title": "Feed History",
+        "svgSrc": "assets/icons/pump.svg",
+        "page": FeedHistory(),
+        "accessLevel": 5
+      },
+      {
+        "title": "Feed History",
+        "svgSrc": "assets/icons/pump.svg",
+        "page": FeedHistory(),
+        "accessLevel": 9
+      },
+      {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
         "page": PasswordSettingPage(),
         "accessLevel": 9
       },
-      {
-        "title": "Notification",
-        "svgSrc": "assets/icons/menu_notification.svg",
-        "page": null,
-        "accessLevel": [2, 5, 9]
-      },
+      // {
+      //   "title": "Feed History",
+      //   "svgSrc": "assets/icons/menu_notification.svg",
+      //   "page": FeedHistory,
+      //   "accessLevel": [2, 5, 9]
+      // },
+
       {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
@@ -184,7 +204,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Version : 1.0.7\nDate modify : 2024-July-15',
+                'Version : 1.0.8\nDate modify : 2024-August-10',
                 style: TextStyle(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),

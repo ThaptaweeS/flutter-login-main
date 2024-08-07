@@ -21,18 +21,18 @@ class Tank1 extends StatelessWidget {
     Tank1Context = context;
 
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              CuPage = P1DASHBOARDMAIN();
-              MainBodyContext.read<ChangePage_Bloc>()
-                  .add(ChangePage_nodrower());
-            },
-          ),
+      appBar: AppBar(
+        backgroundColor: Colors.blue[100],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back),
+          onPressed: () {
+            CuPage = P1DASHBOARDMAIN();
+            MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
+          },
         ),
-        body: Tank1Body());
+      ),
+      body: Tank1Body(),
+    );
   }
 }
 
@@ -40,25 +40,26 @@ class Tank1Body extends StatefulWidget {
   const Tank1Body({super.key});
 
   @override
-  State<Tank1Body> createState() => _P1DASHBOARDMAINState2();
+  State<Tank1Body> createState() => _Tank1BodyState();
 }
 
-class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
+class _Tank1BodyState extends State<Tank1Body> {
   OverlayEntry? _overlayEntry;
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue[100]!],
+          colors: [Colors.blue[100]!, Colors.white],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-      ), // Set the background color to white
+      ),
       child: SafeArea(
         child: SingleChildScrollView(
-          primary: false,
           padding: EdgeInsets.all(defaultPadding),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,9 +77,10 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
                   title: Text(
                     'Degreasing (6000L) : Dashboard',
                     style: TextStyle(
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
+                      fontSize: 18.0,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
               ),
@@ -120,9 +122,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(
-                          height: 140,
-                        ),
+                        SizedBox(height: 140),
                         ElevatedButton.icon(
                           onPressed: () {
                             if (USERDATA.UserLV >= 3) {
@@ -131,7 +131,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
                                   .add(ChangePage_nodrower());
                             } else {
                               _showStatusNotification(
-                                  context, "Error", "No have permission");
+                                  context, "Error", "No permission");
                             }
                           },
                           icon: Icon(Icons.add_to_photos_outlined),
@@ -139,13 +139,10 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Color.fromARGB(255, 175, 184, 38),
-                            minimumSize:
-                                Size(120, 60), // Set the size of the button
+                            minimumSize: Size(120, 60),
                           ),
                         ),
-                        SizedBox(
-                          height: 25,
-                        ),
+                        SizedBox(height: 25),
                         ElevatedButton.icon(
                           onPressed: () {
                             CuPage = Tank2BodyPage();
@@ -157,8 +154,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
                           style: ElevatedButton.styleFrom(
                             foregroundColor: Colors.white,
                             backgroundColor: Color.fromARGB(255, 15, 161, 130),
-                            minimumSize:
-                                Size(120, 60), // Set the size of the button
+                            minimumSize: Size(120, 60),
                           ),
                         ),
                       ],
@@ -178,13 +174,13 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(
-            'Detail',
-            style: TextStyle(color: Colors.black),
-          ),
+          title: Text('Detail', style: TextStyle(color: Colors.black)),
           content: Text(
-              'Process : Fine Cleaner \nTank Capacity : 6000 Litters \nChemicals : FC-4360 \n:: Replenishing :: \nFC-4360= 6.6 kgs./1 pt\n FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day ',
-              style: TextStyle(fontSize: 13.0, color: Colors.black)),
+            'Process : Fine Cleaner\nTank Capacity : 6000 Liters\n'
+            'Chemicals : FC-4360\n:: Replenishing ::\nFC-4360= 6.6 kgs./1 pt\n'
+            'FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day',
+            style: TextStyle(fontSize: 13.0, color: Colors.black),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -200,44 +196,11 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
 
   void _showStatusNotification(
       BuildContext context, String title, String message) {
-    final TextStyle costomtext = const TextStyle(
+    final TextStyle customText = const TextStyle(
       color: Colors.black87,
       fontSize: 12,
       fontFamily: 'Mitr',
     );
-
-    final Icon _ShowIconStatus = Icon(
-      Icons.error,
-      color: Colors.red,
-      size: 24,
-    );
-
-    final Text _ShowMsg_status_notification = Text(title,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.red,
-            fontFamily: 'Mitr'));
-
-    final SizedBox _ShowMsg_Expand = SizedBox(
-      child: SizedBox(
-        child: Text(message, style: costomtext),
-        width: 267,
-      ),
-    );
-
-    // final IconButton _CloseIcon = IconButton(
-    //     mouseCursor: SystemMouseCursors.disappearing,
-    //     splashRadius: 20.0,
-    //     iconSize: 24,
-    //     padding: const EdgeInsets.all(0),
-    //     tooltip: "Close",
-    //     onPressed: () {
-    //       _overlayEntry?.remove();
-    //     },
-    //     icon: Icon(
-    //       Icons.close,
-    //       color: Colors.black,
-    //     ));
 
     final overlay = Overlay.of(context);
     _overlayEntry = OverlayEntry(
@@ -264,17 +227,21 @@ class _P1DASHBOARDMAINState2 extends State<Tank1Body> {
             child: IntrinsicWidth(
               child: Row(
                 children: [
-                  _ShowIconStatus,
+                  Icon(Icons.error, color: Colors.red, size: 24),
                   SizedBox(width: 8),
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _ShowMsg_status_notification,
-                      _ShowMsg_Expand,
+                      Text(title,
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: Colors.red,
+                              fontFamily: 'Mitr')),
+                      SizedBox(
+                          width: 267, child: Text(message, style: customText)),
                     ],
                   ),
                   Spacer(),
-                  // _CloseIcon,
                 ],
               ),
             ),

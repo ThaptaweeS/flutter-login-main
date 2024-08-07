@@ -1,11 +1,11 @@
 import 'dart:convert';
 
-import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/util/extensions/color_extensions.dart';
+import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/util/extensions/color_extensions.dart';
 
 class BarChartSample2 extends StatefulWidget {
   BarChartSample2({super.key});

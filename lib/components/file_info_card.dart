@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:newmaster/models/MyFiles.dart';
@@ -130,7 +131,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
               _buildPieChartSection2(
                 falValue: widget.info.falValue!,
                 tempValue: widget.info.tempValue!,
-                falColor: Colors.lightBlueAccent,
+                falColor: Colors.blueAccent,
                 tempColor: Colors.greenAccent,
                 falLabel: 'F.Al. Value',
                 tempLabel: 'Temp. Value',
@@ -240,43 +241,48 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tempLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
+        Align(
+          alignment: Alignment.topLeft, // Align to the left
+          child: Text(
+            'F.AL.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the content horizontally
           children: [
-            Text(
-              'F.AL. ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
+            Align(
+              alignment: Alignment.center, // Center alignment
+              child: Text(
+                '$falValue',
+                style: TextStyle(
+                    fontSize: 35,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.blueAccent),
               ),
             ),
-            SizedBox(width: 5),
-            Text(
-              '$falValue',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
-              ),
-            ),
-            SizedBox(width: 5),
-            Text(
-              ' Pt.',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.topRight, // Align to the left
+              child: Text(
+                'Pt.',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        // Additional widgets can be added here as needed, such as SizedBox or Tooltip.
       ],
     );
   }
@@ -290,33 +296,48 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String conLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
+        Align(
+          alignment: Alignment.topLeft, // Align to the left
+          child: Text(
+            'Con.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the content horizontally
           children: [
-            Text(
-              'Con. ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
+            Align(
+              alignment: Alignment.center, // Center alignment
+              child: Text(
+                '$conValue',
+                style: TextStyle(
+                    fontSize: 35,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.blueAccent),
               ),
             ),
-            Text(
-              '$conValue %',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.topRight, // Align to the left
+              child: Text(
+                '%',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        // Additional widgets can be added here as needed, such as SizedBox or Tooltip.
       ],
     );
   }
@@ -330,33 +351,38 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String phLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the content horizontally
-          children: [
-            Text(
-              'pH ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
+        Align(
+          alignment: Alignment.topLeft, // Align to the left
+          child: Text(
+            'pH',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
             ),
-            Text(
-              '$phValue',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+          ),
+        ),
+        SizedBox(height: 5),
+        Row(
+          children: [
+            // Spacer(), // Pushes content to the right
+            Align(
+              alignment: Alignment.center, // Right alignment within the Row
+              child: Text(
+                '$phValue'.toDouble().toStringAsFixed(1),
+                style: TextStyle(
+                    fontSize: 35,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.blueAccent),
               ),
             ),
           ],
         ),
-        // Additional widgets can be added here as needed, such as SizedBox or Tooltip.
       ],
     );
   }
@@ -379,80 +405,119 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tank9TempLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Center alignment for Column
       children: [
+        // F.AL. Section
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'T.A.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
           children: [
             Text(
-              'T.A. ',
+              '$taValue',
               style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
+                  fontSize: 35,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2
+                    ..color = Colors.blueAccent),
             ),
-            Text(
-              '$taValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Pt.',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
+        SizedBox(height: 10), // Space between sections
+
+        // A.R. Section
+        // Row(
+        //   children: [
+        //     Text(
+        //       'A.R.',
+        //       style: TextStyle(
+        //         fontSize: 10,
+        //         color: Color.fromARGB(255, 108, 108, 108),
+        //       ),
+        //     ),
+        //     SizedBox(width: 5),
+        //     Text(
+        //       '$arValue',
+        //       style: TextStyle(
+        //         fontSize: 35,
+        //         foreground: Paint()
+        //           ..style = PaintingStyle.stroke
+        //           ..strokeWidth = 2
+        //           ..color = arColor,
+        //       ),
+        //     ),
+        //     SizedBox(width: 5),
+        //     Text(
+        //       'Pt.',
+        //       style: TextStyle(
+        //         fontSize: 10,
+        //         color: Color.fromARGB(255, 108, 108, 108),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // SizedBox(height: 10), // Space between sections
+
+        // A.C. Section
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'A.C.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        // SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
           children: [
             Text(
-              'A.R. ',
+              '$acValue',
               style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
+                  fontSize: 35,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2
+                    ..color = Colors.blueAccent),
             ),
-            Text(
-              '$arValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Pt.',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
-          children: [
-            Text(
-              'A.C.  ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
-            ),
-            Text(
-              '$acValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
-              ),
-            ),
-          ],
-        ),
+        SizedBox(height: 10), // Space between sections
       ],
     );
   }
@@ -475,80 +540,84 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tank10TempLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Center alignment for Column
       children: [
+        // F.AL. Section
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'T.A.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
           children: [
             Text(
-              'T.A. ',
+              '$taValue',
               style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
+                  fontSize: 35,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2
+                    ..color = Colors.blueAccent),
             ),
-            Text(
-              '$taValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Pt.',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
+        SizedBox(height: 10), // Space between sections
+        Align(
+          alignment: Alignment.centerLeft,
+          child: Text(
+            'A.C.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        // SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
           children: [
             Text(
-              'A.R. ',
+              '$acValue',
               style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
+                  fontSize: 35,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 2
+                    ..color = Colors.blueAccent),
             ),
-            Text(
-              '$arValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.centerRight,
+              child: Text(
+                'Pt.',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        Row(
-          mainAxisAlignment:
-              MainAxisAlignment.start, // Center the content horizontally
-          children: [
-            Text(
-              'A.C.  ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
-              ),
-            ),
-            Text(
-              '$acValue Pt.',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
-              ),
-            ),
-          ],
-        ),
+        SizedBox(height: 10), // Space between sections
       ],
     );
   }
@@ -565,33 +634,48 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tank13TempLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
+        Align(
+          alignment: Alignment.topLeft, // Align to the left
+          child: Text(
+            'Con.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the content horizontally
           children: [
-            Text(
-              'Con. ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
+            Align(
+              alignment: Alignment.center, // Center alignment
+              child: Text(
+                '$conValue',
+                style: TextStyle(
+                    fontSize: 35,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.blueAccent),
               ),
             ),
-            Text(
-              '$conValue %',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.topRight, // Align to the left
+              child: Text(
+                '%',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        // Additional widgets can be added here as needed, such as SizedBox or Tooltip.
       ],
     );
   }
@@ -608,33 +692,48 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tank14TempLabel,
   }) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      crossAxisAlignment:
+          CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
+        Align(
+          alignment: Alignment.topLeft, // Align to the left
+          child: Text(
+            'Con.',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+        ),
+        SizedBox(height: 5),
         Row(
-          mainAxisAlignment:
-              MainAxisAlignment.center, // Center the content horizontally
           children: [
-            Text(
-              'Con. ',
-              style: TextStyle(
-                fontSize: 10,
-                color:
-                    const Color.fromARGB(255, 108, 108, 108), // Corrected line
+            Align(
+              alignment: Alignment.center, // Center alignment
+              child: Text(
+                '$conValue',
+                style: TextStyle(
+                    fontSize: 35,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 2
+                      ..color = Colors.blueAccent),
               ),
             ),
-            Text(
-              '$conValue %',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2
-                  ..color = const Color.fromARGB(255, 108, 108, 108),
+            SizedBox(width: 10),
+            Align(
+              alignment: Alignment.topRight, // Align to the left
+              child: Text(
+                '%',
+                style: TextStyle(
+                  fontSize: 10,
+                  color: Colors.black,
+                ),
               ),
             ),
           ],
         ),
-        // Additional widgets can be added here as needed, such as SizedBox or Tooltip.
       ],
     );
   }

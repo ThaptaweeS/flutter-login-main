@@ -42,42 +42,6 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        Positioned(
-          top: 60,
-          right: 50,
-          child: Text(
-            'USL: 80',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 360,
-          right: 50,
-          child: Text(
-            'LSL: 0',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        // Positioned(
-        //   top: 195,
-        //   right: 50,
-        //   child: Text(
-        //     'UCL: 33',
-        //     style: TextStyle(
-        //       color: Colors.yellow,
-        //       fontSize: 12,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -247,7 +211,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -428,39 +392,62 @@ class _LineChartSample23State extends State<LineChartSample23> {
         //   show: false,
         // ),
         // ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 0),
-            FlSpot(28, 0),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 80),
-            FlSpot(28, 80),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
       ],
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+            y: 80,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'USL: 80',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          ),
+          // HorizontalLine(
+          //   y: 12.5,
+          //   color: Colors.green,
+          //   strokeWidth: 1,
+          //   label: HorizontalLineLabel(
+          //     show: true,
+          //     alignment: Alignment.topRight,
+          //     labelResolver: (line) => 'UCL: 12.5',
+          //     style: TextStyle(
+          //       color: Colors.green,
+          //       fontSize: 10,
+          //       fontWeight: FontWeight.bold,
+          //     ),
+          //     padding: EdgeInsets.only(right: 10),
+          //   ),
+          //   // dashArray: [5, 5],
+          // ),
+          HorizontalLine(
+            y: 0,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'LSL: 0',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          )
+        ],
+      ),
     );
   }
 

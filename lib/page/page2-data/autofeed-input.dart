@@ -62,9 +62,17 @@ class Page02Autobody extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.access_time), // Set icon
+                    Icon(
+                      Icons.access_time,
+                      color: Colors.white,
+                    ), // Set icon
                     SizedBox(height: 10), // Add space between icon and text
-                    Text("01:00"),
+                    Text(
+                      "01:00",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -81,9 +89,17 @@ class Page02Autobody extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.timer), // Set icon
+                    Icon(
+                      Icons.timer,
+                      color: Colors.white,
+                    ), // Set icon
                     SizedBox(height: 10), // Add space between icon and text
-                    Text("07:00"),
+                    Text(
+                      "07:00",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -100,9 +116,17 @@ class Page02Autobody extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.alarm), // Set icon
+                    Icon(
+                      Icons.alarm,
+                      color: Colors.white,
+                    ), // Set icon
                     SizedBox(height: 10), // Add space between icon and text
-                    Text("13:00"),
+                    Text(
+                      "13:00",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -119,9 +143,17 @@ class Page02Autobody extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Icon(Icons.schedule), // Set icon
+                    Icon(
+                      Icons.schedule,
+                      color: Colors.white,
+                    ), // Set icon
                     SizedBox(height: 10), // Add space between icon and text
-                    Text("19:00"),
+                    Text(
+                      "19:00",
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
                   ],
                 ),
               ),

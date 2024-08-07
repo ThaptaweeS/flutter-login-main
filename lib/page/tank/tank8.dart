@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:html' as html;
 
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -10,18 +12,24 @@ class Tank8BodyPage extends StatefulWidget {
 }
 
 class _Tank8BodyPageState extends State<Tank8BodyPage> {
-  late TextEditingController ConController;
-  late TextEditingController FeController;
+  late TextEditingController talController;
+  late TextEditingController phController;
   late TextEditingController roundFilterController;
+  late TextEditingController startDateController;
+  late TextEditingController endDateController;
+
   late int roundValue;
   List<Map<String, dynamic>> tableData = [];
+  String? dropdownValue = '';
 
   @override
   void initState() {
     super.initState();
-    ConController = TextEditingController();
-    FeController = TextEditingController();
+    talController = TextEditingController();
+    phController = TextEditingController();
     roundFilterController = TextEditingController();
+    startDateController = TextEditingController();
+    endDateController = TextEditingController();
     roundValue = 1; // Set default value for roundValue
     fetchDataFromAPI();
   }
@@ -31,64 +39,91 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
     return Container(
       decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue[100]!],
+          colors: [Colors.blue[100]!, Colors.blue[100]!],
           begin: Alignment.topCenter,
           end: Alignment.bottomCenter,
         ),
-      ), // Set the background color to white and blue gradient
+      ),
       child: Center(
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
             children: [
               Text(
-                'Tank8 : Surface condition',
+                'Tank8 : Surface Condition(PL-ZN)',
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  _buildDateInputField('Start Date', startDateController),
+                  _buildDateInputField('End Date', endDateController),
                   Container(
-                    width: 300, // Set the width of the TextField
+                    width: 250,
                     child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: TextField(
-                        controller: roundFilterController,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.filter_list),
-                          suffixIcon: IconButton(
-                            icon: Icon(Icons.clear),
-                            onPressed: () {
-                              roundFilterController.clear();
-                              setState(() {});
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: dropdownValue,
+                            icon: Icon(Icons.arrow_drop_down),
+                            decoration: InputDecoration(
+                              labelText: 'Filter',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 12.0), // Adjust padding here
+                              labelStyle: TextStyle(color: Colors.black),
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
                             },
+                            items: <String>['', 'T.Al.', 'pH']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Colors.white,
                           ),
-                          labelText: 'Filter',
-                          hintText: 'Enter detail',
-                          filled: true,
-                          fillColor: Colors.black12,
-                        ),
-                        onChanged: (value) {
-                          setState(() {
-                            // Update the UI when the filter text changes
-                          });
-                        },
-                        style: TextStyle(color: Colors.black),
+                        ],
                       ),
                     ),
                   ),
-                  SizedBox(width: 10),
-                  ElevatedButton(
+                  ElevatedButton.icon(
                     onPressed: () {
-                      // Add your export to CSV logic here
+                      fetchDataFromAPI();
                     },
-                    child: Text('Export to Excel'),
+                    icon: Icon(Icons.search),
+                    label: Text('Search'),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(),
+                    onPressed: () {
+                      exportToExcel();
+                    },
+                    icon: Icon(Icons.save),
+                    label: Text('Export to Excel'),
                   ),
                 ],
               ),
               SizedBox(height: 10),
-              buildTable2(), // Your table widget
+              Expanded(
+                child: SingleChildScrollView(
+                  child: buildTable2(),
+                ),
+              ),
+              SizedBox(height: 16),
             ],
           ),
         ),
@@ -96,17 +131,52 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
     );
   }
 
+  Widget _buildDateInputField(String label, TextEditingController controller) {
+    return Container(
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: label,
+            hintText: 'YYYY-MM-DD',
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(),
+            labelStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: Colors.black),
+          ),
+          style: TextStyle(color: Colors.black),
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+            );
+            if (pickedDate != null) {
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd').format(pickedDate);
+              controller.text = formattedDate;
+            }
+          },
+        ),
+      ),
+    );
+  }
+
   Widget buildTable2() {
-    // Filter the table data based on the entered round number
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
-      String round = roundFilterController.text.toLowerCase();
-      return data['detail'].toString().toLowerCase().contains(round);
+      if (dropdownValue == null || dropdownValue!.isEmpty) {
+        return true; // No filter applied, return all data
+      }
+      return data['detail'].toString().toLowerCase() ==
+          dropdownValue!.toLowerCase();
     }).toList();
 
     return Column(
       children: [
-        SizedBox(height: 10),
-        // Display the filtered table data
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
@@ -122,58 +192,15 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
           children: [
             TableRow(
               children: [
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Round",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Data",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Detail",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Value",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Username",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Time",
-                          style: TextStyle(color: Colors.black),
-                        ))),
-                TableCell(
-                    child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          "Date",
-                          style: TextStyle(color: Colors.black),
-                        ))),
+                _buildTableCell("Round"),
+                _buildTableCell("Data"),
+                _buildTableCell("Detail"),
+                _buildTableCell("Value"),
+                _buildTableCell("Username"),
+                _buildTableCell("Time"),
+                _buildTableCell("Date"),
               ],
             ),
-            // Map each data entry to a TableRow widget
             ...filteredData.map((data) => buildTableRow2(
                 data['round'],
                 data['data'],
@@ -188,120 +215,137 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
     );
   }
 
+  TableCell _buildTableCell(String text) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
   TableRow buildTableRow2(String? round, String? data, String? detail,
       String? value, String? username, String? time, String? date) {
-    // Define date and time format
     final dateFormat = DateFormat('dd-MM-yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
 
     return TableRow(
       children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              round ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              detail ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              value ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              username ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              time != null ? timeFormat.format(DateTime.parse(time)) : '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              date != null ? dateFormat.format(DateTime.parse(date)) : '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
+        _buildTableCell(round ?? ''),
+        _buildTableCell(data ?? ''),
+        _buildTableCell(detail ?? ''),
+        _buildTableCell(value ?? ''),
+        _buildTableCell(username ?? ''),
+        _buildTableCell(
+            time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+        _buildTableCell(
+            date != null ? dateFormat.format(DateTime.parse(date)) : ''),
       ],
     );
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/Tank8task';
-    final response = await http.post(Uri.parse(url));
+    final url = 'http://172.23.10.51:1111/tank8task';
+    String startDate = startDateController.text;
+    String endDate = endDateController.text;
 
-    if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      setState(() {
-        tableData = decodedData
-            .map((entry) => {
-                  'round': entry['round'] ?? '',
-                  'data': entry['data'] ?? '',
-                  'detail': entry['detail'] ?? '',
-                  'value': entry['value']?.toString() ?? '',
-                  'Username': entry['username'] ?? '',
-                  'time': entry['time'] ?? '',
-                  'date': entry['date'] ?? '',
-                })
-            .toList();
-      });
-    } else {
-      // Handle error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
         },
+        body: jsonEncode(<String, String>{
+          'startDate': startDate,
+          'endDate': endDate,
+        }),
       );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedData = json.decode(response.body);
+        setState(() {
+          tableData = decodedData
+              .map((entry) => {
+                    'round': entry['round'] ?? '',
+                    'data': entry['data'] ?? '',
+                    'detail': entry['detail'] ?? '',
+                    'value': entry['value']?.toString() ?? '',
+                    'Username': entry['username'] ?? '',
+                    'time': entry['time'] ?? '',
+                    'date': entry['date'] ?? '',
+                  })
+              .toList();
+        });
+      } else {
+        _showErrorDialog(
+            'Failed to fetch data from the API. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      _showErrorDialog('Error fetching data: $e');
+    }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  void exportToExcel() async {
+    try {
+      var excel = Excel.createExcel();
+      Sheet sheet1 = excel['Sheet1'];
+
+      sheet1.appendRow(["Tank8: Surface Condition(PL-ZN)"]);
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+      sheet1.appendRow(["Date: $formattedDate"]);
+      sheet1.appendRow(
+          ["Round", "Data", "Detail", "Value", "Username", "Time", "Date"]);
+
+      for (var data in tableData) {
+        final dateTime = DateTime.parse(data['time']);
+        final formattedTime = DateFormat('HH:mm:ss').format(dateTime);
+        final formattedDate =
+            DateFormat('dd-MM-yyyy').format(DateTime.parse(data['date']));
+
+        sheet1.appendRow([
+          data['round'],
+          data['data'],
+          data['detail'],
+          data['value'],
+          data['Username'],
+          formattedTime,
+          formattedDate,
+        ]);
+      }
+
+      var fileBytes = excel.encode();
+      final blob = html.Blob([fileBytes!]);
+      final url = html.Url.createObjectUrlFromBlob(blob);
+      final anchor = html.AnchorElement(href: url)
+        ..setAttribute("download", "Tank8_$formattedDate.xlsx")
+        ..click();
+      html.Url.revokeObjectUrl(url);
+    } catch (e) {
+      print('Error exporting Excel: $e');
     }
   }
 }

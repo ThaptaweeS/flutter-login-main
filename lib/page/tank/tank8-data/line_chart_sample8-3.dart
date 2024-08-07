@@ -640,7 +640,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -1198,7 +1198,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,

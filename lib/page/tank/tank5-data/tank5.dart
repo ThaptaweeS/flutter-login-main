@@ -22,7 +22,7 @@ class Tank5 extends StatelessWidget {
 
     return Scaffold(
         appBar: AppBar(
-          shadowColor: Colors.white,
+          backgroundColor: Colors.blue[100],
           leading: IconButton(
             icon: Icon(Icons.arrow_back),
             onPressed: () {
@@ -51,7 +51,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank5Body> {
     return Container(
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
+            colors: [Colors.blue[100]!, Colors.white],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),

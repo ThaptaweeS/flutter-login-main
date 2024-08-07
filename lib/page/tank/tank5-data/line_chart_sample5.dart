@@ -449,7 +449,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
       children: <Widget>[
         AspectRatio(
           // aspectRatio: 1.80,
-          aspectRatio: 1.4,
+          aspectRatio: 1.40,
           child: Padding(
             padding: const EdgeInsets.only(
                 // right: 18,
@@ -459,42 +459,6 @@ class _LineChartSample22State extends State<LineChartSample22> {
                 ),
             child: LineChart(
               showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 110,
-          right: 50,
-          child: Text(
-            'USL: 15',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 235,
-          right: 50,
-          child: Text(
-            'LSL: 10',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 170,
-          right: 50,
-          child: Text(
-            'UCL: 12.5',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -656,7 +620,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -747,54 +711,109 @@ class _LineChartSample22State extends State<LineChartSample22> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 12.5),
-            FlSpot(28, 12.5),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.green, Colors.green], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 15),
-            FlSpot(28, 15),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 10),
-            FlSpot(28, 10),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 12.5),
+        //     FlSpot(28, 12.5),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [Colors.green, Colors.green], // Customize colors as needed
+        //   ),
+        //   barWidth: 1,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        // ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 15),
+        //     FlSpot(28, 15),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [Colors.red, Colors.red], // Customize colors as needed
+        //   ),
+        //   barWidth: 1,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        //   dashArray: [5, 5],
+        // ),
+        // LineChartBarData(
+        //   spots: const [
+        //     FlSpot(0, 10),
+        //     FlSpot(28, 10),
+        //   ],
+        //   isCurved: false,
+        //   gradient: LinearGradient(
+        //     colors: [Colors.red, Colors.red], // Customize colors as needed
+        //   ),
+        //   barWidth: 1,
+        //   isStrokeCapRound: true,
+        //   dotData: const FlDotData(
+        //     show: false,
+        //   ),
+        //   dashArray: [5, 5],
+        // ),
       ],
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+            y: 15,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'USL: 15',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 12.5,
+            color: Colors.green,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'UCL: 12.5',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            // dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 10,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'LSL: 10',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          )
+        ],
+      ),
     );
   }
 

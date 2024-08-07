@@ -1,8 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-import 'dart:convert';
-import 'package:charts_flutter/flutter.dart' as charts;
-
 
 class Page8 extends StatelessWidget {
   const Page8({Key? key}) : super(key: key);

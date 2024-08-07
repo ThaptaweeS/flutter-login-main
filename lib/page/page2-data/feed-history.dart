@@ -3,10 +3,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
-import 'package:newmaster/page/page02.dart';
+import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
 
 late BuildContext FeedHistoryContext;
 
@@ -20,15 +21,13 @@ class FeedHistory extends StatelessWidget {
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
           onPressed: () {
-            CuPage = Page02body();
+            CuPage = P1DASHBOARDMAIN();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
         title: Text("Feed History", style: TextStyle(color: Colors.black)),
-        backgroundColor:
-            Colors.white, // Optional: To make the AppBar background white
-        iconTheme: IconThemeData(
-            color: Colors.black), // Change the color of the leading icon
+        backgroundColor: Colors.blue[100],
+        iconTheme: IconThemeData(color: Colors.black),
       ),
       body: FeedHistoryBody(),
     );
@@ -44,10 +43,13 @@ class FeedHistoryBody extends StatefulWidget {
 
 class _FeedHistoryBodyState extends State<FeedHistoryBody> {
   late List<Map<String, dynamic>> tableData = [];
-  String selectedTank = ''; // Selected tank value for filtering
-  String? selectedYear;
-  String? selectedMonth;
-  String? selectedDay;
+  String selectedTank = '';
+  DateTime? fromDate;
+  DateTime? toDate;
+  String? dropdownValue = '';
+
+  TextEditingController fromDateController = TextEditingController();
+  TextEditingController toDateController = TextEditingController();
 
   @override
   void initState() {
@@ -56,15 +58,35 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/chem-feed';
+    String url = 'http://172.23.10.51:1111/chem-feed';
+    Map<String, String> body = {};
+
+    if (selectedTank.isNotEmpty) {
+      body['tank'] = selectedTank;
+    }
+
+    if (fromDate != null) {
+      body['fromDate'] = DateFormat('yyyy-MM-dd').format(fromDate!);
+    }
+
+    if (toDate != null) {
+      body['toDate'] = DateFormat('yyyy-MM-dd').format(toDate!);
+    }
+
+    print('Fetching data from: $url with body: $body');
+
     try {
-      final response = await http.post(Uri.parse(url));
+      final response = await http.post(Uri.parse(url),
+          headers: {'Content-Type': 'application/json'},
+          body: json.encode(body));
       if (response.statusCode == 200) {
         final List<dynamic> responseData = json.decode(response.body);
+        print('Response data: $responseData');
         setState(() {
           tableData = responseData.cast<Map<String, dynamic>>();
         });
       } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
         throw Exception('Failed to fetch data');
       }
     } catch (error) {
@@ -72,38 +94,33 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
     }
   }
 
-  List<Map<String, dynamic>> filterDataByDate(List<Map<String, dynamic>> data,
-      String? year, String? month, String? day) {
-    // Implement filtering logic based on selected date
+  List<Map<String, dynamic>> filterDataByDateRange(
+      List<Map<String, dynamic>> data, DateTime? fromDate, DateTime? toDate) {
     return data.where((item) {
-      if (year != null && item['date'].startsWith(year)) {
-        if (month != null && item['date'].substring(5, 7) != month) {
-          return false;
-        }
-        if (day != null && item['date'].substring(8) != day) {
-          return false;
-        }
-        return true;
+      DateTime itemDate = DateTime.parse(item['date']);
+      if (fromDate != null && itemDate.isBefore(fromDate)) {
+        return false;
       }
-      return false;
+      if (toDate != null && itemDate.isAfter(toDate)) {
+        return false;
+      }
+      return true;
     }).toList();
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Map<String, dynamic>> filteredData = filterDataByDate(
+    List<Map<String, dynamic>> filteredData = filterDataByDateRange(
         tableData
             .where(
                 (data) => selectedTank.isEmpty || data['tank'] == selectedTank)
             .toList(),
-        selectedYear,
-        selectedMonth,
-        selectedDay);
+        fromDate,
+        toDate);
 
     print('Selected tank: $selectedTank');
-    print('Selected year: $selectedYear');
-    print('Selected month: $selectedMonth');
-    print('Selected day: $selectedDay');
+    print('From date: $fromDate');
+    print('To date: $toDate');
     print('Filtered data length: ${filteredData.length}');
 
     return SafeArea(
@@ -111,7 +128,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
+            colors: [Colors.blue[100]!, Colors.blue[100]!],
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
@@ -120,232 +137,310 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            ListTile(
-              leading: Icon(
-                Icons.heat_pump,
-                size: 36.0,
-                color: Colors.blue,
-              ),
-              title: Text(
-                'Feed History : Dashboard',
-                style: TextStyle(
-                    fontSize: 18.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black),
-              ),
-            ),
-            // Dropdown for filtering by tank value
-            Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: DropdownButton<String>(
-                value: selectedTank,
-                onChanged: (String? newValue) {
-                  setState(() {
-                    selectedTank = newValue!;
-                  });
-                },
-                items: <String>[
-                  '',
-                  '1',
-                  '2',
-                  '3',
-                  '4',
-                  '5',
-                  '6',
-                  '7',
-                  '8',
-                  '9',
-                  '10',
-                  '11',
-                  '12',
-                  '13',
-                  '14'
-                ] // Add other tank values here
-                    .map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text('Tank $value',
-                        style: TextStyle(color: Colors.black)),
-                  );
-                }).toList(),
-                dropdownColor:
-                    Colors.white, // Set dropdown background color to white
-                style: TextStyle(color: Colors.black),
-              ),
-            ),
+            SizedBox(height: 10),
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Dropdown for selecting year
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButton<String>(
-                    value: selectedYear,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedYear = newValue;
-                      });
-                    },
-                    items: <String?>[
-                      '',
-                      '2024',
-                      '2023'
-                    ] // Add other year options here
-                        .map<DropdownMenuItem<String>>((String? value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value ?? 'All',
-                            style: TextStyle(color: Colors.black)),
-                      );
-                    }).toList(),
-                    dropdownColor:
-                        Colors.white, // Set dropdown background color to white
+                Container(
+                  width: 150,
+                  child: TextField(
+                    controller: fromDateController,
+                    decoration: InputDecoration(
+                      labelText: 'Start Date',
+                      hintText: 'DD-MM-YYYY',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.black),
+                      hintStyle: TextStyle(color: Colors.black),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            fromDate = null;
+                            fromDateController.clear();
+                            fetchDataFromAPI();
+                          });
+                        },
+                      ),
+                    ),
                     style: TextStyle(color: Colors.black),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: fromDate ?? DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          fromDate = pickedDate;
+                          fromDateController.text =
+                              DateFormat('dd-MM-yyyy').format(fromDate!);
+                          fetchDataFromAPI();
+                        });
+                      }
+                    },
                   ),
                 ),
-                // Dropdown for selecting month
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButton<String>(
-                    value: selectedMonth,
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        selectedMonth = newValue;
-                      });
-                    },
-                    items: <String?>[
-                      '',
-                      '01',
-                      '02',
-                      '03',
-                      '04',
-                      '05',
-                      '06',
-                      '07',
-                      '08',
-                      '09',
-                      '10',
-                      '11',
-                      '12'
-                    ] // Add other month options here
-                        .map<DropdownMenuItem<String>>((String? value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value ?? 'All',
-                            style: TextStyle(color: Colors.black)),
-                      );
-                    }).toList(),
-                    dropdownColor:
-                        Colors.white, // Set dropdown background color to white
+                SizedBox(width: 10),
+                Container(
+                  width: 150,
+                  child: TextField(
+                    controller: toDateController,
+                    decoration: InputDecoration(
+                      labelText: 'Start Date',
+                      hintText: 'dd-MM-yyyy',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      labelStyle: TextStyle(color: Colors.black),
+                      hintStyle: TextStyle(color: Colors.black),
+                      suffixIcon: IconButton(
+                        icon: Icon(Icons.clear),
+                        onPressed: () {
+                          setState(() {
+                            toDate = null;
+                            toDateController.clear();
+                            fetchDataFromAPI();
+                          });
+                        },
+                      ),
+                    ),
                     style: TextStyle(color: Colors.black),
+                    onTap: () async {
+                      DateTime? pickedDate = await showDatePicker(
+                        context: context,
+                        initialDate: toDate ?? DateTime.now(),
+                        firstDate: DateTime(2000),
+                        lastDate: DateTime(2101),
+                      );
+                      if (pickedDate != null) {
+                        setState(() {
+                          toDate = pickedDate;
+                          toDateController.text =
+                              DateFormat('dd-MM-yyyy').format(toDate!);
+                          fetchDataFromAPI();
+                        });
+                      }
+                    },
                   ),
                 ),
-                // Dropdown for selecting day
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: DropdownButton<String>(
-                    value: selectedDay,
+                SizedBox(width: 10),
+                Container(
+                  width: 200,
+                  child: DropdownButtonFormField<String>(
+                    value: selectedTank.isEmpty ? null : selectedTank,
+                    icon: Icon(Icons.arrow_drop_down),
+                    decoration: InputDecoration(
+                      labelText: 'Tank Select',
+                      filled: true,
+                      fillColor: Colors.white,
+                      border: OutlineInputBorder(),
+                      contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
+                      labelStyle: TextStyle(color: Colors.black),
+                    ),
+                    style: TextStyle(color: Colors.black),
                     onChanged: (String? newValue) {
                       setState(() {
-                        selectedDay = newValue;
+                        selectedTank = newValue ?? '';
+                        fetchDataFromAPI();
                       });
                     },
-                    items: <String?>[
-                      '',
-                      '01',
-                      '02',
-                      '03',
-                      '04',
-                      '05',
-                      '06',
-                      '07',
-                      '08',
-                      '09',
-                      '10',
-                      '11',
-                      '12',
-                      '13',
-                      '14',
-                      '15',
-                      '16',
-                      '17',
-                      '18',
-                      '19',
-                      '20',
-                      '21',
-                      '22',
-                      '23',
-                      '24',
-                      '25',
-                      '26',
-                      '27',
-                      '28',
-                      '29',
-                      '30',
-                      '31'
-                    ] // Add other day options here
-                        .map<DropdownMenuItem<String>>((String? value) {
+                    items: <String>['', '2', '5', '9', '10', '13', '14']
+                        .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text(value ?? 'All',
+                        child: Text('Tank $value',
                             style: TextStyle(color: Colors.black)),
                       );
                     }).toList(),
-                    dropdownColor:
-                        Colors.white, // Set dropdown background color to white
-                    style: TextStyle(color: Colors.black),
+                    dropdownColor: Colors.white,
+                  ),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: fetchDataFromAPI,
+                  child: Row(
+                    children: [
+                      Icon(Icons.search),
+                      SizedBox(width: 5),
+                      Text('Search'),
+                    ],
+                  ),
+                ),
+                SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement export to Excel functionality
+                  },
+                  child: Row(
+                    children: [
+                      Icon(Icons.save),
+                      SizedBox(width: 5),
+                      Text('Export to Excel'),
+                    ],
                   ),
                 ),
               ],
             ),
+            SizedBox(height: 10),
             Expanded(
-              child: Center(
-                child: SingleChildScrollView(
-                  primary: false,
-                  child: DataTable(
-                    columns: [
-                      DataColumn(
-                          label: Text('Tank',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Detail',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Lot',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Name',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Value(Kg)',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Date',
-                              style: TextStyle(color: Colors.black))),
-                      DataColumn(
-                          label: Text('Time',
-                              style: TextStyle(color: Colors.black))),
-                    ],
-                    rows: List<DataRow>.generate(filteredData.length, (index) {
-                      return DataRow(
-                        cells: [
-                          DataCell(Text(filteredData[index]['tank'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(
-                              filteredData[index]['detail'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(filteredData[index]['lot'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(filteredData[index]['name'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(filteredData[index]['value'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(filteredData[index]['date'].toString(),
-                              style: TextStyle(color: Colors.black))),
-                          DataCell(Text(filteredData[index]['time'].toString(),
-                              style: TextStyle(color: Colors.black))),
+              child: SingleChildScrollView(
+                primary: false,
+                child: Align(
+                  alignment: Alignment.topCenter,
+                  child: Table(
+                    defaultVerticalAlignment: TableCellVerticalAlignment.top,
+                    border: TableBorder.all(),
+                    columnWidths: {
+                      0: FixedColumnWidth(80.0),
+                      1: FixedColumnWidth(120.0),
+                      2: FixedColumnWidth(180.0),
+                      3: FixedColumnWidth(180.0),
+                      4: FixedColumnWidth(120.0),
+                      5: FixedColumnWidth(120.0),
+                      6: FixedColumnWidth(120.0),
+                    },
+                    children: [
+                      TableRow(
+                        children: [
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Tank",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Detail",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Lot",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Name",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Value(Kg)",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Date",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Time",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
                         ],
-                      );
-                    }),
+                      ),
+                      ...filteredData.map((data) {
+                        return TableRow(
+                          children: [
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['tank'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['detail'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['lot'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['name'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['value'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  DateFormat('dd-MM-yyyy').format(
+                                      DateTime.parse(data['date'].toString())),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['time'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                          ],
+                        );
+                      }).toList(),
+                    ],
                   ),
                 ),
               ),

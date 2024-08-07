@@ -652,7 +652,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -1016,7 +1016,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
       children: <Widget>[
         AspectRatio(
           // aspectRatio: 1.80,
-          aspectRatio: 1.4,
+          aspectRatio: 1.40,
           child: Padding(
             padding: const EdgeInsets.only(
                 // right: 18,
@@ -1026,42 +1026,6 @@ class _LineChartSample33State extends State<LineChartSample33> {
                 ),
             child: LineChart(
               showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 80,
-          right: 55,
-          child: Text(
-            'USL: 85',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 265,
-          right: 55,
-          child: Text(
-            'LSL: 70',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 170,
-          right: 55,
-          child: Text(
-            'UCL: 80',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -1231,7 +1195,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -1322,54 +1286,62 @@ class _LineChartSample33State extends State<LineChartSample33> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 80),
-            FlSpot(28, 80),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.green, Colors.green], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 75),
-            FlSpot(28, 75),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 85),
-            FlSpot(28, 85),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
       ],
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+            y: 85,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'USL: 85',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 80,
+            color: Colors.green,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'UCL: 80',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            // dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 75,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'LSL: 75',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          )
+        ],
+      ),
     );
   }
 

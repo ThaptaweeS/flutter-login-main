@@ -447,7 +447,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
       children: <Widget>[
         AspectRatio(
           // aspectRatio: 1.80,
-          aspectRatio: 1.4,
+          aspectRatio: 1.40,
           child: Padding(
             padding: const EdgeInsets.only(
                 // right: 18,
@@ -457,42 +457,6 @@ class _LineChartSample22State extends State<LineChartSample22> {
                 ),
             child: LineChart(
               showAvg ? avgData() : mainData(),
-            ),
-          ),
-        ),
-        Positioned(
-          top: 85,
-          right: 55,
-          child: Text(
-            'USL: 30',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 235,
-          right: 55,
-          child: Text(
-            'LSL: 26',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 185,
-          right: 55,
-          child: Text(
-            'UCL: 28',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -595,8 +559,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
         fontWeight: FontWeight.bold, fontSize: 10, color: Colors.black);
     String text;
     switch (value.toInt()) {
-      case 28:
-        text = '28'; // Customize this text for value 1
+      case 25:
+        text = '25'; // Customize this text for value 1
         break;
       case 30:
         text = '30'; // Customize this text for value 3
@@ -606,6 +570,9 @@ class _LineChartSample22State extends State<LineChartSample22> {
         break;
       case 36:
         text = '36'; // Customize this text for value 10
+        break;
+      case 40:
+        text = '40'; // Customize this text for value 10
         break;
       default:
         return Container();
@@ -653,7 +620,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -744,54 +711,62 @@ class _LineChartSample22State extends State<LineChartSample22> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 32),
-            FlSpot(28, 32),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.green, Colors.green], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 30),
-            FlSpot(28, 30),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 36),
-            FlSpot(28, 36),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          dashArray: [5, 5],
-        ),
       ],
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+            y: 36,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'USL: 36',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 32,
+            color: Colors.green,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'UCL: 32',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            // dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 30,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'LSL: 30',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          )
+        ],
+      ),
     );
   }
 

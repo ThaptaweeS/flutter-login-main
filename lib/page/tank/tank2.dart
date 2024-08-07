@@ -36,165 +36,157 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Chemical Control Monitoring'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blue[100]!, Colors.blue[100]!],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  'Tank2 : Degreasing',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: startDateController,
-                          decoration: InputDecoration(
-                            labelText: 'Start Date',
-                            hintText: 'YYYY-MM-DD',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(color: Colors.black),
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                          style: TextStyle(color: Colors.black),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              startDateController.text = formattedDate;
-                            }
-                          },
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                'Tank2 : Degreasing',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: startDateController,
+                        decoration: InputDecoration(
+                          labelText: 'Start Date',
+                          hintText: 'dd-MM-yyyy',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.black),
+                          hintStyle: TextStyle(color: Colors.black),
                         ),
+                        style: TextStyle(color: Colors.black),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('dd-MM-yyyy').format(pickedDate);
+                            startDateController.text = formattedDate;
+                          }
+                        },
                       ),
                     ),
-                    Container(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: endDateController,
-                          decoration: InputDecoration(
-                            labelText: 'End Date',
-                            hintText: 'YYYY-MM-DD',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(color: Colors.black),
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                          style: TextStyle(color: Colors.black),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              endDateController.text = formattedDate;
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 250,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Stack(
-                          alignment: Alignment.centerRight,
-                          children: [
-                            DropdownButtonFormField<String>(
-                              value: dropdownValue,
-                              icon: Icon(Icons.arrow_drop_down),
-                              decoration: InputDecoration(
-                                labelText: 'Filter',
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12.0), // Adjust padding here
-                                labelStyle: TextStyle(color: Colors.black),
-                              ),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>[
-                                '',
-                                'F.Al',
-                                'Temp'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                );
-                              }).toList(),
-                              dropdownColor: Colors.white,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        fetchDataFromAPI();
-                      },
-                      icon: Icon(Icons.search),
-                      label: Text('Search'),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(),
-                      onPressed: () {
-                        exportToExcel();
-                      },
-                      icon: Icon(Icons.save),
-                      label: Text('Export to Excel'),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
                   ),
+                  Container(
+                    width: 150,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: TextField(
+                        controller: endDateController,
+                        decoration: InputDecoration(
+                          labelText: 'End Date',
+                          hintText: 'YYYY-MM-DD',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          labelStyle: TextStyle(color: Colors.black),
+                          hintStyle: TextStyle(color: Colors.black),
+                        ),
+                        style: TextStyle(color: Colors.black),
+                        onTap: () async {
+                          DateTime? pickedDate = await showDatePicker(
+                            context: context,
+                            initialDate: DateTime.now(),
+                            firstDate: DateTime(2000),
+                            lastDate: DateTime(2101),
+                          );
+                          if (pickedDate != null) {
+                            String formattedDate =
+                                DateFormat('yyyy-MM-dd').format(pickedDate);
+                            endDateController.text = formattedDate;
+                          }
+                        },
+                      ),
+                    ),
+                  ),
+                  Container(
+                    width: 250,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Stack(
+                        alignment: Alignment.centerRight,
+                        children: [
+                          DropdownButtonFormField<String>(
+                            value: dropdownValue,
+                            icon: Icon(Icons.arrow_drop_down),
+                            decoration: InputDecoration(
+                              labelText: 'Filter',
+                              filled: true,
+                              fillColor: Colors.white,
+                              border: OutlineInputBorder(),
+                              contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 12.0), // Adjust padding here
+                              labelStyle: TextStyle(color: Colors.black),
+                            ),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue;
+                              });
+                            },
+                            items: <String>['', 'F.Al', 'Temp']
+                                .map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(
+                                value: value,
+                                child: Text(
+                                  value,
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              );
+                            }).toList(),
+                            dropdownColor: Colors.white,
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      fetchDataFromAPI();
+                    },
+                    icon: Icon(Icons.search),
+                    label: Text('Search'),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton.icon(
+                    style: ElevatedButton.styleFrom(),
+                    onPressed: () {
+                      exportToExcel();
+                    },
+                    icon: Icon(Icons.save),
+                    label: Text('Export to Excel'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: buildTable2(),
                 ),
-                SizedBox(height: 16),
-              ],
-            ),
+              ),
+              SizedBox(height: 16),
+            ],
           ),
         ),
       ),

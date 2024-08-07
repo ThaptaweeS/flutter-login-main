@@ -143,9 +143,17 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
       child: Scaffold(
         appBar: AppBar(
           shadowColor: Colors.transparent,
-          backgroundColor: Colors.white,
+          backgroundColor: Colors.blue[100],
           title: Center(
-            child: const Text('Dashboard'),
+            child: Text(
+              'Dashboard',
+              style: TextStyle(
+                fontSize: 35,
+                foreground: Paint()
+                  ..style = PaintingStyle.stroke
+                  ..strokeWidth = 2,
+              ),
+            ),
           ),
           actions: [
             IconButton(
@@ -163,53 +171,63 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
               end: Alignment.bottomCenter,
             ),
           ),
-          child: LayoutBuilder(
-            builder: (context, constraints) {
-              int crossAxisCount = (constraints.maxWidth / 200).floor();
-              double cardWidth =
-                  constraints.maxWidth / crossAxisCount - defaultPadding;
-              double cardHeight = 350; // Set a fixed height or adjust as needed
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Your other widgets (e.g., GridView, headers, etc.)
+              Expanded(
+                child: LayoutBuilder(
+                  builder: (context, constraints) {
+                    int crossAxisCount = (constraints.maxWidth / 200).floor();
+                    double cardWidth =
+                        constraints.maxWidth / crossAxisCount - defaultPadding;
+                    double cardHeight =
+                        350; // Set a fixed height or adjust as needed
 
-              return SingleChildScrollView(
-                padding: const EdgeInsets.all(defaultPadding),
-                child: Column(
-                  children: [
-                    const MyFilesHeader(),
-                    const SizedBox(height: defaultPadding),
-                    GridView.builder(
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: visibleKeys.length,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: crossAxisCount,
-                        crossAxisSpacing: defaultPadding,
-                        mainAxisSpacing: defaultPadding,
-                        childAspectRatio: cardWidth / cardHeight,
+                    return SingleChildScrollView(
+                      padding: const EdgeInsets.all(defaultPadding),
+                      child: Column(
+                        children: [
+                          const MyFilesHeader(),
+                          const SizedBox(height: defaultPadding),
+                          GridView.builder(
+                            physics: NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemCount: visibleKeys.length,
+                            gridDelegate:
+                                SliverGridDelegateWithFixedCrossAxisCount(
+                              crossAxisCount: crossAxisCount,
+                              crossAxisSpacing: defaultPadding,
+                              mainAxisSpacing: defaultPadding,
+                              childAspectRatio: cardWidth / cardHeight,
+                            ),
+                            itemBuilder: (context, index) {
+                              int id = visibleKeys[index];
+                              return FileInfoCard(
+                                info: demoMyFiles[id - 1],
+                                onTap: () => _navigateToTank(id),
+                                width: cardWidth,
+                                height: cardHeight,
+                              );
+                            },
+                          ),
+                        ],
                       ),
-                      itemBuilder: (context, index) {
-                        int id = visibleKeys[index];
-                        return FileInfoCard(
-                          info: demoMyFiles[id - 1],
-                          onTap: () => _navigateToTank(id),
-                          width: cardWidth,
-                          height: cardHeight,
-                        );
-                      },
-                    ),
-                    SizedBox(height: defaultPadding),
-                    Container(
-                      // height: 250,
-                      alignment: Alignment.bottomCenter,
-                      color: Colors.transparent,
-                      child: Image.asset(
-                        "assets/images/city5_photoroom.png",
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                  ],
+                    );
+                  },
                 ),
-              );
-            },
+              ),
+              Container(
+                alignment: Alignment.bottomCenter,
+                height: 200,
+                width: double.infinity,
+                child: Image.asset(
+                  "assets/images/city7_1.png",
+                  width: double.infinity,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
           ),
         ),
       ),

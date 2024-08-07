@@ -32,52 +32,52 @@ class _LineChartSample23State extends State<LineChartSample23> {
           aspectRatio: 1.40,
           child: Padding(
             padding: const EdgeInsets.only(
-              // right: 18,
-              // left: 12,
-              // top: 24,
-              // bottom: 12,
-            ),
+                // right: 18,
+                // left: 12,
+                // top: 24,
+                // bottom: 12,
+                ),
             child: LineChart(
               showAvg ? avgData() : mainData(),
             ),
           ),
         ),
-        Positioned(
-          top: 50,
-          right: 50,
-          child: Text(
-            'USL: 75',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 295,
-          right: 50,
-          child: Text(
-            'LSL: 55',
-            style: TextStyle(
-              color: Colors.red,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        Positioned(
-          top: 170,
-          right: 50,
-          child: Text(
-            'UCL: 65',
-            style: TextStyle(
-              color: Colors.green,
-              fontSize: 12,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
+        // Positioned(
+        //   top: 50,
+        //   right: 50,
+        //   child: Text(
+        //     'USL: 75',
+        //     style: TextStyle(
+        //       color: Colors.red,
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
+        // Positioned(
+        //   top: 295,
+        //   right: 50,
+        //   child: Text(
+        //     'LSL: 55',
+        //     style: TextStyle(
+        //       color: Colors.red,
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
+        // Positioned(
+        //   top: 170,
+        //   right: 50,
+        //   child: Text(
+        //     'UCL: 65',
+        //     style: TextStyle(
+        //       color: Colors.green,
+        //       fontSize: 12,
+        //       fontWeight: FontWeight.bold,
+        //     ),
+        //   ),
+        // ),
       ],
     );
   }
@@ -264,7 +264,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
                 return Padding(
                   padding: EdgeInsets.only(
                     top: 5,
-                    left: 20,
+                    left: 55,
                   ),
                   child: Transform.rotate(
                     angle: -45,
@@ -355,61 +355,62 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 65),
-            FlSpot(28, 65),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.green, Colors.green], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 55),
-            FlSpot(28, 55),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red],
-            // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: false,
-          ),
-          dashArray: [5, 5], // This will create a dashed line
-        ),
-        LineChartBarData(
-          spots: const [
-            FlSpot(0, 75),
-            FlSpot(28, 75),
-          ],
-          isCurved: false,
-          gradient: LinearGradient(
-            colors: [Colors.red, Colors.red], // Customize colors as needed
-          ),
-          barWidth: 1,
-          isStrokeCapRound: true,
-          dotData: const FlDotData(
-            show: false,
-          ),
-          belowBarData: BarAreaData(
-            show: false,
-          ),
-          dashArray: [5, 5], // This will create a dashed line
-        ),
       ],
+      extraLinesData: ExtraLinesData(
+        horizontalLines: [
+          HorizontalLine(
+            y: 75,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'USL: 75',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 65,
+            color: Colors.green,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'UCL: 65',
+              style: TextStyle(
+                color: Colors.green,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            // dashArray: [5, 5],
+          ),
+          HorizontalLine(
+            y: 55,
+            color: Colors.red,
+            strokeWidth: 1,
+            label: HorizontalLineLabel(
+              show: true,
+              alignment: Alignment.topRight,
+              labelResolver: (line) => 'LSL: 55',
+              style: TextStyle(
+                color: Colors.red,
+                fontSize: 10,
+                fontWeight: FontWeight.bold,
+              ),
+              padding: EdgeInsets.only(right: 10),
+            ),
+            dashArray: [5, 5],
+          )
+        ],
+      ),
     );
   }
 

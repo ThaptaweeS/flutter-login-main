@@ -36,173 +36,127 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Chemical Control Monitoring'),
-      ),
-      body: Container(
-        decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          colors: [Colors.blue[100]!, Colors.blue[100]!],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
         ),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                Text(
-                  'Tank5 : Acid Packing No.1',
-                  style: TextStyle(fontSize: 20, color: Colors.black),
-                ),
-                SizedBox(height: 10),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: startDateController,
-                          decoration: InputDecoration(
-                            labelText: 'Start Date',
-                            hintText: 'YYYY-MM-DD',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(color: Colors.black),
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                          style: TextStyle(color: Colors.black),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              startDateController.text = formattedDate;
-                            }
-                          },
+      ),
+      child: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Text(
+                'Tank5 : Acid Packing No.1',
+                style: TextStyle(fontSize: 20, color: Colors.black),
+              ),
+              SizedBox(height: 10),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  _buildDateInputField('Start Date', startDateController),
+                  _buildDateInputField('End Date', endDateController),
+                  Container(
+                    width: 250,
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: DropdownButtonFormField<String>(
+                        value: dropdownValue,
+                        icon: Icon(Icons.arrow_drop_down),
+                        decoration: InputDecoration(
+                          labelText: 'Filter',
+                          filled: true,
+                          fillColor: Colors.white,
+                          border: OutlineInputBorder(),
+                          contentPadding:
+                              EdgeInsets.symmetric(horizontal: 12.0),
+                          labelStyle: TextStyle(color: Colors.black),
                         ),
-                      ),
-                    ),
-                    Container(
-                      width: 150,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: TextField(
-                          controller: endDateController,
-                          decoration: InputDecoration(
-                            labelText: 'End Date',
-                            hintText: 'YYYY-MM-DD',
-                            filled: true,
-                            fillColor: Colors.white,
-                            border: OutlineInputBorder(),
-                            labelStyle: TextStyle(color: Colors.black),
-                            hintStyle: TextStyle(color: Colors.black),
-                          ),
-                          style: TextStyle(color: Colors.black),
-                          onTap: () async {
-                            DateTime? pickedDate = await showDatePicker(
-                              context: context,
-                              initialDate: DateTime.now(),
-                              firstDate: DateTime(2000),
-                              lastDate: DateTime(2101),
-                            );
-                            if (pickedDate != null) {
-                              String formattedDate =
-                                  DateFormat('yyyy-MM-dd').format(pickedDate);
-                              endDateController.text = formattedDate;
-                            }
-                          },
-                        ),
-                      ),
-                    ),
-                    Container(
-                      width: 250,
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Stack(
-                          alignment: Alignment.centerRight,
-                          children: [
-                            DropdownButtonFormField<String>(
-                              value: dropdownValue,
-                              icon: Icon(Icons.arrow_drop_down),
-                              decoration: InputDecoration(
-                                labelText: 'Filter',
-                                filled: true,
-                                fillColor: Colors.white,
-                                border: OutlineInputBorder(),
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: 12.0), // Adjust padding here
-                                labelStyle: TextStyle(color: Colors.black),
-                              ),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  dropdownValue = newValue;
-                                });
-                              },
-                              items: <String>[
-                                '',
-                                'Fe(%)',
-                                'Concentraition(%)'
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: TextStyle(color: Colors.black),
-                                  ),
-                                );
-                              }).toList(),
-                              dropdownColor: Colors.white,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            dropdownValue = newValue;
+                          });
+                        },
+                        items: <String>['', 'Fe(%)', 'Concentraition(%)']
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(
+                              value,
+                              style: TextStyle(color: Colors.black),
                             ),
-                          ],
-                        ),
+                          );
+                        }).toList(),
+                        dropdownColor: Colors.white,
                       ),
                     ),
-                    ElevatedButton.icon(
-                      onPressed: () {
-                        fetchDataFromAPI();
-                      },
-                      icon: Icon(Icons.search),
-                      label: Text('Search'),
-                    ),
-                    SizedBox(width: 10),
-                    ElevatedButton.icon(
-                      style: ElevatedButton.styleFrom(),
-                      onPressed: () {
-                        exportToExcel();
-                      },
-                      icon: Icon(Icons.save),
-                      label: Text('Export to Excel'),
-                    ),
-                  ],
-                ),
-                SizedBox(height: 10),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
                   ),
+                  ElevatedButton.icon(
+                    onPressed: fetchDataFromAPI,
+                    icon: Icon(Icons.search),
+                    label: Text('Search'),
+                  ),
+                  SizedBox(width: 10),
+                  ElevatedButton.icon(
+                    onPressed: exportToExcel,
+                    icon: Icon(Icons.save),
+                    label: Text('Export to Excel'),
+                  ),
+                ],
+              ),
+              SizedBox(height: 10),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: buildTable2(),
                 ),
-                SizedBox(height: 16),
-              ],
-            ),
+              ),
+              SizedBox(height: 16),
+            ],
           ),
         ),
       ),
     );
   }
 
+  Widget _buildDateInputField(String label, TextEditingController controller) {
+    return Container(
+      width: 150,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: TextField(
+          controller: controller,
+          decoration: InputDecoration(
+            labelText: label,
+            hintText: 'YYYY-MM-DD',
+            filled: true,
+            fillColor: Colors.white,
+            border: OutlineInputBorder(),
+            labelStyle: TextStyle(color: Colors.black),
+            hintStyle: TextStyle(color: Colors.black),
+          ),
+          style: TextStyle(color: Colors.black),
+          onTap: () async {
+            DateTime? pickedDate = await showDatePicker(
+              context: context,
+              initialDate: DateTime.now(),
+              firstDate: DateTime(2000),
+              lastDate: DateTime(2101),
+            );
+            if (pickedDate != null) {
+              String formattedDate =
+                  DateFormat('yyyy-MM-dd').format(pickedDate);
+              controller.text = formattedDate;
+            }
+          },
+        ),
+      ),
+    );
+  }
+
   Widget buildTable2() {
-    // Filter the table data based on the selected dropdown value
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
       if (dropdownValue == null || dropdownValue!.isEmpty) {
         return true; // No filter applied, return all data
@@ -213,7 +167,6 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
 
     return Column(
       children: [
-        // Display the filtered table data
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
@@ -229,72 +182,15 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
           children: [
             TableRow(
               children: [
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Round",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Data",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Detail",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Value",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Username",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Time",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
-                TableCell(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: Text(
-                      "Date",
-                      style: TextStyle(color: Colors.black),
-                    ),
-                  ),
-                ),
+                _buildTableCell("Round"),
+                _buildTableCell("Data"),
+                _buildTableCell("Detail"),
+                _buildTableCell("Value"),
+                _buildTableCell("Username"),
+                _buildTableCell("Time"),
+                _buildTableCell("Date"),
               ],
             ),
-            // Map each data entry to a TableRow widget
             ...filteredData.map((data) => buildTableRow2(
                 data['round'],
                 data['data'],
@@ -309,77 +205,34 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
     );
   }
 
+  TableCell _buildTableCell(String text) {
+    return TableCell(
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Text(
+          text,
+          style: TextStyle(color: Colors.black),
+        ),
+      ),
+    );
+  }
+
   TableRow buildTableRow2(String? round, String? data, String? detail,
       String? value, String? username, String? time, String? date) {
-    // Define date and time format
     final dateFormat = DateFormat('dd-MM-yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
 
     return TableRow(
       children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              round ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              data ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              detail ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              value ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              username ?? '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              time != null ? timeFormat.format(DateTime.parse(time)) : '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(
-              date != null ? dateFormat.format(DateTime.parse(date)) : '',
-              style: TextStyle(color: Colors.black),
-            ),
-          ),
-        ),
+        _buildTableCell(round ?? ''),
+        _buildTableCell(data ?? ''),
+        _buildTableCell(detail ?? ''),
+        _buildTableCell(value ?? ''),
+        _buildTableCell(username ?? ''),
+        _buildTableCell(
+            time != null ? timeFormat.format(DateTime.parse(time)) : ''),
+        _buildTableCell(
+            date != null ? dateFormat.format(DateTime.parse(date)) : ''),
       ],
     );
   }
@@ -389,67 +242,72 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
     String startDate = startDateController.text;
     String endDate = endDateController.text;
 
-    final response = await http.post(
-      Uri.parse(url),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        'startDate': startDate,
-        'endDate': endDate,
-      }),
-    );
-
-    if (response.statusCode == 200) {
-      final List<dynamic> decodedData = json.decode(response.body);
-      setState(() {
-        tableData = decodedData
-            .map((entry) => {
-                  'round': entry['round'] ?? '',
-                  'data': entry['data'] ?? '',
-                  'detail': entry['detail'] ?? '',
-                  'value': entry['value']?.toString() ?? '',
-                  'Username': entry['username'] ?? '',
-                  'time': entry['time'] ?? '',
-                  'date': entry['date'] ?? '',
-                })
-            .toList();
-      });
-    } else {
-      // Handle error
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: Text('Error'),
-            content: Text(
-                'Failed to fetch data from the API. Status code: ${response.statusCode}'),
-            actions: <Widget>[
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('OK'),
-              ),
-            ],
-          );
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
         },
+        body: jsonEncode(<String, String>{
+          'startDate': startDate,
+          'endDate': endDate,
+        }),
       );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> decodedData = json.decode(response.body);
+        setState(() {
+          tableData = decodedData
+              .map((entry) => {
+                    'round': entry['round'] ?? '',
+                    'data': entry['data'] ?? '',
+                    'detail': entry['detail'] ?? '',
+                    'value': entry['value']?.toString() ?? '',
+                    'Username': entry['username'] ?? '',
+                    'time': entry['time'] ?? '',
+                    'date': entry['date'] ?? '',
+                  })
+              .toList();
+        });
+      } else {
+        _showErrorDialog(
+            'Failed to fetch data from the API. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      _showErrorDialog('Error fetching data: $e');
     }
+  }
+
+  void _showErrorDialog(String message) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Error'),
+          content: Text(message),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void exportToExcel() async {
     try {
-      // สร้างไฟล์ Excel
       var excel = Excel.createExcel();
       Sheet sheet1 = excel['Sheet1'];
-      Sheet sheet2 = excel['Sheet2']; // สร้าง Sheet ใหม่
+      Sheet sheet2 = excel['Sheet2'];
 
-      // เพิ่มข้อมูลใน Sheet1
       sheet1.appendRow(["Tank5 : Acid Packing No.1 (HCl 10 - 15 %)"]);
       final now = DateTime.now();
       final formattedDate = DateFormat('yyyy-MM-dd').format(now);
-      sheet1.appendRow(["Date: $formattedDate"]); // เพิ่มแถวสำหรับวันที่
+      sheet1.appendRow(["Date: $formattedDate"]);
       sheet1.appendRow(["Round", "Data", "Detail", "Username", "Time", "Date"]);
 
       for (var data in tableData) {
@@ -468,20 +326,16 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
         ]);
       }
 
-      // เพิ่มข้อมูลใน Sheet2
       sheet2.appendRow(["Example Data in Sheet2"]);
       sheet2.appendRow(["Row 1", "Data 1", "Data 2"]);
       sheet2.appendRow(["Row 2", "Data 3", "Data 4"]);
 
-      // เข้ารหัสไฟล์ Excel เป็นไบต์
       var fileBytes = excel.encode();
 
-      // สร้าง Blob และใช้ JavaScript สำหรับการดาวน์โหลดไฟล์
-      final blob = html.Blob([fileBytes]);
+      final blob = html.Blob([fileBytes!]);
       final url = html.Url.createObjectUrlFromBlob(blob);
       final anchor = html.AnchorElement(href: url)
-        ..setAttribute(
-            "download", "Tank5_$formattedDate.xlsx") // เพิ่มวันที่ในชื่อไฟล์
+        ..setAttribute("download", "Tank5_$formattedDate.xlsx")
         ..click();
       html.Url.revokeObjectUrl(url);
     } catch (e) {
