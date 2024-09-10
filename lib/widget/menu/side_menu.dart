@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:newmaster/page/page02/remote-pump-feed.dart';
+import 'package:newmaster/page/page11.dart';
 import 'package:newmaster/page/page2-data/feed-history.dart';
+import 'package:newmaster/page/page2-data/manual-process.dart';
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../bloc/BlocEvent/LoginEvent.dart';
@@ -11,7 +14,6 @@ import '../../page/page01.dart';
 import '../../page/page02.dart';
 import '../../page/page2-data/manual-process-user.dart';
 import '../../page/page3.dart';
-import '../../page/settings.dart';
 
 late BuildContext MenuContext;
 
@@ -51,17 +53,30 @@ class SideMenu extends StatelessWidget {
         "accessLevel": 5
       },
       {
-        "title": "Task",
+        "title": "Chemical Feed Task",
         "svgSrc": "assets/icons/menu_task.svg",
-        "page": Page3(),
+        "page": Manualfeed(),
         "accessLevel": 5
       },
       {
-        "title": "Alarm Feed",
+        "title": "Chemical Feed Task",
+        "svgSrc": "assets/icons/menu_task.svg",
+        "page": Manualfeed(),
+        "accessLevel": 9
+      },
+      {
+        "title": "Chemical Feed Order",
         "svgSrc": "assets/icons/menu_alert.svg",
         "page": ManualfeedUser(),
         "accessLevel": 2
       },
+      {
+        "title": "Data History",
+        "svgSrc": "assets/icons/menu_doc.svg",
+        "page": Page3(),
+        "accessLevel": 5
+      },
+
       {
         "title": "Dashboard",
         "svgSrc": "assets/icons/menu_dashboard.svg",
@@ -88,33 +103,52 @@ class SideMenu extends StatelessWidget {
         "accessLevel": 9
       },
       {
-        "title": "Alarm Feed",
+        "title": "Chemical Feed Order",
         "svgSrc": "assets/icons/menu_alert.svg",
         "page": ManualfeedUser(),
         "accessLevel": 9
       },
       {
         "title": "Feed History",
-        "svgSrc": "assets/icons/pump.svg",
+        "svgSrc": "assets/icons/menu_doc.svg",
         "page": FeedHistory(),
         "accessLevel": 2
       },
       {
         "title": "Feed History",
-        "svgSrc": "assets/icons/pump.svg",
+        "svgSrc": "assets/icons/menu_doc.svg",
         "page": FeedHistory(),
         "accessLevel": 5
       },
       {
         "title": "Feed History",
-        "svgSrc": "assets/icons/pump.svg",
+        "svgSrc": "assets/icons/menu_doc.svg",
         "page": FeedHistory(),
         "accessLevel": 9
       },
       {
+        "title": "Remote Pump Control",
+        "svgSrc": "assets/icons/pump.svg",
+        "page": Remotefeed(),
+        "accessLevel": 9
+      },
+      // {
+      //   "title": "Remote Pump Control",
+      //   "svgSrc": "assets/icons/pump.svg",
+      //   "page": Remotefeed(),
+      //   "accessLevel": 5
+      // },
+      // {
+      //   "title": "Remote Pump Control",
+      //   "svgSrc": "assets/icons/pump.svg",
+      //   "page": Remotefeed(),
+      //   "accessLevel": 2
+      // },
+      {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
-        "page": PasswordSettingPage(),
+        // "page": PasswordSettingPage(),
+        "page": MainSetting(),
         "accessLevel": 9
       },
       // {
@@ -127,13 +161,15 @@ class SideMenu extends StatelessWidget {
       {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
-        "page": PasswordSettingPage(),
+        // "page": PasswordSettingPage(),
+        "page": MainSetting(),
         "accessLevel": 2
       },
       {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
-        "page": PasswordSettingPage(),
+        // "page": PasswordSettingPage(),
+        "page": MainSetting(),
         "accessLevel": 5
       },
       {
@@ -204,7 +240,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Version : 1.0.8\nDate modify : 2024-August-10',
+                'Version : 1.0.9\nDate modify : 2024-Sep-10',
                 style: TextStyle(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),

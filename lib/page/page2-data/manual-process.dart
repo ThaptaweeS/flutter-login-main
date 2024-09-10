@@ -18,18 +18,42 @@ class Manualfeed extends StatelessWidget {
     ManualfeedContext = context;
 
     return Scaffold(
-        appBar: AppBar(
-          leading: IconButton(
-            icon: Icon(Icons.arrow_back),
-            onPressed: () {
-              CuPage = Page02body();
-              MainBodyContext.read<ChangePage_Bloc>()
-                  .add(ChangePage_nodrower());
-            },
-          ),
-          title: Text('Manual Feed'),
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            CuPage = Page02body();
+            MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
+          },
         ),
-        body: ManualfeedBody());
+        title: Center(
+          child: Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Chemical Feed Order',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
+              ),
+              // Solid text as fill.
+              Text(
+                'Chemical Feed Order',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      body: ManualfeedBody(),
+    );
   }
 }
 
@@ -58,7 +82,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
         final List<dynamic> responseData = json.decode(response.body);
         setState(() {
           tableData = responseData.cast<Map<String, dynamic>>();
-          // Initialize showDetails list with false for each row
+
           showDetails = List<bool>.filled(tableData.length, false);
         });
       } else {
@@ -107,11 +131,9 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
           actions: [
             ElevatedButton(
               onPressed: () {
-                // Call API1 ('Passed' endpoint)
                 _callAPI('Passed', tableData[index]['id']).then((_) {
-                  // Fetch updated data for the table
                   fetchDataFromAPI();
-                  // Close the dialog
+
                   Navigator.of(context).pop();
                 });
               },
@@ -140,6 +162,24 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
               ),
               child: Text('Feed'),
             ),
+            ElevatedButton(
+              onPressed: () {
+                // Call API2 ('Approve' endpoint)
+                _callAPI('Makeup', tableData[index]['id']).then((_) {
+                  // Fetch updated data for the table
+                  fetchDataFromAPI();
+                  // Close the dialog
+                  Navigator.of(context).pop();
+                });
+              },
+              style: ElevatedButton.styleFrom(
+                backgroundColor:
+                    Colors.yellow, // Change the button color to green
+                textStyle: TextStyle(
+                    color: Colors.white), // Change the text color to white
+              ),
+              child: Text('Make Up'),
+            )
           ],
         );
       },
@@ -195,7 +235,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                     color: Colors.blue,
                   ),
                   title: Text(
-                    'Order Feed Chemical : Dashboard',
+                    'Action command for feed to Production',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
@@ -206,7 +246,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: LinearGradient(
-                    colors: [Colors.blue[50]!, Colors.blue[100]!],
+                    colors: [Colors.blue[100]!, Colors.blue[50]!],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),

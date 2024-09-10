@@ -565,6 +565,19 @@ class _LineChartSample22State extends State<LineChartSample22> {
     );
     String text;
     switch (value.toInt()) {
+      case 0:
+        text = '0';
+        break;
+      case 5:
+        text = '5';
+        break;
+      case 10:
+        text = '10';
+        break;
+      case 15:
+        text = '15';
+        break;
+
       case 20:
         text = '20'; // Customize this text for value 3
         break;
@@ -587,7 +600,16 @@ class _LineChartSample22State extends State<LineChartSample22> {
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {

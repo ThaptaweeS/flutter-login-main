@@ -349,7 +349,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         builder: (BuildContext context) {
           return AlertDialog(
             title: Text('Error', style: TextStyle(color: Colors.black)),
-            content: Text('Failed to save values to the API.', style: TextStyle(color: Colors.black)),
+            content: Text('Failed to save values to the API.',
+                style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 onPressed: () {
@@ -486,14 +487,16 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                time != null ? timeFormat.format(DateTime.parse(time)) : '', style: TextStyle(color: Colors.black)),
+                time != null ? timeFormat.format(DateTime.parse(time)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: Text(
-                date != null ? dateFormat.format(DateTime.parse(date)) : '', style: TextStyle(color: Colors.black)),
+                date != null ? dateFormat.format(DateTime.parse(date)) : '',
+                style: TextStyle(color: Colors.black)),
           ),
         ),
       ],

@@ -1,7 +1,11 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
+import 'package:newmaster/mainBody.dart';
+import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
 
 import '../data/global.dart';
 
@@ -24,21 +28,18 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
 
     // Check if passwords match
     if (newPassword != reEnterPassword) {
-      // Show error message
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text('New password and re-entered password do not match'),
       ));
       return;
     }
 
-    // Prepare the data to send
     Map<String, dynamic> requestData = {
       'old_password': oldPassword,
       'new_password': newPassword,
-      'user_name': USERDATA.NAME, // Include USERDATA.UserLV
+      'user_name': USERDATA.NAME,
     };
 
-    // Send the data to the API endpoint
     try {
       final response = await http.post(
         Uri.parse('http://172.23.10.51:1111/setting'),
@@ -47,20 +48,26 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
       );
 
       if (response.statusCode == 200) {
-        // Handle success
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Password settings saved successfully', style: TextStyle(color: Colors.black)),
+          content: Text(
+            'Password settings saved successfully',
+            style: TextStyle(color: Colors.black),
+          ),
         ));
       } else {
-        // Handle error
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-          content: Text('Failed to save password settings', style: TextStyle(color: Colors.black)),
+          content: Text(
+            'Failed to save password settings',
+            style: TextStyle(color: Colors.black),
+          ),
         ));
       }
     } catch (e) {
-      // Handle error
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-        content: Text('An error occurred while connecting to the server', style: TextStyle(color: Colors.black)),
+        content: Text(
+          'An error occurred while connecting to the server',
+          style: TextStyle(color: Colors.black),
+        ),
       ));
     }
   }
@@ -73,89 +80,199 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      height: MediaQuery.of(context).size.height,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text('Password Settings'),
+    return Scaffold(
+      appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios_new),
+          onPressed: () {
+            CuPage = P1DASHBOARDMAIN(); // กลับไปยังหน้า Dashboard
+            MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
+          },
         ),
-        body: Padding(
+        title: Text("Change Password", style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.blue[100],
+        iconTheme: IconThemeData(color: Colors.black),
+      ),
+      body: Container(
+        height: MediaQuery.of(context).size.height,
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blue[100]!, Colors.white],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+        child: Container(
           padding: const EdgeInsets.all(15.0),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              TextField(
-                controller: oldPasswordController,
-                decoration: InputDecoration(labelText: 'Old Password'),
-                obscureText: true,
-                style: TextStyle(fontSize: 16), // Set font size of text input
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: newPasswordController,
-                decoration: InputDecoration(labelText: 'New Password'),
-                obscureText: true,
-                style: TextStyle(fontSize: 16),
-                // Similar adjustments as above for the height and width
-              ),
-              SizedBox(height: 16),
-              TextField(
-                controller: reEnterPasswordController,
-                decoration: InputDecoration(labelText: 'Re-enter Password'),
-                obscureText: true,
-                style: TextStyle(fontSize: 16),
-                // Similar adjustments as above for the height and width
-              ),
-              SizedBox(height: 16),
-              Row(
-                children: [
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _save,
-                      child: Container(
-                        height: 40, // Set the height of the button
-                        child: Center(
-                          child: Text(
-                            'Save',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
-                  ),
-                  SizedBox(width: 16),
-                  Expanded(
-                    child: ElevatedButton(
-                      onPressed: _clearFields,
-                      child: Container(
-                        height: 40, // Set the height of the button
-                        child: Center(
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        ),
-                      ),
-                      style: ElevatedButton.styleFrom(
-                        padding: EdgeInsets.zero,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                      ),
-                    ),
+          child: Center(
+            child: Container(
+              width: 300, // Fixed width for the container
+              padding: EdgeInsets.all(16.0),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(8.0),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withOpacity(0.5),
+                    spreadRadius: 5,
+                    blurRadius: 7,
+                    offset: Offset(0, 3),
                   ),
                 ],
               ),
-            ],
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  TextField(
+                    controller: oldPasswordController,
+                    decoration: InputDecoration(labelText: 'Old Password'),
+                    obscureText: true,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(height: 16),
+                  TextField(
+                    controller: newPasswordController,
+                    decoration: InputDecoration(labelText: 'New Password'),
+                    obscureText: true,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(height: 16),
+                  TextField(
+                    controller: reEnterPasswordController,
+                    decoration: InputDecoration(labelText: 'Re-enter Password'),
+                    obscureText: true,
+                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    textAlign: TextAlign.left,
+                  ),
+                  SizedBox(height: 16),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _save,
+                          child: Container(
+                            height: 40,
+                            child: Center(
+                              child: Text(
+                                'Save',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(width: 16),
+                      Expanded(
+                        child: ElevatedButton(
+                          onPressed: _clearFields,
+                          child: Container(
+                            height: 40,
+                            child: Center(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            ),
+                          ),
+                          style: ElevatedButton.styleFrom(
+                            padding: EdgeInsets.zero,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
           ),
         ),
+      ),
+    );
+  }
+}
+
+class User {
+  final String username;
+  final String name;
+  final String role;
+
+  User({required this.username, required this.name, required this.role});
+
+  factory User.fromJson(Map<String, dynamic> json) {
+    return User(
+      username: json['username'],
+      name: json['name'],
+      role: json['role'],
+    );
+  }
+}
+
+// Future<List<User>> fetchUsers() async {
+//   final response =
+//       await http.get(Uri.parse('http://172.23.10.51:1111/manual-feed-user'));
+
+//   if (response.statusCode == 200) {
+//     // Parse the JSON response
+//     List<dynamic> data = json.decode(response.body);
+//     return data.map((user) => User.fromJson(user)).toList();
+//   } else {
+//     throw Exception('Failed to load users');
+//   }
+// }
+
+class UserListPage extends StatefulWidget {
+  @override
+  _UserListPageState createState() => _UserListPageState();
+}
+
+class _UserListPageState extends State<UserListPage> {
+  late Future<List<User>> futureUsers;
+
+  @override
+  // void initState() {
+  //   super.initState();
+  //   futureUsers = fetchUsers(); // Fetch users when the widget is initialized
+  // }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('User List'),
+      ),
+      body: FutureBuilder<List<User>>(
+        future: futureUsers,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          } else if (snapshot.hasError) {
+            return Center(child: Text('Error: ${snapshot.error}'));
+          } else {
+            List<User> users = snapshot.data!;
+            return ListView.builder(
+              itemCount: users.length,
+              itemBuilder: (context, index) {
+                User user = users[index];
+                return ListTile(
+                  title: Text(user.name),
+                  subtitle:
+                      Text('Username: ${user.username}\nRole: ${user.role}'),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

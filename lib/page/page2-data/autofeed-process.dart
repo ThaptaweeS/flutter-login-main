@@ -1,24 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:newmaster/components/chart2.dart';
+import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/page/page02.dart';
 import 'package:newmaster/page/page2-data/text-card.dart';
-import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
-import 'package:newmaster/components/recent_files.dart';
-import 'package:newmaster/constants.dart';
-import 'package:newmaster/page/tank/tank1-data/layout-history.dart';
 import 'package:newmaster/page/tank/tank1-data/pump.dart';
-import 'package:newmaster/presentation/samples/bar/bar_chart_sample1.dart';
-import 'package:newmaster/presentation/samples/bar/bar_chart_sample2.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample2.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample3.dart';
-import 'package:newmaster/presentation/samples/line/line_chart_sample4.dart';
-import 'package:newmaster/responsive.dart';
-import 'package:newmaster/widget/appbar/AppBar.dart';
-import 'package:newmaster/widget/common/Radiobutton.dart';
-import 'package:newmaster/widget/menu/side_menu.dart';
-import 'package:newmaster/page/tank/tank1-data/layout-chart.dart';
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../mainBody.dart';
@@ -32,13 +18,18 @@ class Autofeed extends StatelessWidget {
   Widget build(BuildContext context) {
     AutofeedContext = context;
 
-    return Scaffold(appBar: AppBar(leading: IconButton(
-          icon: Icon(Icons.arrow_back),
-          onPressed: () {
-            CuPage = Page02body();
-            MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
-          },
-        ),), body: AutofeedBody());
+    return Scaffold(
+        appBar: AppBar(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back_ios_new),
+            onPressed: () {
+              CuPage = Page02body();
+              MainBodyContext.read<ChangePage_Bloc>()
+                  .add(ChangePage_nodrower());
+            },
+          ),
+        ),
+        body: AutofeedBody());
   }
 }
 
@@ -107,7 +98,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                             style: TextStyle(
                                 fontSize: 14.0, fontWeight: FontWeight.normal)),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),
@@ -118,7 +110,6 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                           fontSize: 18.0,
                           fontWeight: FontWeight.normal,
                           color: Colors.blue,
-
                         ),
                       ),
                       SizedBox(
@@ -142,7 +133,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed'),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),
@@ -178,7 +170,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed'),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),
@@ -201,7 +194,9 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       FileInfoCardGridView5(),
                       TextCard4(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ElevatedButton.icon(
                         onPressed: () {
                           _showPopup(
@@ -210,7 +205,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed'),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),
@@ -235,7 +231,9 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       FileInfoCardGridView6(),
                       TextCard5(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ElevatedButton.icon(
                         onPressed: () {
                           _showPopup(
@@ -244,7 +242,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed'),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),
@@ -267,7 +266,9 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       FileInfoCardGridView7(),
                       TextCard6(),
-                      SizedBox(height: 10,),
+                      SizedBox(
+                        height: 10,
+                      ),
                       ElevatedButton.icon(
                         onPressed: () {
                           _showPopup(
@@ -276,7 +277,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed'),
                         style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.white, backgroundColor: Color.fromARGB(255, 45, 107, 47),
+                          foregroundColor: Colors.white,
+                          backgroundColor: Color.fromARGB(255, 45, 107, 47),
                           minimumSize:
                               Size(30, 40), // Set the size of the button
                         ),

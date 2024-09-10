@@ -168,10 +168,21 @@ class _LineChartSample23State extends State<LineChartSample23> {
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -245,8 +256,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 0,
-      maxY: 100,
+      minY: 0 - 10,
+      maxY: 80 + 10,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -302,96 +313,6 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        // LineChartBarData(
-        //   isCurved: false,
-        //   /* colors: const [Color(0xff27b6fc)], */
-        //   color: Colors.blue,
-        //   barWidth: 3,
-        //   isStrokeCapRound: false,
-        //   dotData: FlDotData(show: false),
-        //   belowBarData: BarAreaData(show: false),
-        /* spots: [for (final node in HistoryChartData) FlSpot(node.timestamp.toDouble(), node.rawValue)
-        ], */
-        //   spots: ((() {
-        //     if (widget.historyChartData.length == 1 &&
-        //         double.parse(
-        //                 ConverstStr(widget.historyChartData[0].resultApprove)) >
-        //             0) {
-        //       //for (int i = 0; i < historyChartData.length; i++)
-        //       print("addddddd");
-        //       return [
-        //         FlSpot(
-        //             1,
-        //             (double.parse(
-        //                 ConverstStr(widget.historyChartData[0].resultApprove))))
-        //       ];
-        //     } else {
-        //       List<FlSpot> buff = [];
-        //       for (int i = 0; i < widget.historyChartData.length; i++) {
-        //         buff.add(FlSpot(
-        //             i.toDouble(),
-        //             (double.parse(ConverstStr(
-        //                 widget.historyChartData[i].resultApprove)))));
-        //       }
-        //       return buff;
-        //     }
-        //   }())),
-        // ),
-        // Add another line here
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 75),
-        //     FlSpot(24, 75),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Colors.orange,
-        //       Colors.orange
-        //     ], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 55),
-        //     FlSpot(24, 55),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [
-        //       Colors.orange,
-        //       Colors.orange
-        //     ], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
-        //LineChartBarData(
-        //  spots: const [
-        //   FlSpot(0, 65),
-        //   FlSpot(28, 65),
-        // ],
-        // isCurved: false,
-        // gradient: LinearGradient(
-        //  colors: [
-        //    Colors.yellow,
-        //Colors.yellow
-        //   ], // Customize colors as needed
-        //  ),
-        //  barWidth: 2,
-        // isStrokeCapRound: true,
-        // dotData: const FlDotData(
-        //   show: false,
-        // ),
-        // ),
       ],
       extraLinesData: ExtraLinesData(
         horizontalLines: [
@@ -412,23 +333,6 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
             dashArray: [5, 5],
           ),
-          // HorizontalLine(
-          //   y: 12.5,
-          //   color: Colors.green,
-          //   strokeWidth: 1,
-          //   label: HorizontalLineLabel(
-          //     show: true,
-          //     alignment: Alignment.topRight,
-          //     labelResolver: (line) => 'UCL: 12.5',
-          //     style: TextStyle(
-          //       color: Colors.green,
-          //       fontSize: 10,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //     padding: EdgeInsets.only(right: 10),
-          //   ),
-          //   // dashArray: [5, 5],
-          // ),
           HorizontalLine(
             y: 0,
             color: Colors.red,
@@ -449,6 +353,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

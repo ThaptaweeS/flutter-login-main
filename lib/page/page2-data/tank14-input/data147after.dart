@@ -159,7 +159,7 @@ class _Tank147AfterPageState extends State<Tank147AfterPage> {
           child: TextFormField(
             controller: controller,
             keyboardType: TextInputType.number,
-          decoration: InputDecoration(
+            decoration: InputDecoration(
               labelText: label,
               labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),

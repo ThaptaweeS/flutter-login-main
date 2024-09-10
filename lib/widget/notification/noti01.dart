@@ -3,9 +3,6 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-
 import '../../bloc/cubit/NotificationEvent.dart';
 
 //!Bloc provider and builder
@@ -224,7 +221,7 @@ class _Box_notification_ErrorState extends State<Box_notification_Error> {
           fit: BoxFit.cover,
         ));
     //----------------------------------------------------------------
-    Timer(Duration(seconds: 3), () {
+    Timer(Duration(seconds: 5), () {
       // Navigator.pop(context);
       widget.Close_Func();
     });

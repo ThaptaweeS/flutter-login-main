@@ -26,7 +26,7 @@ class Tank13 extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(
-            Icons.arrow_back,
+            Icons.arrow_back_ios_new,
             color: Colors.black,
           ),
           onPressed: () {

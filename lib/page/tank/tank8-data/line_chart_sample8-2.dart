@@ -146,32 +146,60 @@ class _LineChartSample23State extends State<LineChartSample23> {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = '0'; // Customize this text for value 1
+        text = '0';
         break;
-      case 2:
-        text = '2'; // Customize this text for value 10
-        break;
-      case 4:
-        text = '4'; // Customize this text for value 3
-        break;
-      case 6:
-        text = '6'; // Customize this text for value 5
-        break;
-      case 8:
-        text = '8'; // Customize this text for value 10
+      case 5:
+        text = '5';
         break;
       case 10:
-        text = '10'; // Customize this text for value 10
+        text = '10';
         break;
-
+      case 15:
+        text = '15';
+        break;
+      case 20:
+        text = '20';
+        break;
+      case 25:
+        text = '25';
+        break;
+      case 30:
+        text = '30';
+        break;
+      case 33:
+        text = '33';
+        break;
+      case 35:
+        text = '35';
+        break;
+      case 40:
+        text = '40';
+        break;
+      case 45:
+        text = '45';
+        break;
+      case 50:
+        text = '50';
+        break;
       default:
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -245,8 +273,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 0,
-      maxY: 10,
+      minY: minResultApprove - 5,
+      maxY: maxResultApprove + 20,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -359,6 +387,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

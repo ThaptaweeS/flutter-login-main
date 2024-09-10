@@ -321,7 +321,6 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
                             style: TextStyle(color: Colors.black)))),
-                           
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),

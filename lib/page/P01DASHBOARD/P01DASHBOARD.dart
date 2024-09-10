@@ -145,14 +145,28 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
           shadowColor: Colors.transparent,
           backgroundColor: Colors.blue[100],
           title: Center(
-            child: Text(
-              'Dashboard',
-              style: TextStyle(
-                fontSize: 35,
-                foreground: Paint()
-                  ..style = PaintingStyle.stroke
-                  ..strokeWidth = 2,
-              ),
+            child: Stack(
+              children: <Widget>[
+                // Stroked text as border.
+                Text(
+                  'Dashboard',
+                  style: TextStyle(
+                    fontSize: 40,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 6
+                      ..color = Colors.blue[700]!,
+                  ),
+                ),
+                // Solid text as fill.
+                Text(
+                  'Dashboard',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ],
             ),
           ),
           actions: [

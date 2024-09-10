@@ -583,10 +583,21 @@ class _LineChartSample22State extends State<LineChartSample22> {
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -663,8 +674,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 8,
-      maxY: 10,
+      minY: minResultApprove * 0.95,
+      maxY: maxResultApprove * 1.05,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -740,23 +751,6 @@ class _LineChartSample22State extends State<LineChartSample22> {
             ),
             dashArray: [5, 5],
           ),
-          // HorizontalLine(
-          //   y: 33,
-          //   color: Colors.green,
-          //   strokeWidth: 1,
-          //   label: HorizontalLineLabel(
-          //     show: true,
-          //     alignment: Alignment.topRight,
-          //     labelResolver: (line) => 'UCL: 33',
-          //     style: TextStyle(
-          //       color: Colors.green,
-          //       fontSize: 10,
-          //       fontWeight: FontWeight.bold,
-          //     ),
-          //     padding: EdgeInsets.only(right: 10),
-          //   ),
-          //   // dashArray: [5, 5],
-          // ),
           HorizontalLine(
             y: 8.5,
             color: Colors.red,
@@ -777,6 +771,18 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

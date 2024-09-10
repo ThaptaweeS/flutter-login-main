@@ -159,6 +159,7 @@ class _Tank919AfterPageState extends State<Tank919AfterPage> {
       ),
     );
   }
+
   Widget buildTableCell(String label, TextEditingController controller) {
     return TableCell(
       child: Padding(

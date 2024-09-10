@@ -120,7 +120,7 @@ class _IconBellState extends State<IconBell> {
   void initState() {
     super.initState();
     fetchData(); // Fetch data when the widget is initialized
-    Timer.periodic(Duration(seconds: 1), (timer) {
+    Timer.periodic(Duration(minutes: 3), (timer) {
       fetchData(); // Fetch data every 3 minutes
     });
   }

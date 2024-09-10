@@ -295,7 +295,6 @@ class _Tank81BeforePageState extends State<Tank81BeforePage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
                             style: TextStyle(color: Colors.black)))),
-                           
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),

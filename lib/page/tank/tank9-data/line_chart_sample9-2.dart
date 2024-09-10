@@ -142,31 +142,54 @@ class _LineChartSample23State extends State<LineChartSample23> {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = '0'; // Customize this text for value 1
+        text = '0';
         break;
       case 1:
-        text = '1'; // Customize this text for value 1
+        text = '1';
         break;
       case 2:
-        text = '2'; // Customize this text for value 10
+        text = '2';
         break;
       case 3:
-        text = '3'; // Customize this text for value 3
+        text = '3';
         break;
       case 4:
-        text = '4'; // Customize this text for value 10
+        text = '4';
         break;
       case 5:
-        text = '5'; // Customize this text for value 10
+        text = '5';
+        break;
+      case 6:
+        text = '6';
+        break;
+      case 7:
+        text = '7';
+        break;
+      case 8:
+        text = '8';
+        break;
+      case 9:
+        text = '9';
         break;
       default:
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -239,17 +262,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 3.5,
-      maxY: 5,
+      minY: minResultApprove - 1,
+      maxY: maxResultApprove + 1,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
+            print(widget.historyChartData[0].resultApprove);
             if (widget.historyChartData.length == 1 &&
                 double.parse(
                         ConverstStr(widget.historyChartData[0].resultApprove)) >
                     0) {
               //for (int i = 0; i < historyChartData.length; i++)
-              print("addddddd");
+              double maxData = widget.historyChartData[0].resultApprove;
               return [
                 FlSpot(
                     1,
@@ -470,6 +494,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ],
     );
   }
+}
+
+double getMaxResultApprove(List<HistoryChartModel2> historyChartData) {
+  return historyChartData
+      .map((data) => double.parse(ConverstStr(data.resultApprove)))
+      .reduce((current, next) => current > next ? current : next);
+}
+
+double getMinResultApprove(List<HistoryChartModel2> historyChartData) {
+  return historyChartData
+      .map((data) => double.parse(ConverstStr(data.resultApprove)))
+      .reduce((current, next) => current < next ? current : next);
 }
 
 String ConverstStr(dynamic input) {

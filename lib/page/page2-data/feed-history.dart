@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'dart:html' as html;
 
+import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
@@ -10,6 +12,7 @@ import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
 
 late BuildContext FeedHistoryContext;
+List<Map<String, dynamic>> tableData = [];
 
 class FeedHistory extends StatelessWidget {
   const FeedHistory({Key? key}) : super(key: key);
@@ -18,16 +21,39 @@ class FeedHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.blue[100]!,
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             CuPage = P1DASHBOARDMAIN();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
-        title: Text("Feed History", style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.blue[100],
-        iconTheme: IconThemeData(color: Colors.black),
+        title: Center(
+          child: Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Feed History',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
+              ),
+              // Solid text as fill.
+              Text(
+                'Feed History',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: FeedHistoryBody(),
     );
@@ -270,17 +296,13 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                   ),
                 ),
                 SizedBox(width: 10),
-                ElevatedButton(
+                ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    // Implement export to Excel functionality
+                    exportToExcel();
                   },
-                  child: Row(
-                    children: [
-                      Icon(Icons.save),
-                      SizedBox(width: 5),
-                      Text('Export to Excel'),
-                    ],
-                  ),
+                  icon: Icon(Icons.save),
+                  label: Text('Export to Excel'),
                 ),
               ],
             ),
@@ -295,7 +317,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                     border: TableBorder.all(),
                     columnWidths: {
                       0: FixedColumnWidth(80.0),
-                      1: FixedColumnWidth(120.0),
+                      1: FixedColumnWidth(180.0),
                       2: FixedColumnWidth(180.0),
                       3: FixedColumnWidth(180.0),
                       4: FixedColumnWidth(120.0),
@@ -449,5 +471,53 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
         ),
       ),
     );
+  }
+}
+
+void exportToExcel() async {
+  try {
+    // Create Excel document
+    var excel = Excel.createExcel();
+    Sheet sheet = excel['Feed History'];
+
+    // Add header row
+    sheet.appendRow(
+        ["Tank", "Detail", "Lot", "Name", "Value (Kg)", "Date", "Time"]);
+
+    // Add data rows
+    for (var data in tableData) {
+      final dateTime = DateTime.parse(data['time']);
+      final formattedTime = DateFormat('HH:mm:ss').format(dateTime);
+      final formattedDate =
+          DateFormat('dd-MM-yyyy').format(DateTime.parse(data['date']));
+
+      sheet.appendRow([
+        data['tank'].toString(),
+        data['detail'].toString(),
+        data['lot'].toString(),
+        data['name'].toString(),
+        data['value'].toString(),
+        formattedDate,
+        formattedTime,
+      ]);
+    }
+
+    // Encode the Excel file to bytes
+    var fileBytes = excel.encode();
+
+    // Generate file name with the current date
+    final now = DateTime.now();
+    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+    final fileName = "Feed_History_$formattedDate.xlsx";
+
+    // Create a Blob for the file and trigger download
+    final blob = html.Blob([fileBytes]);
+    final url = html.Url.createObjectUrlFromBlob(blob);
+    final anchor = html.AnchorElement(href: url)
+      ..setAttribute("download", fileName)
+      ..click();
+    html.Url.revokeObjectUrl(url);
+  } catch (e) {
+    print('Error exporting to Excel: $e');
   }
 }

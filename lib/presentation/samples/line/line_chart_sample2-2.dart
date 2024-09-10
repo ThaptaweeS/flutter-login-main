@@ -42,42 +42,6 @@ class _LineChartSample23State extends State<LineChartSample23> {
             ),
           ),
         ),
-        // Positioned(
-        //   top: 50,
-        //   right: 50,
-        //   child: Text(
-        //     'USL: 75',
-        //     style: TextStyle(
-        //       color: Colors.red,
-        //       fontSize: 12,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
-        // Positioned(
-        //   top: 295,
-        //   right: 50,
-        //   child: Text(
-        //     'LSL: 55',
-        //     style: TextStyle(
-        //       color: Colors.red,
-        //       fontSize: 12,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
-        // Positioned(
-        //   top: 170,
-        //   right: 50,
-        //   child: Text(
-        //     'UCL: 65',
-        //     style: TextStyle(
-        //       color: Colors.green,
-        //       fontSize: 12,
-        //       fontWeight: FontWeight.bold,
-        //     ),
-        //   ),
-        // ),
       ],
     );
   }
@@ -181,23 +145,42 @@ class _LineChartSample23State extends State<LineChartSample23> {
     String text;
     switch (value.toInt()) {
       case 0:
-        text = '0'; // Customize this text for value 1
+        text = '0';
+        break;
+      case 5:
+        text = '5';
         break;
       case 10:
-        text = '10'; // Customize this text for value 3
+        text = '10';
+        break;
+      case 15:
+        text = '15';
         break;
       case 20:
-        text = '20'; // Customize this text for value 5
+        text = '20';
+        break;
+      case 25:
+        text = '25';
         break;
       case 30:
-        text = '30'; // Customize this text for value 8
+        text = '30';
+        break;
+      case 33:
+        text = '33';
+        break;
+      case 35:
+        text = '35';
         break;
       case 40:
-        text = '40'; // Customize this text for value 10
+        text = '40';
+        break;
+      case 45:
+        text = '45';
         break;
       case 50:
-        text = '50'; // Customize this text for value 10
+        text = '50';
         break;
+
       case 55:
         text = '55'; // Customize this text for value 10
         break;
@@ -220,10 +203,21 @@ class _LineChartSample23State extends State<LineChartSample23> {
         return Container();
     }
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -298,8 +292,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 50,
-      maxY: 80,
+      minY: minResultApprove - 10,
+      maxY: maxResultApprove + 15,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -412,6 +406,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel2> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

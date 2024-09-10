@@ -29,13 +29,37 @@ class Page02Autobody extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             CuPage = Page02body();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
-        title: Text("Select Time"),
+        title: Center(
+          child: Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Select Time',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
+              ),
+              // Solid text as fill.
+              Text(
+                'Select Time',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Container(
         decoration: BoxDecoration(

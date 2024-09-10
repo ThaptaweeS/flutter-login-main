@@ -563,24 +563,59 @@ class _LineChartSample22State extends State<LineChartSample22> {
       color: Colors.black,
     );
     String text;
-    if (value == 0.0) {
-      text = '0'; // Customize this text for value 1
-    } else if (value == 5.0) {
-      text = '5'; // Customize this text for value 5
-    } else if (value == 10.0) {
-      text = '10'; // Customize this text for value 5
-    } else if (value == 15.0) {
-      text = '15'; // Customize this text for value 10
-    } else if (value == 20.0) {
-      text = '20'; // Customize this text for value 10
-    } else {
-      return Container();
-    }
+    switch (value.toInt()) {
+      case 0:
+        text = '0';
+        break;
+      case 5:
+        text = '5';
+        break;
+      case 10:
+        text = '10';
+        break;
+      case 15:
+        text = '15';
+        break;
+      case 20:
+        text = '20';
+        break;
+      case 25:
+        text = '25';
+        break;
+      case 30:
+        text = '30';
+        break;
 
-    return Text(text, style: style, textAlign: TextAlign.right);
+      case 35:
+        text = '35';
+        break;
+      case 40:
+        text = '40';
+        break;
+      case 45:
+        text = '45';
+        break;
+      case 50:
+        text = '50';
+        break;
+      default:
+        return Container();
+    }
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
+      child: Text(
+        text,
+        style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
+      ),
+    );
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -654,8 +689,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 5,
-      maxY: 20,
+      minY: minResultApprove - 10,
+      maxY: maxResultApprove + 10,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -711,53 +746,6 @@ class _LineChartSample22State extends State<LineChartSample22> {
             ),
           ),
         ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 12.5),
-        //     FlSpot(28, 12.5),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.green, Colors.green], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 15),
-        //     FlSpot(28, 15),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.red, Colors.red], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        //   dashArray: [5, 5],
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 10),
-        //     FlSpot(28, 10),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.red, Colors.red], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        //   dashArray: [5, 5],
-        // ),
       ],
       extraLinesData: ExtraLinesData(
         horizontalLines: [
@@ -815,6 +803,18 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

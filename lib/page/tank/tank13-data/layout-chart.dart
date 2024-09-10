@@ -382,7 +382,6 @@ class SimpleBarChart extends StatelessWidget {
   }
 }
 
-
 class ChartData {
   final String date;
   final double value;

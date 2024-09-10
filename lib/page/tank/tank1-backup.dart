@@ -24,7 +24,7 @@ class Tank1 extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.blue[100],
         leading: IconButton(
-          icon: Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             CuPage = P1DASHBOARDMAIN();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
