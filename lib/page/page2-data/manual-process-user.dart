@@ -298,6 +298,11 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold))),
                       DataColumn(
+                          label: Text('Date',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
                           label: Text('Time',
                               style: TextStyle(
                                   color: Colors.black,
@@ -323,6 +328,8 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                           DataCell(Text(tableData[index]['SetPoint'].toString(),
                               style: const TextStyle(color: Colors.black))),
                           DataCell(Text(tableData[index]['Actual'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Date'].toString(),
                               style: const TextStyle(color: Colors.black))),
                           DataCell(Text(tableData[index]['Time'].toString(),
                               style: const TextStyle(color: Colors.black))),
