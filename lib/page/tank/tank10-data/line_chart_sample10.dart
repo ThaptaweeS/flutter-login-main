@@ -596,6 +596,9 @@ class _LineChartSample22State extends State<LineChartSample22> {
       case 45:
         text = '45'; // Customize this text for value 10
         break;
+      case 50:
+        text = '50'; // Customize this text for value 10
+        break;
       default:
         return Container();
     }
@@ -687,8 +690,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 10,
-      maxY: maxResultApprove + 10,
+      minY: minResultApprove - 5,
+      maxY: maxResultApprove + 4,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {

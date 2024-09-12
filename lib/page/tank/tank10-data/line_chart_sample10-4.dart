@@ -247,8 +247,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 1,
-      maxY: maxResultApprove + 2,
+      minY: minResultApprove - 2,
+      maxY: maxResultApprove + 1,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {

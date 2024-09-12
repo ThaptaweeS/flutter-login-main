@@ -613,6 +613,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
   }
 
   LineChartData mainData() {
+    double maxResultApprove = getMaxResultApprove(widget.historyChartData);
+    double minResultApprove = getMinResultApprove(widget.historyChartData);
     return LineChartData(
       gridData: FlGridData(
         show: false,
@@ -685,8 +687,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
       ),
       minX: 0,
       maxX: 28,
-      minY: 20,
-      maxY: 35,
+      minY: minResultApprove - 5,
+      maxY: maxResultApprove + 4,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -799,6 +801,18 @@ class _LineChartSample22State extends State<LineChartSample22> {
         ],
       ),
     );
+  }
+
+  double getMaxResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current > next ? current : next);
+  }
+
+  double getMinResultApprove(List<HistoryChartModel> historyChartData) {
+    return historyChartData
+        .map((data) => double.parse(ConverstStr(data.resultApprove)))
+        .reduce((current, next) => current < next ? current : next);
   }
 
   LineChartData avgData() {

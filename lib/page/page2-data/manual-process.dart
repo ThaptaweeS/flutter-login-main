@@ -269,6 +269,11 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold))),
                     DataColumn(
+                        label: Text('Chemical',
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold))),
+                    DataColumn(
                         label: Text('Specification',
                             style: TextStyle(
                                 color: Colors.black,
@@ -331,6 +336,8 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                         DataCell(Text(tableData[index]['Process'].toString(),
                             style: TextStyle(color: Colors.black))),
                         DataCell(Text(tableData[index]['Item'].toString(),
+                            style: TextStyle(color: Colors.black))),
+                        DataCell(Text(tableData[index]['Detail'].toString(),
                             style: TextStyle(color: Colors.black))),
                         DataCell(Text(tableData[index]['Spec'].toString(),
                             style: TextStyle(color: Colors.black))),

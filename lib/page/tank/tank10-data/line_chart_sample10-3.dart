@@ -703,7 +703,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 1,
+      minY: minResultApprove - 2,
       maxY: maxResultApprove + 2,
       lineBarsData: [
         LineChartBarData(

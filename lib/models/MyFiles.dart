@@ -153,7 +153,7 @@ List<CloudStorageInfo> demoMyFiles = [
     title: "Tank10 : Phosphate",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank3.svg",
-    totalStorage: "(3-10) PB-181X(M)",
+    totalStorage: "(3-10) PB-181XM",
     color: Color.fromARGB(255, 127, 138, 152),
     percentage: 99,
     color2: Colors.transparent,

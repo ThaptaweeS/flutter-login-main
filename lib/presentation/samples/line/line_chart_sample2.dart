@@ -186,9 +186,7 @@ class _LineChartSample22State extends State<LineChartSample22> {
       case 45:
         text = '45';
         break;
-      case 46:
-        text = '46';
-        break;
+
       case 50:
         text = '50';
         break;
