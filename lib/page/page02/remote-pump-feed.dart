@@ -5,6 +5,7 @@ import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/page02.dart';
+import 'package:newmaster/page/page02/barchartfeed.dart';
 
 late BuildContext RemotefeedContext;
 
@@ -95,7 +96,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
 
   Widget buildPumpTank9(BuildContext context) {
     return Container(
-      height: 500,
+      height: 650,
       decoration: BoxDecoration(
         color: Colors.blue[300],
         borderRadius: BorderRadius.circular(15),
@@ -118,7 +119,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Tank9 : Zinc Phosphate (PB-L3650X)',
+              'Tank9 : Zinc Phosphate (PB-3650X)',
               style: TextStyle(fontSize: 24, color: Colors.black),
             ),
             SizedBox(height: 50),
@@ -133,26 +134,30 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        buildPumpControlContainer(
-          context,
-          'Pump PB-L3650X',
-          () => sendDataToAPI1819(context, 'start', 'PB-181X'),
-          () => sendDataToAPI1819(context, 'stop', 'PB-181X'),
+        Expanded(
+          child: buildPumpControlContainer(
+            context,
+            'AC-131 (PUMP M-55)',
+            () => sendDataToAPIac9(context, 'start', true),
+            () => sendDataToAPIac9(context, 'stop', false),
+          ),
         ),
         SizedBox(width: 16), // Space between the containers
-        buildPumpControlContainer(
-          context,
-          'Pump AC-131',
-          () => sendDataToAPIac9(context, 'start', 'AC-131'),
-          () => sendDataToAPIac9(context, 'stop', 'AC-131'),
-        ),
+        Expanded(
+          child: buildPumpControlContainer(
+            context,
+            'PB-3650XM (PUMP M-22)',
+            () => sendDataToAPI1819(context, 'start', true),
+            () => sendDataToAPI1819(context, 'stop', false),
+          ),
+        )
       ],
     );
   }
 
   Widget buildPumpTank10(BuildContext context) {
     return Container(
-      height: 500,
+      height: 650,
       decoration: BoxDecoration(
         color: Colors.blue[300],
         borderRadius: BorderRadius.circular(15),
@@ -191,14 +196,29 @@ class _RemotefeedBodyState extends State<remotereedBody> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         SizedBox(width: 16), // Space between the containers
-        buildPumpControlContainer(
-          context,
-          'Pump AC-131',
-          () => sendDataToAPIac10(context, 'start', 'AC-131'),
-          () => sendDataToAPIac10(context, 'stop', 'AC-131'),
-        ),
+        Expanded(
+          child: buildPumpControlContainer(
+            context,
+            'AC-131 (PUMP M-56)',
+            () => sendDataToAPIac10(context, 'start', true),
+            () => sendDataToAPIac10(context, 'stop', false),
+          ),
+        )
       ],
     );
+  }
+
+  Widget buildPumpdata(BuildContext context) {
+    return SizedBox(
+        width: 200,
+        child: TextFormField(
+          decoration: InputDecoration(
+            labelText: 'Quantity Feed',
+            labelStyle: TextStyle(color: Colors.black),
+            border: OutlineInputBorder(),
+          ),
+          style: TextStyle(color: Colors.black),
+        ));
   }
 
   Widget buildPumpControlContainer(
@@ -207,75 +227,106 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     VoidCallback onStart,
     VoidCallback onStop,
   ) {
-    return Container(
-      padding: const EdgeInsets.all(16.0),
-      alignment: Alignment.topCenter,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black26,
-            blurRadius: 10,
-            offset: Offset(0, 5),
-          ),
-        ],
-        gradient: LinearGradient(
-          colors: [Colors.white, Colors.grey[100]!],
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-        ),
-      ),
-      child: Column(
-        children: [
-          Text(
-            title,
-            style: TextStyle(fontSize: 24, color: Colors.black),
-          ),
-          SizedBox(height: 10),
-          // Image.asset(
-          //   'assets/icons/pumpandtank.svg', // Correct asset path
-          //   width: 50,
-          //   height: 50,
-          // ),
-          SizedBox(height: 10),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
-                onPressed: onStart,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.green,
-                  minimumSize: Size(50, 60),
-                ),
-                child: Text('Start'),
-              ),
-              SizedBox(width: 16),
-              ElevatedButton(
-                onPressed: onStop,
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.black,
-                  backgroundColor: Colors.red,
-                  minimumSize: Size(50, 60),
-                ),
-                child: Text('Stop'),
+    TextEditingController _controller = TextEditingController();
+    double feedQuantity = 0.0; // Store quantity from TextFormField
+    List<double> reciveDataFromAPI = [120]; // Example data from API
+
+    return StatefulBuilder(
+      builder: (context, setState) {
+        return Container(
+          padding: const EdgeInsets.all(16.0),
+          alignment: Alignment.topCenter,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: Colors.black26,
+                blurRadius: 10,
+                offset: Offset(0, 5),
               ),
             ],
           ),
-        ],
-      ),
+          child: Column(
+            children: [
+              Text(
+                title,
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+              SizedBox(height: 10),
+
+              // PumpFeedChart widget to show the feed data
+              SizedBox(
+                height: 150,
+                width: 150,
+                child: PumpFeedChart(
+                  feedQuantity: feedQuantity,
+                  recipeData: reciveDataFromAPI, // Data from API
+                ),
+              ),
+              SizedBox(height: 20),
+
+              // TextField for Quantity Feed Input
+              SizedBox(
+                width: 200,
+                child: TextFormField(
+                  controller: _controller,
+                  keyboardType: TextInputType.number,
+                  decoration: InputDecoration(
+                    labelText: 'Quantity Feed (ml)',
+                    labelStyle: TextStyle(color: Colors.black),
+                    border: OutlineInputBorder(),
+                  ),
+                  style: TextStyle(color: Colors.black),
+                  onChanged: (value) {
+                    // Update feed quantity and refresh chart
+                    setState(() {
+                      feedQuantity = double.tryParse(value) ?? 0.0;
+                    });
+                  },
+                ),
+              ),
+              SizedBox(height: 20),
+
+              // Control buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: onStart,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.green,
+                      minimumSize: Size(50, 60),
+                    ),
+                    child: Text('Start'),
+                  ),
+                  SizedBox(width: 16),
+                  ElevatedButton(
+                    onPressed: onStop,
+                    style: ElevatedButton.styleFrom(
+                      foregroundColor: Colors.black,
+                      backgroundColor: Colors.red,
+                      minimumSize: Size(50, 60),
+                    ),
+                    child: Text('Stop'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
-  void sendDataToAPIac10(
-      BuildContext context, String action, String pump) async {
-    final url =
-        'http://172.23.10.51:1111/acfeed10'; // Update this URL as needed
+  void sendDataToAPIac10(BuildContext context, String action, bool pump) async {
+    final url = 'http://172.23.10.51:1111/ac10'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
-        'action': action,
-        'pump': pump,
+        'Action': action,
+        'Status': pump.toString(),
       });
 
       print('Response status: ${response.statusCode}');
@@ -295,14 +346,13 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     }
   }
 
-  void sendDataToAPIac9(
-      BuildContext context, String action, String pump) async {
+  void sendDataToAPIac9(BuildContext context, String action, bool pump) async {
     final url = 'http://172.23.10.51:1111/acfeed9'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
-        'action': action,
-        'pump': pump,
+        'Action': action,
+        'Status': pump.toString(),
       });
 
       print('Response status: ${response.statusCode}');
@@ -322,8 +372,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     }
   }
 
-  void sendDataToAPI1819(
-      BuildContext context, String action, String pump) async {
+  void sendDataToAPI1819(BuildContext context, String action, bool pump) async {
     final url =
         'http://172.23.10.51:1111/181feed9'; // Update this URL as needed
 
@@ -331,8 +380,8 @@ class _RemotefeedBodyState extends State<remotereedBody> {
       final response = await http.post(
         Uri.parse(url),
         body: {
-          'action': action,
-          // 'pump': pump,
+          'Action': action,
+          'Status': pump.toString(),
         },
       );
 

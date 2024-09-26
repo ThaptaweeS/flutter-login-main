@@ -201,7 +201,7 @@ class _Chart13State extends State<Chart13> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text("F.E. (Point) Chart",
+                  Text("Fe (%) Chart",
                       style: Theme.of(context)
                           .textTheme
                           .titleMedium

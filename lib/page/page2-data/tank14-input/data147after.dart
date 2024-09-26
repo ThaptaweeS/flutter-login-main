@@ -87,7 +87,7 @@ class _Tank147AfterPageState extends State<Tank147AfterPage> {
                             title: Text('Invalid Values',
                                 style: TextStyle(color: Colors.black)),
                             content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 1.5 ถึง 2.5\nTemp.(°C) ควรอยู่ระหว่าง 75 ถึง 85.\nF.A. (Point) ควรอยู่ระหว่าง -1 ถึง 1.',
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 2.0ถึง 2.5\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nF.A. (Point) ควรอยู่ระหว่าง -1 ถึง 1.',
                                 style: TextStyle(color: Colors.black)),
                             actions: <Widget>[
                               TextButton(
@@ -243,8 +243,8 @@ class _Tank147AfterPageState extends State<Tank147AfterPage> {
     double tempValue = double.tryParse(tempController.text) ?? 0.0;
     double ConValue = double.tryParse(ConController.text) ?? 0.0;
 
-    return (FAValue >= 1.5 && FAValue <= 2.5) &&
-        (tempValue >= 75.0 && tempValue <= 85) &&
+    return (FAValue >= 2.0 && FAValue <= 2.5) &&
+        (tempValue >= 70.0 && tempValue <= 80) &&
         (ConValue >= -1 && ConValue <= 1);
   }
 

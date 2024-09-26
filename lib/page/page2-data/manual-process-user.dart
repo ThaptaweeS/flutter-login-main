@@ -117,7 +117,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
             children: [
               Text('เคมีที่ต้องเติม : ${tableData[index]['Detail']}',
                   style: const TextStyle(color: Colors.black)),
-              Text('ปริมาณที่เติม : ${tableData[index]['Solv']} กิโลกรัม',
+              Text('ปริมาณที่แนะนำ : ${tableData[index]['Solv']} กิโลกรัม',
                   style: const TextStyle(color: Colors.black)),
               const SizedBox(height: 15),
               TextField(

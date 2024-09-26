@@ -176,73 +176,91 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
             ),
           ],
         ),
-        body: Container(
-          height: MediaQuery.of(context).size.height,
-          decoration: BoxDecoration(
-            gradient: LinearGradient(
-              colors: [Colors.blue[100]!, Colors.white],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter,
-            ),
-          ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              // Your other widgets (e.g., GridView, headers, etc.)
-              Expanded(
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    int crossAxisCount = (constraints.maxWidth / 200).floor();
-                    double cardWidth =
-                        constraints.maxWidth / crossAxisCount - defaultPadding;
-                    double cardHeight =
-                        350; // Set a fixed height or adjust as needed
-
-                    return SingleChildScrollView(
-                      padding: const EdgeInsets.all(defaultPadding),
-                      child: Column(
-                        children: [
-                          const MyFilesHeader(),
-                          const SizedBox(height: defaultPadding),
-                          GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemCount: visibleKeys.length,
-                            gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: crossAxisCount,
-                              crossAxisSpacing: defaultPadding,
-                              mainAxisSpacing: defaultPadding,
-                              childAspectRatio: cardWidth / cardHeight,
-                            ),
-                            itemBuilder: (context, index) {
-                              int id = visibleKeys[index];
-                              return FileInfoCard(
-                                info: demoMyFiles[id - 1],
-                                onTap: () => _navigateToTank(id),
-                                width: cardWidth,
-                                height: cardHeight,
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                    );
-                  },
+        body: Stack(
+          children: [
+            // 1. Gradient background behind everything
+            Positioned.fill(
+              child: Container(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.blue[100]!, Colors.white],
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                  ),
                 ),
               ),
-              Container(
-                alignment: Alignment.bottomCenter,
-                height: 200,
+            ),
+
+            // 2. Bottom image behind the cards but in front of the gradient
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Container(
+                height: 200, // Set your desired height for the image
                 width: double.infinity,
                 child: Image.asset(
                   "assets/images/city7_1.png",
-                  width: double.infinity,
                   fit: BoxFit.fill,
                 ),
               ),
-            ],
-          ),
+            ),
+
+            // 3. Foreground content (cards) on top of the image
+            Positioned.fill(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Expanded(
+                    child: LayoutBuilder(
+                      builder: (context, constraints) {
+                        int crossAxisCount =
+                            (constraints.maxWidth / 200).floor();
+                        double cardWidth =
+                            constraints.maxWidth / crossAxisCount -
+                                defaultPadding;
+                        double cardHeight =
+                            350; // Set a fixed height or adjust as needed
+
+                        return SingleChildScrollView(
+                          padding: const EdgeInsets.all(defaultPadding),
+                          child: Column(
+                            children: [
+                              const MyFilesHeader(),
+                              const SizedBox(height: defaultPadding),
+                              GridView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: visibleKeys.length,
+                                gridDelegate:
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
+                                  crossAxisSpacing: defaultPadding,
+                                  mainAxisSpacing: defaultPadding,
+                                  childAspectRatio: cardWidth / cardHeight,
+                                ),
+                                itemBuilder: (context, index) {
+                                  int id = visibleKeys[index];
+                                  return FileInfoCard(
+                                    info: demoMyFiles[id - 1],
+                                    onTap: () => _navigateToTank(id),
+                                    width: cardWidth,
+                                    height: cardHeight,
+                                  );
+                                },
+                              ),
+                              const SizedBox(
+                                  height: 20), // Add some space after the grid
+                            ],
+                          ),
+                        );
+                      },
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
         ),
       ),
     );
