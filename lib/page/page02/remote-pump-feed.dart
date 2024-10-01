@@ -131,6 +131,10 @@ class _RemotefeedBodyState extends State<remotereedBody> {
   }
 
   Widget buildPumpControlRow9(BuildContext context) {
+    TextEditingController _controller = TextEditingController();
+    double feedQuantity = 0.0;
+    double feedQuantity2 = 0.0;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -138,19 +142,19 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           child: buildPumpControlContainer(
             context,
             'AC-131 (PUMP M-55)',
-            () => sendDataToAPIac9(context, 'start', true),
-            () => sendDataToAPIac9(context, 'stop', false),
+            () => sendDataToAPIac9(context, 'start', true, feedQuantity),
+            () => sendDataToAPIac9(context, 'stop', false, feedQuantity),
           ),
         ),
-        SizedBox(width: 16), // Space between the containers
+        SizedBox(width: 16),
         Expanded(
           child: buildPumpControlContainer(
             context,
             'PB-3650XM (PUMP M-22)',
-            () => sendDataToAPI1819(context, 'start', true),
-            () => sendDataToAPI1819(context, 'stop', false),
+            () => sendDataToAPI1819(context, 'start', true, feedQuantity2),
+            () => sendDataToAPI1819(context, 'stop', false, feedQuantity2),
           ),
-        )
+        ),
       ],
     );
   }
@@ -229,7 +233,9 @@ class _RemotefeedBodyState extends State<remotereedBody> {
   ) {
     TextEditingController _controller = TextEditingController();
     double feedQuantity = 0.0; // Store quantity from TextFormField
-    List<double> reciveDataFromAPI = [120]; // Example data from API
+    double feedQuantity2 = 0.0;
+    List<double> reciveDataFromAPI = [0]; // Example data from API
+    double feedActual = 0.0;
 
     return StatefulBuilder(
       builder: (context, setState) {
@@ -251,16 +257,18 @@ class _RemotefeedBodyState extends State<remotereedBody> {
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 24, color: Colors.black),
+                style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
 
               // PumpFeedChart widget to show the feed data
               SizedBox(
-                height: 150,
+                height: 250,
                 width: 150,
                 child: PumpFeedChart(
-                  feedQuantity: feedQuantity,
+                  feedQuantity:
+                      feedQuantity, // Display the updated feedQuantity
+                  feedAcual: feedQuantity,
                   recipeData: reciveDataFromAPI, // Data from API
                 ),
               ),
@@ -282,6 +290,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
                     // Update feed quantity and refresh chart
                     setState(() {
                       feedQuantity = double.tryParse(value) ?? 0.0;
+                      feedQuantity2 = double.tryParse(value) ?? 0.0;
                     });
                   },
                 ),
@@ -293,7 +302,11 @@ class _RemotefeedBodyState extends State<remotereedBody> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: onStart,
+                    onPressed: () {
+                      // Call the onStart method and pass the feedQuantity value
+                      onStart();
+                      sendDataToAPIac9(context, 'start', true, feedQuantity);
+                    },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.green,
@@ -333,7 +346,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
       print('Response body: ${response.body}');
 
       final message = response.statusCode == 200
-          ? 'Action $action for $pump sent successfully!'
+          ? 'Action $action for Pump M-56 sent successfully!'
           : 'Failed to send action $action for $pump';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -346,21 +359,23 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     }
   }
 
-  void sendDataToAPIac9(BuildContext context, String action, bool pump) async {
+  void sendDataToAPIac9(BuildContext context, String action, bool pump,
+      double feedQuantity) async {
     final url = 'http://172.23.10.51:1111/acfeed9'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
         'Action': action,
         'Status': pump.toString(),
+        'FeedQuantity': feedQuantity.toString(),
       });
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
       final message = response.statusCode == 200
-          ? 'Action $action for $pump sent successfully!'
-          : 'Failed to send action $action for $pump';
+          ? 'Action $action for Pump M-55 sent successfully with Feed Quantity: $feedQuantity ml!'
+          : 'Failed to send action $action for Pump M-55';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
@@ -372,7 +387,8 @@ class _RemotefeedBodyState extends State<remotereedBody> {
     }
   }
 
-  void sendDataToAPI1819(BuildContext context, String action, bool pump) async {
+  void sendDataToAPI1819(BuildContext context, String action, bool pump,
+      double feedQuantity2) async {
     final url =
         'http://172.23.10.51:1111/181feed9'; // Update this URL as needed
 
@@ -382,12 +398,13 @@ class _RemotefeedBodyState extends State<remotereedBody> {
         body: {
           'Action': action,
           'Status': pump.toString(),
+          'FeedQuantity': feedQuantity2.toString(),
         },
       );
 
       final message = response.statusCode == 200
-          ? 'Action $action for $pump sent successfully!'
-          : 'Failed to send action $action for $pump';
+          ? 'Action $action for Pump M-22 sent successfully with Feed Quantity: $feedQuantity2 ml!'
+          : 'Failed to send action $action for Pump M-22';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),

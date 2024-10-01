@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 class PumpFeedChart extends StatefulWidget {
   final double feedQuantity; // The maximum feed quantity from TextField
   final List<double> recipeData; // Data from API for X-axis
+  final double feedAcual; // Data from API for Y-axis
 
   PumpFeedChart({
     required this.feedQuantity,
     required this.recipeData,
+    required this.feedAcual,
   });
 
   @override
@@ -19,9 +21,9 @@ class _PumpFeedChartState extends State<PumpFeedChart> {
   Widget build(BuildContext context) {
     return BarChart(
       BarChartData(
-        maxY: widget.feedQuantity, // Set the Y-axis max limit from TextField
+        maxY: widget.feedAcual, // Set the Y-axis max limit from TextField
         borderData: FlBorderData(
-          show: false,
+          show: true,
           border: Border.all(color: Colors.black, width: 1),
         ),
         titlesData: FlTitlesData(
@@ -30,11 +32,13 @@ class _PumpFeedChartState extends State<PumpFeedChart> {
           // Left Titles (Y-axis)
           leftTitles: AxisTitles(
             sideTitles: SideTitles(
+              reservedSize: 40,
               showTitles: true,
               getTitlesWidget: (value, meta) {
+                
                 return Text(
                   '${value.toInt()} ml', // Display Y-axis values in milliliters
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style: TextStyle(color: Colors.black, fontSize: 8),
                 );
               },
             ),
