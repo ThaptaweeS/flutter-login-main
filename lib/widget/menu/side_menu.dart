@@ -129,7 +129,7 @@ class SideMenu extends StatelessWidget {
       {
         "title": "Remote Pump Control",
         "svgSrc": "assets/icons/pump.svg",
-        "page": remotereedBody(),
+        "page": Remotefeed(),
         "accessLevel": 9
       },
       // {
