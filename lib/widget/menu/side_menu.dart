@@ -138,12 +138,12 @@ class SideMenu extends StatelessWidget {
       //   "page": Remotefeed(),
       //   "accessLevel": 5
       // },
-      // {
-      //   "title": "Remote Pump Control",
-      //   "svgSrc": "assets/icons/pump.svg",
-      //   "page": Remotefeed(),
-      //   "accessLevel": 2
-      // },
+      {
+        "title": "Remote Pump Control",
+        "svgSrc": "assets/icons/pump.svg",
+        "page": Remotefeed(),
+        "accessLevel": 2
+      },
       {
         "title": "Settings",
         "svgSrc": "assets/icons/menu_setting.svg",
@@ -240,7 +240,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Version : 1.0.9\nDate modify : 2024-Sep-10',
+                'Version : 1.0.9\nDate modify : 2024-Oct-10',
                 style: TextStyle(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),

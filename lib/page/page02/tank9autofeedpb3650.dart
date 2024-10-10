@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/page/page02/barchartfeed.dart';
 
-Widget buildPumpControlContainer1819(
+Widget buildPumpControlContainer3650(
   BuildContext context,
   String title,
   VoidCallback onStart,
@@ -58,7 +58,7 @@ Widget buildPumpControlContainer1819(
                 controller: _controller,
                 keyboardType: TextInputType.number,
                 decoration: InputDecoration(
-                  labelText: 'Quantity Feed (ml)',
+                  labelText: 'Quantity Feed (kg)',
                   labelStyle: TextStyle(color: Colors.black),
                   border: OutlineInputBorder(),
                 ),
@@ -82,7 +82,7 @@ Widget buildPumpControlContainer1819(
                   onPressed: () {
                     // Call the onStart method and pass the feedQuantity value
                     // onStart();
-                    sendDataToAPI1819(
+                    sendDataToAPIPB3650(
                         context, 'start', true, pb181x9feedQuantity);
                   },
                   style: ElevatedButton.styleFrom(
@@ -111,9 +111,9 @@ Widget buildPumpControlContainer1819(
   );
 }
 
-void sendDataToAPIac9(BuildContext context, String action, bool pump,
+void sendDataToAPIPB3650(BuildContext context, String action, bool pump,
     double ac9feedQuantity) async {
-  final url = 'http://172.23.10.51:1111/acfeed9'; // Update this URL as needed
+  final url = 'http://172.23.10.51:1111/pb36509'; // Update this URL as needed
 
   try {
     final response = await http.post(Uri.parse(url), body: {
@@ -128,34 +128,6 @@ void sendDataToAPIac9(BuildContext context, String action, bool pump,
     final message = response.statusCode == 200
         ? 'Action $action for Pump M-55 sent successfully with Feed Quantity: $ac9feedQuantity ml!'
         : 'Failed to send action $action for Pump M-55';
-
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text(message),
-    ));
-  } catch (e) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text('Error: $e'),
-    ));
-  }
-}
-
-void sendDataToAPI1819(BuildContext context, String action, bool pump,
-    double pb181x9feedQuantity) async {
-  final url = 'http://172.23.10.51:1111/181feed9'; // Update this URL as needed
-
-  try {
-    final response = await http.post(
-      Uri.parse(url),
-      body: {
-        'Action': action,
-        'Status': pump.toString(),
-        'FeedQuantity': pb181x9feedQuantity.toString(),
-      },
-    );
-
-    final message = response.statusCode == 200
-        ? 'Action $action for Pump M-22 sent successfully with Feed Quantity: $pb181x9feedQuantity ml!'
-        : 'Failed to send action $action for Pump M-22';
 
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
       content: Text(message),

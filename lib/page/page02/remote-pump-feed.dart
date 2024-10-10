@@ -4,9 +4,9 @@ import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/page02.dart';
-import 'package:newmaster/page/page02/barchartfeed.dart';
 import 'package:newmaster/page/page02/tank10autofeed.dart';
-import 'package:newmaster/page/page02/tank9autofeed.dart';
+import 'package:newmaster/page/page02/tank9autofeedac.dart';
+import 'package:newmaster/page/page02/tank9autofeedpb3650.dart';
 
 late BuildContext RemotefeedContext;
 
@@ -134,17 +134,19 @@ class _RemotefeedBodyState extends State<remotereedBody> {
   Widget buildPumpControlRow9(BuildContext context) {
     TextEditingController _controller = TextEditingController();
     double ac9feedQuantity = 0.0;
-    double pb181x9feedQuantity = 0.0;
+    double pb3650x9feedQuantity = 0.0;
 
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: buildPumpControlContainer1819(
+          child: buildPumpControlContainer3650(
             context,
             'PB-3650XM (PUMP M-22)',
-            () => sendDataToAPI1819(context, 'start', true, ac9feedQuantity),
-            () => sendDataToAPI1819(context, 'stop', false, ac9feedQuantity),
+            () => sendDataToAPIPB3650(
+                context, 'start', true, pb3650x9feedQuantity),
+            () => sendDataToAPIPB3650(
+                context, 'stop', false, pb3650x9feedQuantity),
           ),
         ),
         SizedBox(width: 16),
@@ -152,8 +154,8 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           child: buildPumpControlContainerac9(
             context,
             'AC-131 (PUMP M-55)',
-            () => sendDataToAPIac9(context, 'start', true, pb181x9feedQuantity),
-            () => sendDataToAPIac9(context, 'stop', false, pb181x9feedQuantity),
+            () => sendDataToAPIac9(context, 'start', true, ac9feedQuantity),
+            () => sendDataToAPIac9(context, 'stop', false, ac9feedQuantity),
           ),
         ),
       ],
@@ -193,132 +195,6 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           ],
         ),
       ),
-    );
-  }
-
-  Widget buildPumpControlRow(BuildContext context) {
-    TextEditingController _controller = TextEditingController();
-    double ac10feedQuantity = 0.0;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        SizedBox(width: 16), // Space between the containers
-        Expanded(
-          child: buildPumpControlContainerac10(
-            context,
-            'AC-131 (PUMP M-56)',
-            () => sendDataToAPIac10(context, 'start', true, ac10feedQuantity),
-            () => sendDataToAPIac10(context, 'stop', false, ac10feedQuantity),
-          ),
-        )
-      ],
-    );
-  }
-
-  Widget buildPumpControlContainerac9(
-    BuildContext context,
-    String title,
-    VoidCallback onStart,
-    VoidCallback onStop,
-  ) {
-    TextEditingController _controller = TextEditingController();
-    double ac9feedQuantity = 0.0; // Store quantity from TextFormField
-
-    List<double> reciveDataFromAPI = [0]; // Example data from API
-    double feedActual = 0.0;
-
-    return StatefulBuilder(
-      builder: (context, setState) {
-        return Container(
-          padding: const EdgeInsets.all(16.0),
-          alignment: Alignment.topCenter,
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(15),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black26,
-                blurRadius: 10,
-                offset: Offset(0, 5),
-              ),
-            ],
-          ),
-          child: Column(
-            children: [
-              Text(
-                title,
-                style: TextStyle(fontSize: 20, color: Colors.black),
-              ),
-              SizedBox(height: 10),
-
-              // PumpFeedChart widget to show the feed data
-              SizedBox(
-                height: 250,
-                width: 150,
-                child: PumpFeedChart(
-                  feedQuantity:
-                      ac9feedQuantity, // Display the updated feedQuantity
-                  feedAcual: ac9feedQuantity,
-                  recipeData: reciveDataFromAPI, // Data from API
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // TextField for Quantity Feed Input
-              SizedBox(
-                width: 200,
-                child: TextFormField(
-                  controller: _controller,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Quantity Feed (ml)',
-                    labelStyle: TextStyle(color: Colors.black),
-                    border: OutlineInputBorder(),
-                  ),
-                  style: TextStyle(color: Colors.black),
-                  onChanged: (value) {
-                    // Update feed quantity and refresh chart
-                    setState(() {
-                      ac9feedQuantity = double.tryParse(value) ?? 0.0;
-                    });
-                  },
-                ),
-              ),
-              SizedBox(height: 20),
-
-              // Control buttons
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      // Call the onStart method and pass the feedQuantity value
-                      // onStart();
-                      sendDataToAPIac9(context, 'start', true, ac9feedQuantity);
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.green,
-                      minimumSize: Size(50, 60),
-                    ),
-                    child: Text('Start'),
-                  ),
-                  SizedBox(width: 16),
-                  ElevatedButton(
-                    onPressed: onStop,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.black,
-                      backgroundColor: Colors.red,
-                      minimumSize: Size(50, 60),
-                    ),
-                    child: Text('Stop'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
