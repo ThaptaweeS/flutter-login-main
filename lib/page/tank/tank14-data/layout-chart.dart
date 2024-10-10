@@ -329,7 +329,7 @@ class SimpleBarChart extends StatelessWidget {
           domainFn: (ChartData sales, _) => sales.date,
           measureFn: (ChartData sales, _) => sales.value,
           data: data,
-          displayName: 'PB-181X(M)(kg/day)',
+          displayName: 'LUB-235(kg)',
           colorFn: (ChartData sales, _) {
             if (sales.value <= 20) {
               return charts.ColorUtil.fromDartColor(
