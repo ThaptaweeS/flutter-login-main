@@ -240,7 +240,7 @@ class SideMenu extends StatelessWidget {
             ),
             ListTile(
               title: Text(
-                'Version : 1.0.9\nDate modify : 2024-Oct-10',
+                'Version : 1.1.0\nDate modify : 2024-Oct-15',
                 style: TextStyle(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),

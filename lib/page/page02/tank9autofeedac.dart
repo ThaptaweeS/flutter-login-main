@@ -41,7 +41,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        // SizedBox(width: 16), // Space between the containers
+        SizedBox(width: 16), // Space between the containers
         Expanded(
           child: buildPumpControlContainerac9(
             context,
