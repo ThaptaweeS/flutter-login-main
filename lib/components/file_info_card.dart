@@ -35,7 +35,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
   void initState() {
     super.initState();
     iconColor = Colors.transparent;
-    timer = Timer.periodic(Duration(milliseconds: 700), (timer) {
+    timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         iconColor = (iconColor == const Color.fromARGB(40, 158, 158, 158))
             ? widget.info.color2!
@@ -403,6 +403,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String arLabel,
     required String acLabel,
     required String tank9TempLabel,
+    // required String feedqualityac9,
   }) {
     return Column(
       crossAxisAlignment:
@@ -517,7 +518,46 @@ class _FileInfoCardState extends State<FileInfoCard> {
             ),
           ],
         ),
-        SizedBox(height: 10), // Space between sections
+        SizedBox(height: 10),
+        // Column(
+        //   children: [
+        //     Align(
+        //       alignment: Alignment.centerLeft,
+        //       child: Text(
+        //         'Dispensing chemical',
+        //         style: TextStyle(
+        //           fontSize: 10,
+        //           color: Colors.black,
+        //           fontWeight: FontWeight.bold,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
+        // Row(
+        //   children: [
+        //     Text(
+        //       '0',
+        //       style: TextStyle(
+        //           fontSize: 20,
+        //           foreground: Paint()
+        //             ..style = PaintingStyle.stroke
+        //             ..strokeWidth = 2
+        //             ..color = Colors.blueAccent),
+        //     ),
+        //     SizedBox(width: 10),
+        //     Align(
+        //       alignment: Alignment.centerRight,
+        //       child: Text(
+        //         'kg.',
+        //         style: TextStyle(
+        //           fontSize: 10,
+        //           color: Colors.black,
+        //         ),
+        //       ),
+        //     ),
+        //   ],
+        // ),
       ],
     );
   }

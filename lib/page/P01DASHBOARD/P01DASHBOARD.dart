@@ -200,7 +200,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                 height: 200, // Set your desired height for the image
                 width: double.infinity,
                 child: Image.asset(
-                  "assets/images/city7_1.png",
+                  "assets/images/city8.png",
                   fit: BoxFit.fill,
                 ),
               ),
@@ -220,7 +220,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                             constraints.maxWidth / crossAxisCount -
                                 defaultPadding;
                         double cardHeight =
-                            350; // Set a fixed height or adjust as needed
+                            400; // Set a fixed height or adjust as needed
 
                         return SingleChildScrollView(
                           padding: const EdgeInsets.all(defaultPadding),

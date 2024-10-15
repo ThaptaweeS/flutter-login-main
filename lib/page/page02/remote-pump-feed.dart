@@ -5,8 +5,8 @@ import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/page02.dart';
 import 'package:newmaster/page/page02/tank10autofeed.dart';
+import 'package:newmaster/page/page02/tank10autofeedpb181.dart';
 import 'package:newmaster/page/page02/tank9autofeedac.dart';
-import 'package:newmaster/page/page02/tank9autofeedpb3650.dart';
 
 late BuildContext RemotefeedContext;
 
@@ -114,49 +114,35 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           end: Alignment.bottomRight,
         ),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              'Tank9 : Zinc Phosphate (PB-3650X)',
-              style: TextStyle(fontSize: 24, color: Colors.black),
-            ),
-            SizedBox(height: 50),
-            buildPumpControlRow9(context),
-          ],
+      child: Expanded(
+        child: Padding(
+          padding: EdgeInsets.all(20.0),
+          child: Column(
+            // mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                'Tank9 : Zinc Phosphate (PB-3650X)',
+                style: TextStyle(fontSize: 24, color: Colors.black),
+              ),
+              SizedBox(height: 50),
+              PumpControlWidgetac9(),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget buildPumpControlRow9(BuildContext context) {
-    TextEditingController _controller = TextEditingController();
-    double ac9feedQuantity = 0.0;
-    double pb3650x9feedQuantity = 0.0;
-
+  Widget buildPumpControlRow10(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Expanded(
-          child: buildPumpControlContainer3650(
-            context,
-            'PB-3650XM (PUMP M-22)',
-            () => sendDataToAPIPB3650(
-                context, 'start', true, pb3650x9feedQuantity),
-            () => sendDataToAPIPB3650(
-                context, 'stop', false, pb3650x9feedQuantity),
-          ),
+          child: PumpControlWidgetpb10(),
         ),
         SizedBox(width: 16),
         Expanded(
-          child: buildPumpControlContainerac9(
-            context,
-            'AC-131 (PUMP M-55)',
-            () => sendDataToAPIac9(context, 'start', true, ac9feedQuantity),
-            () => sendDataToAPIac9(context, 'stop', false, ac9feedQuantity),
-          ),
+          child: PumpControlWidget(),
         ),
       ],
     );
@@ -187,11 +173,11 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           mainAxisSize: MainAxisSize.min,
           children: [
             Text(
-              'Tank10 : Zinc Phosphate (PB-181X(M))',
+              'Tank10 : Zinc Phosphate (PB-181X)',
               style: TextStyle(fontSize: 24, color: Colors.black),
             ),
             SizedBox(height: 50),
-            buildPumpControlRow(context),
+            buildPumpControlRow10(context),
           ],
         ),
       ),

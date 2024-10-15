@@ -5,15 +5,15 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class PumpControlWidget extends StatefulWidget {
+class PumpControlWidgetpb10 extends StatefulWidget {
   @override
   _PumpControlWidgetState createState() => _PumpControlWidgetState();
 }
 
-class _PumpControlWidgetState extends State<PumpControlWidget> {
-  double feedActualac10 = 0.0;
-  double feedTargetac10 = 0.0;
-  double ac10feedQuantity = 0.0;
+class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
+  double feedActualpb9 = 0.0;
+  double feedTargetpb9 = 0.0;
+  double pb9feedQuantity = 0.0;
   List<double> reciveDataFromAPI = [];
   TextEditingController _controller = TextEditingController();
   Timer? _timer;
@@ -41,20 +41,20 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        SizedBox(width: 16), // Space between the containers
+        // SizedBox(width: 16), // Space between the containers
         Expanded(
-          child: buildPumpControlContainerac10(
+          child: buildPumpControlContainer3650(
             context,
-            'AC-131 (PUMP M-56)',
-            () => sendDataToAPIac10(context, 'start', true, ac10feedQuantity),
-            () => sendDataToAPIac10(context, 'stop', false, ac10feedQuantity),
+            'PB-181XR (PUMP M-23)',
+            () => sendDataToAPIPB3650(context, 'start', true, pb9feedQuantity),
+            () => sendDataToAPIPB3650(context, 'stop', false, pb9feedQuantity),
           ),
         ),
       ],
     );
   }
 
-  Widget buildPumpControlContainerac10(
+  Widget buildPumpControlContainer3650(
     BuildContext context,
     String title,
     VoidCallback onStart,
@@ -83,15 +83,18 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                 style: TextStyle(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
+
+              // PumpFeedChart widget to show the feed data
               SizedBox(
                 height: 250,
                 width: 150,
-                child: PumpFeedChartac10(
-                  feedActual: feedActualac10, // Actual feed data from API
-                  feedTarget: feedTargetac10, // Quantity feed from TextField
+                child: PumpFeedChartpb9(
+                  feedActual: feedActualpb9, // Updated feed actual
+                  feedTarget: feedTargetpb9, // Updated feed target
                 ),
               ),
               SizedBox(height: 10),
+
               SizedBox(
                 width: 200,
                 child: TextFormField(
@@ -104,18 +107,26 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                   ),
                   style: TextStyle(color: Colors.black),
                   onChanged: (value) {
+                    // Update feed quantity and refresh chart
                     setState(() {
-                      ac10feedQuantity = double.tryParse(value) ?? 0.0;
+                      pb9feedQuantity =
+                          double.tryParse(_controller.text) ?? 0.0;
                     });
                   },
                 ),
               ),
               SizedBox(height: 20),
+
+              // Control buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: onStart,
+                    onPressed: () {
+                      // Call the onStart method and pass the feedQuantity value
+                      sendDataToAPIPB3650(
+                          context, 'start', true, pb9feedQuantity);
+                    },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.green,
@@ -142,24 +153,23 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
     );
   }
 
-  // Function to send data to API when start/stop button is pressed
-  void sendDataToAPIac10(BuildContext context, String action, bool pump,
-      double ac10feedQuantity) async {
-    final url = 'http://172.23.10.51:1111/ac10'; // Update this URL as needed
+  void sendDataToAPIPB3650(BuildContext context, String action, bool pump,
+      double ac9feedQuantity) async {
+    final url = 'http://172.23.10.51:1111/pb36509'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
         'Action': action,
         'Status': pump.toString(),
-        'FeedQuantity': ac10feedQuantity.toString(), // Send the feed quantity
+        'FeedQuantity': pb9feedQuantity.toString(),
       });
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');
 
       final message = response.statusCode == 200
-          ? 'Action $action for Pump M-56 sent successfully!'
-          : 'Failed to send action $action for $pump';
+          ? 'Action $action for Pump M-22 sent successfully with Feed Quantity: $pb9feedQuantity kg!'
+          : 'Failed to send action $action for Pump M-22';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
@@ -171,15 +181,13 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
     }
   }
 
-  // Function to start fetching the feedActual data and updating the graph
   void startFetchingFeedActualData() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       fetchFeedDataFromAPI().then((newData) {
         setState(() {
-          feedActualac10 = newData['feedActual'] ?? 0.0; // Update feed actual
-          feedTargetac10 = newData['feedTarget'] ?? 0.0; // Update feed target
-          reciveDataFromAPI
-              .add(timeCounter.toDouble()); // Update the X-axis (seconds)
+          feedActualpb9 = newData['feedActual'] ?? 0.0; // Update feed actual
+          feedTargetpb9 = newData['feedTarget'] ?? 0.0; // Update feed target
+          reciveDataFromAPI.add(timeCounter.toDouble()); // Update the X-axis
           timeCounter++;
         });
       });
@@ -188,48 +196,40 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
     final url =
-        'http://172.23.10.51:1111/ac10acual'; // Update this URL as needed
+        'http://172.23.10.51:1111/pb9acual'; // Update this URL as needed
 
     try {
-      final response = await http.post(Uri.parse(url), body: {
-        // Pass parameters if needed
-      });
+      final response = await http.post(Uri.parse(url), body: {});
 
-      // Print the status code and response body for debugging
-      // print('Response status: ${response.statusCode}');
-      // print('Response body: ${response.body}');
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body); // Decode the JSON response
-        // Print the received data for debugging
-        // print('Received data: $data');
-
         return {
-          'feedActual': (data['feedActualac10'] ?? 0.0).toDouble(),
-          'feedTarget': (data['feedTargetac10'] ?? 0.0).toDouble(),
+          'feedActual': (data['feedActualPB9'] ?? 0.0).toDouble(),
+          'feedTarget': (data['feedTargetPB9'] ?? 0.0).toDouble(),
         };
       } else {
-        print('Failed to fetch data. Status code: ${response.statusCode}');
         return {
-          // 'feedActual': 0.0, // Return default value on failure
-          // 'feedTarget': 0.0, // Return default value on failure
+          'feedActual': 0.0,
+          'feedTarget': 0.0,
         };
       }
     } catch (e) {
-      print('Error: $e');
       return {
-        // 'feedActual': 0.0, // Return default value if error occurs
-        // 'feedTarget': 0.0, // Return default value if error occurs
+        'feedActual': 0.0,
+        'feedTarget': 0.0,
       };
     }
   }
 }
 
-class PumpFeedChartac10 extends StatelessWidget {
+class PumpFeedChartpb9 extends StatelessWidget {
   final double feedActual; // Feed actual data from API
   final double feedTarget; // Feed target (from TextField)
 
-  PumpFeedChartac10({
+  PumpFeedChartpb9({
     required this.feedActual,
     required this.feedTarget,
   });
