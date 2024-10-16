@@ -21,7 +21,7 @@ class ManualfeedUser extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.white,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
+          icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
             CuPage = P1DASHBOARDMAIN();
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
