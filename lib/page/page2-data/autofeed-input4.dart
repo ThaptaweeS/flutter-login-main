@@ -59,7 +59,7 @@ class Page044Autobody extends StatelessWidget {
                     },
                     children: [
                       buildTableRow(
-                        "Tank2 : Degreasing",
+                        "Tank2 (3-2) : Degreasing (FC-4360)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.blue,
@@ -70,7 +70,7 @@ class Page044Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank2after13",
                       ),
                       buildTableRow(
-                        "Tank8 : Surface condition",
+                        "Tank8 (3-8) : Surface condition (PL-ZN)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.green,
@@ -81,7 +81,7 @@ class Page044Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank8after13",
                       ),
                       buildTableRow(
-                        "Tank9 : Phosphate",
+                        "Tank9 (3-9) : Phosphate (PB-3650X)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.orange,
@@ -92,7 +92,7 @@ class Page044Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank9after13",
                       ),
                       buildTableRow(
-                        "Tank10 : Phosphate",
+                        "Tank10 (3-10) : Phosphate (PB-181X) ",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.grey,

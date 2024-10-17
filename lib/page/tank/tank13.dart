@@ -510,7 +510,7 @@ class _Tank13BodyPageState extends State<Tank13BodyPage> {
       var excel = Excel.createExcel();
       Sheet sheet1 = excel['Sheet1'];
 
-      sheet1.appendRow(["Tank13 : Lubricant"]);
+      sheet1.appendRow(["Tank13 (3-13) : Lubricant (Lub-4618) "]);
       final now = DateTime.now();
       final formattedDate = DateFormat('yyyy-MM-dd').format(now);
       sheet1.appendRow(["Date: $formattedDate"]);

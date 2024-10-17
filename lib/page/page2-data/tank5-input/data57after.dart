@@ -27,6 +27,7 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
     roundValue = 1; // Set default value for roundValue
     fetchRoundValue(); // Call the method to fetch roundValue from the API
     fetchDataFromAPI();
+    fetchdataValue();
   }
 
   // Method to fetch roundValue from the API
@@ -40,6 +41,75 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
           // Set roundValue based on the length of the data array
           roundValue =
               data.length + 1; // Increment by 1 to set the default value
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  void fetchdataValue() async {
+    if (roundValue > 1) {
+      // If roundValue is greater than 1, no need to fetch the data or update the fields
+      return;
+    }
+    try {
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank5fetchdata7'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        // Debug: print the entire response to check if data is coming through
+        print('Data received: $data');
+
+        // Assuming "detail" can differentiate between F_Al and Temp
+        String? ConValue;
+        String? FeValue;
+
+        for (var entry in data) {
+          print(
+              'Processing entry: $entry'); // Debug: print each entry for debugging
+          if (entry['detail'] == 'Concentraition(%)') {
+            // Double check the detail key
+            ConValue = entry['value'];
+          } else if (entry['detail'] == 'Fe(%)') {
+            FeValue = entry['value'];
+          }
+        }
+
+        // Apply the conditions and set text fields if valid
+        setState(() {
+          if (roundValue <= 1) {
+            // Only set F_Al if it meets the condition
+            if (ConValue != null) {
+              print(
+                  'Con value: $ConValue'); // Debug: print F_Al value for debugging
+              if (int.parse(ConValue) >= 10 && int.parse(ConValue) <= 15) {
+                ConController.text = ConValue; // Set F_Al value
+              } else {
+                print(
+                    'Con value not in range: $ConValue'); // Debug if value is out of range
+                ConController.clear(); // Clear if not meeting the condition
+              }
+            }
+
+            // Only set Temp if it meets the condition
+            if (FeValue != null) {
+              print(
+                  'Fe value: $FeValue'); // Debug: print Temp value for debugging
+              if (int.parse(FeValue) >= 0 && int.parse(FeValue) <= 80) {
+                FeController.text = FeValue; // Set Temp value
+              } else {
+                print(
+                    'Fe value not in range: $FeValue'); // Debug if value is out of range
+                FeController.clear(); // Clear if not meeting the condition
+              }
+            }
+          } else {
+            print('roundValue is greater than 1, skipping field updates.');
+          }
         });
       } else {
         throw Exception('Failed to load data');

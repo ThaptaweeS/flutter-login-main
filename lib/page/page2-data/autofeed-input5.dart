@@ -64,7 +64,7 @@ class Page055Autobody extends StatelessWidget {
                     },
                     children: [
                       buildTableRow(
-                        "Tank2 : Degreasing",
+                        "Tank2 (3-2) : Degreasing (FC-4360)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.blue,
@@ -75,7 +75,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank2after19",
                       ),
                       buildTableRow(
-                        "Tank5 : Acid picking No.1",
+                        "Tank5 (3-5) : Acid picking No.1 (HCI)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.green,
@@ -86,7 +86,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank5after19",
                       ),
                       buildTableRow(
-                        "Tank8 : Surface condition",
+                        "Tank8 (3-8) : Surface condition (PL-ZN)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.blue,
@@ -97,7 +97,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank8after19",
                       ),
                       buildTableRow(
-                        "Tank9 : Phosphate",
+                        "Tank9 (3-9) : Phosphate (PB-3650X)",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.orange,
@@ -108,7 +108,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank9after19",
                       ),
                       buildTableRow(
-                        "Tank10 : Phosphate",
+                        "Tank10 (3-10) : Phosphate (PB-181X) ",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.grey,
@@ -119,7 +119,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank10after19",
                       ),
                       buildTableRow(
-                        "Tank13 : Lubricant",
+                        "Tank13 (3-13) : Lubricant (Lub-4618) ",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.green,
@@ -130,7 +130,7 @@ class Page055Autobody extends StatelessWidget {
                         "http://172.23.10.51:1111/tank13after19",
                       ),
                       buildTableRow(
-                        "Tank14 : Lubricant",
+                        "Tank14 (3-14) : Lubricant (Lub-235T) ",
                         Icons.add_chart_outlined,
                         Icons.add_box_outlined,
                         Colors.blue,

@@ -104,7 +104,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 5,
-    title: "Tank5 : Acid Picking No.1",
+    title: "Tank5 (3-5) : Acid picking No.1 (HCI)",
     numOfFiles: "2 Times/day",
     svgSrc: "assets/icons/tank3.svg",
     totalStorage: "(3-5) HCl",
@@ -130,7 +130,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 8,
-    title: "Tank8 : Surface condition",
+    title: "Tank8 (3-8) : Surface condition (PL-ZN)",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank6.svg",
     totalStorage: "(3-8) PL-ZN",
@@ -140,7 +140,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 9,
-    title: "Tank9 : Phosphate",
+    title: "Tank9 (3-9) : Phosphate (PB-3650X)",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank3.svg",
     totalStorage: "(3-9) PB-3650X",
@@ -150,7 +150,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 10,
-    title: "Tank10 : Phosphate",
+    title: "Tank10 (3-10) : Phosphate (PB-181X) ",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank3.svg",
     totalStorage: "(3-10) PB-181X",
@@ -176,7 +176,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 13,
-    title: "Tank13 : Lubricant",
+    title: "Tank13 (3-13) : Lubricant (Lub-4618) ",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank4.svg",
     totalStorage: "(3-13) LUB-4618",
@@ -186,7 +186,7 @@ List<CloudStorageInfo> demoMyFiles = [
   ),
   CloudStorageInfo(
     id: 14,
-    title: "Tank14 : Lubricant",
+    title: "Tank14 (3-14) : Lubricant (Lub-235T) ",
     numOfFiles: "4 Times/day",
     svgSrc: "assets/icons/tank4.svg",
     totalStorage: "(3-14) LUB-235T",

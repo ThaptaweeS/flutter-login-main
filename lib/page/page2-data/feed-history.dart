@@ -323,6 +323,9 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                       4: FixedColumnWidth(120.0),
                       5: FixedColumnWidth(120.0),
                       6: FixedColumnWidth(120.0),
+                      7: FixedColumnWidth(120.0),
+                      8: FixedColumnWidth(120.0),
+                      9: FixedColumnWidth(120.0),
                     },
                     children: [
                       TableRow(
@@ -367,25 +370,43 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                             child: Padding(
                               padding: const EdgeInsets.all(8.0),
                               child: Text(
+                                "Round",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Order Time",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Refill Date",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                "Refill Time",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ),
+                          ),
+                          TableCell(
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
                                 "Value(Kg)",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Date",
-                                style: TextStyle(color: Colors.black),
-                              ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Time",
                                 style: TextStyle(color: Colors.black),
                               ),
                             ),
@@ -435,7 +456,18 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                               child: Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  data['value'].toString(),
+                                  DateFormat('').format(
+                                      DateTime.parse(data['date'].toString())),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  DateFormat('').format(
+                                      DateTime.parse(data['date'].toString())),
                                   style: TextStyle(color: Colors.black),
                                 ),
                               ),
@@ -455,6 +487,15 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
                                   data['time'].toString(),
+                                  style: TextStyle(color: Colors.black),
+                                ),
+                              ),
+                            ),
+                            TableCell(
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  data['value'].toString(),
                                   style: TextStyle(color: Colors.black),
                                 ),
                               ),

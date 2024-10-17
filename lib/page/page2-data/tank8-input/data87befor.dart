@@ -27,6 +27,7 @@ class _Tank87BeforePageState extends State<Tank87BeforePage> {
     roundValue = 1; // Set default value for roundValue
     fetchRoundValue(); // Call the method to fetch roundValue from the API
     fetchDataFromAPI();
+    fetchdataValue();
   }
 
   // Method to fetch roundValue from the API
@@ -40,6 +41,75 @@ class _Tank87BeforePageState extends State<Tank87BeforePage> {
           // Set roundValue based on the length of the data array
           roundValue =
               data.length + 1; // Increment by 1 to set the default value
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  void fetchdataValue() async {
+    if (roundValue > 1) {
+      // If roundValue is greater than 1, no need to fetch the data or update the fields
+      return;
+    }
+    try {
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank8fetchdata7'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        // Debug: print the entire response to check if data is coming through
+        print('Data received: $data');
+
+        // Assuming "detail" can differentiate between F_Al and Temp
+        String? TAIValue;
+        String? pHValue;
+
+        for (var entry in data) {
+          print(
+              'Processing entry: $entry'); // Debug: print each entry for debugging
+          if (entry['detail'] == 'T.Al.') {
+            // Double check the detail key
+            TAIValue = entry['value'];
+          } else if (entry['detail'] == 'pH') {
+            pHValue = entry['value'];
+          }
+        }
+
+        // Apply the conditions and set text fields if valid, only when roundValue <= 1
+        setState(() {
+          if (roundValue <= 1) {
+            // Only set F_Al if it meets the condition
+            if (TAIValue != null) {
+              print(
+                  'T_Al value: $TAIValue'); // Debug: print F_Al value for debugging
+              if (int.parse(TAIValue) >= 2 && int.parse(TAIValue) <= 8) {
+                TAIController.text = TAIValue; // Set F_Al value
+              } else {
+                print(
+                    'T_Al value not in range: $TAIValue'); // Debug if value is out of range
+                TAIController.clear(); // Clear if not meeting the condition
+              }
+            }
+
+            // Only set Temp if it meets the condition
+            if (pHValue != null) {
+              print(
+                  'pH value: $pHValue'); // Debug: print Temp value for debugging
+              if (int.parse(pHValue) >= 8.5 && int.parse(pHValue) <= 9.5) {
+                pHController.text = pHValue; // Set Temp value
+              } else {
+                print(
+                    'Temp value not in range: $pHValue'); // Debug if value is out of range
+                pHController.clear(); // Clear if not meeting the condition
+              }
+            }
+          } else {
+            print('roundValue is greater than 1, skipping field updates.');
+          }
         });
       } else {
         throw Exception('Failed to load data');

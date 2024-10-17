@@ -243,9 +243,9 @@ class _Tank147AfterPageState extends State<Tank147AfterPage> {
     double tempValue = double.tryParse(tempController.text) ?? 0.0;
     double ConValue = double.tryParse(ConController.text) ?? 0.0;
 
-    return (FAValue >= 2.0 && FAValue <= 2.5) &&
-        (tempValue >= 70.0 && tempValue <= 80) &&
-        (ConValue >= -1 && ConValue <= 1);
+    return (FAValue >= -1 && FAValue <= 1) &&
+        (tempValue >= 75.0 && tempValue <= 85) &&
+        (ConValue >= 1.5 && ConValue <= 2.5);
   }
 
   void saveValuesToAPI(BuildContext context) async {

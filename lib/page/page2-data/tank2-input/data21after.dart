@@ -27,6 +27,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     roundValue = 1; // Set default value for roundValue
     fetchRoundValue(); // Call the method to fetch roundValue from the API
     fetchDataFromAPI();
+    fetchdataValue();
   }
 
   // Method to fetch roundValue from the API
@@ -40,6 +41,76 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
           // Set roundValue based on the length of the data array
           roundValue =
               data.length + 1; // Increment by 1 to set the default value
+        });
+      } else {
+        throw Exception('Failed to load data');
+      }
+    } catch (error) {
+      print('Error: $error');
+    }
+  }
+
+  void fetchdataValue() async {
+    if (roundValue > 1) {
+      // If roundValue is greater than 1, no need to fetch the data or update the fields
+      return;
+    }
+
+    try {
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank2fetchdata1'));
+      if (response.statusCode == 200) {
+        final List<dynamic> data = json.decode(response.body);
+
+        // Debug: print the entire response to check if data is coming through
+        print('Data received: $data');
+
+        // Assuming "detail" can differentiate between F_Al and Temp
+        String? fAlValue;
+        String? tempValue;
+
+        for (var entry in data) {
+          print(
+              'Processing entry: $entry'); // Debug: print each entry for debugging
+          if (entry['detail'] == 'F.Al') {
+            // Double check the detail key
+            fAlValue = entry['value'];
+          } else if (entry['detail'] == 'Temp') {
+            tempValue = entry['value'];
+          }
+        }
+
+        // Apply the conditions and set text fields if valid, only when roundValue <= 1
+        setState(() {
+          if (roundValue <= 1) {
+            // Only set F_Al if it meets the condition
+            if (fAlValue != null) {
+              print(
+                  'F_Al value: $fAlValue'); // Debug: print F_Al value for debugging
+              if (int.parse(fAlValue) >= 30 && int.parse(fAlValue) <= 40) {
+                FAlController.text = fAlValue; // Set F_Al value
+              } else {
+                print(
+                    'F_Al value not in range: $fAlValue'); // Debug if value is out of range
+                FAlController.clear(); // Clear if not meeting the condition
+              }
+            }
+
+            // Only set Temp if it meets the condition
+            if (tempValue != null) {
+              print(
+                  'Temp value: $tempValue'); // Debug: print Temp value for debugging
+              if (int.parse(tempValue) >= 55 && int.parse(tempValue) <= 70) {
+                tempController.text = tempValue; // Set Temp value
+              } else {
+                print(
+                    'Temp value not in range: $tempValue'); // Debug if value is out of range
+                tempController.clear(); // Clear if not meeting the condition
+              }
+            }
+          } else {
+            print('roundValue is greater than 1, skipping field updates.');
+          }
         });
       } else {
         throw Exception('Failed to load data');
