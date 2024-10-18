@@ -463,7 +463,7 @@ class _Tank147AfterPageState extends State<Tank147AfterPage> {
       final List<dynamic> decodedData = json.decode(response.body);
       setState(() {
         tableData = decodedData
-            .where((entry) => entry['data'] == 'After')
+            .where((entry) => entry['data'] == 'after')
             .map((entry) => {
                   'round': entry['round'] ?? '',
                   'detail': entry['detail'] ?? '',
