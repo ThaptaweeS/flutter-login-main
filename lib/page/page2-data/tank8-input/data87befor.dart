@@ -297,6 +297,7 @@ class _Tank87BeforePageState extends State<Tank87BeforePage> {
         'pH': pHValue,
         'Name': Name,
         'Round': Round,
+        'Range': '07:00',
       },
     );
     if (response.statusCode == 200) {

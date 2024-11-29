@@ -146,6 +146,9 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                   tableData[index]['Detail'],
                   tableData[index]['Solv'],
                   USERDATA.NAME,
+                  tableData[index]['RoundTime'],
+                  tableData[index]['Date'],
+                  tableData[index]['Time'],
                 );
 
                 // Add delay to ensure API is completely processed before refreshing data
@@ -185,9 +188,24 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
     String detail,
     String solv,
     String name,
+    String roundtime,
+    String date,
+    String ordertime,
   ) async {
     await _callAPI(
-        'User-Feed', id, request_id, no, lot, value, detail, solv, name);
+      'User-Feed',
+      id,
+      request_id,
+      no,
+      lot,
+      value,
+      detail,
+      solv,
+      name,
+      roundtime,
+      date,
+      ordertime,
+    );
   }
 
   Future<void> _callAPI(
@@ -200,6 +218,9 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
     String detail,
     String solv,
     String userDataNam,
+    String roundtime,
+    String date,
+    String ordertime,
   ) async {
     try {
       final Map<String, String> body = {
@@ -211,6 +232,9 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
         'detail': detail,
         'solv': solv,
         'userDataNam': userDataNam,
+        'roundtime': roundtime,
+        'orderdate': date,
+        'ordertime': ordertime,
       };
       final response = await http
           .post(Uri.parse('http://172.23.10.51:1111/$endpoint'), body: body);
@@ -303,7 +327,12 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold))),
                       DataColumn(
-                          label: Text('Time',
+                          label: Text('Round',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Order Time',
                               style: TextStyle(
                                   color: Colors.black,
                                   fontWeight: FontWeight.bold))),
@@ -330,6 +359,9 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                           DataCell(Text(tableData[index]['Actual'].toString(),
                               style: const TextStyle(color: Colors.black))),
                           DataCell(Text(tableData[index]['Date'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(
+                              tableData[index]['RoundTime'].toString(),
                               style: const TextStyle(color: Colors.black))),
                           DataCell(Text(tableData[index]['Time'].toString(),
                               style: const TextStyle(color: Colors.black))),

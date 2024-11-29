@@ -276,7 +276,7 @@ class _Tank1019BeforePageState extends State<Tank1019BeforePage> {
     final FAValue = FAController.text;
     final ARValue = ARController.text;
     final ACValue = ACController.text;
-    final Round = roundValue.toString(); // Convert to string
+
     final Name = USERDATA.NAME;
 
     final response = await http.post(
@@ -288,7 +288,7 @@ class _Tank1019BeforePageState extends State<Tank1019BeforePage> {
         'AR': ARValue,
         'AC': ACValue,
         'Name': Name,
-        'Round': Round,
+        'Range': '19:00',
       },
     );
     if (response.statusCode == 200) {

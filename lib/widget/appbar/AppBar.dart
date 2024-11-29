@@ -2,7 +2,6 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-//--------------------------------------------- Bloc
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
@@ -12,7 +11,6 @@ import 'package:newmaster/page/page2-data/manual-process-user.dart';
 
 import '../../bloc/BlocEvent/LoginEvent.dart';
 import '../../mainBody.dart';
-//---------------------------------------------
 
 String pageactive = '';
 
@@ -42,8 +40,6 @@ class _App_BarState extends State<App_Bar> {
       ),
     );
   }
-
-  ///###################################################################################
 }
 
 class Logo2 extends StatelessWidget {
@@ -97,12 +93,129 @@ class Pack_topright_bar extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(right: 20),
       child: Container(
-          width: 310,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [IconBell(), Time_(), IconProfile()],
-          )),
+        width: 360, // เพิ่มขนาดเพื่อรองรับไอคอนใหม่
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IconNew(), // ไอคอนใหม่
+            IconBell(), // Icon Bell
+            Time_(), // เวลา
+            IconProfile(), // Icon Profile
+          ],
+        ),
+      ),
     );
+  }
+}
+
+class IconNew extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // ตรวจสอบว่าเป็นวันจันทร์หรือไม่
+    bool isMonday = DateTime.now().weekday == DateTime.monday;
+
+    return IconButton(
+      onPressed: isMonday
+          ? () {
+              // ฟังก์ชันเมื่อกดไอคอน
+              print("New Icon Clicked");
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Surface Condition',
+                        style: TextStyle(color: Colors.black)),
+                    content: Text(
+                        'คุณต้องการสั่ง Make up ประจำวันจันทร์หรือไม่',
+                        style: TextStyle(color: Colors.black)),
+                    actions: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          TextButton(
+                            onPressed: () async {
+                              // Call the API and await response
+                              await _callFeedAPI('Makeup8', '0', '0', '07.00');
+
+                              // Add delay to ensure API is completely processed before refreshing data
+                              await Future.delayed(
+                                  const Duration(milliseconds: 500));
+
+                              // Fetch new data and refresh the table
+                              await fetchDataFromAPI();
+
+                              // Close the dialog only after refreshing the data
+                              Navigator.of(context).pop();
+                            },
+                            child: Row(
+                              children: [
+                                Icon(Icons.double_arrow_outlined),
+                                SizedBox(width: 5),
+                                Text('Make up'),
+                              ],
+                            ),
+                          ),
+                          SizedBox(width: 8),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).pop();
+                            },
+                            child: Text('Close'),
+                          ),
+                        ],
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          : null, // ถ้าไม่ใช่วันจันทร์ ปุ่มจะไม่สามารถกดได้
+      icon: Icon(Icons.info_outline, color: Colors.white),
+      tooltip: "Surface Condition Make up",
+    );
+  }
+
+  Future<void> _callFeedAPI(
+      String endpoint, String no, String no2, String value) async {
+    // URL of your Node-RED endpoint
+    final url = 'http://172.23.10.51:1111/$endpoint';
+
+    try {
+      final response = await http.post(
+        Uri.parse(url),
+        body: {
+          'TAI': no, // Unique ID or number
+          'pH': no2,
+          'Range': value, // Signal or parameter to trigger
+        },
+      );
+
+      if (response.statusCode == 200) {
+        // If API call is successful
+        print('API call successful: No: $no, Value: $value');
+      } else {
+        // If API call fails
+        print('Failed to call API: StatusCode ${response.statusCode}');
+      }
+    } catch (error) {
+      print('Error calling API: $error');
+    }
+  }
+
+  Future<void> fetchDataFromAPI() async {
+    final url = 'http://172.23.10.51:1111/manual-feed';
+
+    try {
+      final response = await http.post(Uri.parse(url));
+      if (response.statusCode == 200) {
+        print('Data fetched successfully');
+        // Process data if needed
+      } else {
+        print('Failed to fetch data');
+      }
+    } catch (error) {
+      print('Error fetching data: $error');
+    }
   }
 }
 

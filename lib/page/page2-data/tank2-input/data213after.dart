@@ -296,6 +296,7 @@ class _Tank213AfterPageState extends State<Tank213AfterPage> {
         'Temp': tempValue,
         'Name': Name,
         'Round': Round,
+        'Range': '13:00',
       },
     );
     if (response.statusCode == 200) {

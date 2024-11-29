@@ -118,8 +118,8 @@ class MainBody extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.indigo[900],
+        // shadowColor: Colors.transparent,
+        backgroundColor: Colors.blue[900],
         actions: <Widget>[App_Bar()],
         iconTheme: IconThemeData(color: Colors.black),
       ),

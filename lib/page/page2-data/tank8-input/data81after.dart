@@ -294,6 +294,7 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
         'pH': pHValue,
         'Name': Name,
         'Round': Round,
+        'Range': '01:00',
       },
     );
     if (response.statusCode == 200) {

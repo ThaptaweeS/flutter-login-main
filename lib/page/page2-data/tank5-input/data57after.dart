@@ -321,6 +321,7 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
         'Fe': FeValue,
         'Name': Name,
         'Round': Round,
+        'Range': '07:00',
       },
     );
     if (response.statusCode == 200) {

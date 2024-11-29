@@ -228,6 +228,7 @@ class _Tank27BeforePageState extends State<Tank27BeforePage> {
         'Temp': tempValue,
         'Name': Name,
         'Round': Round,
+        'Range': '07:00',
       },
     );
     if (response.statusCode == 200) {

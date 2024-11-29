@@ -259,6 +259,7 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
       body: {
         'F_AI': fAIValue,
         'Temp': tempValue,
+        'Range': '01:00',
       },
     );
 

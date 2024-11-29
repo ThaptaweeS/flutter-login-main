@@ -119,19 +119,37 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
             ],
           ),
           content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('Chemicals: ${tableData[index]['Detail']}',
-                  style: TextStyle(color: Colors.black)),
-              Text('Feed : ${tableData[index]['Solv']}',
-                  style: TextStyle(color: Colors.black)),
-            ],
-          ),
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('Chemicals : ${tableData[index]['Detail']}',
+                    style: TextStyle(color: Colors.black)),
+                SizedBox(height: 20),
+                SizedBox(
+                  width: 120,
+                  child: TextField(
+                    keyboardType: TextInputType.number,
+                    controller: TextEditingController(
+                      text: tableData[index]['Solv'].toString(),
+                    ),
+                    decoration: InputDecoration(
+                      labelText: 'Feed',
+                      border: OutlineInputBorder(),
+                    ),
+                    style: TextStyle(color: Colors.black),
+                    onChanged: (value) {
+                      // Update the table data when the user changes the value
+                      tableData[index]['Solv'] = value;
+                    },
+                  ),
+                ),
+              ]),
           actions: [
             ElevatedButton(
               onPressed: () {
-                _callAPI('Passed', tableData[index]['id']).then((_) {
+                _callAPI('Passed', tableData[index]['id'],
+                        tableData[index]['Solv'])
+                    .then((_) {
                   fetchDataFromAPI();
 
                   Navigator.of(context).pop();
@@ -142,12 +160,14 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                 textStyle: TextStyle(
                     color: Colors.white), // Change the text color to white
               ),
-              child: Text('No Feed'),
+              child: Text('No Feed', style: TextStyle(color: Colors.black)),
             ),
             ElevatedButton(
               onPressed: () {
                 // Call API2 ('Approve' endpoint)
-                _callAPI('Feed', tableData[index]['id']).then((_) {
+                _callAPI('Feed', tableData[index]['id'],
+                        tableData[index]['Solv'])
+                    .then((_) {
                   // Fetch updated data for the table
                   fetchDataFromAPI();
                   // Close the dialog
@@ -160,12 +180,14 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                 textStyle: TextStyle(
                     color: Colors.white), // Change the text color to white
               ),
-              child: Text('Feed'),
+              child: Text('Feed', style: TextStyle(color: Colors.black)),
             ),
             ElevatedButton(
               onPressed: () {
                 // Call API2 ('Approve' endpoint)
-                _callAPI('Makeup', tableData[index]['id']).then((_) {
+                _callAPI('Makeup', tableData[index]['id'],
+                        tableData[index]['Solv'])
+                    .then((_) {
                   // Fetch updated data for the table
                   fetchDataFromAPI();
                   // Close the dialog
@@ -178,7 +200,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                 textStyle: TextStyle(
                     color: Colors.white), // Change the text color to white
               ),
-              child: Text('Make Up'),
+              child: Text('Make Up', style: TextStyle(color: Colors.black)),
             )
           ],
         );
@@ -187,15 +209,18 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
   }
 
   // Method to call API
-  Future<void> _callAPI(String endpoint, int id) async {
+  Future<void> _callAPI(String endpoint, int id, String updatedValue) async {
     try {
       final response = await http.post(
         Uri.parse('http://172.23.10.51:1111/$endpoint'),
-        body: {'id': id.toString()},
+        body: {
+          'id': id.toString(),
+          'value': updatedValue, // Send the updated value
+        },
       );
       if (response.statusCode == 200) {
         // API call successful
-        print('API call successful: $endpoint, id: $id');
+        print('API call successful: $endpoint, id: $id, value: $updatedValue');
         // You can perform any additional actions here if needed
       } else {
         // API call failed
@@ -235,7 +260,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                     color: Colors.blue,
                   ),
                   title: Text(
-                    'Action command for feed to Production',
+                    'Action command to feed to Production',
                     style:
                         TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
                   ),
@@ -251,119 +276,131 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                     end: Alignment.bottomCenter,
                   ),
                 ),
-                child: DataTable(
-                  columns: [
-                    DataColumn(
-                        label: Text('No.',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Process',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Item Check',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Chemical',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Specification',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Setpoint',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Actual',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Date',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Time',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('Status',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                    DataColumn(
-                        label: Text('',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold))),
-                  ],
-                  rows: List.generate(tableData.length, (index) {
-                    String statusText = '';
-                    Color statusColor = Colors.black;
-                    switch (tableData[index]['Status']) {
-                      case 0:
-                        statusText = 'Waiting';
-                        statusColor = Colors.red;
-                        break;
-                      case 1:
-                        statusText = 'Send Data';
-                        statusColor = Colors.orange;
-                        break;
-                      case 2:
-                        statusText = 'Feed';
-                        statusColor = Colors.blue;
-                        break;
-                      default:
-                        statusText = 'Unknown';
-                    }
+                child: SingleChildScrollView(
+                  scrollDirection:
+                      Axis.horizontal, // Enable horizontal scrolling
+                  child: DataTable(
+                    columns: const [
+                      DataColumn(
+                          label: Text('No.',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Process',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Item Check',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Chemical',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Specification',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Setpoint',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Actual',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Date',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Round',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Time',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('Status',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                      DataColumn(
+                          label: Text('',
+                              style: TextStyle(
+                                  color: Colors.black,
+                                  fontWeight: FontWeight.bold))),
+                    ],
+                    rows: List.generate(tableData.length, (index) {
+                      String statusText = '';
+                      Color statusColor = Colors.black;
+                      switch (tableData[index]['Status']) {
+                        case 0:
+                          statusText = 'Waiting';
+                          statusColor = Colors.red;
+                          break;
+                        case 1:
+                          statusText = 'Send Data';
+                          statusColor = Colors.orange;
+                          break;
+                        case 2:
+                          statusText = 'Feed';
+                          statusColor = Colors.blue;
+                          break;
+                        default:
+                          statusText = 'Unknown';
+                      }
 
-                    return DataRow(
-                      cells: [
-                        DataCell(Text(tableData[index]['No'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Process'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Item'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Detail'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Spec'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['SetPoint'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Actual'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Date'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(Text(tableData[index]['Time'].toString(),
-                            style: TextStyle(color: Colors.black))),
-                        DataCell(
-                          Text(
-                            statusText,
-                            style: TextStyle(color: statusColor),
+                      return DataRow(
+                        cells: [
+                          DataCell(Text(tableData[index]['No'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Process'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Item'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Detail'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Spec'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['SetPoint'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Actual'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Date'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(
+                              tableData[index]['RoundTime'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(Text(tableData[index]['Time'].toString(),
+                              style: const TextStyle(color: Colors.black))),
+                          DataCell(
+                            Text(
+                              statusText,
+                              style: TextStyle(color: statusColor),
+                            ),
                           ),
-                        ),
-                        DataCell(ElevatedButton(
-                          onPressed: () {
-                            showDetailPopup(index);
-                          },
-                          child: Text('Action'),
-                        )),
-                      ],
-                    );
-                  }),
+                          DataCell(ElevatedButton(
+                            onPressed: () {
+                              showDetailPopup(index);
+                            },
+                            child: Text('Action'),
+                          )),
+                        ],
+                      );
+                    }),
+                  ),
                 ),
               ),
               SizedBox(height: 168), // Adjust this size based on your need

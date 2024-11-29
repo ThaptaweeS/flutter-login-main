@@ -158,7 +158,7 @@ class Page044Autobody extends StatelessWidget {
           builder: (BuildContext context) {
             return AlertDialog(
               title: Text('Error', style: TextStyle(color: Colors.black)),
-              content: Text(message),
+              content: Text(message, style: TextStyle(color: Colors.black)),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {

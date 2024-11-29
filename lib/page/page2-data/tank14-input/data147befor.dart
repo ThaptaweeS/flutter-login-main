@@ -227,7 +227,7 @@ class _Tank147BeforePageState extends State<Tank147BeforePage> {
     final ConValue = ConController.text;
     final tempValue = tempController.text;
     final FAValue = FAController.text;
-    final Round = roundValue.toString(); // Convert to string
+
     final Name = USERDATA.NAME;
 
     final response = await http.post(
@@ -237,7 +237,7 @@ class _Tank147BeforePageState extends State<Tank147BeforePage> {
         'Temp': tempValue,
         'FA': FAValue,
         'Name': Name,
-        'Round': Round,
+        'Range': '07:00',
       },
     );
     if (response.statusCode == 200) {

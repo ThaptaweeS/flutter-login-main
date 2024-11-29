@@ -198,6 +198,7 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
       body: {
         'F_AI': fAIValue,
         'Temp': tempValue,
+        'Range': '01:00',
       },
     );
 

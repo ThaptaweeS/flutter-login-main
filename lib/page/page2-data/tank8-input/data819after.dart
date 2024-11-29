@@ -197,6 +197,7 @@ class _Tank819AfterPageState extends State<Tank819AfterPage> {
           'pH': pHValue,
           'Name': name,
           'Round': round,
+          'Range': '19:00',
         },
       );
 

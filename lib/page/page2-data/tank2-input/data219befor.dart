@@ -198,6 +198,7 @@ class _Tank219BeforePageState extends State<Tank219BeforePage> {
         'Temp': tempValue,
         'Name': Name,
         'Round': Round,
+        'Range': '19:00',
       },
     );
     if (response.statusCode == 200) {

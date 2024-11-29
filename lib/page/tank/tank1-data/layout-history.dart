@@ -300,6 +300,7 @@ class _DataHistory2State extends State<DataHistory2> {
         'Temp': tempValue,
         'Name': Name,
         'Round': Round,
+        'Range': '01:00',
       },
     );
     if (response.statusCode == 200) {

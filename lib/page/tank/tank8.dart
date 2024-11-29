@@ -119,9 +119,9 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
               ),
               SizedBox(height: 10),
               Expanded(
-                child: SingleChildScrollView(
-                  child: buildTable2(),
-                ),
+                // child: SingleChildScrollView(
+                child: buildTable2(),
+                // ),
               ),
               SizedBox(height: 16),
             ],
@@ -167,6 +167,7 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
   }
 
   Widget buildTable2() {
+    // Filter the table data based on the selected dropdown value
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
       if (dropdownValue == null || dropdownValue!.isEmpty) {
         return true; // No filter applied, return all data
@@ -175,42 +176,177 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
           dropdownValue!.toLowerCase();
     }).toList();
 
-    return Column(
+    // Fixed header row
+    Widget header = Table(
+      defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+      border: TableBorder.all(),
+      columnWidths: const {
+        0: FixedColumnWidth(80.0), // Round
+        1: FixedColumnWidth(120.0), // Data
+        2: FixedColumnWidth(180.0), // Detail
+        3: FixedColumnWidth(100.0), // Value
+        4: FixedColumnWidth(120.0), // Username
+        5: FixedColumnWidth(100.0), // Time
+        6: FixedColumnWidth(120.0), // Date
+      },
       children: [
-        Table(
-          defaultVerticalAlignment: TableCellVerticalAlignment.middle,
-          border: TableBorder.all(),
-          columnWidths: {
-            0: FixedColumnWidth(80.0),
-            1: FixedColumnWidth(120.0),
-            2: FixedColumnWidth(180.0),
-            3: FixedColumnWidth(100.0),
-            4: FixedColumnWidth(120.0),
-            5: FixedColumnWidth(100.0),
-            6: FixedColumnWidth(120.0),
-          },
+        TableRow(
           children: [
-            TableRow(
-              children: [
-                _buildTableCell("Round"),
-                _buildTableCell("Data"),
-                _buildTableCell("Detail"),
-                _buildTableCell("Value"),
-                _buildTableCell("Username"),
-                _buildTableCell("Time"),
-                _buildTableCell("Date"),
-              ],
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Round",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
             ),
-            ...filteredData.map((data) => buildTableRow2(
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Data",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Detail",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Value",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Username",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Time",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+            TableCell(
+              child: Container(
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                ),
+                alignment: Alignment.center, // Center align text
+                child: const Text(
+                  "Date",
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+
+    // Scrollable rows
+    Widget scrollableRows = Expanded(
+      child: SingleChildScrollView(
+        scrollDirection: Axis.vertical, // Vertical scrolling
+        child: SingleChildScrollView(
+          scrollDirection: Axis.horizontal, // Horizontal scrolling
+          child: Table(
+            defaultVerticalAlignment: TableCellVerticalAlignment.middle,
+            border: TableBorder.all(),
+            columnWidths: {
+              0: FixedColumnWidth(80.0), // Round
+              1: FixedColumnWidth(120.0), // Data
+              2: FixedColumnWidth(180.0), // Detail
+              3: FixedColumnWidth(100.0), // Value
+              4: FixedColumnWidth(120.0), // Username
+              5: FixedColumnWidth(100.0), // Time
+              6: FixedColumnWidth(120.0), // Date
+            },
+            children: filteredData.map((data) {
+              return buildTableRow2(
                 data['round'],
                 data['data'],
                 data['detail'],
                 data['value'],
                 data['Username'],
                 data['time'],
-                data['date'])),
-          ],
+                data['date'],
+              );
+            }).toList(),
+          ),
         ),
+      ),
+    );
+
+    return Column(
+      children: [
+        header, // Fixed header
+        scrollableRows, // Scrollable content
       ],
     );
   }

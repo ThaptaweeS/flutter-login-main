@@ -288,7 +288,7 @@ class _Tank919BeforePageState extends State<Tank919BeforePage> {
         'AR': ARValue,
         'AC': ACValue,
         'Name': Name,
-        'Round': Round,
+        'Range': '19.00',
       },
     );
     if (response.statusCode == 200) {

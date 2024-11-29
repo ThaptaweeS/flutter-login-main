@@ -13,6 +13,7 @@ import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
 
 late BuildContext FeedHistoryContext;
 List<Map<String, dynamic>> tableData = [];
+int? selectedRowIndex;
 
 class FeedHistory extends StatelessWidget {
   const FeedHistory({Key? key}) : super(key: key);
@@ -110,6 +111,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
         print('Response data: $responseData');
         setState(() {
           tableData = responseData.cast<Map<String, dynamic>>();
+          print('Fetched tableData: $tableData');
         });
       } else {
         print('Failed to fetch data. Status code: ${response.statusCode}');
@@ -159,7 +161,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
             end: Alignment.bottomCenter,
           ),
         ),
-        alignment: Alignment.topLeft,
+        alignment: Alignment.topCenter,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -252,13 +254,13 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                     },
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 Container(
                   width: 200,
                   child: DropdownButtonFormField<String>(
                     value: selectedTank.isEmpty ? null : selectedTank,
-                    icon: Icon(Icons.arrow_drop_down),
-                    decoration: InputDecoration(
+                    icon: const Icon(Icons.arrow_drop_down),
+                    decoration: const InputDecoration(
                       labelText: 'Tank Select',
                       filled: true,
                       fillColor: Colors.white,
@@ -273,18 +275,18 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         fetchDataFromAPI();
                       });
                     },
-                    items: <String>['', '2', '5', '9', '10', '13', '14']
+                    items: <String>['', '2', '5', '8', '9', '10', '13', '14']
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
                         child: Text('Tank $value',
-                            style: TextStyle(color: Colors.black)),
+                            style: const TextStyle(color: Colors.black)),
                       );
                     }).toList(),
                     dropdownColor: Colors.white,
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton(
                   onPressed: fetchDataFromAPI,
                   child: Row(
@@ -295,217 +297,350 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                     ],
                   ),
                 ),
-                SizedBox(width: 10),
+                const SizedBox(width: 10),
                 ElevatedButton.icon(
                   style: ElevatedButton.styleFrom(),
                   onPressed: () {
-                    exportToExcel();
+                    exportToExcel(filteredData);
                   },
-                  icon: Icon(Icons.save),
-                  label: Text('Export to Excel'),
+                  icon: const Icon(Icons.save),
+                  label: const Text('Export to Excel'),
                 ),
               ],
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             Expanded(
-              child: SingleChildScrollView(
-                primary: false,
-                child: Align(
-                  alignment: Alignment.topCenter,
-                  child: Table(
-                    defaultVerticalAlignment: TableCellVerticalAlignment.top,
-                    border: TableBorder.all(),
-                    columnWidths: {
-                      0: FixedColumnWidth(80.0),
-                      1: FixedColumnWidth(180.0),
-                      2: FixedColumnWidth(180.0),
-                      3: FixedColumnWidth(180.0),
-                      4: FixedColumnWidth(120.0),
-                      5: FixedColumnWidth(120.0),
-                      6: FixedColumnWidth(120.0),
-                      7: FixedColumnWidth(120.0),
-                      8: FixedColumnWidth(120.0),
-                      9: FixedColumnWidth(120.0),
-                    },
-                    children: [
-                      TableRow(
+              child: Column(
+                children: [
+                  // Fixed header row
+                  Container(
+                    child: Center(
+                      child: Table(
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        border: TableBorder.all(),
+                        columnWidths: const {
+                          0: FixedColumnWidth(80.0), // Tank
+                          1: FixedColumnWidth(180.0), // Detail
+                          2: FixedColumnWidth(180.0), // Lot
+                          3: FixedColumnWidth(180.0), // Name
+                          4: FixedColumnWidth(120.0), // Order Date
+                          5: FixedColumnWidth(120.0), // Round Check
+                          6: FixedColumnWidth(120.0), // Order Time
+                          7: FixedColumnWidth(120.0), // Fill Date
+                          8: FixedColumnWidth(120.0), // Fill Time
+                          9: FixedColumnWidth(120.0), // Value (Kg)
+                        },
                         children: [
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Tank",
-                                style: TextStyle(color: Colors.black),
+                          TableRow(
+                            children: [
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Tank",
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Detail",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Detail",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Lot",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Lot. Number",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Name",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "User Name",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Round",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Order Date",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Order Time",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Round Check",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Refill Date",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Order Time",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Refill Time",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Fill Date",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
-                          ),
-                          TableCell(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Text(
-                                "Value(Kg)",
-                                style: TextStyle(color: Colors.black),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Fill Time",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
                               ),
-                            ),
+                              TableCell(
+                                child: Container(
+                                  height: 40,
+                                  decoration: BoxDecoration(
+                                    color: Colors.indigo[100], // สีพื้นหลังเต็ม
+                                  ),
+                                  alignment:
+                                      Alignment.center, // จัดข้อความให้อยู่กลาง
+                                  child: const Text(
+                                    "Value(Kg)",
+                                    textAlign: TextAlign.center,
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
                         ],
                       ),
-                      ...filteredData.map((data) {
-                        return TableRow(
-                          children: [
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['tank'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['detail'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['lot'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['name'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  DateFormat('').format(
-                                      DateTime.parse(data['date'].toString())),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  DateFormat('').format(
-                                      DateTime.parse(data['date'].toString())),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  DateFormat('dd-MM-yyyy').format(
-                                      DateTime.parse(data['date'].toString())),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['time'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                            TableCell(
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Text(
-                                  data['value'].toString(),
-                                  style: TextStyle(color: Colors.black),
-                                ),
-                              ),
-                            ),
-                          ],
-                        );
-                      }).toList(),
-                    ],
+                    ),
                   ),
-                ),
+
+                  // Scrollable body
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Table(
+                        defaultVerticalAlignment:
+                            TableCellVerticalAlignment.middle,
+                        border: TableBorder.all(),
+                        columnWidths: const {
+                          0: FixedColumnWidth(80.0), // Tank
+                          1: FixedColumnWidth(180.0), // Detail
+                          2: FixedColumnWidth(180.0), // Lot
+                          3: FixedColumnWidth(180.0), // Name
+                          4: FixedColumnWidth(120.0), // Order Date
+                          5: FixedColumnWidth(120.0), // Round Check
+                          6: FixedColumnWidth(120.0), // Order Time
+                          7: FixedColumnWidth(120.0), // Fill Date
+                          8: FixedColumnWidth(120.0), // Fill Time
+                          9: FixedColumnWidth(120.0), // Value (Kg)
+                        },
+                        children: filteredData.map((data) {
+                          return TableRow(
+                            children: [
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['tank'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['detail'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['lot'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['name'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    () {
+                                      try {
+                                        var date =
+                                            DateTime.parse(data['orderdate']);
+                                        return DateFormat('dd-MM-yyyy')
+                                            .format(date);
+                                      } catch (e) {
+                                        return '-';
+                                      }
+                                    }(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['roundtime'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['ordertime'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    DateFormat('dd-MM-yyyy').format(
+                                        DateTime.parse(
+                                            data['date'].toString())),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['time'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                              TableCell(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Text(
+                                    data['value'].toString(),
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
           ],
@@ -513,52 +648,100 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
       ),
     );
   }
-}
 
-void exportToExcel() async {
-  try {
-    // Create Excel document
-    var excel = Excel.createExcel();
-    Sheet sheet = excel['Feed History'];
+  void exportToExcel(List<Map<String, dynamic>> tableData) async {
+    try {
+      var excel = Excel.createExcel(); // Create a new Excel document
+      Sheet sheet1 = excel['Sheet1']; // Access the first sheet
 
-    // Add header row
-    sheet.appendRow(
-        ["Tank", "Detail", "Lot", "Name", "Value (Kg)", "Date", "Time"]);
+      // Add a header row for the sheet
+      sheet1.appendRow(["Feed History Phosphate line 3"]);
 
-    // Add data rows
-    for (var data in tableData) {
-      final dateTime = DateTime.parse(data['time']);
-      final formattedTime = DateFormat('HH:mm:ss').format(dateTime);
-      final formattedDate =
-          DateFormat('dd-MM-yyyy').format(DateTime.parse(data['date']));
+      final now = DateTime.now();
+      final formattedDate = DateFormat('yyyy-MM-dd').format(now);
+      sheet1.appendRow(["Date: $formattedDate"]); // Add current date as a row
 
-      sheet.appendRow([
-        data['tank'].toString(),
-        data['detail'].toString(),
-        data['lot'].toString(),
-        data['name'].toString(),
-        data['value'].toString(),
-        formattedDate,
-        formattedTime,
+      // Add column titles for the table
+      sheet1.appendRow([
+        "Tank",
+        "Detail",
+        "Lot",
+        "Name",
+        "Order Date",
+        "Round Check",
+        "Order Time",
+        "Fill Date",
+        "Fill Time",
+        "Value(Kg)"
       ]);
+
+      // Loop through the data and append rows to the Excel sheet
+      for (var data in tableData) {
+        // Safely handle and format dates, add try-catch block to avoid errors
+        String formattedTime = "";
+        String formattedOrderDate = "";
+        String formattedFillDate = "";
+
+        try {
+          final orderDateTime = DateTime.tryParse(data['orderdate'] ?? '');
+          formattedOrderDate = orderDateTime != null
+              ? DateFormat('dd-MM-yyyy').format(orderDateTime)
+              : "";
+        } catch (e) {
+          print("Error parsing orderdate: $e");
+        }
+
+        try {
+          final fillDateTime = DateTime.tryParse(data['date'] ?? '');
+          formattedFillDate = fillDateTime != null
+              ? DateFormat('dd-MM-yyyy').format(fillDateTime)
+              : "";
+        } catch (e) {
+          print("Error parsing date: $e");
+        }
+
+        try {
+          final time = DateTime.tryParse(data['time'] ?? '');
+          formattedTime =
+              time != null ? DateFormat('HH:mm:ss').format(time) : "";
+        } catch (e) {
+          print("Error parsing time: $e");
+        }
+
+        // Add row to the Excel sheet
+        sheet1.appendRow([
+          data['tank'] ?? "", // If empty, use an empty string
+          data['detail'] ?? "",
+          data['lot'] ?? "",
+          data['name'] ?? "",
+          formattedOrderDate,
+          data['roundtime'] ?? "",
+          data['ordertime'] ?? "",
+          formattedFillDate,
+          formattedTime,
+          data['value'] ?? 0, // Use 0 if empty
+        ]);
+      }
+
+      // Encode the Excel file to bytes
+      var fileBytes = excel.encode()!;
+
+      // Check if fileBytes is valid (not null)
+      if (fileBytes != null) {
+        // Create Blob and use JavaScript for downloading the file (Web only)
+        final blob = html.Blob([fileBytes]);
+        final url = html.Url.createObjectUrlFromBlob(blob);
+        final anchor = html.AnchorElement(href: url)
+          ..target = 'blank'
+          ..download =
+              "Feed History_$formattedDate.xlsx" // Add current date to filename
+          ..click();
+        html.Url.revokeObjectUrl(url); // Clean up after download
+      } else {
+        print("Failed to encode Excel file.");
+      }
+    } catch (e) {
+      print('Error exporting Excel: $e');
     }
-
-    // Encode the Excel file to bytes
-    var fileBytes = excel.encode();
-
-    // Generate file name with the current date
-    final now = DateTime.now();
-    final formattedDate = DateFormat('yyyy-MM-dd').format(now);
-    final fileName = "Feed_History_$formattedDate.xlsx";
-
-    // Create a Blob for the file and trigger download
-    final blob = html.Blob([fileBytes]);
-    final url = html.Url.createObjectUrlFromBlob(blob);
-    final anchor = html.AnchorElement(href: url)
-      ..setAttribute("download", fileName)
-      ..click();
-    html.Url.revokeObjectUrl(url);
-  } catch (e) {
-    print('Error exporting to Excel: $e');
   }
 }

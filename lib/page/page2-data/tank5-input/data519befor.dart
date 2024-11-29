@@ -227,6 +227,7 @@ class _Tank519BeforePageState extends State<Tank519BeforePage> {
         'Fe': FeValue,
         'Name': Name,
         'Round': Round,
+        'Range': '19:00',
       },
     );
     if (response.statusCode == 200) {
