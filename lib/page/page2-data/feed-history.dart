@@ -217,7 +217,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                   child: TextField(
                     controller: toDateController,
                     decoration: InputDecoration(
-                      labelText: 'Start Date',
+                      labelText: 'End Date',
                       hintText: 'dd-MM-yyyy',
                       filled: true,
                       fillColor: Colors.white,
@@ -718,7 +718,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
           data['roundtime'] ?? "",
           data['ordertime'] ?? "",
           formattedFillDate,
-          formattedTime,
+          data['time'] ?? "",
           data['value'] ?? 0, // Use 0 if empty
         ]);
       }
