@@ -40,8 +40,9 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
   Widget buildPumpControlRow(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        // SizedBox(width: 16), // Space between the containers
+        // Pump Control Container
         Expanded(
           child: buildPumpControlContainerac9(
             context,
@@ -68,7 +69,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(10),
-            boxShadow: [
+            boxShadow: const [
               BoxShadow(
                 color: Colors.black26,
                 blurRadius: 10,
@@ -80,9 +81,9 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style: const TextStyle(fontSize: 20, color: Colors.black),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 10),
               SizedBox(
                 height: 250,
                 width: 150,
@@ -91,18 +92,37 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                   feedTarget: feedTargetac9,
                 ),
               ),
-              SizedBox(height: 10),
+              // const SizedBox(height: 10),
+              // SizedBox(
+              //   width: 200,
+              //   child: TextFormField(
+              //     controller: _controller,
+              //     keyboardType: TextInputType.number,
+              //     decoration: const InputDecoration(
+              //       labelText: 'Lot. Number',
+              //       labelStyle: TextStyle(color: Colors.black),
+              //       border: OutlineInputBorder(),
+              //     ),
+              //     style: const TextStyle(color: Colors.black),
+              //     onChanged: (value) {
+              //       setState(() {
+              //         // LotNumber = double.tryParse(value) ?? 0.0;
+              //       });
+              //     },
+              //   ),
+              // ),
+              const SizedBox(height: 10),
               SizedBox(
                 width: 200,
                 child: TextFormField(
                   controller: _controller,
                   keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     labelText: 'Quantity Feed (kg)',
                     labelStyle: TextStyle(color: Colors.black),
                     border: OutlineInputBorder(),
                   ),
-                  style: TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                   onChanged: (value) {
                     setState(() {
                       ac9feedQuantity = double.tryParse(value) ?? 0.0;
@@ -110,7 +130,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                   },
                 ),
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -121,19 +141,19 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.green,
-                      minimumSize: Size(50, 60),
+                      minimumSize: const Size(50, 60),
                     ),
-                    child: Text('Start'),
+                    child: const Text('Start'),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   ElevatedButton(
                     onPressed: onStop,
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.red,
-                      minimumSize: Size(50, 60),
+                      minimumSize: const Size(50, 60),
                     ),
-                    child: Text('Stop'),
+                    child: const Text('Stop'),
                   ),
                 ],
               ),
@@ -146,7 +166,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
 
   void sendDataToAPIac9(BuildContext context, String action, bool pump,
       double ac9feedQuantity) async {
-    final url = 'http://172.23.10.51:1111/acfeed9'; // Update as needed
+    const url = 'http://172.23.10.51:1111/acfeed9'; // Update as needed
 
     try {
       final response = await http.post(
@@ -173,7 +193,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
   }
 
   void startFetchingFeedActualData() {
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       fetchFeedDataFromAPI().then((newData) {
         setState(() {
           feedActualac9 = newData['feedActual'] ?? 0.0; // Update feed actual
@@ -186,7 +206,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
   }
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
-    final url =
+    const url =
         'http://172.23.10.51:1111/ac9acual'; // Update this URL as needed
 
     try {
@@ -221,7 +241,8 @@ class PumpFeedChartac9 extends StatelessWidget {
   final double feedActual; // Feed actual data from API
   final double feedTarget; // Feed target (from TextField)
 
-  PumpFeedChartac9({
+  const PumpFeedChartac9({
+    // Add 'const' here
     required this.feedActual,
     required this.feedTarget,
   });
@@ -247,7 +268,7 @@ class PumpFeedChartac9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()} sec', // Show FeedTarget as kg
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style: const TextStyle(color: Colors.black, fontSize: 10),
                 );
               },
             ),
@@ -259,14 +280,14 @@ class PumpFeedChartac9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${feedActual.toInt()} sec', // Show FeedActual as seconds
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style: const TextStyle(color: Colors.black, fontSize: 10),
                 );
               },
             ),
           ),
         ),
         // Bar chart data
-        gridData: FlGridData(
+        gridData: const FlGridData(
             show: true, drawHorizontalLine: true, drawVerticalLine: true),
         barGroups: [
           BarChartGroupData(
@@ -282,7 +303,6 @@ class PumpFeedChartac9 extends StatelessWidget {
                   toY: feedTarget,
                   color: Colors.grey.withOpacity(0.5),
                 ),
-                // ปรับ tooltip ให้อยู่ภายในกราฟแท่ง
                 rodStackItems: [
                   BarChartRodStackItem(
                     0,

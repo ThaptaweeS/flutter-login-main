@@ -7,6 +7,7 @@ import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
+import 'package:newmaster/page/page02/remote-pump-feed.dart';
 
 late BuildContext ManualfeedUserContext;
 
@@ -20,12 +21,21 @@ class ManualfeedUser extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back_ios_new),
-          onPressed: () {
-            CuPage = P1DASHBOARDMAIN();
-            MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
-          },
+        leading: Row(
+          children: [
+            IconButton(
+              icon: const Icon(Icons.arrow_back_ios_new),
+              onPressed: () {
+                CuPage = P1DASHBOARDMAIN();
+                MainBodyContext.read<ChangePage_Bloc>()
+                    .add(ChangePage_nodrower());
+              },
+            ),
+            const Text(
+              'Dashboard',
+              // style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+          ],
         ),
         title: Center(
           child: Stack(
@@ -52,7 +62,26 @@ class ManualfeedUser extends StatelessWidget {
             ],
           ),
         ),
-        // title: const Text('Order Feed Chemicals'),
+        actions: [
+          TextButton(
+            onPressed: () {
+              CuPage = Remotefeed();
+              MainBodyContext.read<ChangePage_Bloc>()
+                  .add(ChangePage_nodrower());
+            },
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Remote Feed',
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(width: 8), // เว้นระยะระหว่างข้อความกับไอคอน
+                Icon(Icons.arrow_forward_ios, color: Colors.black),
+              ],
+            ),
+          ),
+        ],
       ),
       body: const ManualfeedUserBody(),
     );
@@ -160,8 +189,19 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                 // Trigger the UI to rebuild
                 setState(() {});
 
+                // Check if tank is 9 or 10
+                // if (tableData[index]['tank'] == 9 ||
+                //     tableData[index]['tank'] == 10) {
+                //   // Navigate to RemoteFeed page
+                //   Navigator.of(context).pop(); // Close the current dialog
+                //   Navigator.push(
+                //     context,
+                //     MaterialPageRoute(builder: (context) => Remotefeed()),
+                //   );
+                // } else {
                 // Close the dialog only after refreshing the data
                 Navigator.of(context).pop();
+                // }
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
               child: const Text('บันทึกค่า'),
@@ -289,111 +329,121 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                       end: Alignment.bottomCenter,
                     ),
                   ),
-                  child: DataTable(
-                    columns: const [
-                      DataColumn(
-                          label: Text('Tank No.',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Process',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Item Check',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Specification',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Setpoint',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Actual',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Date',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Round',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Order Time',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(
-                          label: Text('Status',
-                              style: TextStyle(
-                                  color: Colors.black,
-                                  fontWeight: FontWeight.bold))),
-                      DataColumn(label: Text('')),
-                    ],
-                    rows: List.generate(tableData.length, (index) {
-                      return DataRow(
-                        cells: [
-                          DataCell(Text(tableData[index]['No'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Process'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Item'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Spec'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['SetPoint'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Actual'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Date'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(
-                              tableData[index]['RoundTime'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(Text(tableData[index]['Time'].toString(),
-                              style: const TextStyle(color: Colors.black))),
-                          DataCell(
-                            Text(
-                              tableData[index]['Status'] == 0
-                                  ? 'Waiting'
-                                  : tableData[index]['Status'] == 1
-                                      ? 'Feed'
-                                      : tableData[index]['Status'] == 3
-                                          ? 'Make Up'
-                                          : 'Unknown', // Add this for handling any unexpected status values
-                              style: TextStyle(
-                                color: tableData[index]['Status'] == 0
-                                    ? Colors.blue
-                                    : tableData[index]['Status'] == 1
-                                        ? Colors.green[700]
-                                        : tableData[index]['Status'] == 3
-                                            ? Colors
-                                                .red // You can use any color for Make Up status
-                                            : Colors
-                                                .red, // Color for unknown status
-                              ),
-                            ),
-                          ),
-                          DataCell(ElevatedButton(
-                            onPressed: () => showDetailPopup(index),
-                            child: const Text('Action'),
-                          )),
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical, // เลื่อนแนวตั้ง
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.horizontal, // เลื่อนแนวนอน
+                      child: DataTable(
+                        columnSpacing: 45.0,
+                        columns: const [
+                          DataColumn(
+                              label: Text('Tank No.',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Process',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Item Check',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Specification',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Setpoint',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Actual',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Date',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Round',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Order Time',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(
+                              label: Text('Status',
+                                  style: TextStyle(
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold))),
+                          DataColumn(label: Text('')),
                         ],
-                      );
-                    }),
+                        rows: List.generate(tableData.length, (index) {
+                          return DataRow(
+                            cells: [
+                              DataCell(Text(tableData[index]['No'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(
+                                  tableData[index]['Process'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(tableData[index]['Item'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(tableData[index]['Spec'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(
+                                  tableData[index]['SetPoint'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(
+                                  tableData[index]['Actual'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(tableData[index]['Date'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(
+                                  tableData[index]['RoundTime'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(Text(tableData[index]['Time'].toString(),
+                                  style: const TextStyle(color: Colors.black))),
+                              DataCell(
+                                Text(
+                                  tableData[index]['Status'] == 0
+                                      ? 'Waiting'
+                                      : tableData[index]['Status'] == 1
+                                          ? 'Feed'
+                                          : tableData[index]['Status'] == 3
+                                              ? 'Make Up'
+                                              : 'Unknown', // Add this for handling any unexpected status values
+                                  style: TextStyle(
+                                    color: tableData[index]['Status'] == 0
+                                        ? Colors.blue
+                                        : tableData[index]['Status'] == 1
+                                            ? Colors.green[700]
+                                            : tableData[index]['Status'] == 3
+                                                ? Colors
+                                                    .red // You can use any color for Make Up status
+                                                : Colors
+                                                    .red, // Color for unknown status
+                                  ),
+                                ),
+                              ),
+                              DataCell(ElevatedButton(
+                                onPressed: () => showDetailPopup(index),
+                                child: const Text('Action'),
+                              )),
+                            ],
+                          );
+                        }),
+                      ),
+                    ),
                   ),
                 ),
               ),

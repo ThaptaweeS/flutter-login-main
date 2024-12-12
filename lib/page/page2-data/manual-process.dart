@@ -19,6 +19,8 @@ class Manualfeed extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
+        shadowColor: Colors.transparent,
+        backgroundColor: Colors.white,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -119,31 +121,42 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
             ],
           ),
           content: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Chemicals : ${tableData[index]['Detail']}',
-                    style: TextStyle(color: Colors.black)),
-                SizedBox(height: 20),
-                SizedBox(
-                  width: 120,
-                  child: TextField(
-                    keyboardType: TextInputType.number,
-                    controller: TextEditingController(
-                      text: tableData[index]['Solv'].toString(),
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('Chemicals : ${tableData[index]['Detail']}',
+                  style: TextStyle(color: Colors.black)),
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  SizedBox(
+                    width: 120,
+                    child: TextField(
+                      keyboardType: TextInputType.number,
+                      controller: TextEditingController(
+                        text: tableData[index]['Solv'].toString(),
+                      ),
+                      decoration: InputDecoration(
+                        labelText: 'Feed',
+                        border: OutlineInputBorder(),
+                      ),
+                      style: TextStyle(color: Colors.black),
+                      onChanged: (value) {
+                        // Update the table data when the user changes the value
+                        tableData[index]['Solv'] = value;
+                      },
                     ),
-                    decoration: InputDecoration(
-                      labelText: 'Feed',
-                      border: OutlineInputBorder(),
-                    ),
-                    style: TextStyle(color: Colors.black),
-                    onChanged: (value) {
-                      // Update the table data when the user changes the value
-                      tableData[index]['Solv'] = value;
-                    },
                   ),
-                ),
-              ]),
+                  SizedBox(width: 10), // Spacing between TextField and "kg."
+                  Text('kg.',
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 16,
+                      )),
+                ],
+              ),
+            ],
+          ),
           actions: [
             ElevatedButton(
               onPressed: () {

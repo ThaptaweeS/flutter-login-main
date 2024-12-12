@@ -376,8 +376,10 @@ class SimpleBarChart extends StatelessWidget {
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
           labelStyle: charts.TextStyleSpec(
+            fontSize: 10,
             color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
+          labelRotation: 30,
         ),
       ),
     );

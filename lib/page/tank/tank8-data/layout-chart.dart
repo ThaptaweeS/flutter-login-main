@@ -315,6 +315,12 @@ class _BarChartBodyState extends State<BarChartBody> {
   }
 }
 
+int calculateRotationAngle(int numberOfBars) {
+  if (numberOfBars > 10) return -90; // หมุน 90 องศาสำหรับข้อมูลจำนวนมาก
+  if (numberOfBars > 5) return -45; // หมุน 45 องศา
+  return 0; // ข้อมูลน้อยไม่ต้องหมุน
+}
+
 class SimpleBarChart extends StatelessWidget {
   final List<ChartData> data;
 
@@ -374,6 +380,7 @@ class SimpleBarChart extends StatelessWidget {
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
+          labelRotation: calculateRotationAngle(data.length),
           labelStyle: charts.TextStyleSpec(
             color: charts.ColorUtil.fromDartColor(Colors.black),
           ),

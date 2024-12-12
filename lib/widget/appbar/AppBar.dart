@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
+import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,6 +34,9 @@ class _App_BarState extends State<App_Bar> {
         children: [
           Logo2(),
           Logo1(),
+          Pump9ac(),
+          Pump10ac(),
+          Pump10pb(),
           Spacer(),
           Spacer(),
           Pack_topright_bar(),
@@ -56,6 +60,308 @@ class Logo2 extends StatelessWidget {
           width: 50,
           color: Color.fromRGBO(255, 255, 255, 0),
         ),
+      ),
+    );
+  }
+}
+
+class Pump9ac extends StatefulWidget {
+  @override
+  _Pump9acState createState() => _Pump9acState();
+}
+
+class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool isRunning = false; // สถานะจาก PLC (true หมุน, false หยุด)
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    // เรียกใช้ฟังก์ชันดึงข้อมูลจาก API
+    fetchPlcStatus();
+  }
+
+  Future<void> fetchPlcStatus() async {
+    const url = 'http://172.23.10.51:1111/status9ac'; // URL ของ API ของคุณ
+    try {
+      // ส่งคำขอ GET ไปยัง API
+      final response = await http.get(Uri.parse(url));
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // แปลงข้อมูล JSON ที่ได้จาก API
+        final data = json.decode(response.body);
+
+        // อัปเดตสถานะ `isRunning` จากค่าที่ได้รับ
+        setState(() {
+          // ตรวจสอบว่าข้อมูลใน API เป็น `true` หรือ `false`
+          isRunning = data['status'] == true;
+
+          // ควบคุมการหมุนของไอคอนตามสถานะ
+          if (isRunning) {
+            _controller.repeat(); // เริ่มหมุนถ้าสถานะเป็น true
+          } else {
+            _controller.stop(); // หยุดหมุนถ้าสถานะเป็น false
+          }
+        });
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+
+    // เรียกใช้ซ้ำทุก 1 วินาที
+    await Future.delayed(Duration(seconds: 2), fetchPlcStatus);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: isRunning
+                    ? _controller.value * 2 * math.pi
+                    : 0, // หมุนถ้าสถานะเป็น true
+                child: child,
+              );
+            },
+            child: Icon(
+              Icons.support_rounded,
+              color: isRunning
+                  ? const Color.fromARGB(255, 0, 255, 8)
+                  : const Color.fromARGB(
+                      255, 247, 247, 247), // สีเขียวถ้า true, สีแดงถ้า false
+              size: 24.0,
+            ),
+          ),
+          SizedBox(width: 8.0),
+          Text(
+            'AC-131\n(PUMP M-55)',
+            style: TextStyle(fontSize: 8.0),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Pump10ac extends StatefulWidget {
+  @override
+  _Pump10acState createState() => _Pump10acState();
+}
+
+class _Pump10acState extends State<Pump10ac>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool isRunning = false; // สถานะจาก PLC (true หมุน, false หยุด)
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    // เรียกใช้ฟังก์ชันดึงข้อมูลจาก API
+    fetchPlcStatus();
+  }
+
+  Future<void> fetchPlcStatus() async {
+    const url = 'http://172.23.10.51:1111/status10ac'; // URL ของ API ของคุณ
+    try {
+      // ส่งคำขอ GET ไปยัง API
+      final response = await http.get(Uri.parse(url));
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // แปลงข้อมูล JSON ที่ได้จาก API
+        final data = json.decode(response.body);
+
+        // อัปเดตสถานะ `isRunning` จากค่าที่ได้รับ
+        setState(() {
+          // ตรวจสอบว่าข้อมูลใน API เป็น `true` หรือ `false`
+          isRunning = data['status'] == true;
+
+          // ควบคุมการหมุนของไอคอนตามสถานะ
+          if (isRunning) {
+            _controller.repeat(); // เริ่มหมุนถ้าสถานะเป็น true
+          } else {
+            _controller.stop(); // หยุดหมุนถ้าสถานะเป็น false
+          }
+        });
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+
+    // เรียกใช้ซ้ำทุก 1 วินาที
+    await Future.delayed(Duration(seconds: 2), fetchPlcStatus);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: isRunning
+                    ? _controller.value * 2 * math.pi
+                    : 0, // หมุนถ้าสถานะเป็น true
+                child: child,
+              );
+            },
+            child: Icon(
+              Icons.support_rounded,
+              color: isRunning
+                  ? const Color.fromARGB(255, 0, 255, 8)
+                  : const Color.fromARGB(
+                      255, 247, 247, 247), // สีเขียวถ้า true, สีแดงถ้า false
+              size: 24.0,
+            ),
+          ),
+          SizedBox(width: 8.0), // Add spacing between the icon and text
+          Text(
+            'AC-131\n(PUMP M-56)',
+            style: TextStyle(fontSize: 8.0),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Pump10pb extends StatefulWidget {
+  @override
+  _Pump10pbState createState() => _Pump10pbState();
+}
+
+class _Pump10pbState extends State<Pump10pb>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  bool isRunning = false; // สถานะจาก PLC (true หมุน, false หยุด)
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      vsync: this,
+      duration: Duration(seconds: 1),
+    );
+
+    // เรียกใช้ฟังก์ชันดึงข้อมูลจาก API
+    fetchPlcStatus();
+  }
+
+  Future<void> fetchPlcStatus() async {
+    const url = 'http://172.23.10.51:1111/status10pb'; // URL ของ API ของคุณ
+    try {
+      // ส่งคำขอ GET ไปยัง API
+      final response = await http.get(Uri.parse(url));
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
+
+      if (response.statusCode == 200) {
+        // แปลงข้อมูล JSON ที่ได้จาก API
+        final data = json.decode(response.body);
+
+        // อัปเดตสถานะ `isRunning` จากค่าที่ได้รับ
+        setState(() {
+          // ตรวจสอบว่าข้อมูลใน API เป็น `true` หรือ `false`
+          isRunning = data['status'] == true;
+
+          // ควบคุมการหมุนของไอคอนตามสถานะ
+          if (isRunning) {
+            _controller.repeat(); // เริ่มหมุนถ้าสถานะเป็น true
+          } else {
+            _controller.stop(); // หยุดหมุนถ้าสถานะเป็น false
+          }
+        });
+      } else {
+        print('Failed to fetch data. Status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      print('Error fetching data: $e');
+    }
+
+    // เรียกใช้ซ้ำทุก 1 วินาที
+    await Future.delayed(Duration(seconds: 2), fetchPlcStatus);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.all(8.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          AnimatedBuilder(
+            animation: _controller,
+            builder: (context, child) {
+              return Transform.rotate(
+                angle: isRunning
+                    ? _controller.value * 2 * math.pi
+                    : 0, // หมุนถ้าสถานะเป็น true
+                child: child,
+              );
+            },
+            child: Icon(
+              Icons.support_rounded,
+              color: isRunning
+                  ? const Color.fromARGB(255, 0, 255, 8)
+                  : const Color.fromARGB(
+                      255, 247, 247, 247), // สีเขียวถ้า true, สีแดงถ้า false
+              size: 24.0,
+            ),
+          ),
+          SizedBox(width: 8.0), // Add spacing between the icon and text
+          Text(
+            'PB-181XR\n(PUMP M-23)',
+            style: TextStyle(fontSize: 8.0),
+          ),
+        ],
       ),
     );
   }

@@ -93,8 +93,26 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
                   feedTarget: feedTargetpb9, // Updated feed target
                 ),
               ),
+              // SizedBox(height: 10),
+              // SizedBox(
+              //   width: 200,
+              //   child: TextFormField(
+              //     controller: _controller,
+              //     keyboardType: TextInputType.number,
+              //     decoration: InputDecoration(
+              //       labelText: 'Lot. Number',
+              //       labelStyle: TextStyle(color: Colors.black),
+              //       border: OutlineInputBorder(),
+              //     ),
+              //     style: TextStyle(color: Colors.black),
+              //     onChanged: (value) {
+              //       setState(() {
+              //         // LotNumber = double.tryParse(value) ?? 0.0;
+              //       });
+              //     },
+              //   ),
+              // ),
               SizedBox(height: 10),
-
               SizedBox(
                 width: 200,
                 child: TextFormField(

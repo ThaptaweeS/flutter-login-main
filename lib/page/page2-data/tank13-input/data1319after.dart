@@ -252,6 +252,7 @@ class _Tank1319AfterPageState extends State<Tank1319AfterPage> {
     final ConValue = ConController.text;
     final tempValue = tempController.text;
     final FAValue = FAController.text;
+    final Round = roundValue.toString();
 
     final Name = USERDATA.NAME;
 
@@ -263,6 +264,7 @@ class _Tank1319AfterPageState extends State<Tank1319AfterPage> {
         'FA': FAValue,
         'Name': Name,
         'Range': '19:00',
+        'Round': Round,
       },
     );
     if (response.statusCode == 200) {

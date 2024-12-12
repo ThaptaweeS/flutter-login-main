@@ -256,6 +256,7 @@ class _Tank1013AfterPageState extends State<Tank1013AfterPage> {
     final FAValue = FAController.text;
     final ARValue = ARController.text;
     final ACValue = ACController.text;
+    final Round = roundValue.toString();
 
     final name = USERDATA.NAME;
 
@@ -270,6 +271,7 @@ class _Tank1013AfterPageState extends State<Tank1013AfterPage> {
           'AC': ACValue,
           'Name': name,
           'Range': '13:00',
+          'Round': Round,
         },
       );
 

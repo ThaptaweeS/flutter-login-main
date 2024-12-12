@@ -185,9 +185,14 @@ class SimpleBarChart extends StatelessWidget {
       ),
       domainAxis: charts.OrdinalAxisSpec(
         renderSpec: charts.SmallTickRendererSpec(
+          // labelRotation: calculateRotationAngle(data.length),
           labelStyle: charts.TextStyleSpec(
+            fontSize: 10,
             color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
+          labelAnchor: charts.TickLabelAnchor.centered,
+          labelOffsetFromAxisPx: 60, // เลื่อนข้อความออกจากแกนเล็กน้อย
+          labelRotation: -90,
         ),
       ),
     );

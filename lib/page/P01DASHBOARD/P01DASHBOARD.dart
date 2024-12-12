@@ -171,7 +171,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.settings),
+              icon: Icon(Icons.visibility),
               onPressed: () => _showSettingsDialog(context),
             ),
           ],

@@ -7,6 +7,7 @@ import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
 import 'package:newmaster/page/page02/tank10autofeed.dart';
 import 'package:newmaster/page/page02/tank10autofeedpb181.dart';
 import 'package:newmaster/page/page02/tank9autofeedac.dart';
+import 'package:newmaster/page/page2-data/manual-process-user.dart';
 
 late BuildContext RemotefeedContext;
 
@@ -51,6 +52,26 @@ class Remotefeed extends StatelessWidget {
             ],
           ),
         ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              CuPage = ManualfeedUser();
+              MainBodyContext.read<ChangePage_Bloc>()
+                  .add(ChangePage_nodrower());
+            },
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  'Feed Order',
+                  style: TextStyle(color: Colors.black),
+                ),
+                SizedBox(width: 8), // เว้นระยะระหว่างข้อความกับไอคอน
+                Icon(Icons.arrow_forward_ios, color: Colors.black),
+              ],
+            ),
+          ),
+        ],
       ),
       body: remotereedBody(),
     );

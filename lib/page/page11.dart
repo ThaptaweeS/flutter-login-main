@@ -4,6 +4,7 @@ import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
+import 'package:newmaster/page/adduser.dart';
 import 'package:newmaster/page/editdata.dart';
 import 'package:newmaster/page/settings.dart';
 
@@ -44,7 +45,7 @@ class MainSetting extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {
                     // เปลี่ยนหน้าไปยัง Add User
-                    // CuPage = AddUserPage(); // ตัวอย่างหน้าใหม่
+                    CuPage = UserManagementPage(); // ตัวอย่างหน้าใหม่
                     MainBodyContext.read<ChangePage_Bloc>()
                         .add(ChangePage_nodrower());
                   },

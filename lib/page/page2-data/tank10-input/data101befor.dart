@@ -267,6 +267,7 @@ class _Tank101BeforePageState extends State<Tank101BeforePage> {
     final FAValue = FAController.text;
     final ARValue = ARController.text;
     final ACValue = ACController.text;
+    final Round = roundValue.toString();
 
     final Name = USERDATA.NAME;
 
@@ -280,6 +281,7 @@ class _Tank101BeforePageState extends State<Tank101BeforePage> {
         'AC': ACValue,
         'Name': Name,
         'Range': '01:00',
+        'Round': Round,
       },
     );
     if (response.statusCode == 200) {
