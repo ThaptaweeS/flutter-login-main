@@ -31,6 +31,31 @@ class Tank8 extends StatelessWidget {
                   .add(ChangePage_nodrower());
             },
           ),
+          title: Center(
+            child: Stack(
+              children: <Widget>[
+                // Stroked text as border.
+                Text(
+                  'Tank 8 Surface Condition',
+                  style: TextStyle(
+                    fontSize: 40,
+                    foreground: Paint()
+                      ..style = PaintingStyle.stroke
+                      ..strokeWidth = 6
+                      ..color = Colors.blue[700]!,
+                  ),
+                ),
+                // Solid text as fill.
+                Text(
+                  'Tank 8 Surface Condition',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.grey[300],
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
         body: Tank8Body());
   }
@@ -183,10 +208,11 @@ class _P1DASHBOARDMAINState2 extends State<Tank8Body> {
               style: TextStyle(fontSize: 13.0)),
           actions: [
             TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

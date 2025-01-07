@@ -82,21 +82,25 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                       // Save values to API
                       saveValuesToAPI(context);
                     } else {
-                      // Show popup for Invalid Values
+                      // Show popup for แจ้งเตือน
                       showDialog(
                         context: context,
                         builder: (BuildContext context) {
                           return AlertDialog(
-                            title: Text('Invalid Values',
+                            title: Text('แจ้งเตือน',
                                 style: TextStyle(color: Colors.black)),
                             content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.'),
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.',
+                                style: TextStyle(color: Colors.black)),
                             actions: <Widget>[
                               TextButton(
+                                style: TextButton.styleFrom(
+                                    backgroundColor: Colors.pink[50]),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
-                                child: Text('OK'),
+                                child: Text('OK',
+                                    style: TextStyle(color: Colors.black)),
                               ),
                             ],
                           );
@@ -104,7 +108,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                       );
                     }
                   },
-                  child: Text('Save Values'),
+                  child: Text('Save Values',
+                      style: TextStyle(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -333,11 +338,12 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -354,10 +360,11 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -534,10 +541,11 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 'Failed to fetch data from the API. Status code: ${response.statusCode}'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );

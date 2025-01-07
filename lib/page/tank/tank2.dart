@@ -497,10 +497,11 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                 'Failed to fetch data from the API. Status code: ${response.statusCode}'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );

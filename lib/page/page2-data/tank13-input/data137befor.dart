@@ -76,7 +76,8 @@ class _Tank137BeforePageState extends State<Tank137BeforePage> {
                   onPressed: () {
                     saveValuesToAPI(context);
                   },
-                  child: Text('Save Values'),
+                  child: Text('Save Values',
+                      style: TextStyle(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -263,11 +264,12 @@ class _Tank137BeforePageState extends State<Tank137BeforePage> {
             ),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -289,10 +291,11 @@ class _Tank137BeforePageState extends State<Tank137BeforePage> {
             ),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -477,10 +480,11 @@ class _Tank137BeforePageState extends State<Tank137BeforePage> {
             ),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );

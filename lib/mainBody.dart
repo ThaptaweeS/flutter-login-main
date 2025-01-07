@@ -113,6 +113,7 @@ class MainBody extends StatelessWidget {
   Widget page;
 
   @override
+
   Widget build(BuildContext context) {
     MainBodyContext = context;
 
@@ -121,7 +122,7 @@ class MainBody extends StatelessWidget {
         // shadowColor: Colors.transparent,
         backgroundColor: Colors.blue[900],
         actions: <Widget>[App_Bar()],
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: IconThemeData(color: Colors.white),
       ),
       drawer: SideMenu(),
       body: page,

@@ -30,6 +30,31 @@ class Tank10 extends StatelessWidget {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
+        title: Center(
+          child: Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Tank 10 Zinc Phosphate(PB-181X)',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
+              ),
+              // Solid text as fill.
+              Text(
+                'Tank 10 Zinc Phosphate(PB-181X)',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Tank10Body(),
     );
@@ -225,10 +250,11 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
               style: TextStyle(fontSize: 13.0)),
           actions: [
             TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

@@ -30,6 +30,31 @@ class Tank1 extends StatelessWidget {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
+        title: Center(
+          child: Stack(
+            children: <Widget>[
+              // Stroked text as border.
+              Text(
+                'Tank 2 Degreasing',
+                style: TextStyle(
+                  fontSize: 40,
+                  foreground: Paint()
+                    ..style = PaintingStyle.stroke
+                    ..strokeWidth = 6
+                    ..color = Colors.blue[700]!,
+                ),
+              ),
+              // Solid text as fill.
+              Text(
+                'Tank 2 Degreasing',
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.grey[300],
+                ),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Tank1Body(),
     );
@@ -183,10 +208,11 @@ class _Tank1BodyState extends State<Tank1Body> {
           ),
           actions: [
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

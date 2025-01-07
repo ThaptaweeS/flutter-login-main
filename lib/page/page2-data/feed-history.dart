@@ -411,9 +411,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
                                   child: const Text(
-                                    "Order Date",
+                                    "Order Date\n(DD-MM-YYYY)",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
+                                        fontSize: 12,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -462,9 +463,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
                                   child: const Text(
-                                    "Fill Date",
+                                    "Fill Date\n(DD-MM-YYYY)",
                                     textAlign: TextAlign.center,
                                     style: TextStyle(
+                                        fontSize: 12,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),

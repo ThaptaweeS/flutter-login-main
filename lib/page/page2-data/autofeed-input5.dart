@@ -202,7 +202,7 @@ class Page055Autobody extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK'),
+                  child: Text('OK', style: TextStyle(color: Colors.black)),
                 ),
               ],
             );
@@ -219,10 +219,11 @@ class Page055Autobody extends StatelessWidget {
                 style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );

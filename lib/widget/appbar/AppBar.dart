@@ -92,8 +92,8 @@ class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         // แปลงข้อมูล JSON ที่ได้จาก API
@@ -193,8 +193,8 @@ class _Pump10acState extends State<Pump10ac>
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         // แปลงข้อมูล JSON ที่ได้จาก API
@@ -294,8 +294,8 @@ class _Pump10pbState extends State<Pump10pb>
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         // แปลงข้อมูล JSON ที่ได้จาก API
@@ -594,6 +594,8 @@ class _IconBellState extends State<IconBell> {
                             MainAxisAlignment.end, // Align buttons to the right
                         children: [
                           TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.blue),
                             onPressed: () {
                               CuPage = ManualfeedUser();
                               MainBodyContext.read<ChangePage_Bloc>()
@@ -601,23 +603,28 @@ class _IconBellState extends State<IconBell> {
                               Navigator.of(context).pop();
                               print('Go');
                             },
-                            child: Row(
+                            child: const Row(
                               children: [
-                                Icon(Icons.double_arrow_outlined),
+                                Icon(Icons.double_arrow_outlined,
+                                    color: Colors.black),
                                 SizedBox(
                                     width:
                                         5), // Add some spacing between the icon and the text
-                                Text('Go to'),
+                                Text('Go to',
+                                    style: TextStyle(color: Colors.black)),
                               ],
                             ),
                           ),
-                          SizedBox(
+                          const SizedBox(
                               width: 8), // Add some spacing between the buttons
                           TextButton(
+                            style: TextButton.styleFrom(
+                                backgroundColor: Colors.grey),
                             onPressed: () {
                               Navigator.of(context).pop();
                             },
-                            child: Text('Close'),
+                            child: Text('Close',
+                                style: TextStyle(color: Colors.black)),
                           ),
                         ],
                       ),

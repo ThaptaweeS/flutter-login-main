@@ -21,22 +21,59 @@ class ManualfeedUser extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
-        leading: Row(
-          children: [
-            IconButton(
-              icon: const Icon(Icons.arrow_back_ios_new),
+        leading: Builder(
+          builder: (BuildContext context) {
+            return TextButton(
               onPressed: () {
                 CuPage = P1DASHBOARDMAIN();
                 MainBodyContext.read<ChangePage_Bloc>()
                     .add(ChangePage_nodrower());
               },
-            ),
-            const Text(
-              'Dashboard',
-              // style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-          ],
+              style: const ButtonStyle(
+                alignment: Alignment.centerRight,
+              ),
+              child: const Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.arrow_back_ios_new, color: Colors.black),
+                  SizedBox(width: 8),
+                  // Text(
+                  //   'Dashboard',
+                  //   style: TextStyle(color: Colors.black),
+                  //   overflow: TextOverflow.ellipsis,
+                  // ),
+                ],
+              ),
+            );
+          },
         ),
+        // leading: Row(
+        //   children: [
+        //     TextButton(
+        //       onPressed: () {
+        //         CuPage = P1DASHBOARDMAIN();
+        //         MainBodyContext.read<ChangePage_Bloc>()
+        //             .add(ChangePage_nodrower());
+        //       },
+        //       style: const ButtonStyle(
+        //         alignment: Alignment.centerRight, // ครอบคลุมพื้นที่ด้านซ้าย
+        //       ),
+        //       child: const Row(
+        //         mainAxisAlignment: MainAxisAlignment.center,
+        //         children: [
+        //           Icon(Icons.arrow_back_ios_new, color: Colors.black),
+        //           SizedBox(width: 8),
+        //           Text(
+        //             'Dashboard',
+        //             style: TextStyle(
+        //               color: Colors.black,
+        //             ),
+        //           ),
+        //         ],
+        //       ),
+        //     ),
+        //   ],
+        // ),
         title: Center(
           child: Stack(
             children: <Widget>[
@@ -115,12 +152,33 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
           tableData = responseData.cast<Map<String, dynamic>>();
           showDetails = List<bool>.filled(tableData.length, false);
         });
-        print('Data fetched successfully: $tableData');
       } else {
-        throw Exception('Failed to fetch data');
+        throw Exception(
+            'Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error: $error');
+      print('Error fetching data: $error');
+      // เพิ่ม Dialog แสดงข้อผิดพลาด
+      if (context.mounted) {
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('ข้อผิดพลาด',
+                  style: TextStyle(color: Colors.black)),
+              content: Text('ไม่สามารถโหลดข้อมูลได้: $error',
+                  style: const TextStyle(color: Colors.black)),
+              actions: [
+                ElevatedButton(
+                  onPressed: () => Navigator.of(context).pop(),
+                  child:
+                      const Text('ปิด', style: TextStyle(color: Colors.black)),
+                ),
+              ],
+            );
+          },
+        );
+      }
     }
   }
 
@@ -131,6 +189,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
   }
 
   void showDetailPopup(int index) {
+    final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
     TextEditingController lotController = TextEditingController();
     TextEditingController valueController = TextEditingController();
 
@@ -140,78 +199,100 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
         return AlertDialog(
           title:
               const Text('รายละเอียด', style: TextStyle(color: Colors.black)),
-          content: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('เคมีที่ต้องเติม : ${tableData[index]['Detail']}',
-                  style: const TextStyle(color: Colors.black)),
-              Text('ปริมาณที่แนะนำ : ${tableData[index]['Solv']} กิโลกรัม',
-                  style: const TextStyle(color: Colors.black)),
-              const SizedBox(height: 15),
-              TextField(
-                controller: lotController,
-                decoration: const InputDecoration(labelText: 'Lot'),
-                style: const TextStyle(color: Colors.black),
-              ),
-              TextField(
-                controller: valueController,
-                decoration:
-                    const InputDecoration(labelText: 'จำนวนที่เติม(กิโลกรัม)'),
-                style: const TextStyle(color: Colors.black),
-              ),
-            ],
+          content: Form(
+            key: _formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text('เคมีที่ต้องเติม : ${tableData[index]['Detail']}',
+                    style: const TextStyle(color: Colors.black)),
+                Text('ปริมาณที่แนะนำ : ${tableData[index]['Solv']} กิโลกรัม',
+                    style: const TextStyle(color: Colors.black)),
+                const SizedBox(height: 15),
+                TextFormField(
+                  controller: lotController,
+                  decoration: InputDecoration(
+                    labelText: 'Lot',
+                    border: const OutlineInputBorder(),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'กรุณากรอก Lot';
+                    }
+                    return null;
+                  },
+                ),
+                const SizedBox(height: 10),
+                TextFormField(
+                  controller: valueController,
+                  decoration: InputDecoration(
+                    labelText: 'จำนวนที่เติม(กิโลกรัม)',
+                    border: const OutlineInputBorder(),
+                    errorBorder: const OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.red, width: 1.0),
+                    ),
+                  ),
+                  style: const TextStyle(color: Colors.black),
+                  validator: (value) {
+                    if (value == null || value.isEmpty) {
+                      return 'กรุณากรอกจำนวนที่เติม';
+                    }
+                    return null;
+                  },
+                ),
+              ],
+            ),
           ),
           actions: [
             ElevatedButton(
               onPressed: () async {
-                // Call the API and await response
-                await _callFeedAPI(
-                  tableData[index]['id'],
-                  tableData[index]['request_id'],
-                  tableData[index]['No'],
-                  lotController.text,
-                  valueController.text,
-                  tableData[index]['Detail'],
-                  tableData[index]['Solv'],
-                  USERDATA.NAME,
-                  tableData[index]['RoundTime'],
-                  tableData[index]['Date'],
-                  tableData[index]['Time'],
-                );
+                if (_formKey.currentState?.validate() ?? false) {
+                  try {
+                    // ตรวจสอบค่าจาก tableData และ TextField
+                    String lot = lotController.text.trim();
+                    String quantity = valueController.text.trim();
+                    print("Lot: $lot");
+                    print("จำนวนที่เติม: $quantity");
 
-                // Add delay to ensure API is completely processed before refreshing data
-                await Future.delayed(const Duration(milliseconds: 500));
+                    await _callFeedAPI(
+                      tableData[index]['id'] ?? '',
+                      tableData[index]['request_id'] ?? '',
+                      tableData[index]['No'] ?? '',
+                      lot,
+                      quantity,
+                      tableData[index]['Detail'] ?? '',
+                      tableData[index]['Solv'] ?? '',
+                      USERDATA.NAME ?? '',
+                      tableData[index]['RoundTime'] ?? '',
+                      tableData[index]['Date'] ?? '',
+                      tableData[index]['Time'] ?? '',
+                    );
 
-                // Fetch new data and refresh the table
-                await fetchDataFromAPI();
-
-                // Trigger the UI to rebuild
-                setState(() {});
-
-                // Check if tank is 9 or 10
-                // if (tableData[index]['tank'] == 9 ||
-                //     tableData[index]['tank'] == 10) {
-                //   // Navigate to RemoteFeed page
-                //   Navigator.of(context).pop(); // Close the current dialog
-                //   Navigator.push(
-                //     context,
-                //     MaterialPageRoute(builder: (context) => Remotefeed()),
-                //   );
-                // } else {
-                // Close the dialog only after refreshing the data
-                Navigator.of(context).pop();
-                // }
+                    await Future.delayed(const Duration(milliseconds: 300));
+                    await fetchDataFromAPI();
+                    setState(() {});
+                    Navigator.of(context).pop(); // ปิด Popup
+                  } catch (error) {
+                    print('Error during save: $error');
+                  }
+                }
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: const Text('บันทึกค่า'),
+              child: const Text('บันทึกค่า',
+                  style: TextStyle(color: Colors.white)),
             ),
             ElevatedButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
               style: ElevatedButton.styleFrom(backgroundColor: Colors.red),
-              child: const Text('ยกเลิก'),
+              child:
+                  const Text('ยกเลิก', style: TextStyle(color: Colors.white)),
             ),
           ],
         );
@@ -276,15 +357,21 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
         'orderdate': date,
         'ordertime': ordertime,
       };
-      final response = await http
-          .post(Uri.parse('http://172.23.10.51:1111/$endpoint'), body: body);
+
+      final response = await http.post(
+        Uri.parse('http://172.23.10.51:1111/$endpoint'),
+        body: body,
+      );
+
       if (response.statusCode == 200) {
         print('API call successful: $endpoint');
       } else {
-        print('Failed to call API: $endpoint');
+        throw Exception(
+            'Failed to call API. Status code: ${response.statusCode}');
       }
     } catch (error) {
       print('Error calling API: $error');
+      throw error; // ส่งข้อผิดพลาดให้ฟังก์ชันที่เรียกใช้
     }
   }
 
@@ -437,7 +524,8 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                               ),
                               DataCell(ElevatedButton(
                                 onPressed: () => showDetailPopup(index),
-                                child: const Text('Action'),
+                                child: const Text('Action',
+                                    style: TextStyle(color: Colors.black)),
                               )),
                             ],
                           );

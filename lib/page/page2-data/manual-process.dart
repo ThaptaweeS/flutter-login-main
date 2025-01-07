@@ -414,7 +414,8 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                                   onPressed: () {
                                     showDetailPopup(index);
                                   },
-                                  child: Text('Action'),
+                                  child: Text('Action',
+                                      style: TextStyle(color: Colors.black)),
                                 ),
                               ),
                             ),

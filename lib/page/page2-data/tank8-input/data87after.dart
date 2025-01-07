@@ -83,7 +83,8 @@ class _Tank87AfterPageState extends State<Tank87AfterPage> {
                       showInvalidValuesDialog(context);
                     }
                   },
-                  child: Text('Save Values'),
+                  child: Text('Save Values',
+                      style: TextStyle(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -218,17 +219,18 @@ class _Tank87AfterPageState extends State<Tank87AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Invalid Values', style: TextStyle(color: Colors.black)),
+          title: Text('แจ้งเตือน', style: TextStyle(color: Colors.black)),
           content: Text(
             'กรุณากรอกค่าภายในช่วงที่ระบุ\nT.AI.(Point) ควรอยู่ระหว่าง 2 ถึง 8\npH ควรอยู่ระหว่าง 8.5 ถึง 9.5',
             style: TextStyle(color: Colors.black),
           ),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -249,7 +251,7 @@ class _Tank87AfterPageState extends State<Tank87AfterPage> {
               onPressed: () {
                 Navigator.of(context).popUntil(ModalRoute.withName('/'));
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -266,10 +268,11 @@ class _Tank87AfterPageState extends State<Tank87AfterPage> {
           content: Text(message, style: TextStyle(color: Colors.black)),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

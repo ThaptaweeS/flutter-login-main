@@ -433,10 +433,11 @@ class _Tank8BodyPageState extends State<Tank8BodyPage> {
           content: Text(message),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

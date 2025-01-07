@@ -92,7 +92,8 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
                       showInvalidValuesDialog(context);
                     }
                   },
-                  child: Text('Save Values'),
+                  child: Text('Save Values',
+                      style: TextStyle(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -318,17 +319,18 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Invalid Values', style: TextStyle(color: Colors.black)),
+          title: Text('แจ้งเตือน', style: TextStyle(color: Colors.black)),
           content: Text(
             'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
             style: TextStyle(color: Colors.black),
           ),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -348,7 +350,7 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
               onPressed: () {
                 Navigator.of(context).popUntil(ModalRoute.withName('/'));
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );
@@ -365,10 +367,11 @@ class _Tank97AfterPageState extends State<Tank97AfterPage> {
           content: Text(message),
           actions: <Widget>[
             TextButton(
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK'),
+              child: Text('OK', style: TextStyle(color: Colors.black)),
             ),
           ],
         );

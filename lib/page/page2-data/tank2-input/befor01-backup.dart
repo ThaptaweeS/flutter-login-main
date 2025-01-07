@@ -39,30 +39,34 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
                     // Save values to API
                     saveValuesToAPI(context);
                   } else {
-                    // Show popup for Invalid Values',
+                    // Show popup for แจ้งเตือน',
 
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('Invalid Values',
+                          title: Text('แจ้งเตือน',
                               style: TextStyle(color: Colors.black)),
                           content: Text(
                               'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 and 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 and 70.'),
                           actions: <Widget>[
                             TextButton(
+                              style: TextButton.styleFrom(
+                                  backgroundColor: Colors.green),
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
-                              child: Text('OK'),
-                            ),
+                              child: Text('OK',
+                                  style: TextStyle(color: Colors.black)),
+                            )
                           ],
                         );
                       },
                     );
                   }
                 },
-                child: Text('Save Values'),
+                child:
+                    Text('Save Values', style: TextStyle(color: Colors.black)),
               ),
               SizedBox(height: 20),
               Expanded(
@@ -227,10 +231,11 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
                 'Failed to fetch data from the API. Status code: ${response.statusCode}'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -278,11 +283,12 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
                 Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -298,10 +304,11 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
             content: Text('Failed to save values to the API.'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );

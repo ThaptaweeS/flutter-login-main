@@ -219,7 +219,7 @@ void _showTextPopup(BuildContext context) {
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK'),
+            child: Text('OK', style: TextStyle(color: Colors.black)),
           ),
         ],
       );

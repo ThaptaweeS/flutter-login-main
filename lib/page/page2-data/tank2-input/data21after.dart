@@ -120,6 +120,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     }
   }
 
+  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -137,49 +138,62 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                buildTable(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (validateValues()) {
-                      // Save values to API
-                      saveValuesToAPI(context);
-                    } else {
-                      // Show popup for Invalid Values',
-
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('Invalid Values',
-                                style: TextStyle(color: Colors.black)),
-                            content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
-                              style: TextStyle(color: Colors.black),
-                            ),
-                            actions: <Widget>[
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('OK'),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTable(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        // Save values to API
+                        saveValuesToAPI(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('แจ้งเตือน',
+                                  style: TextStyle(color: Colors.black)),
+                              content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
+                                style: TextStyle(color: Colors.black),
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text('Save Values'),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    // เรียกใช้ saveValuesToAPI เมื่อกด "ยืนยัน"
+                                    saveValuesToAPI(context);
+                                    Navigator.of(context).pop(); // ปิด Dialog
+                                  },
+                                  child: Text('ยืนยัน'),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.pink[50]),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ยกเลิก',
+                                      style: TextStyle(color: Colors.black)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Save Values',
+                        style: TextStyle(color: Colors.black)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: buildTable2(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
@@ -198,12 +212,24 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
       children: [
         TableRow(
           children: [
-            buildTableCell("F.Al (Point)", FAlController),
+            buildTableCell(
+              "F.Al (Point)",
+              FAlController,
+              "ค่าต้องอยู่ระหว่าง 30 ถึง 40",
+              30.0,
+              40.0,
+            ),
           ],
         ),
         TableRow(
           children: [
-            buildTableCell("Temp(°C)", tempController),
+            buildTableCell(
+              "Temp(°C)",
+              tempController,
+              "ค่าต้องอยู่ระหว่าง 55 ถึง 70",
+              55.0,
+              70.0,
+            ),
           ],
         ),
         TableRow(
@@ -215,7 +241,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller) {
+  Widget buildTableCell(String label, TextEditingController controller,
+      String rangeMessage, double min, double max) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
@@ -226,9 +253,25 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              // labelStyle: TextStyle(color: Colors.black),
               border: OutlineInputBorder(),
+              errorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+              ),
+              focusedErrorBorder: OutlineInputBorder(
+                borderSide: BorderSide(color: Colors.red),
+              ),
+              errorStyle: TextStyle(color: Colors.red),
             ),
+            validator: (value) {
+              double? numericValue = double.tryParse(value ?? '');
+              if (numericValue == null ||
+                  numericValue < min ||
+                  numericValue > max) {
+                return rangeMessage;
+              }
+              return null;
+            },
             style: TextStyle(color: Colors.black),
           ),
         ),
@@ -319,11 +362,12 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             ),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
                 onPressed: () {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -339,10 +383,11 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             content: Text('Failed to save values to the API.'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
@@ -364,14 +409,14 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
           width: 620,
           child: TextField(
             controller: roundFilterController,
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               labelText: 'Filter Round',
               labelStyle: TextStyle(color: Colors.black),
               hintText: 'Enter round number',
               hintStyle: TextStyle(color: Colors.black),
               prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
-            style: TextStyle(color: Colors.black),
+            style: const TextStyle(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes
@@ -383,7 +428,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
-          columnWidths: {
+          columnWidths: const {
             0: FixedColumnWidth(80.0),
             1: FixedColumnWidth(120.0),
             2: FixedColumnWidth(80.0),
@@ -392,7 +437,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             5: FixedColumnWidth(120.0),
           },
           children: [
-            TableRow(
+            const TableRow(
               children: [
                 TableCell(
                     child: Padding(
@@ -522,10 +567,11 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                 'Failed to fetch data from the API. Status code: ${response.statusCode}'),
             actions: <Widget>[
               TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK'),
+                child: Text('OK', style: TextStyle(color: Colors.black)),
               ),
             ],
           );
