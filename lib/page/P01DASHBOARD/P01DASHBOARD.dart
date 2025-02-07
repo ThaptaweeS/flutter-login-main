@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/components/file_info_card.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
@@ -42,8 +43,10 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      fetchStatusAndUpdateColors();
-      setState(() {});
+      // print('Timer...'); // ตรวจสอบว่า Timer ทำงานจริง
+      setState(() {
+        fetchStatusAndUpdateColors() {}
+      });
     });
   }
 
@@ -60,12 +63,13 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   }
 
   void _navigateToTank(int id) {
+    print("Inside _navigateToTank for Tank $id"); // Debugging statement
     switch (id) {
-      case 1:
-        CuPage = Tank1();
-        P3TANKMASTERvar.SelectPage = 3;
-        MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
-        break;
+      // case 1:
+      //   CuPage = Tank1();
+      //   P3TANKMASTERvar.SelectPage = 3;
+      //   MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
+      //   break;
       case 2:
         CuPage = Tank1();
         P3TANKMASTERvar.SelectPage = 3;
@@ -142,71 +146,106 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          shadowColor: Colors.transparent,
-          backgroundColor: Colors.blue[100],
-          title: Center(
-            child: Stack(
-              children: <Widget>[
-                // Stroked text as border.
-                Text(
-                  'Dashboard',
-                  style: TextStyle(
-                    fontSize: 40,
-                    foreground: Paint()
-                      ..style = PaintingStyle.stroke
-                      ..strokeWidth = 6
-                      ..color = Colors.blue[700]!,
-                  ),
+          backgroundColor: Colors.indigo[50],
+          title: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment:
+                CrossAxisAlignment.baseline, // ใช้ Baseline เดียวกัน
+            textBaseline: TextBaseline
+                .alphabetic, // ต้องเพิ่มสำหรับให้ align ด้วย baseline
+            children: [
+              Text(
+                'DASHBOARD',
+                style: GoogleFonts.ramabhadra(
+                  fontSize: 40,
+                  color: Colors.black,
                 ),
-                // Solid text as fill.
-                Text(
-                  'Dashboard',
-                  style: TextStyle(
-                    fontSize: 40,
-                    color: Colors.grey[300],
+              ),
+              const SizedBox(width: 20),
+              Row(
+                // mainAxisAlignment: MainAxisAlignment.center,
+                // crossAxisAlignment: CrossAxisAlignment.end,
+                // textBaseline: TextBaseline.alphabetic,
+                children: [
+                  // Text(
+                  //   "Select Tank",
+                  //   style: GoogleFonts.ramabhadra(
+                  //     fontSize: 20,
+                  //     color: Colors.black,
+                  //   ),
+                  // ),
+                  const SizedBox(width: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      CircleAvatar(
+                        backgroundColor: Colors.green,
+                        radius: 10,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Pass",
+                        style: GoogleFonts.ramabhadra(
+                          fontSize: 11,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
+                  const SizedBox(width: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircleAvatar(
+                        backgroundColor: Colors.yellow,
+                        radius: 10,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Waiting Check",
+                        style: GoogleFonts.ramabhadra(
+                          fontSize: 11,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(width: 15),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const CircleAvatar(
+                        backgroundColor: Colors.red,
+                        radius: 10,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        "NG Value",
+                        style: GoogleFonts.ramabhadra(
+                          fontSize: 11,
+                          color: Colors.black,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ],
           ),
           actions: [
             IconButton(
-              icon: Icon(Icons.visibility),
+              icon: const Icon(Icons.visibility),
               onPressed: () => _showSettingsDialog(context),
             ),
           ],
         ),
         body: Stack(
           children: [
-            // 1. Gradient background behind everything
             Positioned.fill(
               child: Container(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.blue[100]!, Colors.white],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
-                ),
+                color: Colors.indigo[50],
               ),
             ),
-
-            // 2. Bottom image behind the cards but in front of the gradient
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Container(
-                height: 200, // Set your desired height for the image
-                width: double.infinity,
-                child: Image.asset(
-                  "assets/images/city8.png",
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),
-
-            // 3. Foreground content (cards) on top of the image
             Positioned.fill(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,17 +258,15 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                         double cardWidth =
                             constraints.maxWidth / crossAxisCount -
                                 defaultPadding;
-                        double cardHeight =
-                            400; // Set a fixed height or adjust as needed
+                        double cardHeight = 600;
 
                         return SingleChildScrollView(
                           padding: const EdgeInsets.all(defaultPadding),
                           child: Column(
                             children: [
-                              const MyFilesHeader(),
                               const SizedBox(height: defaultPadding),
                               GridView.builder(
-                                physics: NeverScrollableScrollPhysics(),
+                                physics: const NeverScrollableScrollPhysics(),
                                 shrinkWrap: true,
                                 itemCount: visibleKeys.length,
                                 gridDelegate:
@@ -241,16 +278,17 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                                 ),
                                 itemBuilder: (context, index) {
                                   int id = visibleKeys[index];
-                                  return FileInfoCard(
-                                    info: demoMyFiles[id - 1],
+                                  return HoverableCard(
                                     onTap: () => _navigateToTank(id),
-                                    width: cardWidth,
-                                    height: cardHeight,
+                                    child: FileInfoCard(
+                                      info: demoMyFiles[id - 1],
+                                      onTap: () => _navigateToTank(id),
+                                      width: cardWidth,
+                                      height: cardHeight,
+                                    ),
                                   );
                                 },
                               ),
-                              const SizedBox(
-                                  height: 20), // Add some space after the grid
                             ],
                           ),
                         );
@@ -266,17 +304,13 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
     );
   }
 
-  void fetchStatusAndUpdateColors() {
-    // Dummy implementation
-  }
-
   void _showSettingsDialog(BuildContext context) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:
-              Text('Tanks Visibility', style: TextStyle(color: Colors.black)),
+          title: Text('Tanks Visibility',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           content: SingleChildScrollView(
             child: Column(
               children: [
@@ -284,7 +318,8 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text('Tank $id', style: TextStyle(color: Colors.black)),
+                      Text('Tank $id',
+                          style: GoogleFonts.ramabhadra(color: Colors.black)),
                       Switch(
                         value: visibilityStates[id]!,
                         onChanged: (bool value) {
@@ -310,175 +345,59 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   }
 }
 
-class MyFilesHeader extends StatelessWidget {
-  const MyFilesHeader();
+class HoverableCard extends StatefulWidget {
+  final Widget child;
+  final VoidCallback onTap;
+
+  const HoverableCard({
+    Key? key,
+    required this.child,
+    required this.onTap,
+  }) : super(key: key);
+
+  @override
+  _HoverableCardState createState() => _HoverableCardState();
+}
+
+class _HoverableCardState extends State<HoverableCard> {
+  bool _isHovered = false;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Row(
-          children: [
-            Text(
-              "Select Tank",
-              style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                    color: Colors.black,
-                  ),
-            ),
-            const SizedBox(width: 25),
-            const CircleAvatar(
-              backgroundColor: Colors.green,
-              radius: 10,
-            ),
-            const SizedBox(width: 5),
-            const Text(
-              "Pass",
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(width: 15),
-            const CircleAvatar(
-              backgroundColor: Colors.yellow,
-              radius: 10,
-            ),
-            const SizedBox(width: 5),
-            const Text(
-              "Waiting Check",
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
-            ),
-            const SizedBox(width: 15),
-            const CircleAvatar(
-              backgroundColor: Colors.red,
-              radius: 10,
-            ),
-            const SizedBox(width: 5),
-            const Text(
-              "NG Value",
-              style: TextStyle(
-                fontSize: 11,
-                color: Colors.black,
-              ),
-            ),
-          ],
+    return MouseRegion(
+      onEnter: (_) => setState(() => _isHovered = true),
+      onExit: (_) => setState(() => _isHovered = false),
+      child: GestureDetector(
+        onTap: () {
+          print("Card tapped");
+          widget.onTap();
+        },
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 50),
+          curve: Curves.easeInOut,
+          transform: Matrix4.identity()..scale(_isHovered ? 1.05 : 1.0),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(10),
+            boxShadow: _isHovered
+                ? [
+                    BoxShadow(
+                      color: Colors.black26,
+                      blurRadius: 15,
+                      offset: Offset(0, 10),
+                    ),
+                  ]
+                : [
+                    BoxShadow(
+                      color: Colors.black12,
+                      blurRadius: 5,
+                      offset: Offset(0, 3),
+                    ),
+                  ],
+          ),
+          child: widget.child,
         ),
-      ],
+      ),
     );
   }
 }
-
-// class IconNew extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     // ตรวจสอบว่าเป็นวันจันทร์หรือไม่
-//     bool isMonday = DateTime.now().weekday == DateTime.monday;
-
-//     return IconButton(
-//       onPressed: isMonday
-//           ? () {
-//               // ฟังก์ชันเมื่อกดไอคอน
-//               print("New Icon Clicked");
-//               showDialog(
-//                 context: context,
-//                 builder: (BuildContext context) {
-//                   return AlertDialog(
-//                     title: Text('Surface Condition',
-//                         style: TextStyle(color: Colors.black)),
-//                     content: Text(
-//                         'คุณต้องการสั่ง Make up ประจำวันจันทร์หรือไม่',
-//                         style: TextStyle(color: Colors.black)),
-//                     actions: [
-//                       Row(
-//                         mainAxisAlignment: MainAxisAlignment.end,
-//                         children: [
-//                           TextButton(
-//                             onPressed: () async {
-//                               // Call the API and await response
-//                               await _callFeedAPI('Makeup8', '0', '0', '07.00');
-
-//                               // Add delay to ensure API is completely processed before refreshing data
-//                               await Future.delayed(
-//                                   const Duration(milliseconds: 500));
-
-//                               // Fetch new data and refresh the table
-//                               await fetchDataFromAPI();
-
-//                               // Close the dialog only after refreshing the data
-//                               Navigator.of(context).pop();
-//                             },
-//                             child: Row(
-//                               children: [
-//                                 Icon(Icons.double_arrow_outlined),
-//                                 SizedBox(width: 5),
-//                                 Text('Make up'),
-//                               ],
-//                             ),
-//                           ),
-//                           SizedBox(width: 8),
-//                           TextButton(
-//                             onPressed: () {
-//                               Navigator.of(context).pop();
-//                             },
-//                             child: Text('Close'),
-//                           ),
-//                         ],
-//                       ),
-//                     ],
-//                   );
-//                 },
-//               );
-//             }
-//           : null, // ถ้าไม่ใช่วันจันทร์ ปุ่มจะไม่สามารถกดได้
-//       icon: Icon(Icons.info_outline, color: Colors.white),
-//       tooltip: "Surface Condition Make up",
-//     );
-//   }
-
-//   Future<void> _callFeedAPI(
-//       String endpoint, String no, String no2, String value) async {
-//     // URL of your Node-RED endpoint
-//     final url = 'http://172.23.10.51:1111/$endpoint';
-
-//     try {
-//       final response = await http.post(
-//         Uri.parse(url),
-//         body: {
-//           'TAI': no, // Unique ID or number
-//           'pH': no2,
-//           'Range': value, // Signal or parameter to trigger
-//         },
-//       );
-
-//       if (response.statusCode == 200) {
-//         // If API call is successful
-//         print('API call successful: No: $no, Value: $value');
-//       } else {
-//         // If API call fails
-//         print('Failed to call API: StatusCode ${response.statusCode}');
-//       }
-//     } catch (error) {
-//       print('Error calling API: $error');
-//     }
-//   }
-
-//   Future<void> fetchDataFromAPI() async {
-//     final url = 'http://172.23.10.51:1111/manual-feed';
-
-//     try {
-//       final response = await http.post(Uri.parse(url));
-//       if (response.statusCode == 200) {
-//         print('Data fetched successfully');
-//         // Process data if needed
-//       } else {
-//         print('Failed to fetch data');
-//       }
-//     } catch (error) {
-//       print('Error fetching data: $error');
-//     }
-//   }
-// }

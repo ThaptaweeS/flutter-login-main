@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
@@ -78,6 +79,7 @@ class Page02Autobody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.indigo[50],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -142,14 +144,15 @@ class Page02Autobody extends StatelessWidget {
                   context: context,
                   builder: (BuildContext context) {
                     return AlertDialog(
-                      title:
-                          Text("Error", style: TextStyle(color: Colors.black)),
+                      title: Text("Error",
+                          style: GoogleFonts.ramabhadra(color: Colors.black)),
                       content: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         mainAxisSize: MainAxisSize.min,
                         children: [
                           Text("กรุณากรอกข้อมูลในช่องด้านล่างให้ครบถ้วน",
-                              style: TextStyle(color: Colors.black)),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black)),
                           for (String fieldName in missingFields)
                             Text("$fieldName"),
                         ],
@@ -179,7 +182,7 @@ class Page02Autobody extends StatelessWidget {
               SizedBox(height: 12),
               Text(
                 'Data Input (Auto Feed)',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 16,
                 ),
               ),

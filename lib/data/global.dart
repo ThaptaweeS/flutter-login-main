@@ -37,3 +37,9 @@ Map<int, bool> visibilityStates = {
   13: true,
   14: true,
 };
+
+class feedData {
+  static String ac9feedQuantity = '';
+  static String ac10feedQuantity = '';
+  static String PB10feedQuantity = '';
+}

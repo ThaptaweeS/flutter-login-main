@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -132,11 +133,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -154,7 +151,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
                     }
                   },
                   child: Text('Save Values',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -197,10 +194,10 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
               keyboardType: TextInputType.number,
               decoration: InputDecoration(
                 labelText: label,
-                labelStyle: TextStyle(color: Colors.black),
+                labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                 border: OutlineInputBorder(),
               ),
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -219,7 +216,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
               value: roundValue,
               decoration: InputDecoration(
                 labelText: 'Round',
-                labelStyle: TextStyle(color: Colors.black),
+                labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                 border: OutlineInputBorder(),
               ),
               items: List.generate(
@@ -228,7 +225,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
                         value: index + 1,
                         child: Text(
                           (index + 1).toString(),
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ),
                       )),
               onChanged: (value) {
@@ -237,7 +234,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
                 });
               },
               dropdownColor: Colors.white,
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -289,10 +286,11 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('แจ้งเตือน', style: TextStyle(color: Colors.black)),
+          title: Text('แจ้งเตือน',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           content: Text(
             'กรุณากรอกค่าภายในช่วงที่ระบุ\nT.AI.(Point) ควรอยู่ระหว่าง 2 ถึง 8\npH ควรอยู่ระหว่าง 8.5 ถึง 9.5',
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
           actions: <Widget>[
             TextButton(
@@ -300,7 +298,8 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -313,15 +312,17 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Success', style: TextStyle(color: Colors.black)),
-          content:
-              Text('บันทึกค่าสำเร็จ', style: TextStyle(color: Colors.black)),
+          title: Text('Success',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text('บันทึกค่าสำเร็จ',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).popUntil(ModalRoute.withName('/'));
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -334,15 +335,18 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Error', style: TextStyle(color: Colors.black)),
-          content: Text(message, style: TextStyle(color: Colors.black)),
+          title:
+              Text('Error', style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content:
+              Text(message, style: GoogleFonts.ramabhadra(color: Colors.black)),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -364,12 +368,12 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               hintText: 'Enter round number',
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
               prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
             onChanged: (value) {
               setState(() {});
             },
@@ -415,7 +419,7 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text, style: TextStyle(color: Colors.black)),
+        child: Text(text, style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
     );
   }
@@ -443,7 +447,8 @@ class _Tank813AfterPageState extends State<Tank813AfterPage> {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text ?? '', style: TextStyle(color: Colors.black)),
+        child: Text(text ?? '',
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
     );
   }

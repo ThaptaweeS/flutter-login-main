@@ -2,6 +2,7 @@ import 'dart:convert'; // สำหรับ JSON
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
@@ -26,11 +27,11 @@ class _AddUserState extends State<AddUser> {
   String? _selectedPermission;
 
   final List<String> _roles = [
-    'Admin',
+    'ADMIN',
     'QC Engineer',
     'PD Engineer',
-    'QC',
-    'PD'
+    'QC Staff',
+    'PD Staff'
   ];
   final List<String> _permissions = ['9', '1', '15'];
 
@@ -38,9 +39,10 @@ class _AddUserState extends State<AddUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('เพิ่มผู้ใช้งาน'),
+        backgroundColor: Colors.indigo[50],
+        title: Text('เพิ่มผู้ใช้งาน', style: GoogleFonts.ramabhadra()),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.indigo[50],
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: SingleChildScrollView(
@@ -50,7 +52,15 @@ class _AddUserState extends State<AddUser> {
               TextField(
                 controller: _nameController,
                 decoration: const InputDecoration(
-                  labelText: 'ชื่อ',
+                  labelText: 'First Name',
+                  border: OutlineInputBorder(),
+                ),
+              ),
+              const SizedBox(height: 16),
+              TextField(
+                controller: _nameController,
+                decoration: const InputDecoration(
+                  labelText: 'Surname',
                   border: OutlineInputBorder(),
                 ),
               ),
@@ -90,9 +100,13 @@ class _AddUserState extends State<AddUser> {
                 items: _roles.map((role) {
                   return DropdownMenuItem(
                     value: role,
-                    child: Text(role),
+                    child: Text(
+                      role,
+                      style: GoogleFonts.ramabhadra(color: Colors.black),
+                    ),
                   );
                 }).toList(),
+                dropdownColor: Colors.white,
                 onChanged: (value) {
                   setState(() {
                     _selectedRole = value;
@@ -109,9 +123,13 @@ class _AddUserState extends State<AddUser> {
                 items: _permissions.map((permission) {
                   return DropdownMenuItem(
                     value: permission,
-                    child: Text(permission),
+                    child: Text(
+                      permission,
+                      style: GoogleFonts.ramabhadra(color: Colors.black),
+                    ),
                   );
                 }).toList(),
+                dropdownColor: Colors.white,
                 onChanged: (value) {
                   setState(() {
                     _selectedPermission = value;
@@ -207,7 +225,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
                     .add(ChangePage_nodrower());
               },
             ),
-            const Text('Dashboard'),
+            // const Text('Dashboard'),
           ],
         ),
 
@@ -215,39 +233,39 @@ class _UserManagementPageState extends State<UserManagementPage> {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'User Management',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'User Management',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'User Management',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
         ),
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.blue[100],
+        // shadowColor: Colors.transparent,
+        backgroundColor: Colors.indigo[50],
         actions: [
           Row(
             children: [
               TextButton(
                 onPressed: () => _navigateToAddUser(context),
-                child: Row(
+                child: const Row(
                   children: [
-                    const Icon(Icons.add_reaction_rounded),
-                    const SizedBox(width: 8),
-                    const Text('Add User'),
+                    Icon(Icons.add_reaction_rounded),
+                    SizedBox(width: 8),
+                    Text('Add User'),
                   ],
                 ),
               )
@@ -255,7 +273,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
           )
         ],
       ),
-      backgroundColor: Colors.blue[100],
+      backgroundColor: Colors.indigo[50],
       body: FutureBuilder<List<Map<String, dynamic>>>(
         future: _usersFuture,
         builder: (context, snapshot) {
@@ -308,10 +326,10 @@ class _UserManagementPageState extends State<UserManagementPage> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddUser(context),
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => _navigateToAddUser(context),
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 
@@ -361,10 +379,12 @@ class _UserManagementPageState extends State<UserManagementPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title:
-              const Text('Delete User', style: TextStyle(color: Colors.black)),
-          content: Text('คุณต้องการลบผู้ใช้ ${user["name"]} หรือไม่?',
-              style: const TextStyle(color: Colors.black)),
+          title: Text('Delete User',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'คุณต้องการลบผู้ใช้ ${user["name"]} หรือไม่?',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
           actions: [
             TextButton(
               onPressed: () {
@@ -387,6 +407,14 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
 // Function to handle edit action
   void _editUser(BuildContext context, Map<String, dynamic> user) {
+    String? _selectedRole;
+    final List<String> _roles = [
+      'ADMIN',
+      'QC Engineer',
+      'PD Engineer',
+      'QC Staff',
+      'PD Staff'
+    ];
     showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -398,24 +426,46 @@ class _UserManagementPageState extends State<UserManagementPage> {
             TextEditingController(text: user["role"]);
 
         return AlertDialog(
-          title: const Text('Edit User', style: TextStyle(color: Colors.black)),
+          title: Text('Edit User',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
               TextField(
                 controller: nameController,
-                style: const TextStyle(color: Colors.black), // Text color black
+                style: GoogleFonts.ramabhadra(
+                    color: Colors.black), // Text color black
                 decoration: const InputDecoration(labelText: 'Name'),
               ),
+              const SizedBox(height: 16),
               TextField(
                 controller: usernameController,
-                style: const TextStyle(color: Colors.black), // Text color black
+                style: GoogleFonts.ramabhadra(
+                    color: Colors.black), // Text color black
                 decoration: const InputDecoration(labelText: 'Username'),
               ),
-              TextField(
-                controller: roleController,
-                style: const TextStyle(color: Colors.black), // Text color black
-                decoration: const InputDecoration(labelText: 'Role'),
+              const SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                decoration: const InputDecoration(
+                  labelText: 'Role',
+                  border: OutlineInputBorder(),
+                ),
+                value: _selectedRole,
+                items: _roles.map((role) {
+                  return DropdownMenuItem(
+                    value: role,
+                    child: Text(
+                      role,
+                      style: GoogleFonts.ramabhadra(color: Colors.black),
+                    ),
+                  );
+                }).toList(),
+                dropdownColor: Colors.white,
+                onChanged: (value) {
+                  setState(() {
+                    _selectedRole = value;
+                  });
+                },
               ),
             ],
           ),

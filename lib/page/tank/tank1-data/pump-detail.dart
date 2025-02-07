@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:newmaster/models/MyFiles.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/models/MyFiles.dart';
 import 'package:newmaster/page/tank/tank1-data/pum-info.dart';
 
 import '../../../constants.dart';
@@ -89,7 +90,7 @@ class _PumpinfoState extends State<Pumpinfo> {
               widget.info.title ?? '',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12.0),
+              style: GoogleFonts.ramabhadra(fontSize: 12.0),
             ),
             ProgressLine(
               percentage: widget.info.percentage,
@@ -99,11 +100,11 @@ class _PumpinfoState extends State<Pumpinfo> {
               children: [
                 Text(
                   widget.info.totalStorage ?? '',
-                  style: TextStyle(fontSize: 12.0),
+                  style: GoogleFonts.ramabhadra(fontSize: 12.0),
                 ),
                 Text(
                   widget.info.numOfFiles ?? '',
-                  style: TextStyle(fontSize: 12.0),
+                  style: GoogleFonts.ramabhadra(fontSize: 12.0),
                 ),
               ],
             )
@@ -164,7 +165,7 @@ class ProgressLine extends StatelessWidget {
         ),
         Text(
           '$percentage%',
-          style: TextStyle(
+          style: GoogleFonts.ramabhadra(
             fontWeight: FontWeight.w200,
             fontSize: 12,
             color: getColor(percentage!),
@@ -259,7 +260,7 @@ class _PumpinfoState2 extends State<Pumpinfo2> {
               widget.info.title ?? '',
               maxLines: 1,
               overflow: TextOverflow.ellipsis,
-              style: TextStyle(fontSize: 12.0),
+              style: GoogleFonts.ramabhadra(fontSize: 12.0),
             ),
             ProgressLine(
               percentage: widget.info.percentage,
@@ -269,7 +270,7 @@ class _PumpinfoState2 extends State<Pumpinfo2> {
               children: [
                 Text(
                   widget.info.totalStorage ?? '',
-                  style: TextStyle(fontSize: 12.0),
+                  style: GoogleFonts.ramabhadra(fontSize: 12.0),
                 ),
               ],
             )

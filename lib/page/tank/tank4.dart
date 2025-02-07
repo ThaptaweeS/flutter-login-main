@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/components/recent_files.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/widget/appbar/AppBar.dart';
@@ -23,7 +24,7 @@ class Tank4body extends StatelessWidget {
     return Center(
       child: Text(
         'Data History Page',
-        style: TextStyle(fontSize: 20),
+        style: GoogleFonts.ramabhadra(fontSize: 20),
       ),
     );
   }

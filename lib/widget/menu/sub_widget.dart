@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../data/global.dart';
@@ -42,7 +43,7 @@ class menu_normal extends StatelessWidget {
                   decoration: BoxDecoration(
                     color: Color.fromARGB(255, 35, 11, 84),
                     image: DecorationImage(
-                      image: AssetImage(""+_icon),
+                      image: AssetImage("" + _icon),
                       fit: BoxFit.fitWidth,
                     ),
                     borderRadius: BorderRadius.all(Radius.circular(20.0)),
@@ -53,7 +54,7 @@ class menu_normal extends StatelessWidget {
                 alignment: Alignment.centerLeft,
                 child: Text(
                   "   " + _name,
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.white,
                     fontSize: 14,
                     fontWeight: FontWeight.w300,
@@ -69,4 +70,3 @@ class menu_normal extends StatelessWidget {
     );
   }
 }
-

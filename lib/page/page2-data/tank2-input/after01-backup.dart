@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -69,16 +70,21 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
                       context: context,
                       builder: (BuildContext context) {
                         return AlertDialog(
-                          title: Text('แจ้งเตือน'),
+                          title: Text('แจ้งเตือน',
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black)),
                           content: Text(
-                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 and 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 and 70.'),
+                              'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 and 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 and 70.',
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black)),
                           actions: <Widget>[
                             TextButton(
                               onPressed: () {
                                 Navigator.of(context).pop();
                               },
                               child: Text('OK',
-                                  style: TextStyle(color: Colors.black)),
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
                             ),
                           ],
                         );
@@ -86,8 +92,8 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
                     );
                   }
                 },
-                child:
-                    Text('Save Values', style: TextStyle(color: Colors.black)),
+                child: Text('Save Values',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
               SizedBox(height: 20),
               Expanded(
@@ -214,9 +220,10 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success', style: TextStyle(color: Colors.black)),
-            content:
-                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
+            title: Text('Success',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('บันทึกค่าสำเร็จ.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
@@ -224,7 +231,8 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -244,7 +252,8 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -383,7 +392,8 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

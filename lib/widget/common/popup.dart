@@ -1,6 +1,8 @@
 import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 //------------------------------------
 
@@ -94,10 +96,10 @@ void WORNINGPatMoveZonepop(
                         color: const Color(0xff230a38),
                         borderRadius: BorderRadius.circular(4),
                       ),
-                      child: const Center(
+                      child:  Center(
                         child: Text(
                           'ตกลง',
-                          style: TextStyle(
+                          style: GoogleFonts.ramabhadra(
                             color: Colors.white,
                             fontSize: 16,
                           ),

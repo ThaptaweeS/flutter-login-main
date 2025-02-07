@@ -1,6 +1,7 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class LineChartSample4 extends StatelessWidget {
   LineChartSample4({
@@ -67,7 +68,7 @@ class LineChartSample4 extends StatelessWidget {
       space: 4,
       child: Text(
         text,
-        style: TextStyle(
+        style: GoogleFonts.ramabhadra(
           fontSize: 10,
           color: mainLineColor,
           fontWeight: FontWeight.bold,
@@ -151,7 +152,7 @@ class LineChartSample4 extends StatelessWidget {
               bottomTitles: AxisTitles(
                 axisNameWidget: Text(
                   '2019',
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     fontSize: 10,
                     color: mainLineColor,
                     fontWeight: FontWeight.bold,
@@ -166,9 +167,9 @@ class LineChartSample4 extends StatelessWidget {
               ),
               leftTitles: AxisTitles(
                 axisNameSize: 20,
-                axisNameWidget: const Text(
+                axisNameWidget:  Text(
                   'Value',
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: AppColors.mainTextColor2,
                   ),
                 ),

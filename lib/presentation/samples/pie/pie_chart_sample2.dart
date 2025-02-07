@@ -1,7 +1,8 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
-import 'package:newmaster/presentation/widgets/indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/presentation/widgets/indicator.dart';
 
 class PieChartSample2 extends StatefulWidget {
   const PieChartSample2({super.key});
@@ -110,7 +111,7 @@ class PieChart2State extends State {
             value: 40,
             title: '40%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: GoogleFonts.ramabhadra(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: AppColors.mainTextColor1,
@@ -123,7 +124,7 @@ class PieChart2State extends State {
             value: 30,
             title: '30%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: GoogleFonts.ramabhadra(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: AppColors.mainTextColor1,
@@ -136,7 +137,7 @@ class PieChart2State extends State {
             value: 15,
             title: '15%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: GoogleFonts.ramabhadra(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: AppColors.mainTextColor1,
@@ -149,7 +150,7 @@ class PieChart2State extends State {
             value: 15,
             title: '15%',
             radius: radius,
-            titleStyle: TextStyle(
+            titleStyle: GoogleFonts.ramabhadra(
               fontSize: fontSize,
               fontWeight: FontWeight.bold,
               color: AppColors.mainTextColor1,

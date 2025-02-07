@@ -1,11 +1,6 @@
-import 'package:dartx/dartx.dart';
-import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/urls.dart';
-import 'package:newmaster/util/app_helper.dart';
-import 'package:newmaster/util/app_utils.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/util/app_helper.dart';
 
 import 'fl_chart_banner.dart';
 import 'menu_row.dart';
@@ -51,18 +46,14 @@ class AppMenuState extends State<AppMenu> {
               itemBuilder: (context, position) {
                 final menuItem = widget.menuItems[position];
                 return MenuRow(
-                  text: menuItem.text,
-                  svgPath: menuItem.iconPath,
-                  isSelected: widget.currentSelectedIndex == position,
-                  onTap: () {
-                    widget.onItemSelected(position, menuItem);
-                  },
-                  onDocumentsTap: () async {
-      
-                    }
-                );
+                    text: menuItem.text,
+                    svgPath: menuItem.iconPath,
+                    isSelected: widget.currentSelectedIndex == position,
+                    onTap: () {
+                      widget.onItemSelected(position, menuItem);
+                    },
+                    onDocumentsTap: () async {});
               },
-              
               itemCount: widget.menuItems.length,
             ),
           ),
@@ -130,7 +121,7 @@ class AppMenuState extends State<AppMenu> {
 //                     onPressed: () => AppUtils().tryToLaunchUrl(Urls.aboutUrl),
 //                     child: const Text(
 //                       'About',
-//                       style: TextStyle(
+//                       style: GoogleFonts.ramabhadra(
 //                         color: AppColors.primary,
 //                         fontSize: 12,
 //                         fontWeight: FontWeight.bold,

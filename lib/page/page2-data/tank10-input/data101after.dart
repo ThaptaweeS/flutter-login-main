@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -63,11 +64,7 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -88,10 +85,12 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('แจ้งเตือน',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                             content: Text(
                                 'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                             actions: <Widget>[
                               TextButton(
                                 style: TextButton.styleFrom(
@@ -100,7 +99,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Text('OK',
-                                    style: TextStyle(color: Colors.black)),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black)),
                               ),
                             ],
                           );
@@ -109,7 +109,7 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                     }
                   },
                   child: Text('Save Values',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -168,9 +168,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             decoration: InputDecoration(
               labelText: label,
               border: OutlineInputBorder(),
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -195,9 +195,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             decoration: InputDecoration(
               labelText: label,
               border: OutlineInputBorder(),
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -239,11 +239,11 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             },
             dropdownColor:
                 Colors.white, // Set dropdown background color to white
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
                 color: Colors.black), // Set selected item text color to black
             decoration: InputDecoration(
               labelText: 'Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
           ),
@@ -258,7 +258,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(label, style: TextStyle(color: Colors.black)),
+            child:
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -272,9 +273,9 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 decoration: InputDecoration(
                   hintText: 'Enter value',
                   border: OutlineInputBorder(),
-                  hintStyle: TextStyle(color: Colors.black),
+                  hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
                 ),
-                style: TextStyle(color: Colors.black),
+                style: GoogleFonts.ramabhadra(color: Colors.black),
               ),
             ),
           ),
@@ -333,9 +334,10 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success', style: TextStyle(color: Colors.black)),
-            content:
-                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
+            title: Text('Success',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('บันทึกค่าสำเร็จ.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.grey),
@@ -343,7 +345,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -355,16 +358,18 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.black)),
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             content: Text('Failed to save values to the API.',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -417,32 +422,38 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Detail",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Value",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Username",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Time",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Date",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -470,25 +481,29 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(round ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(detail ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(value ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(username ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -496,7 +511,7 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 time != null ? timeFormat.format(DateTime.parse(time)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -504,7 +519,7 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 date != null ? dateFormat.format(DateTime.parse(date)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
       ],
@@ -545,7 +560,8 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

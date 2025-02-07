@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
@@ -21,8 +22,9 @@ class _EditdataState extends State<Editdata> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100],
-        title: const Text('Data Edit', style: TextStyle(color: Colors.black)),
+        backgroundColor: Colors.indigo[50],
+        title: Text('Data Edit',
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
         leading: IconButton(
           icon: const Icon(
             Icons.arrow_back_ios_new,
@@ -91,6 +93,7 @@ class _EditdataBodyState extends State<EditdataBody> {
                     'Username': entry['username'] ?? '',
                     'time': entry['time'] ?? '',
                     'date': entry['date'] ?? '',
+                    'tank': tankNumber, // เพิ่ม tankNumber
                   })
               .toList();
         });
@@ -123,6 +126,8 @@ class _EditdataBodyState extends State<EditdataBody> {
 
       if (response.statusCode == 200) {
         print('Data updated successfully: ${response.body}');
+        // หลังจากการอัพเดตข้อมูลสำเร็จ ให้รีเฟรชข้อมูลตาราง
+        await _sendTankRequest(tankNumber);
       } else {
         print('Failed to update data: ${response.statusCode}');
       }
@@ -153,11 +158,7 @@ class _EditdataBodyState extends State<EditdataBody> {
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[100]!, Colors.blue[100]!],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        color: Colors.indigo[50],
       ),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -188,7 +189,7 @@ class _EditdataBodyState extends State<EditdataBody> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
                   gradient: LinearGradient(
-                    colors: [Colors.white, Colors.blue[50]!],
+                    colors: [Colors.blue[200]!, Colors.blue[200]!],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                   ),
@@ -199,74 +200,96 @@ class _EditdataBodyState extends State<EditdataBody> {
                     scrollDirection: Axis.horizontal,
                     child: DataTable(
                       columnSpacing: 45.0,
-                      columns: const [
+                      columns: [
                         DataColumn(
                             label: Text('ID',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Round',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Data',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Detail',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Value',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Username',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Time',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Date\n(DD-MM-YYYY)',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Action',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                       ],
                       rows: tableData.map((data) {
                         return DataRow(
                           cells: [
-                            DataCell(Text(data['id'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['round'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['data'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['detail'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['value'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['Username'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(data['time'].toString(),
-                                style: const TextStyle(color: Colors.black))),
+                            DataCell(Text(
+                              data['id'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['round'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['data'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['detail'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['value'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['Username'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              data['time'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
                             DataCell(Text(
                               DateFormat('dd-MM-yyyy').format(
                                   DateTime.parse(data['date'].toString())),
-                              style: const TextStyle(color: Colors.black),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
                             )),
                             DataCell(
                               IconButton(
@@ -282,9 +305,10 @@ class _EditdataBodyState extends State<EditdataBody> {
                                     builder: (BuildContext context) {
                                       return AlertDialog(
                                         title: Text(
-                                            'Edit Value for ID: ${data['id'] ?? ''}',
-                                            style: const TextStyle(
-                                                color: Colors.black)),
+                                          'Edit Value for ID: ${data['id'] ?? ''}',
+                                          style: const TextStyle(
+                                              color: Colors.black),
+                                        ),
                                         content: Column(
                                           mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
@@ -298,10 +322,11 @@ class _EditdataBodyState extends State<EditdataBody> {
                                             const SizedBox(height: 10),
                                             TextField(
                                               controller: valueController,
-                                              decoration: const InputDecoration(
+                                              decoration: InputDecoration(
                                                 labelText: 'Value',
-                                                labelStyle: TextStyle(
-                                                    color: Colors.black),
+                                                labelStyle:
+                                                    GoogleFonts.ramabhadra(
+                                                        color: Colors.black),
                                                 border: OutlineInputBorder(),
                                               ),
                                               style: const TextStyle(
@@ -310,34 +335,51 @@ class _EditdataBodyState extends State<EditdataBody> {
                                           ],
                                         ),
                                         actions: [
-                                          TextButton(
+                                          ElevatedButton(
                                             onPressed: () async {
                                               final id = data['id'].toString();
                                               final value =
                                                   valueController.text;
-                                              final tankNumber =
-                                                  data['tank'].toString();
-                                              _sendTankRequest(tankNumber);
+                                              final tankNumber = data['tank'] ??
+                                                  ''; // ดึงค่า tankNumber
 
+                                              // แสดง Loading Dialog
                                               showDialog(
                                                 context: context,
                                                 barrierDismissible: false,
                                                 builder:
                                                     (BuildContext context) {
                                                   return const Center(
-                                                      child:
-                                                          CircularProgressIndicator());
+                                                    child:
+                                                        CircularProgressIndicator(),
+                                                  );
                                                 },
                                               );
 
+                                              // บันทึกค่าและ fetch data ใหม่
                                               await callEditDataAPI(
                                                   id, value, tankNumber);
 
-                                              Navigator.of(context).pop();
+                                              // ปิด Loading และ Dialog
+                                              Navigator.of(context)
+                                                  .pop(); // ปิด Loading
+                                              Navigator.of(context)
+                                                  .pop(); // ปิด AlertDialog
+                                            },
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.green),
+                                            child: Text('บันทึกค่า',
+                                                style: GoogleFonts.ramabhadra(
+                                                    color: Colors.black)),
+                                          ),
+                                          ElevatedButton(
+                                            onPressed: () {
                                               Navigator.of(context).pop();
                                             },
-                                            child: const Text('Save',
-                                                style: TextStyle(
+                                            style: ElevatedButton.styleFrom(
+                                                backgroundColor: Colors.red),
+                                            child: Text('ยกเลิก',
+                                                style: GoogleFonts.ramabhadra(
                                                     color: Colors.black)),
                                           ),
                                         ],
@@ -354,7 +396,7 @@ class _EditdataBodyState extends State<EditdataBody> {
                   ),
                 ),
               ),
-              SizedBox(height: 168),
+              const SizedBox(height: 168),
             ],
           ),
         ),

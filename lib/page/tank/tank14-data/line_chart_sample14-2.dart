@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 class LineChartSample23 extends StatefulWidget {
   LineChartSample23({
     super.key,
@@ -218,7 +218,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+                      style: GoogleFonts.ramabhadra(
+                          fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -314,7 +315,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'USL: 1.0',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -331,7 +332,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'UCL: 0.7',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.green,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -348,7 +349,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'LSL: -1.0',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -401,8 +402,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
                   angle: -45,
                   child: Text(
                     widget.historyChartData[value.toInt()].date,
-/*                   style: TextStyle(color: Colors.red), */
-                    style: TextStyle(fontSize: 14),
+/*                   style: GoogleFonts.ramabhadra(color: Colors.red), */
+                    style: GoogleFonts.ramabhadra(fontSize: 14),
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.center,
                   ),

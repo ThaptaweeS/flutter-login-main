@@ -2,9 +2,10 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:flutter/material.dart';
 import 'package:newmaster/responsive.dart';
 
 class LineChartSample10 extends StatefulWidget {
@@ -60,7 +61,7 @@ class _LineChartSample10State extends State<LineChartSample10> {
               ),
               Text(
                 'sin: ${sinLitter.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   color: widget.sinColor,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
@@ -68,7 +69,7 @@ class _LineChartSample10State extends State<LineChartSample10> {
               ),
               Text(
                 'cos: ${cosLitter.last.y.toStringAsFixed(1)}',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   color: widget.cosColor,
                   fontSize: 10,
                   fontWeight: FontWeight.bold,
@@ -150,6 +151,3 @@ class _LineChartSample10State extends State<LineChartSample10> {
     super.dispose();
   }
 }
-
-
-

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class PumpToTankLayout extends StatefulWidget {
   @override
@@ -62,7 +63,7 @@ class _PumpToTankLayoutState extends State<PumpToTankLayout>
       appBar: AppBar(
         title: Text("Pump to Tank Animation"),
       ),
-      backgroundColor: Colors.white,
+      backgroundColor: Colors.indigo[50],
       body: Padding(
         padding: EdgeInsets.all(20),
         child: Column(
@@ -150,7 +151,8 @@ class _PumpToTankLayoutState extends State<PumpToTankLayout>
             // Add Descriptive Text
             Text(
               "Pump transferring water to tank",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+              style: GoogleFonts.ramabhadra(
+                  fontSize: 16, fontWeight: FontWeight.bold),
             ),
           ],
         ),

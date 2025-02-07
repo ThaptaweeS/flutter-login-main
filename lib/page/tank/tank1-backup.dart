@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
@@ -22,7 +23,7 @@ class Tank1 extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.indigo[50],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -34,22 +35,22 @@ class Tank1 extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'Tank 2 Degreasing',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'Tank 2 Degreasing',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Tank 2 Degreasing',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -77,11 +78,7 @@ class _Tank1BodyState extends State<Tank1Body> {
 
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[100]!, Colors.white],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        color: Colors.indigo[50],
       ),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -101,7 +98,7 @@ class _Tank1BodyState extends State<Tank1Body> {
                   ),
                   title: Text(
                     'Degreasing (6000L) : Dashboard',
-                    style: TextStyle(
+                    style: GoogleFonts.ramabhadra(
                       fontSize: 18.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.black,
@@ -199,12 +196,13 @@ class _Tank1BodyState extends State<Tank1Body> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Detail', style: TextStyle(color: Colors.black)),
+          title: Text('Detail',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           content: Text(
             'Process : Fine Cleaner\nTank Capacity : 6000 Liters\n'
             'Chemicals : FC-4360\n:: Replenishing ::\nFC-4360= 6.6 kgs./1 pt\n'
             'FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day',
-            style: TextStyle(fontSize: 13.0, color: Colors.black),
+            style: GoogleFonts.ramabhadra(fontSize: 13.0, color: Colors.black),
           ),
           actions: [
             TextButton(
@@ -212,7 +210,8 @@ class _Tank1BodyState extends State<Tank1Body> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -259,10 +258,10 @@ class _Tank1BodyState extends State<Tank1Body> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(title,
-                          style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              color: Colors.red,
-                              fontFamily: 'Mitr')),
+                          style: GoogleFonts.ramabhadra(
+                            fontWeight: FontWeight.bold,
+                            color: Colors.red,
+                          )),
                       SizedBox(
                           width: 267, child: Text(message, style: customText)),
                     ],

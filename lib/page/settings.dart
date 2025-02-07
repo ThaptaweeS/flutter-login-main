@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/mainBody.dart';
@@ -51,14 +52,14 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             'Password settings saved successfully',
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ));
       } else {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text(
             'Failed to save password settings',
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ));
       }
@@ -66,7 +67,7 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(
           'An error occurred while connecting to the server',
-          style: TextStyle(color: Colors.black),
+          style: GoogleFonts.ramabhadra(color: Colors.black),
         ),
       ));
     }
@@ -89,18 +90,15 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
-        title: Text("Change Password", style: TextStyle(color: Colors.black)),
-        backgroundColor: Colors.blue[100],
+        title: Text("Change Password",
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
+        backgroundColor: Colors.indigo[50],
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[100]!, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Container(
           padding: const EdgeInsets.all(15.0),
@@ -127,7 +125,8 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
                     controller: oldPasswordController,
                     decoration: InputDecoration(labelText: 'Old Password'),
                     obscureText: true,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: GoogleFonts.ramabhadra(
+                        fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 16),
@@ -135,7 +134,8 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
                     controller: newPasswordController,
                     decoration: InputDecoration(labelText: 'New Password'),
                     obscureText: true,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: GoogleFonts.ramabhadra(
+                        fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 16),
@@ -143,7 +143,8 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
                     controller: reEnterPasswordController,
                     decoration: InputDecoration(labelText: 'Re-enter Password'),
                     obscureText: true,
-                    style: TextStyle(fontSize: 16, color: Colors.black),
+                    style: GoogleFonts.ramabhadra(
+                        fontSize: 16, color: Colors.black),
                     textAlign: TextAlign.left,
                   ),
                   SizedBox(height: 16),
@@ -157,7 +158,7 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
                             child: Center(
                               child: Text(
                                 'Save',
-                                style: TextStyle(fontSize: 16),
+                                style: GoogleFonts.ramabhadra(fontSize: 16),
                               ),
                             ),
                           ),
@@ -178,7 +179,7 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
                             child: Center(
                               child: Text(
                                 'Cancel',
-                                style: TextStyle(fontSize: 16),
+                                style: GoogleFonts.ramabhadra(fontSize: 16),
                               ),
                             ),
                           ),

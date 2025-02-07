@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../constants.dart';
 
@@ -36,7 +37,7 @@ class FileInfoCard1 extends StatelessWidget {
         children: [
           Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -44,7 +45,7 @@ class FileInfoCard1 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -52,7 +53,7 @@ class FileInfoCard1 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -60,7 +61,7 @@ class FileInfoCard1 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -102,9 +103,9 @@ class FileInfoCard2 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -112,7 +113,7 @@ class FileInfoCard2 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -120,7 +121,7 @@ class FileInfoCard2 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -128,7 +129,7 @@ class FileInfoCard2 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -139,7 +140,6 @@ class FileInfoCard2 extends StatelessWidget {
     );
   }
 }
-
 
 class TextCard3 extends StatelessWidget {
   @override
@@ -171,9 +171,9 @@ class FileInfoCard3 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -181,7 +181,7 @@ class FileInfoCard3 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -189,7 +189,7 @@ class FileInfoCard3 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -197,7 +197,7 @@ class FileInfoCard3 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -239,9 +239,9 @@ class FileInfoCard4 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -249,7 +249,7 @@ class FileInfoCard4 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -257,7 +257,7 @@ class FileInfoCard4 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -265,7 +265,7 @@ class FileInfoCard4 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -307,9 +307,9 @@ class FileInfoCard5 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -317,7 +317,7 @@ class FileInfoCard5 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -325,7 +325,7 @@ class FileInfoCard5 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -333,7 +333,7 @@ class FileInfoCard5 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -375,9 +375,9 @@ class FileInfoCard6 extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-           Text(
+          Text(
             'FA Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -385,7 +385,7 @@ class FileInfoCard6 extends StatelessWidget {
           ),
           Text(
             'AC Feed : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -393,7 +393,7 @@ class FileInfoCard6 extends StatelessWidget {
           ),
           Text(
             'FA Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,
@@ -401,7 +401,7 @@ class FileInfoCard6 extends StatelessWidget {
           ),
           Text(
             'AC Error : 0 Litter', // Customize the title text here
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: Colors.white,
               fontSize: 13,
               fontWeight: FontWeight.normal,

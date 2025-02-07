@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
@@ -34,22 +35,22 @@ class Tank10 extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'Tank 10 Zinc Phosphate(PB-181X)',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'Tank 10 Zinc Phosphate(PB-181X)',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Tank 10 Zinc Phosphate(PB-181X)',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -75,11 +76,7 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue[100]!],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        color: Colors.indigo[50],
       ), // Set the background color to white
       child: SafeArea(
         child: SingleChildScrollView(
@@ -247,14 +244,15 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
           content: Text(
               // 'Process : Fine Cleaner \nTank Capacity : 6000 Litters \nChemicals : FC-4360 \n:: Replenishing :: \nFC-4360= 6.6 kgs./1 pt\n FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day ',
               '',
-              style: TextStyle(fontSize: 13.0)),
+              style: GoogleFonts.ramabhadra(fontSize: 13.0)),
           actions: [
             TextButton(
-                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
+              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -277,10 +275,10 @@ class _P1DASHBOARDMAINState2 extends State<Tank10Body> {
     );
 
     final Text _ShowMsg_status_notification = Text(title,
-        style: TextStyle(
-            fontWeight: FontWeight.bold,
-            color: Colors.red,
-            fontFamily: 'Mitr'));
+        style: GoogleFonts.ramabhadra(
+          fontWeight: FontWeight.bold,
+          color: Colors.red,
+        ));
 
     final SizedBox _ShowMsg_Expand = SizedBox(
       child: SizedBox(

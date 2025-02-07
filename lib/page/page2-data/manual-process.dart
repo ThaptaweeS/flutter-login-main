@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/page/page02.dart';
@@ -19,8 +20,8 @@ class Manualfeed extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        shadowColor: Colors.transparent,
-        backgroundColor: Colors.white,
+        // shadowColor: Colors.transparent,
+        backgroundColor: Colors.indigo[50],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -34,22 +35,22 @@ class Manualfeed extends StatelessWidget {
               // Stroked text as border.
               Text(
                 'Chemical Feed Order',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
+                  // foreground: Paint()
+                  //   ..style = PaintingStyle.stroke
+                  //   ..strokeWidth = 6
+                  color: Colors.black,
                 ),
               ),
               // Solid text as fill.
-              Text(
-                'Chemical Feed Order',
-                style: TextStyle(
-                  fontSize: 40,
-                  color: Colors.grey[300],
-                ),
-              ),
+              // Text(
+              //   'Chemical Feed Order',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     color: Colors.grey[300],
+              //   ),
+              // ),
             ],
           ),
         ),
@@ -111,7 +112,8 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
           title: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Details', style: TextStyle(color: Colors.black)),
+              Text('Details',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
               IconButton(
                 onPressed: () {
                   Navigator.of(context).pop(); // Close the dialog
@@ -125,7 +127,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text('Chemicals : ${tableData[index]['Detail']}',
-                  style: TextStyle(color: Colors.black)),
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
               SizedBox(height: 20),
               Row(
                 children: [
@@ -140,7 +142,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                         labelText: 'Feed',
                         border: OutlineInputBorder(),
                       ),
-                      style: TextStyle(color: Colors.black),
+                      style: GoogleFonts.ramabhadra(color: Colors.black),
                       onChanged: (value) {
                         // Update the table data when the user changes the value
                         tableData[index]['Solv'] = value;
@@ -149,7 +151,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                   ),
                   SizedBox(width: 10), // Spacing between TextField and "kg."
                   Text('kg.',
-                      style: TextStyle(
+                      style: GoogleFonts.ramabhadra(
                         color: Colors.black,
                         fontSize: 16,
                       )),
@@ -170,10 +172,10 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
               },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.red, // Change the button color to red
-                textStyle: TextStyle(
-                    color: Colors.white), // Change the text color to white
+                textStyle: GoogleFonts.ramabhadra(color: Colors.white),
               ),
-              child: Text('No Feed', style: TextStyle(color: Colors.black)),
+              child: Text('No Feed',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -190,10 +192,10 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
               style: ElevatedButton.styleFrom(
                 backgroundColor:
                     Colors.green, // Change the button color to green
-                textStyle: TextStyle(
-                    color: Colors.white), // Change the text color to white
+                textStyle: GoogleFonts.ramabhadra(color: Colors.white),
               ),
-              child: Text('Feed', style: TextStyle(color: Colors.black)),
+              child: Text('Feed',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
             ElevatedButton(
               onPressed: () {
@@ -210,10 +212,11 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
               style: ElevatedButton.styleFrom(
                 backgroundColor:
                     Colors.yellow, // Change the button color to green
-                textStyle: TextStyle(
+                textStyle: GoogleFonts.ramabhadra(
                     color: Colors.white), // Change the text color to white
               ),
-              child: Text('Make Up', style: TextStyle(color: Colors.black)),
+              child: Text('Make Up',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             )
           ],
         );
@@ -249,14 +252,16 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
 
   @override
   Widget build(BuildContext context) {
+    final textStyle = GoogleFonts.ramabhadra(color: Colors.black);
+    final textStyleBold = GoogleFonts.ramabhadra(
+        color: Colors.black, fontWeight: FontWeight.bold);
     return Container(
       height: MediaQuery.of(context).size.height,
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.white, Colors.blue[100]!],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        // gradient: LinearGradient(
+        color: Colors.indigo[50],
+        // begin: Alignment.topCenter,
+        // end: Alignment.bottomCenter,
       ),
       child: SafeArea(
         child: SingleChildScrollView(
@@ -283,11 +288,10 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
               Container(
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(10),
-                  gradient: LinearGradient(
-                    colors: [Colors.blue[100]!, Colors.blue[50]!],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                  ),
+                  // gradient: LinearGradient(
+                  color: Colors.blue[100],
+                  // begin: Alignment.topCenter,
+                  // end: Alignment.bottomCenter,
                 ),
                 child: SingleChildScrollView(
                   scrollDirection: Axis.vertical, // เลื่อนแนวตั้ง
@@ -295,65 +299,66 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                     scrollDirection: Axis.horizontal, // เลื่อนแนวนอน
                     child: DataTable(
                       columnSpacing: 45.0,
-                      columns: const [
+                      columns: [
                         DataColumn(
                             label: Text('No.',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold))),
+                                style: GoogleFonts.ramabhadra(
+                                  color: Colors.black,
+                                  // fontWeight: FontWeight.bold
+                                ))),
                         DataColumn(
                             label: Text('Process',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Item Check',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Chemical',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Specification',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Setpoint',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Actual',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Date',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Round',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Time',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('Status',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                         DataColumn(
                             label: Text('',
-                                style: TextStyle(
+                                style: GoogleFonts.ramabhadra(
                                     color: Colors.black,
                                     fontWeight: FontWeight.bold))),
                       ],
@@ -379,33 +384,61 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
 
                         return DataRow(
                           cells: [
-                            DataCell(Text(tableData[index]['No'].toString(),
-                                style: const TextStyle(color: Colors.black))),
                             DataCell(Text(
-                                tableData[index]['Process'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Item'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Detail'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Spec'].toString(),
-                                style: const TextStyle(color: Colors.black))),
+                              tableData[index]['No'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
                             DataCell(Text(
-                                tableData[index]['SetPoint'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Actual'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Date'].toString(),
-                                style: const TextStyle(color: Colors.black))),
+                              tableData[index]['Process'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
                             DataCell(Text(
-                                tableData[index]['RoundTime'].toString(),
-                                style: const TextStyle(color: Colors.black))),
-                            DataCell(Text(tableData[index]['Time'].toString(),
-                                style: const TextStyle(color: Colors.black))),
+                              tableData[index]['Item'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['Detail'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['Spec'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['SetPoint'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['Actual'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['Date'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['RoundTime'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
+                            DataCell(Text(
+                              tableData[index]['Time'].toString(),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
+                            )),
                             DataCell(
                               Text(
                                 statusText,
-                                style: TextStyle(color: statusColor),
+                                style:
+                                    GoogleFonts.ramabhadra(color: statusColor),
                               ),
                             ),
                             DataCell(
@@ -415,7 +448,8 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
                                     showDetailPopup(index);
                                   },
                                   child: Text('Action',
-                                      style: TextStyle(color: Colors.black)),
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
                                 ),
                               ),
                             ),

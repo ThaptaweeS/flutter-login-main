@@ -47,9 +47,9 @@ class MainbodyBuffer extends MainBlocRebuild {
                   body: Container(
                     height: MediaQuery.of(context).size.height,
                     width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.white, Colors.blue[100]!],
+                        colors: [Colors.white, Colors.white],
                         begin: Alignment.topCenter,
                         end: Alignment.bottomCenter,
                       ),
@@ -113,14 +113,13 @@ class MainBody extends StatelessWidget {
   Widget page;
 
   @override
-
   Widget build(BuildContext context) {
     MainBodyContext = context;
 
     return Scaffold(
       appBar: AppBar(
         // shadowColor: Colors.transparent,
-        backgroundColor: Colors.blue[900],
+        backgroundColor: Colors.black,
         actions: <Widget>[App_Bar()],
         iconTheme: IconThemeData(color: Colors.white),
       ),

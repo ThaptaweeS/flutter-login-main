@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class Historydata1 extends StatelessWidget {
   final List<Map<String, String>> historyData;
@@ -18,25 +19,31 @@ class Historydata1 extends StatelessWidget {
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text('Date', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Date', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
             DataColumn(
-              label: Text('Times', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Times', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
             DataColumn(
-              label: Text('Values', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Values', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
           ],
           rows: historyData.map((data) {
             return DataRow(cells: [
               DataCell(
-                Text(data['date']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['date']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
               DataCell(
-                Text(data['time']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['time']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
               DataCell(
-                Text(data['value']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['value']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
             ]);
           }).toList(),
@@ -65,25 +72,31 @@ class Historydata2 extends StatelessWidget {
         child: DataTable(
           columns: [
             DataColumn(
-              label: Text('Date', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Date', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
             DataColumn(
-              label: Text('Times', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Times', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
             DataColumn(
-              label: Text('Values', style: TextStyle(fontSize: 12.0)),
+              label:
+                  Text('Values', style: GoogleFonts.ramabhadra(fontSize: 12.0)),
             ),
           ],
           rows: historyData.map((data) {
             return DataRow(cells: [
               DataCell(
-                Text(data['date']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['date']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
               DataCell(
-                Text(data['time']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['time']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
               DataCell(
-                Text(data['value']!, style: TextStyle(fontSize: 12.0)),
+                Text(data['value']!,
+                    style: GoogleFonts.ramabhadra(fontSize: 12.0)),
               ),
             ]);
           }).toList(),

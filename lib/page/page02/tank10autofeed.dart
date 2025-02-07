@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class PumpControlWidget extends StatefulWidget {
@@ -80,7 +81,8 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style:
+                    GoogleFonts.ramabhadra(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
               SizedBox(
@@ -99,10 +101,10 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
               //     keyboardType: TextInputType.number,
               //     decoration: InputDecoration(
               //       labelText: 'Lot. Number',
-              //       labelStyle: TextStyle(color: Colors.black),
+              //       labelstyle: GoogleFonts.ramabhadra(color: Colors.black),
               //       border: OutlineInputBorder(),
               //     ),
-              //     style: TextStyle(color: Colors.black),
+              //     style: GoogleFonts.ramabhadra(color: Colors.black),
               //     onChanged: (value) {
               //       setState(() {
               //         // LotNumber = double.tryParse(value) ?? 0.0;
@@ -118,10 +120,10 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Quantity Feed (kg)',
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                     border: OutlineInputBorder(),
                   ),
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                   onChanged: (value) {
                     setState(() {
                       ac10feedQuantity = double.tryParse(value) ?? 0.0;
@@ -206,7 +208,7 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
   }
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
-    final url =
+    const url =
         'http://172.23.10.51:1111/ac10acual'; // Update this URL as needed
 
     try {
@@ -274,7 +276,8 @@ class PumpFeedChartac10 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()} sec', // Show FeedTarget as kg
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),
@@ -286,7 +289,8 @@ class PumpFeedChartac10 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${feedActual.toInt()} sec', // Show FeedActual as seconds
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),

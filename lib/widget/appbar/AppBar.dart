@@ -4,6 +4,7 @@ import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
@@ -28,7 +29,7 @@ class _App_BarState extends State<App_Bar> {
     return Container(
       height: 70,
       width: MediaQuery.of(context).size.width,
-      color: Color.fromRGBO(255, 255, 255, 0.353),
+      // color: Color.fromRGBO(255, 255, 255, 0.353),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -157,7 +158,7 @@ class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
           SizedBox(width: 8.0),
           Text(
             'AC-131\n(PUMP M-55)',
-            style: TextStyle(fontSize: 8.0),
+            style: GoogleFonts.ramabhadra(fontSize: 8.0, color: Colors.white),
           ),
         ],
       ),
@@ -258,7 +259,7 @@ class _Pump10acState extends State<Pump10ac>
           SizedBox(width: 8.0), // Add spacing between the icon and text
           Text(
             'AC-131\n(PUMP M-56)',
-            style: TextStyle(fontSize: 8.0),
+            style: GoogleFonts.ramabhadra(fontSize: 8.0, color: Colors.white),
           ),
         ],
       ),
@@ -359,7 +360,7 @@ class _Pump10pbState extends State<Pump10pb>
           SizedBox(width: 8.0), // Add spacing between the icon and text
           Text(
             'PB-181XR\n(PUMP M-23)',
-            style: TextStyle(fontSize: 8.0),
+            style: GoogleFonts.ramabhadra(fontSize: 8.0, color: Colors.white),
           ),
         ],
       ),
@@ -376,15 +377,15 @@ class Logo1 extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.only(left: 1),
       child: Container(
-        color: Color.fromRGBO(0, 0, 0, 0),
+        // color: Color.fromRGBO(0, 0, 0, 0),
         child: Text(
           "Chemical Control Monitoring",
-          style: TextStyle(
-            color: Color.fromRGBO(0, 0, 0, 1),
+          style: GoogleFonts.ramabhadra(
+            color: Colors.white,
             fontSize: 20,
-            fontWeight: FontWeight.w400,
-            fontStyle: FontStyle.normal,
-            letterSpacing: 0,
+            // fontWeight: FontWeight.w400,
+            // fontStyle: FontStyle.normal,
+            // letterSpacing: 0,
           ),
         ),
       ),
@@ -430,10 +431,10 @@ class IconNew extends StatelessWidget {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('Surface Condition',
-                        style: TextStyle(color: Colors.black)),
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                     content: Text(
                         'คุณต้องการสั่ง Make up ประจำวันจันทร์หรือไม่',
-                        style: TextStyle(color: Colors.black)),
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                     actions: [
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -584,9 +585,9 @@ class _IconBellState extends State<IconBell> {
                 builder: (BuildContext context) {
                   return AlertDialog(
                     title: Text('แจ้งเตือน',
-                        style: TextStyle(color: Colors.black)),
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                     content: Text('ได้รับข้อมูลเคมีที่ต้องเติมเพิ่มจาก QC',
-                        style: TextStyle(color: Colors.black)),
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                     backgroundColor: Colors.white,
                     actions: [
                       Row(
@@ -603,7 +604,7 @@ class _IconBellState extends State<IconBell> {
                               Navigator.of(context).pop();
                               print('Go');
                             },
-                            child: const Row(
+                            child: Row(
                               children: [
                                 Icon(Icons.double_arrow_outlined,
                                     color: Colors.black),
@@ -611,7 +612,8 @@ class _IconBellState extends State<IconBell> {
                                     width:
                                         5), // Add some spacing between the icon and the text
                                 Text('Go to',
-                                    style: TextStyle(color: Colors.black)),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black)),
                               ],
                             ),
                           ),
@@ -624,7 +626,8 @@ class _IconBellState extends State<IconBell> {
                               Navigator.of(context).pop();
                             },
                             child: Text('Close',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                           ),
                         ],
                       ),
@@ -646,9 +649,8 @@ class _IconBellState extends State<IconBell> {
           SizedBox(width: 3),
           Text(
             USERDATA.NAME,
-            style: TextStyle(
-              fontFamily: 'Mitr',
-              color: Colors.black,
+            style: GoogleFonts.ramabhadra(
+              color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w600,
               fontStyle: FontStyle.normal,
@@ -689,9 +691,8 @@ class _Time_State extends State<Time_> {
         return Center(
           child: Text(
             DateFormat('MMM dd, yyyy hh:mm a').format(now),
-            style: TextStyle(
-              fontFamily: 'Mitr',
-              color: Color.fromARGB(255, 0, 0, 0),
+            style: GoogleFonts.ramabhadra(
+              color: Colors.white,
               fontSize: 14,
               fontWeight: FontWeight.w400,
               fontStyle: FontStyle.normal,

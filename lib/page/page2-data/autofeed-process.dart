@@ -5,7 +5,7 @@ import 'package:newmaster/data/global.dart';
 import 'package:newmaster/page/page02.dart';
 import 'package:newmaster/page/page2-data/text-card.dart';
 import 'package:newmaster/page/tank/tank1-data/pump.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
 import '../../mainBody.dart';
 
@@ -61,7 +61,8 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                 ),
                 title: Text(
                   'Auto Feed Chemical : Dashboard',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.ramabhadra(
+                      fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -80,7 +81,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                     children: [
                       Text(
                         '  Zinc Phosphate 3650X',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView2(),
@@ -95,7 +96,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                         },
                         icon: Icon(Icons.motion_photos_on),
                         label: Text('Feed',
-                            style: TextStyle(
+                            style: GoogleFonts.ramabhadra(
                                 fontSize: 14.0, fontWeight: FontWeight.normal)),
                         style: ElevatedButton.styleFrom(
                           foregroundColor: Colors.white,
@@ -106,7 +107,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '──────────────────────',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           fontSize: 18.0,
                           fontWeight: FontWeight.normal,
                           color: Colors.blue,
@@ -117,7 +118,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '  Acid Picking No.1',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView3(),
@@ -154,7 +155,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                     children: [
                       Text(
                         '  Zinc Phosphate 181X',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView4(),
@@ -178,7 +179,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '──────────────────────',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           fontSize: 18.0,
                           fontWeight: FontWeight.normal,
                           color: Colors.blue,
@@ -189,7 +190,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '  Lubricant (4618)',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView5(),
@@ -226,7 +227,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                     children: [
                       Text(
                         '  Degreasing',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView6(),
@@ -250,7 +251,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '──────────────────────',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           fontSize: 18.0,
                           fontWeight: FontWeight.normal,
                           color: Colors.blue,
@@ -261,7 +262,7 @@ class _P1DASHBOARDMAINState2 extends State<AutofeedBody> {
                       ),
                       Text(
                         '  Lubricant (235)',
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                             fontSize: 14.0, fontWeight: FontWeight.normal),
                       ),
                       FileInfoCardGridView7(),
@@ -301,13 +302,14 @@ void _showTextPopup(BuildContext context) {
     builder: (BuildContext context) {
       return AlertDialog(
         title: Text('Auto Feed Chemical'),
-        content: Text('', style: TextStyle(fontSize: 13.0)),
+        content: Text('', style: GoogleFonts.ramabhadra(fontSize: 13.0)),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK', style: TextStyle(color: Colors.black)),
+            child:
+                Text('OK', style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ],
       );
@@ -324,7 +326,7 @@ void _showPopup(BuildContext context, String message) {
         content: Text(
           message,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: GoogleFonts.ramabhadra(
             fontSize: 18,
           ),
         ),

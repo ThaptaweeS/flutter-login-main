@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/data/global.dart';
@@ -65,7 +66,8 @@ class _P1DASHBOARDMAINState2 extends State<Page5Body> {
                 ),
                 title: Text(
                   'Acid picking No.1 (4000L) : Dashboard',
-                  style: TextStyle(fontSize: 18.0, fontWeight: FontWeight.bold),
+                  style: GoogleFonts.ramabhadra(
+                      fontSize: 18.0, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
@@ -213,13 +215,14 @@ void _showTextPopup(BuildContext context) {
         title: Text('Detail'),
         content: Text(
             'Process : Fine Cleaner \nTank Capacity : 6000 Litters \nChemicals : FC-4360 \n:: Replenishing :: \nFC-4360= 6.6 kgs./1 pt\n FAl increase (1.1 g/l)\nFrequency of Checking : 4 Times/day ',
-            style: TextStyle(fontSize: 13.0)),
+            style: GoogleFonts.ramabhadra(fontSize: 13.0)),
         actions: [
           TextButton(
             onPressed: () {
               Navigator.of(context).pop();
             },
-            child: Text('OK', style: TextStyle(color: Colors.black)),
+            child:
+                Text('OK', style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ],
       );

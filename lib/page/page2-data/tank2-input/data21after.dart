@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -16,6 +17,9 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
   late TextEditingController tempController;
   late TextEditingController roundFilterController;
   late int roundValue;
+  bool isFAlChecked = false;
+  bool isTempChecked = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> tableData = [];
 
   @override
@@ -52,7 +56,6 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
 
   void fetchdataValue() async {
     if (roundValue > 1) {
-      // If roundValue is greater than 1, no need to fetch the data or update the fields
       return;
     }
 
@@ -62,16 +65,13 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
 
-        // Debug: print the entire response to check if data is coming through
         print('Data received: $data');
 
-        // Assuming "detail" can differentiate between F_Al and Temp
         String? fAlValue;
         String? tempValue;
 
         for (var entry in data) {
-          print(
-              'Processing entry: $entry'); // Debug: print each entry for debugging
+          print('Processing entry: $entry');
           if (entry['detail'] == 'F.Al') {
             // Double check the detail key
             fAlValue = entry['value'];
@@ -80,32 +80,29 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
           }
         }
 
-        // Apply the conditions and set text fields if valid, only when roundValue <= 1
         setState(() {
           if (roundValue <= 1) {
-            // Only set F_Al if it meets the condition
             if (fAlValue != null) {
               print(
                   'F_Al value: $fAlValue'); // Debug: print F_Al value for debugging
               if (int.parse(fAlValue) >= 30 && int.parse(fAlValue) <= 40) {
                 FAlController.text = fAlValue; // Set F_Al value
               } else {
-                print(
-                    'F_Al value not in range: $fAlValue'); // Debug if value is out of range
-                FAlController.clear(); // Clear if not meeting the condition
+                print('F_Al value not in range: $fAlValue');
+                FAlController.clear();
               }
             }
 
             // Only set Temp if it meets the condition
             if (tempValue != null) {
-              print(
-                  'Temp value: $tempValue'); // Debug: print Temp value for debugging
+              // print(
+              //     'Temp value: $tempValue'); // Debug: print Temp value for debugging
               if (int.parse(tempValue) >= 55 && int.parse(tempValue) <= 70) {
                 tempController.text = tempValue; // Set Temp value
               } else {
-                print(
-                    'Temp value not in range: $tempValue'); // Debug if value is out of range
-                tempController.clear(); // Clear if not meeting the condition
+                // print(
+                //     'Temp value not in range: $tempValue'); // Debug if value is out of range
+                tempController.clear();
               }
             }
           } else {
@@ -120,7 +117,6 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     }
   }
 
-  final _formKey = GlobalKey<FormState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -129,11 +125,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -155,10 +147,12 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                           builder: (BuildContext context) {
                             return AlertDialog(
                               title: Text('แจ้งเตือน',
-                                  style: TextStyle(color: Colors.black)),
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
                               content: Text(
                                 'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
-                                style: TextStyle(color: Colors.black),
+                                style:
+                                    GoogleFonts.ramabhadra(color: Colors.black),
                               ),
                               actions: <Widget>[
                                 ElevatedButton(
@@ -176,7 +170,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                                     Navigator.of(context).pop();
                                   },
                                   child: Text('ยกเลิก',
-                                      style: TextStyle(color: Colors.black)),
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
                                 ),
                               ],
                             );
@@ -185,7 +180,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                       }
                     },
                     child: Text('Save Values',
-                        style: TextStyle(color: Colors.black)),
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
                   Expanded(
                     child: SingleChildScrollView(
@@ -200,6 +195,25 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
       ),
     );
   }
+
+  // Widget build(BuildContext context) {
+  //   return Form(
+  //     key: _formKey,
+  //     child: Column(
+  //       children: [
+  //         buildTable(),
+  //         ElevatedButton(
+  //           onPressed: () {
+  //             if (_formKey.currentState?.validate() ?? false) {
+  //               // ทำอะไรบางอย่างเมื่อค่าถูกต้อง
+  //             }
+  //           },
+  //           child: Text("ตรวจสอบค่า"),
+  //         ),
+  //       ],
+  //     ),
+  //   );
+  // }
 
   Widget buildTable() {
     return Table(
@@ -218,6 +232,12 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
               "ค่าต้องอยู่ระหว่าง 30 ถึง 40",
               30.0,
               40.0,
+              isFAlChecked,
+              (value) {
+                setState(() {
+                  isFAlChecked = value ?? false;
+                });
+              },
             ),
           ],
         ),
@@ -229,6 +249,12 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
               "ค่าต้องอยู่ระหว่าง 55 ถึง 70",
               55.0,
               70.0,
+              isTempChecked,
+              (value) {
+                setState(() {
+                  isTempChecked = value ?? false;
+                });
+              },
             ),
           ],
         ),
@@ -241,39 +267,62 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller,
-      String rangeMessage, double min, double max) {
+  Widget buildTableCell(
+      String label,
+      TextEditingController controller,
+      String rangeMessage,
+      double min,
+      double max,
+      bool isChecked, // เพิ่มตัวแปรสำหรับสถานะของ Checkbox
+      Function(bool?) onCheckboxChanged // ฟังก์ชัน callback สำหรับอัปเดตค่า
+      ) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: label,
-              // labelStyle: TextStyle(color: Colors.black),
-              border: OutlineInputBorder(),
-              errorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red),
-              ),
-              focusedErrorBorder: OutlineInputBorder(
-                borderSide: BorderSide(color: Colors.red),
-              ),
-              errorStyle: TextStyle(color: Colors.red),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: onCheckboxChanged, // อัปเดตค่า Checkbox
+                ),
+              ],
             ),
-            validator: (value) {
-              double? numericValue = double.tryParse(value ?? '');
-              if (numericValue == null ||
-                  numericValue < min ||
-                  numericValue > max) {
-                return rangeMessage;
-              }
-              return null;
-            },
-            style: TextStyle(color: Colors.black),
-          ),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  errorStyle: GoogleFonts.ramabhadra(color: Colors.red),
+                ),
+                validator: (value) {
+                  if (isChecked) {
+                    return null;
+                  }
+                  double? numericValue = double.tryParse(value ?? '');
+                  if (numericValue == null ||
+                      numericValue < min ||
+                      numericValue > max) {
+                    return rangeMessage;
+                  }
+                  return null;
+                },
+                style: GoogleFonts.ramabhadra(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -289,7 +338,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             value: roundValue,
             decoration: InputDecoration(
               labelText: 'Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
             items: List.generate(
@@ -298,7 +347,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                 value: index + 1,
                 child: Text(
                   (index + 1).toString(),
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                 ),
               ),
             ),
@@ -309,7 +358,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             },
             dropdownColor:
                 Colors.white, // Set dropdown background color to white
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
                 color: Colors.black), // Set selected item text color to black
           ),
         ),
@@ -354,11 +403,11 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
           return AlertDialog(
             title: Text(
               'Success',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
             content: Text(
               'บันทึกค่าสำเร็จ',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
             actions: <Widget>[
               TextButton(
@@ -367,7 +416,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -387,7 +437,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -409,14 +460,14 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
           width: 620,
           child: TextField(
             controller: roundFilterController,
-            decoration: const InputDecoration(
+            decoration: InputDecoration(
               labelText: 'Filter Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               hintText: 'Enter round number',
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
               prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
-            style: const TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes
@@ -437,38 +488,44 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             5: FixedColumnWidth(120.0),
           },
           children: [
-            const TableRow(
+            TableRow(
               children: [
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Detail",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Value",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Username",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Time",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Date",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -496,25 +553,29 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(round ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(detail ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(value ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(username ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -522,7 +583,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 time != null ? timeFormat.format(DateTime.parse(time)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -530,7 +591,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 date != null ? dateFormat.format(DateTime.parse(date)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
       ],
@@ -571,7 +632,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

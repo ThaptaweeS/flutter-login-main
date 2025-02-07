@@ -31,7 +31,7 @@
 //               getTitlesWidget: (value, meta) {
 //                 return Text(
 //                   '${value.toInt()} ml', // Display Y-axis values in milliliters
-//                   style: TextStyle(color: Colors.black, fontSize: 8),
+//                   style: GoogleFonts.ramabhadra(color: Colors.black, fontSize: 8),
 //                 );
 //               },
 //             ),
@@ -46,7 +46,7 @@
 //                 if (index < recipeData.length) {
 //                   return Text(
 //                     '${recipeData[index]} ml', // Display data from API on X-axis
-//                     style: TextStyle(color: Colors.black, fontSize: 10),
+//                     style: GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
 //                   );
 //                 }
 //                 return Text('');

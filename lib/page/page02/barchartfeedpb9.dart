@@ -32,7 +32,7 @@
 //               getTitlesWidget: (value, meta) {
 //                 return Text(
 //                   '${value.toInt()} sec', // Show FeedTarget as kg
-//                   style: TextStyle(color: Colors.black, fontSize: 10),
+//                   style: GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
 //                 );
 //               },
 //             ),
@@ -44,7 +44,7 @@
 //               getTitlesWidget: (value, meta) {
 //                 return Text(
 //                   '${feedActual.toInt()} sec', // Show FeedActual as seconds
-//                   style: TextStyle(color: Colors.black, fontSize: 10),
+//                   style: GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
 //                 );
 //               },
 //             ),

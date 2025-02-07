@@ -1,9 +1,11 @@
 import 'dart:convert';
+
 import 'package:charts_flutter/flutter.dart' as charts;
-import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class LineChartSample23 extends StatefulWidget {
   LineChartSample23({
@@ -55,7 +57,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
         //     },
         //     child: Text(
         //       '',
-        //       style: TextStyle(
+        //       style: GoogleFonts.ramabhadra(
         //         fontSize: 12,
         //         color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
         //       ),
@@ -233,7 +235,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10),
+                      style: GoogleFonts.ramabhadra(fontSize: 10),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -481,8 +483,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
                   angle: -45,
                   child: Text(
                     widget.historyChartData[value.toInt()].date,
-/*                   style: TextStyle(color: Colors.red), */
-                    style: TextStyle(fontSize: 14),
+/*                   style: GoogleFonts.ramabhadra(color: Colors.red), */
+                    style: GoogleFonts.ramabhadra(fontSize: 14),
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.center,
                   ),

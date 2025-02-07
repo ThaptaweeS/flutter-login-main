@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -71,11 +72,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -93,7 +90,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
                     }
                   },
                   child: Text('Save Values',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -151,10 +148,10 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
             readOnly: true,
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -177,10 +174,10 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
             },
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -204,7 +201,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
             value: roundValue,
             decoration: InputDecoration(
               labelText: 'Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
             items: List.generate(
@@ -213,7 +210,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
                 value: index + 1,
                 child: Text(
                   (index + 1).toString(),
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                 ),
               ),
             ),
@@ -223,7 +220,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
               });
             },
             dropdownColor: Colors.white,
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -319,10 +316,11 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('แจ้งเตือน', style: TextStyle(color: Colors.black)),
+          title: Text('แจ้งเตือน',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
           content: Text(
             'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
           actions: <Widget>[
             TextButton(
@@ -330,7 +328,8 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -350,7 +349,8 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
               onPressed: () {
                 Navigator.of(context).popUntil(ModalRoute.withName('/'));
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -371,7 +371,8 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('OK', style: TextStyle(color: Colors.black)),
+              child: Text('OK',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
             ),
           ],
         );
@@ -441,7 +442,7 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text, style: TextStyle(color: Colors.black)),
+        child: Text(text, style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
     );
   }
@@ -469,7 +470,8 @@ class _Tank1019AfterPageState extends State<Tank1019AfterPage> {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: Text(text ?? '', style: TextStyle(color: Colors.black)),
+        child: Text(text ?? '',
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
     );
   }

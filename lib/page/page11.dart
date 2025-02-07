@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
@@ -26,38 +27,38 @@ class MainSetting extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'Setting',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'Setting',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Setting',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
           ),
         ),
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.indigo[50],
         iconTheme: IconThemeData(color: Colors.black),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[100]!, Colors.white],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
+          // ),
         ),
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -87,7 +88,7 @@ class MainSetting extends StatelessWidget {
                       SizedBox(height: 10), // Add space between icon and text
                       Text(
                         "Add User",
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           color: Colors.white,
                         ),
                       ),
@@ -116,7 +117,7 @@ class MainSetting extends StatelessWidget {
                       SizedBox(height: 10), // Add space between icon and text
                       Text(
                         "Change password",
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           color: Colors.white,
                         ),
                       ),
@@ -145,7 +146,7 @@ class MainSetting extends StatelessWidget {
                       SizedBox(height: 10), // Add space between icon and text
                       Text(
                         "Edit Data",
-                        style: TextStyle(
+                        style: GoogleFonts.ramabhadra(
                           color: Colors.white,
                         ),
                       ),

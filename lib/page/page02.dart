@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/page/page2-data/autofeed-input.dart';
 
 import '../bloc/BlocEvent/ChangePageEvent.dart';
@@ -26,11 +27,11 @@ class Page02body extends StatelessWidget {
     return SafeArea(
       child: DecoratedBox(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
+          // ),
         ),
         child: Container(
           height: MediaQuery.of(context).size.height,
@@ -101,7 +102,7 @@ void _showPopup(BuildContext context, String message) {
         content: Text(
           message,
           textAlign: TextAlign.center,
-          style: TextStyle(
+          style: GoogleFonts.ramabhadra(
             fontSize: 18,
           ),
         ),

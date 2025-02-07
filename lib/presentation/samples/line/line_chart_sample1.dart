@@ -1,6 +1,7 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class _LineChart extends StatelessWidget {
   const _LineChart({required this.isShowingMainData});
@@ -42,8 +43,8 @@ class _LineChart extends StatelessWidget {
   LineTouchData get lineTouchData1 => LineTouchData(
         handleBuiltInTouches: true,
         touchTooltipData: LineTouchTooltipData(
-         // tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
-        ),
+            // tooltipBgColor: Colors.blueGrey.withOpacity(0.8),
+            ),
       );
 
   FlTitlesData get titlesData1 => FlTitlesData(
@@ -315,9 +316,9 @@ class LineChartSample1State extends State<LineChartSample1> {
               const SizedBox(
                 height: 37,
               ),
-              const Text(
+               Text(
                 'Monthly Sales',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   color: AppColors.primary,
                   fontSize: 32,
                   fontWeight: FontWeight.bold,

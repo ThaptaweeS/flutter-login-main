@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
@@ -31,17 +32,13 @@ class Page044Autobody extends StatelessWidget {
             MainBodyContext.read<ChangePage_Bloc>().add(ChangePage_nodrower());
           },
         ),
-        title: Text("Select Tank | 13:00 "),
+        title: Text("Select Tank | 13:00 ", style: GoogleFonts.ramabhadra()),
       ),
       body: Container(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -157,14 +154,17 @@ class Page044Autobody extends StatelessWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: Text('Error', style: TextStyle(color: Colors.black)),
-              content: Text(message, style: TextStyle(color: Colors.black)),
+              title: Text('Error',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+              content: Text(message,
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
               actions: <Widget>[
                 TextButton(
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('OK', style: TextStyle(color: Colors.black)),
+                  child: Text('OK',
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
               ],
             );
@@ -176,16 +176,18 @@ class Page044Autobody extends StatelessWidget {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.black)),
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             content: Text('Failed to call API',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -234,7 +236,8 @@ class Page044Autobody extends StatelessWidget {
       children: [
         Text(
           text,
-          style: TextStyle(color: Colors.black), // Set text color to black
+          style: GoogleFonts.ramabhadra(
+              color: Colors.black), // Set text color to black
         ),
         SizedBox(width: 5), // Add space between text and icon
       ],
@@ -275,11 +278,12 @@ class BlankPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('System Error', style: TextStyle(color: Colors.black)),
+        title: Text('System Error',
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
       body: Center(
         child: Text('หน้านี้ยังไม่เปิดใช้งาน',
-            style: TextStyle(color: Colors.black)),
+            style: GoogleFonts.ramabhadra(color: Colors.black)),
       ),
     );
   }

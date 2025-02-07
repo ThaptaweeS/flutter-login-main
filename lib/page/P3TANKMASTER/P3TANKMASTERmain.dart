@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/P01DASHBOARD/P01DASHBOARD.dart';
@@ -42,27 +43,27 @@ class _P3TANKMASTERMAINState extends State<P3TANKMASTERMAIN> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.indigo[50],
         title: Center(
           child: Stack(
             children: <Widget>[
-              // Stroked text as border.
-              Text(
-                'Data History',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // // Stroked text as border.
+              // Text(
+              //   'Data History',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Data History',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -81,11 +82,11 @@ class _P3TANKMASTERMAINState extends State<P3TANKMASTERMAIN> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[100]!, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
+          // ),
         ),
         child: Column(
           children: [

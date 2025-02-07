@@ -1,10 +1,11 @@
 import 'dart:async';
 import 'dart:math';
 
-import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/util/extensions/color_extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/util/extensions/color_extensions.dart';
 
 class BarChartSample1 extends StatefulWidget {
   BarChartSample1({super.key});
@@ -37,78 +38,77 @@ class BarChartSample1State extends State<BarChartSample1> {
   @override
   Widget build(BuildContext context) {
     return Container(
-  width: 100, // Set the desired width
-  height: 250, // Set the desired height
-  child: AspectRatio(
-    aspectRatio: 1.5, // Adjust this value to change the aspect ratio
-    child: Stack(
-        children: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(12),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: <Widget>[
-                const Text(
-                  'FA Feed Bar',
-                  style: TextStyle(
-                    color: Color.fromARGB(255, 255, 255, 255),
-                    fontSize: 12,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                // const SizedBox(
-                //   height: 4,
-                // ),
-                // Text(
-                //   'Grafik konsumsi kalori',
-                //   style: TextStyle(
-                //     color: AppColors.contentColorGreen.darken(),
-                //     fontSize: 18,
-                //     fontWeight: FontWeight.bold,
-                //   ),
-                // ),
-                // const SizedBox(
-                //   height: 38,
-                // ),
-                Expanded(
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: BarChart(
-                      isPlaying ? randomData() : mainBarData(),
-                      swapAnimationDuration: animDuration,
+        width: 100, // Set the desired width
+        height: 250, // Set the desired height
+        child: AspectRatio(
+          aspectRatio: 1.5, // Adjust this value to change the aspect ratio
+          child: Stack(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: <Widget>[
+                     Text(
+                      'FA Feed Bar',
+                      style: GoogleFonts.ramabhadra(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
+                    // const SizedBox(
+                    //   height: 4,
+                    // ),
+                    // Text(
+                    //   'Grafik konsumsi kalori',
+                    //   style: GoogleFonts.ramabhadra(
+                    //     color: AppColors.contentColorGreen.darken(),
+                    //     fontSize: 18,
+                    //     fontWeight: FontWeight.bold,
+                    //   ),
+                    // ),
+                    // const SizedBox(
+                    //   height: 38,
+                    // ),
+                    Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 8),
+                        child: BarChart(
+                          isPlaying ? randomData() : mainBarData(),
+                          swapAnimationDuration: animDuration,
+                        ),
+                      ),
+                    ),
+                    // const SizedBox(
+                    //   height: 12,
+                    // ),
+                  ],
                 ),
-                // const SizedBox(
-                //   height: 12,
-                // ),
-              ],
-            ),
+              ),
+              // Padding(
+              //   padding: const EdgeInsets.all(8),
+              //   child: Align(
+              //     alignment: Alignment.topRight,
+              //     child: IconButton(
+              //       icon: Icon(
+              //         isPlaying ? Icons.pause : Icons.play_arrow,
+              //         color: AppColors.contentColorGreen,
+              //       ),
+              //       onPressed: () {
+              //         setState(() {
+              //           isPlaying = !isPlaying;
+              //           if (isPlaying) {
+              //             refreshState();
+              //           }
+              //         });
+              //       },
+              //     ),
+              //   ),
+              // )
+            ],
           ),
-          // Padding(
-          //   padding: const EdgeInsets.all(8),
-          //   child: Align(
-          //     alignment: Alignment.topRight,
-          //     child: IconButton(
-          //       icon: Icon(
-          //         isPlaying ? Icons.pause : Icons.play_arrow,
-          //         color: AppColors.contentColorGreen,
-          //       ),
-          //       onPressed: () {
-          //         setState(() {
-          //           isPlaying = !isPlaying;
-          //           if (isPlaying) {
-          //             refreshState();
-          //           }
-          //         });
-          //       },
-          //     ),
-          //   ),
-          // )
-        ],
-      ),
-  )
-    );
+        ));
   }
 
   BarChartGroupData makeGroupData(
@@ -166,7 +166,7 @@ class BarChartSample1State extends State<BarChartSample1> {
     return BarChartData(
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
-         // tooltipBgColor: Colors.blueGrey,
+          // tooltipBgColor: Colors.blueGrey,
           tooltipHorizontalAlignment: FLHorizontalAlignment.right,
           tooltipMargin: -10,
           getTooltipItem: (group, groupIndex, rod, rodIndex) {
@@ -206,7 +206,7 @@ class BarChartSample1State extends State<BarChartSample1> {
               children: <TextSpan>[
                 TextSpan(
                   text: (rod.toY - 1).toString(),
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: widget.touchedBarColor,
                     fontSize: 16,
                     fontWeight: FontWeight.w300,

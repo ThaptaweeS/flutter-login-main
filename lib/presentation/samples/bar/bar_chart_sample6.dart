@@ -1,7 +1,8 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/presentation/widgets/legend_widget.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/presentation/widgets/legend_widget.dart';
 
 class BarChartSample6 extends StatelessWidget {
   const BarChartSample6({super.key});
@@ -100,9 +101,9 @@ class BarChartSample6 extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
+           Text(
             'Activity',
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: AppColors.contentColorBlue,
               fontSize: 16,
               fontWeight: FontWeight.bold,

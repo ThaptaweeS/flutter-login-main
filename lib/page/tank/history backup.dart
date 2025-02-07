@@ -3,7 +3,7 @@ import 'package:newmaster/components/recent_files.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/widget/appbar/AppBar.dart';
 import 'package:newmaster/widget/menu/side_menu.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 late BuildContext Page02Context;
 
 class Page02 extends StatelessWidget {
@@ -29,7 +29,7 @@ class Page02body extends StatelessWidget {
             SizedBox(height: 12),
             Text(
               'History Data',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 fontSize: 16,
               ),
             ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/main.dart';
 
 import '../bloc/BlocEvent/LoginEvent.dart';
@@ -139,12 +140,11 @@ class _LoginSignin extends StatelessWidget {
           color: Colors.blue,
           borderRadius: BorderRadius.circular(8),
         ),
-        child: const Align(
+        child: Align(
           alignment: Alignment.center,
           child: Text(
             "LOGIN",
-            style: TextStyle(
-              fontFamily: 'Mitr',
+            style: GoogleFonts.ramabhadra(
               color: Colors.black,
               fontSize: 14,
               fontWeight: FontWeight.w300,
@@ -177,7 +177,7 @@ class _MainContextState extends State<MainContext> {
           theme: currentTheme,
           home: Scaffold(
             appBar: AppBar(
-              backgroundColor: Colors.white,
+              backgroundColor: Colors.indigo[50],
               actions: [
                 IconButton(
                   icon: Icon(

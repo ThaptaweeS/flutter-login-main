@@ -118,9 +118,6 @@ class _Chart133State extends State<Chart133> {
                   ),
                 ],
               ),
-              SizedBox(
-                height: 15,
-              ),
               Responsive(
                 mobile: LineChartSample22(
                   crossAxisCount: _size.width < 650 ? 2 : 4,

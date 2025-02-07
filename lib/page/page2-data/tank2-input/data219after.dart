@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -127,11 +128,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -153,10 +150,12 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('แจ้งเตือน',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                             content: Text(
                               'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
-                              style: TextStyle(color: Colors.black),
+                              style:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
                             ),
                             actions: <Widget>[
                               TextButton(
@@ -166,7 +165,8 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Text('OK',
-                                    style: TextStyle(color: Colors.black)),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black)),
                               ),
                             ],
                           );
@@ -175,7 +175,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                     }
                   },
                   child: Text('Save Values',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -229,10 +229,10 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             keyboardType: TextInputType.number,
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -249,7 +249,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             value: roundValue,
             decoration: InputDecoration(
               labelText: 'Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
             items: List.generate(
@@ -258,7 +258,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                 value: index + 1,
                 child: Text(
                   (index + 1).toString(),
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                 ),
               ),
             ),
@@ -269,7 +269,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             },
             dropdownColor:
                 Colors.white, // Set dropdown background color to white
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
                 color: Colors.black), // Set selected item text color to black
           ),
         ),
@@ -314,11 +314,11 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
           return AlertDialog(
             title: Text(
               'Success',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
             content: Text(
               'บันทึกค่าสำเร็จ',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
             actions: <Widget>[
               TextButton(
@@ -327,7 +327,8 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -347,7 +348,8 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -371,12 +373,12 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               hintText: 'Enter round number',
-              hintStyle: TextStyle(color: Colors.black),
+              hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
               prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes
@@ -403,32 +405,38 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Detail",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Value",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Username",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Time",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Date",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -456,25 +464,29 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(round ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(round ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(detail ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(detail ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(value ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(value ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: Text(username ?? '', style: TextStyle(color: Colors.black)),
+            child: Text(username ?? '',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -482,7 +494,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 time != null ? timeFormat.format(DateTime.parse(time)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
         TableCell(
@@ -490,7 +502,7 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
                 date != null ? dateFormat.format(DateTime.parse(date)) : '',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
           ),
         ),
       ],
@@ -531,7 +543,8 @@ class _Tank219AfterPageState extends State<Tank219AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

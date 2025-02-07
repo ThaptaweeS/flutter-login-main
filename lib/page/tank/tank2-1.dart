@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
@@ -37,7 +38,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
           children: [
             Text(
               'Tank2 : Degreasing',
-              style: TextStyle(fontSize: 20, color: Colors.black),
+              style: GoogleFonts.ramabhadra(fontSize: 20, color: Colors.black),
             ),
             SizedBox(height: 10),
             Row(
@@ -117,49 +118,49 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Round",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Data",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Detail",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Value",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Username",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Time",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text(
                           "Date",
-                          style: TextStyle(color: Colors.black),
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
                         ))),
               ],
             ),
@@ -191,7 +192,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               round ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -200,7 +201,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               data ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -209,7 +210,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               detail ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -218,7 +219,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               value ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -227,7 +228,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               username ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -236,7 +237,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               time != null ? timeFormat.format(DateTime.parse(time)) : '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -245,7 +246,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               date != null ? dateFormat.format(DateTime.parse(date)) : '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -287,7 +288,8 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

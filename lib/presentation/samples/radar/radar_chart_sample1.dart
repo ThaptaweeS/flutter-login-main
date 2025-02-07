@@ -1,7 +1,8 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/util/extensions/color_extensions.dart';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
+import 'package:newmaster/util/extensions/color_extensions.dart';
 
 class RadarChartSample1 extends StatefulWidget {
   RadarChartSample1({super.key});
@@ -31,17 +32,17 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          const Text(
+           Text(
             'Title configuration',
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               color: AppColors.mainTextColor2,
             ),
           ),
           Row(
             children: [
-              const Text(
+               Text(
                 'Angle',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   color: AppColors.mainTextColor2,
                 ),
               ),
@@ -121,7 +122,7 @@ class _RadarChartSample1State extends State<RadarChartSample1> {
                             AnimatedDefaultTextStyle(
                               duration: const Duration(milliseconds: 300),
                               curve: Curves.easeInToLinear,
-                              style: TextStyle(
+                              style: GoogleFonts.ramabhadra(
                                 color:
                                     isSelected ? value.color : widget.gridColor,
                               ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/page02.dart';
@@ -28,6 +29,7 @@ class Page02Autobody extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.indigo[50],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -41,33 +43,33 @@ class Page02Autobody extends StatelessWidget {
               // Stroked text as border.
               Text(
                 'Select Time',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
+                  color: Colors.black,
+                  // foreground: Paint()
+                  //   ..style = PaintingStyle.stroke
+                  //   ..strokeWidth = 6
+                  //   ..color = Colors.blue[700]!,
                 ),
               ),
               // Solid text as fill.
-              Text(
-                'Select Time',
-                style: TextStyle(
-                  fontSize: 40,
-                  color: Colors.grey[300],
-                ),
-              ),
+              // Text(
+              //   'Select Time',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     color: Colors.grey[300],
+              //   ),
+              // ),
             ],
           ),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
         ),
         child: Center(
           child: Row(
@@ -93,7 +95,7 @@ class Page02Autobody extends StatelessWidget {
                     SizedBox(height: 10), // Add space between icon and text
                     Text(
                       "01:00",
-                      style: TextStyle(
+                      style: GoogleFonts.ramabhadra(
                         color: Colors.white,
                       ),
                     ),
@@ -120,7 +122,7 @@ class Page02Autobody extends StatelessWidget {
                     SizedBox(height: 10), // Add space between icon and text
                     Text(
                       "07:00",
-                      style: TextStyle(
+                      style: GoogleFonts.ramabhadra(
                         color: Colors.white,
                       ),
                     ),
@@ -147,7 +149,7 @@ class Page02Autobody extends StatelessWidget {
                     SizedBox(height: 10), // Add space between icon and text
                     Text(
                       "13:00",
-                      style: TextStyle(
+                      style: GoogleFonts.ramabhadra(
                         color: Colors.white,
                       ),
                     ),
@@ -174,7 +176,7 @@ class Page02Autobody extends StatelessWidget {
                     SizedBox(height: 10), // Add space between icon and text
                     Text(
                       "19:00",
-                      style: TextStyle(
+                      style: GoogleFonts.ramabhadra(
                         color: Colors.white,
                       ),
                     ),

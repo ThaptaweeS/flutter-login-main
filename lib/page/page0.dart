@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../bloc/BlocEvent/ChangePageEvent.dart';
 import '../data/global.dart';
@@ -31,7 +32,7 @@ class Page0Body extends StatelessWidget {
         children: <Widget>[
           Text(
             'Welcome to Chemical Monitoring',
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               fontSize: 20,
               fontWeight: FontWeight.bold,
             ),
@@ -39,7 +40,7 @@ class Page0Body extends StatelessWidget {
           SizedBox(height: 20),
           Text(
             'Monitor your chemicals here.',
-            style: TextStyle(
+            style: GoogleFonts.ramabhadra(
               fontSize: 16,
             ),
           ),

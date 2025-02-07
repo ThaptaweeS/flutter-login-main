@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 
 class PumpControlWidgetpb10 extends StatefulWidget {
@@ -80,7 +81,8 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
             children: [
               Text(
                 title,
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style:
+                    GoogleFonts.ramabhadra(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
 
@@ -93,7 +95,7 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
                   feedTarget: feedTargetpb9, // Updated feed target
                 ),
               ),
-              // SizedBox(height: 10),
+              SizedBox(height: 10),
               // SizedBox(
               //   width: 200,
               //   child: TextFormField(
@@ -101,10 +103,10 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
               //     keyboardType: TextInputType.number,
               //     decoration: InputDecoration(
               //       labelText: 'Lot. Number',
-              //       labelStyle: TextStyle(color: Colors.black),
+              //       labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               //       border: OutlineInputBorder(),
               //     ),
-              //     style: TextStyle(color: Colors.black),
+              //     style: GoogleFonts.ramabhadra(color: Colors.black),
               //     onChanged: (value) {
               //       setState(() {
               //         // LotNumber = double.tryParse(value) ?? 0.0;
@@ -120,10 +122,10 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
                   keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                     labelText: 'Quantity Feed (kg)',
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                     border: OutlineInputBorder(),
                   ),
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                   onChanged: (value) {
                     // Update feed quantity and refresh chart
                     setState(() {
@@ -219,8 +221,8 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
     try {
       final response = await http.post(Uri.parse(url), body: {});
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      print('Response status: API pb9acual code ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body); // Decode the JSON response
@@ -273,7 +275,8 @@ class PumpFeedChartpb9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()} sec', // Show FeedTarget as kg
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),
@@ -285,7 +288,8 @@ class PumpFeedChartpb9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${feedActual.toInt()} sec', // Show FeedActual as seconds
-                  style: TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),

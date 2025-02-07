@@ -1,6 +1,7 @@
-import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class MenuRow extends StatefulWidget {
   final String text;
@@ -57,7 +58,7 @@ class _MenuRowState extends State<MenuRow> {
               ),
               Text(
                 widget.text,
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   color: _showSelectedState ? AppColors.primary : Colors.white,
                   fontSize: AppDimens.menuTextSize,
                 ),

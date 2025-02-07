@@ -3,7 +3,9 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:newmaster/data/global.dart';
 
 class PumpControlWidgetac9 extends StatefulWidget {
   @override
@@ -22,7 +24,8 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
   @override
   void initState() {
     super.initState();
-    startFetchingFeedActualData(); // Start fetching data for the graph
+    startFetchingFeedActualData();
+    _controller.text = feedData.ac9feedQuantity.toString();
   }
 
   @override
@@ -47,8 +50,20 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
           child: buildPumpControlContainerac9(
             context,
             'AC-131 (PUMP M-55)',
-            () => sendDataToAPIac9(context, 'start', true, ac9feedQuantity),
-            () => sendDataToAPIac9(context, 'stop', false, ac9feedQuantity),
+            () => sendDataToAPIac9(
+              // Update this line
+              context,
+              'Start',
+              true,
+              ac9feedQuantity,
+            ),
+            () => sendDataToAPIac9(
+              // Update this line
+              context,
+              'Stop',
+              false,
+              ac9feedQuantity,
+            ),
           ),
         ),
       ],
@@ -81,7 +96,8 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
             children: [
               Text(
                 title,
-                style: const TextStyle(fontSize: 20, color: Colors.black),
+                style:
+                    GoogleFonts.ramabhadra(fontSize: 20, color: Colors.black),
               ),
               const SizedBox(height: 10),
               SizedBox(
@@ -92,18 +108,18 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                   feedTarget: feedTargetac9,
                 ),
               ),
-              // const SizedBox(height: 10),
+              const SizedBox(height: 10),
               // SizedBox(
               //   width: 200,
               //   child: TextFormField(
               //     controller: _controller,
               //     keyboardType: TextInputType.number,
-              //     decoration: const InputDecoration(
+              //     decoration: InputDecoration(
               //       labelText: 'Lot. Number',
-              //       labelStyle: TextStyle(color: Colors.black),
+              //       labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               //       border: OutlineInputBorder(),
               //     ),
-              //     style: const TextStyle(color: Colors.black),
+              //     style: GoogleFonts.ramabhadra(color: Colors.black),
               //     onChanged: (value) {
               //       setState(() {
               //         // LotNumber = double.tryParse(value) ?? 0.0;
@@ -117,15 +133,16 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                 child: TextFormField(
                   controller: _controller,
                   keyboardType: TextInputType.number,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     labelText: 'Quantity Feed (kg)',
-                    labelStyle: TextStyle(color: Colors.black),
+                    labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                     border: OutlineInputBorder(),
                   ),
-                  style: const TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                   onChanged: (value) {
                     setState(() {
-                      ac9feedQuantity = double.tryParse(value) ?? 0.0;
+                      feedData.ac9feedQuantity =
+                          double.tryParse(value)?.toString() ?? '0.0';
                     });
                   },
                 ),
@@ -136,7 +153,12 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
                 children: [
                   ElevatedButton(
                     onPressed: () {
-                      sendDataToAPIac9(context, 'start', true, ac9feedQuantity);
+                      sendDataToAPIac9(
+                        context,
+                        'start',
+                        true,
+                        ac9feedQuantity,
+                      );
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
@@ -166,21 +188,22 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
 
   void sendDataToAPIac9(BuildContext context, String action, bool pump,
       double ac9feedQuantity) async {
-    const url = 'http://172.23.10.51:1111/acfeed9'; // Update as needed
+    final url = 'http://172.23.10.51:1111/acfeed9'; // Update this URL as needed
 
     try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: {
-          'Action': action,
-          'Status': pump.toString(),
-          'FeedQuantity': ac9feedQuantity.toString(),
-        },
-      );
+      print('sending data');
+      final response = await http.post(Uri.parse(url), body: {
+        'Action': action,
+        'Status': pump.toString(),
+        'FeedQuantity': ac9feedQuantity.toString(),
+      });
+
+      print('Response status: ${response.statusCode}');
+      print('Response body: ${response.body}');
 
       final message = response.statusCode == 200
-          ? 'Action $action for Pump M-22 sent successfully with Feed Quantity: $ac9feedQuantity kg!'
-          : 'Failed to send action $action for Pump M-22';
+          ? 'Action $action for Pump M-55 sent successfully with Feed Quantity: $ac9feedQuantity kg!'
+          : 'Failed to send action $action for Pump M-55';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
@@ -212,8 +235,8 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
     try {
       final response = await http.post(Uri.parse(url), body: {});
 
-      print('Response status: ${response.statusCode}');
-      print('Response body: ${response.body}');
+      // print('Response status: ${response.statusCode}');
+      // print('Response body: ${response.body}');
 
       if (response.statusCode == 200) {
         var data = json.decode(response.body); // Decode the JSON response
@@ -268,7 +291,8 @@ class PumpFeedChartac9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${value.toInt()} sec', // Show FeedTarget as kg
-                  style: const TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),
@@ -280,7 +304,8 @@ class PumpFeedChartac9 extends StatelessWidget {
               getTitlesWidget: (value, meta) {
                 return Text(
                   '${feedActual.toInt()} sec', // Show FeedActual as seconds
-                  style: const TextStyle(color: Colors.black, fontSize: 10),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.black, fontSize: 10),
                 );
               },
             ),

@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/models/MyFiles.dart';
 import 'package:newmaster/responsive.dart';
@@ -43,24 +44,27 @@ class _MyFilesState extends State<MyFiles> {
               children: [
                 Text(
                   "Select Tank",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
-                SizedBox(width: 25), // Add spacing between text and icons
-                CircleAvatar(
-                  backgroundColor:
-                      Colors.green, // Customize the color of the circle icon
-                  radius: 10, // Customize the size of the circle icon
-                ),
-                SizedBox(width: 5),
-                Text(
-                  "Pass",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     fontSize: 11, // Set the desired font size here
                     // You can also customize other text properties here if needed
                   ),
                 ),
-                SizedBox(width: 15), // Add spacing between circle icons
-                CircleAvatar(
+                const SizedBox(width: 25), // Add spacing between text and icons
+                const CircleAvatar(
+                  backgroundColor:
+                      Colors.green, // Customize the color of the circle icon
+                  radius: 10, // Customize the size of the circle icon
+                ),
+                const SizedBox(width: 5),
+                Text(
+                  "Pass",
+                  style: GoogleFonts.ramabhadra(
+                    fontSize: 11, // Set the desired font size here
+                    // You can also customize other text properties here if needed
+                  ),
+                ),
+                const SizedBox(width: 15), // Add spacing between circle icons
+                const CircleAvatar(
                   backgroundColor:
                       Colors.yellow, // Customize the color of the circle icon
                   radius: 10, // Customize the size of the circle icon
@@ -68,21 +72,21 @@ class _MyFilesState extends State<MyFiles> {
                 SizedBox(width: 5),
                 Text(
                   "Waiting Check",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     fontSize: 11, // Set the desired font size here
                     // You can also customize other text properties here if needed
                   ),
                 ),
-                SizedBox(width: 15),
-                CircleAvatar(
+                const SizedBox(width: 15),
+                const CircleAvatar(
                   backgroundColor:
                       Colors.red, // Customize the color of the circle icon
                   radius: 10, // Customize the size of the circle icon
                 ),
-                SizedBox(width: 5),
+                const SizedBox(width: 5),
                 Text(
                   "NG Value",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     fontSize: 11, // Set the desired font size here
                     // You can also customize other text properties here if needed
                   ),
@@ -243,7 +247,7 @@ class FileInfoCardGridView extends StatelessWidget {
                                       title:
                                           '${demoMyFiles[index].falValue} Point',
                                       color: Colors.lightBlueAccent,
-                                      titleStyle: TextStyle(
+                                      titleStyle: GoogleFonts.ramabhadra(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -254,7 +258,7 @@ class FileInfoCardGridView extends StatelessWidget {
                                       title:
                                           '${demoMyFiles[index].tempValue} °C',
                                       color: Colors.greenAccent,
-                                      titleStyle: TextStyle(
+                                      titleStyle: GoogleFonts.ramabhadra(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -297,7 +301,7 @@ class FileInfoCardGridView extends StatelessWidget {
                                       title:
                                           '${demoMyFiles[index].feValue} Point',
                                       color: Colors.redAccent,
-                                      titleStyle: TextStyle(
+                                      titleStyle: GoogleFonts.ramabhadra(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -308,7 +312,7 @@ class FileInfoCardGridView extends StatelessWidget {
                                       title:
                                           '${demoMyFiles[index].conValue} °C',
                                       color: Colors.orangeAccent,
-                                      titleStyle: TextStyle(
+                                      titleStyle: GoogleFonts.ramabhadra(
                                         fontSize: 10,
                                         fontWeight: FontWeight.bold,
                                         color: Colors.black,
@@ -356,7 +360,7 @@ class FileInfoCardGridView extends StatelessWidget {
         SizedBox(width: 5),
         Text(
           text,
-          style: TextStyle(fontSize: 12, color: Colors.black),
+          style: GoogleFonts.ramabhadra(fontSize: 12, color: Colors.black),
         ),
       ],
     );

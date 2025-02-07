@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/page/page02/remote-pump-feed.dart';
 import 'package:newmaster/page/page11.dart';
 import 'package:newmaster/page/page2-data/feed-history.dart';
@@ -241,7 +242,7 @@ class SideMenu extends StatelessWidget {
             ListTile(
               title: Text(
                 'Version : 1.1.2\nDate modify : 2025-Jan-7\nDeveloper by Automation Team',
-                style: TextStyle(fontSize: 10.0),
+                style: GoogleFonts.ramabhadra(fontSize: 10.0),
               ),
               leading: Icon(Icons.info),
             ),
@@ -260,7 +261,7 @@ class SideMenu extends StatelessWidget {
 //         title: Text('About'),
 //         content: Text(
 //           'Web application V.1.0.6 \n Developer by Automation Team.',
-//           style: TextStyle(fontSize: 14.0),
+//           style: GoogleFonts.ramabhadra(fontSize: 14.0),
 //         ),
 //         actions: [
 //           TextButton(
@@ -303,7 +304,7 @@ class DrawerListTile extends StatelessWidget {
       ),
       title: Text(
         title,
-        style: TextStyle(
+        style: GoogleFonts.ramabhadra(
           color: Color.fromARGB(250, 0, 0, 0),
           fontSize: textSize, // Set the text size here
         ),

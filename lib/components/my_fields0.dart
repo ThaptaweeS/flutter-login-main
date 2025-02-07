@@ -113,7 +113,7 @@
 //                 SizedBox(width: 5),
 //                 Text(
 //                   "Pass",
-//                   style: TextStyle(
+//                   style: GoogleFonts.ramabhadra(
 //                     fontSize: 11, // Set the desired font size here
 //                     // You can also customize other text properties here if needed
 //                   ),
@@ -127,7 +127,7 @@
 //                 SizedBox(width: 5),
 //                 Text(
 //                   "Waiting Check",
-//                   style: TextStyle(
+//                   style: GoogleFonts.ramabhadra(
 //                     fontSize: 11, // Set the desired font size here
 //                     // You can also customize other text properties here if needed
 //                   ),
@@ -141,7 +141,7 @@
 //                 SizedBox(width: 5),
 //                 Text(
 //                   "NG Value",
-//                   style: TextStyle(
+//                   style: GoogleFonts.ramabhadra(
 //                     fontSize: 11, // Set the desired font size here
 //                     // You can also customize other text properties here if needed
 //                   ),

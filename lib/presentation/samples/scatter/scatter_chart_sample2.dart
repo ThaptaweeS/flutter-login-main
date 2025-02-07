@@ -125,9 +125,9 @@
 //               getTooltipItems: (ScatterSpot touchedBarSpot) {
 //                 return ScatterTooltipItem(
 //                   'X: ',
-//                   textStyle: TextStyle(
+//                   textstyle: GoogleFonts.ramabhadra(
 //                     height: 1.2,
-//                     color: Colors.grey[100],
+//                     color: Colors.indigo[50],
 //                     fontStyle: FontStyle.italic,
 //                   ),
 //                   bottomMargin: 10,
@@ -142,9 +142,9 @@
 //                     ),
 //                     TextSpan(
 //                       text: 'Y: ',
-//                       style: TextStyle(
+//                       style: GoogleFonts.ramabhadra(
 //                         height: 1.2,
-//                         color: Colors.grey[100],
+//                         color: Colors.indigo[50],
 //                         fontStyle: FontStyle.italic,
 //                       ),
 //                     ),

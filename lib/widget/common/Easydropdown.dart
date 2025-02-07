@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../styles/TextStyle.dart';
 import 'ComSpace.dart';
@@ -73,7 +74,7 @@ class _EasyDropDownState extends State<EasyDropDown> {
                       ),
                     )
                   : null,
-              style: const TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
               underline: Container(
                 height: 2,
                 color: Colors.transparent,

@@ -213,7 +213,7 @@ class _Chart13State extends State<Chart13> {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
           responseData.cast<Map<String, dynamic>>();
-
+      print(123456);
       return data;
     } else {
       throw Exception('Failed to fetch data');

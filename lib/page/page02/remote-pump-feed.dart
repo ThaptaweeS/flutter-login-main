@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
 import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
@@ -19,7 +20,7 @@ class Remotefeed extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100],
+        backgroundColor: Colors.indigo[50],
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -31,22 +32,22 @@ class Remotefeed extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'Remote Pump Feed Control',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'Remote Pump Feed Control',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Remote Pump Feed Control',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -59,12 +60,12 @@ class Remotefeed extends StatelessWidget {
               MainBodyContext.read<ChangePage_Bloc>()
                   .add(ChangePage_nodrower());
             },
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
                   'Feed Order',
-                  style: TextStyle(color: Colors.black),
+                  style: GoogleFonts.ramabhadra(color: Colors.black),
                 ),
                 SizedBox(width: 8), // เว้นระยะระหว่างข้อความกับไอคอน
                 Icon(Icons.arrow_forward_ios, color: Colors.black),
@@ -92,11 +93,11 @@ class _RemotefeedBodyState extends State<remotereedBody> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[100]!, Colors.blue[200]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
+          // ),
         ),
         child: Padding(
           padding: EdgeInsets.all(16.0),
@@ -142,7 +143,7 @@ class _RemotefeedBodyState extends State<remotereedBody> {
           children: [
             Text(
               'Tank9 : Zinc Phosphate (PB-3650X)',
-              style: TextStyle(fontSize: 24, color: Colors.black),
+              style: GoogleFonts.ramabhadra(fontSize: 24, color: Colors.black),
             ),
             SizedBox(height: 50),
             PumpControlWidgetac9(),
@@ -194,7 +195,7 @@ Widget buildPumpTank10(BuildContext context) {
         children: [
           Text(
             'Tank10 : Zinc Phosphate (PB-181X)',
-            style: TextStyle(fontSize: 24, color: Colors.black),
+            style: GoogleFonts.ramabhadra(fontSize: 24, color: Colors.black),
           ),
           SizedBox(height: 50),
           buildPumpControlRow10(context),

@@ -3,7 +3,7 @@ import 'package:newmaster/components/recent_files.dart';
 import 'package:newmaster/constants.dart';
 import 'package:newmaster/widget/appbar/AppBar.dart';
 import 'package:newmaster/widget/menu/side_menu.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 late BuildContext Tank3Context;
 
 class Tank3 extends StatelessWidget {
@@ -23,7 +23,7 @@ class Tank3body extends StatelessWidget {
     return Center(
       child: Text(
         'Tank3 Page',
-        style: TextStyle(fontSize: 20),
+        style: GoogleFonts.ramabhadra(fontSize: 20),
       ),
     );
   }

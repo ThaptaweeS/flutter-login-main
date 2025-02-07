@@ -4,7 +4,7 @@ import 'package:newmaster/constants.dart';
 import 'package:newmaster/page/resize/test.dart';
 import 'package:newmaster/widget/appbar/AppBar.dart';
 import 'package:newmaster/widget/menu/side_menu.dart';
-
+import 'package:google_fonts/google_fonts.dart';
 late BuildContext Tank1Context;
 
 class Tank1 extends StatelessWidget {
@@ -24,10 +24,8 @@ class Tank1body extends StatelessWidget {
     return Center(
       child: Text(
         'Tank1 Page',
-        style: TextStyle(fontSize: 20),
+        style: GoogleFonts.ramabhadra(fontSize: 20),
       ),
     );
-
   }
 }
-

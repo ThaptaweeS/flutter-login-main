@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -63,11 +64,7 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
       ),
       body: Container(
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.white, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          color: Colors.indigo[50],
         ),
         child: Center(
           child: Padding(
@@ -88,10 +85,12 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                         builder: (BuildContext context) {
                           return AlertDialog(
                             title: Text('แจ้งเตือน',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                             content: Text(
                                 'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
-                                style: TextStyle(color: Colors.black)),
+                                style: GoogleFonts.ramabhadra(
+                                    color: Colors.black)),
                             actions: <Widget>[
                               TextButton(
                                 style: TextButton.styleFrom(
@@ -100,7 +99,8 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                                   Navigator.of(context).pop();
                                 },
                                 child: Text('OK',
-                                    style: TextStyle(color: Colors.black)),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black)),
                               ),
                             ],
                           );
@@ -109,7 +109,7 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                     }
                   },
                   child: Text('Save Values',
-                      style: TextStyle(color: Colors.black)),
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
                 Expanded(
                   child: SingleChildScrollView(
@@ -167,10 +167,10 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
             readOnly: true, // Set readOnly to true
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -194,10 +194,10 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
             },
             decoration: InputDecoration(
               labelText: label,
-              labelStyle: TextStyle(color: Colors.black),
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               border: OutlineInputBorder(),
             ),
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -239,7 +239,7 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
             },
             dropdownColor:
                 Colors.white, // Set dropdown background color to white
-            style: TextStyle(color: Colors.black),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
           ),
         ),
       ),
@@ -326,9 +326,10 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success', style: TextStyle(color: Colors.black)),
-            content:
-                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
+            title: Text('Success',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('บันทึกค่าสำเร็จ.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
@@ -336,7 +337,8 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -348,16 +350,18 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.black)),
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             content: Text('Failed to save values to the API.',
-                style: TextStyle(color: Colors.black)),
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.grey),
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -410,32 +414,38 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Round",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Detail",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Value",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Username",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Time",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
                 TableCell(
                     child: Padding(
                         padding: const EdgeInsets.all(8.0),
                         child: Text("Date",
-                            style: TextStyle(color: Colors.black)))),
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
               ],
             ),
             // Map each data entry to a TableRow widget
@@ -527,10 +537,11 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Error', style: TextStyle(color: Colors.black)),
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             content: Text(
               'Failed to fetch data from the API. Status code: ${response.statusCode}',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
             actions: <Widget>[
               TextButton(
@@ -538,7 +549,8 @@ class _Tank91AfterPageState extends State<Tank91AfterPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

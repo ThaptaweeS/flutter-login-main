@@ -3,6 +3,7 @@ import 'dart:html' as html;
 
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 
@@ -40,11 +41,11 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          colors: [Colors.blue[100]!, Colors.blue[100]!],
-          begin: Alignment.topCenter,
-          end: Alignment.bottomCenter,
-        ),
+        // gradient: LinearGradient(
+        color: Colors.indigo[50],
+        // begin: Alignment.topCenter,
+        // end: Alignment.bottomCenter,
+        // ),
       ),
       child: Center(
         child: Padding(
@@ -53,7 +54,8 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             children: [
               Text(
                 'Tank2 : Degreasing',
-                style: TextStyle(fontSize: 20, color: Colors.black),
+                style:
+                    GoogleFonts.ramabhadra(fontSize: 20, color: Colors.black),
               ),
               SizedBox(height: 10),
               Row(
@@ -71,10 +73,12 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(),
-                          labelStyle: TextStyle(color: Colors.black),
-                          hintStyle: TextStyle(color: Colors.black),
+                          labelStyle:
+                              GoogleFonts.ramabhadra(color: Colors.black),
+                          hintStyle:
+                              GoogleFonts.ramabhadra(color: Colors.black),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: GoogleFonts.ramabhadra(color: Colors.black),
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -103,10 +107,12 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                           filled: true,
                           fillColor: Colors.white,
                           border: OutlineInputBorder(),
-                          labelStyle: TextStyle(color: Colors.black),
-                          hintStyle: TextStyle(color: Colors.black),
+                          labelStyle:
+                              GoogleFonts.ramabhadra(color: Colors.black),
+                          hintStyle:
+                              GoogleFonts.ramabhadra(color: Colors.black),
                         ),
-                        style: TextStyle(color: Colors.black),
+                        style: GoogleFonts.ramabhadra(color: Colors.black),
                         onTap: () async {
                           DateTime? pickedDate = await showDatePicker(
                             context: context,
@@ -140,7 +146,8 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                               border: OutlineInputBorder(),
                               contentPadding: EdgeInsets.symmetric(
                                   horizontal: 12.0), // Adjust padding here
-                              labelStyle: TextStyle(color: Colors.black),
+                              labelStyle:
+                                  GoogleFonts.ramabhadra(color: Colors.black),
                             ),
                             onChanged: (String? newValue) {
                               setState(() {
@@ -153,7 +160,8 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                                 value: value,
                                 child: Text(
                                   value,
-                                  style: TextStyle(color: Colors.black),
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black),
                                 ),
                               );
                             }).toList(),
@@ -167,8 +175,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                     onPressed: () {
                       fetchDataFromAPI();
                     },
-                    icon: Icon(Icons.search),
-                    label: Text('Search'),
+                    icon: Icon(Icons.search, color: Colors.black),
+                    label: Text('Search',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
                   SizedBox(width: 10),
                   ElevatedButton.icon(
@@ -176,8 +185,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                     onPressed: () {
                       exportToExcel();
                     },
-                    icon: Icon(Icons.save),
-                    label: Text('Export to Excel'),
+                    icon: Icon(Icons.save, color: Colors.black),
+                    label: Text('Export to Excel',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
                 ],
               ),
@@ -228,9 +238,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Round",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -244,9 +254,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Data",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -260,9 +270,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Detail",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -276,9 +286,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Value",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -292,9 +302,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Username",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -308,9 +318,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Time",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -324,9 +334,9 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                   color: Colors.indigo[100], // สีพื้นหลังเต็ม
                 ),
                 alignment: Alignment.center, // Center align text
-                child: const Text(
+                child: Text(
                   "Date",
-                  style: TextStyle(
+                  style: GoogleFonts.ramabhadra(
                     color: Colors.black,
                     fontWeight: FontWeight.bold,
                   ),
@@ -393,7 +403,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               round ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -402,7 +412,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               data ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -411,7 +421,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               detail ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -420,7 +430,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               value ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -429,7 +439,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               username ?? '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -438,7 +448,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               time != null ? timeFormat.format(DateTime.parse(time)) : '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -447,7 +457,7 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
             padding: const EdgeInsets.all(8.0),
             child: Text(
               date != null ? dateFormat.format(DateTime.parse(date)) : '',
-              style: TextStyle(color: Colors.black),
+              style: GoogleFonts.ramabhadra(color: Colors.black),
             ),
           ),
         ),
@@ -501,7 +511,8 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

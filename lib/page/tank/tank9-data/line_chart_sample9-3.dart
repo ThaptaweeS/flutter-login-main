@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/presentation/resources/app_resources.dart';
 
 class LineChartSample2 extends StatefulWidget {
@@ -49,7 +50,7 @@ class _LineChartSample2State extends State<LineChartSample2> {
             },
             child: Text(
               '',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 fontSize: 12,
                 color: showAvg ? Colors.white.withOpacity(0.5) : Colors.white,
               ),
@@ -677,7 +678,8 @@ class _LineChartSample32State extends State<LineChartSample32> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+                      style: GoogleFonts.ramabhadra(
+                          fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -773,7 +775,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'USL: 7.5',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -790,7 +792,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
           //     show: true,
           //     alignment: Alignment.topRight,
           //     labelResolver: (line) => 'UCL: 28',
-          //     style: TextStyle(
+          //     style: GoogleFonts.ramabhadra(
           //       color: Colors.green,
           //       fontSize: 10,
           //       fontWeight: FontWeight.bold,
@@ -807,7 +809,7 @@ class _LineChartSample32State extends State<LineChartSample32> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'LSL: 5.5',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -872,8 +874,8 @@ class _LineChartSample32State extends State<LineChartSample32> {
                   angle: -45,
                   child: Text(
                     widget.historyChartData[value.toInt()].date,
-/*                   style: TextStyle(color: Colors.red), */
-                    style: TextStyle(fontSize: 14),
+/*                   style: GoogleFonts.ramabhadra(color: Colors.red), */
+                    style: GoogleFonts.ramabhadra(fontSize: 14),
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.center,
                   ),
@@ -1245,7 +1247,8 @@ class _LineChartSample33State extends State<LineChartSample33> {
                     angle: -45,
                     child: Text(
                       widget.historyChartData[value.toInt()].samplingDate,
-                      style: TextStyle(fontSize: 10, color: Colors.black),
+                      style: GoogleFonts.ramabhadra(
+                          fontSize: 10, color: Colors.black),
                       textDirection: TextDirection.rtl,
                       textAlign: TextAlign.center,
                     ),
@@ -1341,7 +1344,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'USL: 80',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -1358,7 +1361,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'UCL: 75',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.green,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -1375,7 +1378,7 @@ class _LineChartSample33State extends State<LineChartSample33> {
               show: true,
               alignment: Alignment.topRight,
               labelResolver: (line) => 'LSL: 70',
-              style: TextStyle(
+              style: GoogleFonts.ramabhadra(
                 color: Colors.red,
                 fontSize: 10,
                 fontWeight: FontWeight.bold,
@@ -1440,8 +1443,8 @@ class _LineChartSample33State extends State<LineChartSample33> {
                   angle: -45,
                   child: Text(
                     widget.historyChartData[value.toInt()].date,
-/*                   style: TextStyle(color: Colors.red), */
-                    style: TextStyle(fontSize: 14),
+/*                   style: GoogleFonts.ramabhadra(color: Colors.red), */
+                    style: GoogleFonts.ramabhadra(fontSize: 14),
                     textDirection: TextDirection.rtl,
                     textAlign: TextAlign.center,
                   ),

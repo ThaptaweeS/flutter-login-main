@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:charts_flutter/flutter.dart' as charts;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:newmaster/presentation/resources/app_resources.dart';
 import 'package:newmaster/util/extensions/color_extensions.dart';
@@ -67,9 +68,10 @@ class BarChartSample2State extends State<BarChartSample2> {
                 // const SizedBox(
                 //   width: 10,
                 // ),
-                const Text(
+                Text(
                   'FA/AC Feed Bar',
-                  style: TextStyle(color: Colors.white, fontSize: 18),
+                  style:
+                      GoogleFonts.ramabhadra(color: Colors.white, fontSize: 18),
                 ),
               ],
             ),

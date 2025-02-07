@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:newmaster/page/tank/tank1-data/data_page01.dart';
@@ -313,9 +314,10 @@ class _DataHistory2State extends State<DataHistory2> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: Text('Success', style: TextStyle(color: Colors.black)),
-            content:
-                Text('บันทึกค่าสำเร็จ.', style: TextStyle(color: Colors.black)),
+            title: Text('Success',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('บันทึกค่าสำเร็จ.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
             actions: <Widget>[
               TextButton(
                 style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
@@ -323,7 +325,8 @@ class _DataHistory2State extends State<DataHistory2> {
                   Navigator.of(context).popUntil(ModalRoute.withName(
                       '/')); // Navigate back to the home page
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -343,7 +346,8 @@ class _DataHistory2State extends State<DataHistory2> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );
@@ -534,7 +538,8 @@ class _DataHistory2State extends State<DataHistory2> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: Text('OK', style: TextStyle(color: Colors.black)),
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
               ),
             ],
           );

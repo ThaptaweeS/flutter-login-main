@@ -4,6 +4,7 @@ import 'dart:html' as html;
 import 'package:excel/excel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'package:newmaster/bloc/BlocEvent/ChangePageEvent.dart';
@@ -22,7 +23,7 @@ class FeedHistory extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.blue[100]!,
+        backgroundColor: Colors.indigo[50]!,
         leading: IconButton(
           icon: Icon(Icons.arrow_back_ios_new),
           onPressed: () {
@@ -34,22 +35,22 @@ class FeedHistory extends StatelessWidget {
           child: Stack(
             children: <Widget>[
               // Stroked text as border.
-              Text(
-                'Feed History',
-                style: TextStyle(
-                  fontSize: 40,
-                  foreground: Paint()
-                    ..style = PaintingStyle.stroke
-                    ..strokeWidth = 6
-                    ..color = Colors.blue[700]!,
-                ),
-              ),
+              // Text(
+              //   'Feed History',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 40,
+              //     foreground: Paint()
+              //       ..style = PaintingStyle.stroke
+              //       ..strokeWidth = 6
+              //       ..color = Colors.blue[700]!,
+              //   ),
+              // ),
               // Solid text as fill.
               Text(
                 'Feed History',
-                style: TextStyle(
+                style: GoogleFonts.ramabhadra(
                   fontSize: 40,
-                  color: Colors.grey[300],
+                  color: Colors.black,
                 ),
               ),
             ],
@@ -155,11 +156,11 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
       child: Container(
         height: MediaQuery.of(context).size.height,
         decoration: BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.blue[100]!, Colors.blue[100]!],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
+          // gradient: LinearGradient(
+          color: Colors.indigo[50],
+          // begin: Alignment.topCenter,
+          // end: Alignment.bottomCenter,
+          // ),
         ),
         alignment: Alignment.topCenter,
         child: Column(
@@ -179,8 +180,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
-                      labelStyle: TextStyle(color: Colors.black),
-                      hintStyle: TextStyle(color: Colors.black),
+                      labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
+                      hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () {
@@ -192,7 +193,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         },
                       ),
                     ),
-                    style: TextStyle(color: Colors.black),
+                    style: GoogleFonts.ramabhadra(color: Colors.black),
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -222,8 +223,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
-                      labelStyle: TextStyle(color: Colors.black),
-                      hintStyle: TextStyle(color: Colors.black),
+                      labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
+                      hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
                       suffixIcon: IconButton(
                         icon: Icon(Icons.clear),
                         onPressed: () {
@@ -235,7 +236,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         },
                       ),
                     ),
-                    style: TextStyle(color: Colors.black),
+                    style: GoogleFonts.ramabhadra(color: Colors.black),
                     onTap: () async {
                       DateTime? pickedDate = await showDatePicker(
                         context: context,
@@ -260,15 +261,15 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                   child: DropdownButtonFormField<String>(
                     value: selectedTank.isEmpty ? null : selectedTank,
                     icon: const Icon(Icons.arrow_drop_down),
-                    decoration: const InputDecoration(
+                    decoration: InputDecoration(
                       labelText: 'Tank Select',
                       filled: true,
                       fillColor: Colors.white,
                       border: OutlineInputBorder(),
                       contentPadding: EdgeInsets.symmetric(horizontal: 12.0),
-                      labelStyle: TextStyle(color: Colors.black),
+                      labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
                     ),
-                    style: TextStyle(color: Colors.black),
+                    style: GoogleFonts.ramabhadra(color: Colors.black),
                     onChanged: (String? newValue) {
                       setState(() {
                         selectedTank = newValue ?? '';
@@ -279,8 +280,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                         .map<DropdownMenuItem<String>>((String value) {
                       return DropdownMenuItem<String>(
                         value: value,
-                        child: Text('Tank $value',
-                            style: const TextStyle(color: Colors.black)),
+                        child: Text(
+                          'Tank $value',
+                          style: GoogleFonts.ramabhadra(color: Colors.black),
+                        ),
                       );
                     }).toList(),
                     dropdownColor: Colors.white,
@@ -291,21 +294,22 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                   onPressed: fetchDataFromAPI,
                   child: Row(
                     children: [
-                      Icon(Icons.search),
+                      Icon(Icons.search, color: Colors.black),
                       SizedBox(width: 5),
-                      Text('Search'),
+                      Text('Search',
+                          style: GoogleFonts.ramabhadra(color: Colors.black))
                     ],
                   ),
                 ),
                 const SizedBox(width: 10),
                 ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(),
-                  onPressed: () {
-                    exportToExcel(filteredData);
-                  },
-                  icon: const Icon(Icons.save),
-                  label: const Text('Export to Excel'),
-                ),
+                    style: ElevatedButton.styleFrom(),
+                    onPressed: () {
+                      exportToExcel(filteredData);
+                    },
+                    icon: const Icon(Icons.save, color: Colors.black),
+                    label: Text('Export to Excel',
+                        style: GoogleFonts.ramabhadra(color: Colors.black))),
               ],
             ),
             const SizedBox(height: 10),
@@ -342,9 +346,9 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Tank",
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                       color: Colors.black,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -359,10 +363,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Detail",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -376,10 +380,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Lot. Number",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -393,10 +397,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "User Name",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -410,10 +414,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Order Date\n(DD-MM-YYYY)",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         fontSize: 12,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
@@ -428,10 +432,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Round Check",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -445,10 +449,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Order Time",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -462,10 +466,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Fill Date\n(DD-MM-YYYY)",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         fontSize: 12,
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
@@ -480,10 +484,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Fill Time",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -497,10 +501,10 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   ),
                                   alignment:
                                       Alignment.center, // จัดข้อความให้อยู่กลาง
-                                  child: const Text(
+                                  child: Text(
                                     "Value(Kg)",
                                     textAlign: TextAlign.center,
-                                    style: TextStyle(
+                                    style: GoogleFonts.ramabhadra(
                                         color: Colors.black,
                                         fontWeight: FontWeight.bold),
                                   ),
@@ -540,7 +544,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['tank'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -549,7 +554,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['detail'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -558,7 +564,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['lot'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -567,7 +574,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['name'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -585,7 +593,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                         return '-';
                                       }
                                     }(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -594,7 +603,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['roundtime'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -603,7 +613,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['ordertime'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -614,7 +625,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                     DateFormat('dd-MM-yyyy').format(
                                         DateTime.parse(
                                             data['date'].toString())),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -623,7 +635,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['time'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),
@@ -632,7 +645,8 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Text(
                                     data['value'].toString(),
-                                    style: const TextStyle(color: Colors.black),
+                                    style: GoogleFonts.ramabhadra(
+                                        color: Colors.black),
                                   ),
                                 ),
                               ),

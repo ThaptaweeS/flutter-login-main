@@ -122,7 +122,7 @@
 //       builder: (BuildContext context) {
 //         return AlertDialog(
 //           title: Text('Toggle Tanks Visibility',
-//               style: TextStyle(color: Colors.black)),
+//               style: GoogleFonts.ramabhadra(color: Colors.black)),
 //           content: SingleChildScrollView(
 //             child: Column(
 //               children: [
@@ -130,7 +130,7 @@
 //                   Row(
 //                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
 //                     children: [
-//                       Text('Tank $id', style: TextStyle(color: Colors.black)),
+//                       Text('Tank $id', style: GoogleFonts.ramabhadra(color: Colors.black)),
 //                       Switch(
 //                         value: visibilityStates[id]!,
 //                         onChanged: (bool value) {
@@ -180,7 +180,7 @@
 //             const SizedBox(width: 5),
 //             const Text(
 //               "Pass",
-//               style: TextStyle(
+//               style: GoogleFonts.ramabhadra(
 //                 fontSize: 11,
 //                 color: Colors.black,
 //               ),
@@ -193,7 +193,7 @@
 //             const SizedBox(width: 5),
 //             const Text(
 //               "Waiting Check",
-//               style: TextStyle(
+//               style: GoogleFonts.ramabhadra(
 //                 fontSize: 11,
 //                 color: Colors.black,
 //               ),
@@ -206,7 +206,7 @@
 //             const SizedBox(width: 5),
 //             const Text(
 //               "NG Value",
-//               style: TextStyle(
+//               style: GoogleFonts.ramabhadra(
 //                 fontSize: 11,
 //                 color: Colors.black,
 //               ),
