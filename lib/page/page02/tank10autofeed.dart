@@ -5,6 +5,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
+import 'package:newmaster/data/global.dart';
 
 class PumpControlWidget extends StatefulWidget {
   @override
@@ -23,7 +24,8 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
   @override
   void initState() {
     super.initState();
-    startFetchingFeedActualData(); // Start fetching data for the graph
+    startFetchingFeedActualData();
+    _controller.text = feedData.ac10feedQuantity.toString();
   }
 
   @override
@@ -126,7 +128,8 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                   style: GoogleFonts.ramabhadra(color: Colors.black),
                   onChanged: (value) {
                     setState(() {
-                      ac10feedQuantity = double.tryParse(value) ?? 0.0;
+                      feedData.ac10feedQuantity =
+                          double.tryParse(value)?.toString() ?? '0.0';
                     });
                   },
                 ),
@@ -136,13 +139,20 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   ElevatedButton(
-                    onPressed: onStart,
+                    onPressed: () {
+                      sendDataToAPIac10(
+                        context,
+                        'start',
+                        true,
+                        ac10feedQuantity,
+                      );
+                    },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.black,
                       backgroundColor: Colors.green,
-                      minimumSize: Size(50, 60),
+                      minimumSize: const Size(50, 60),
                     ),
-                    child: Text('Start'),
+                    child: const Text('Start'),
                   ),
                   SizedBox(width: 16),
                   ElevatedButton(
@@ -179,8 +189,8 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
       print('Response body: ${response.body}');
 
       final message = response.statusCode == 200
-          ? 'Action $action for Pump M-56 sent successfully!'
-          : 'Failed to send action $action for $pump';
+          ? 'Action $action for Pump M-56 sent successfully with Feed Quantity: $ac10feedQuantity kg!'
+          : 'Failed to send action $action for Pump M-56';
 
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(
         content: Text(message),
@@ -195,7 +205,13 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
   // Function to start fetching the feedActual data and updating the graph
   void startFetchingFeedActualData() {
     _timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        _timer?.cancel(); // Cancel the timer if the widget is not mounted
+        return;
+      }
       fetchFeedDataFromAPI().then((newData) {
+        if (!mounted) return; // Double-check before calling setState
+
         setState(() {
           feedActualac10 = newData['feedActual'] ?? 0.0; // Update feed actual
           feedTargetac10 = newData['feedTarget'] ?? 0.0; // Update feed target
@@ -203,6 +219,10 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
               .add(timeCounter.toDouble()); // Update the X-axis (seconds)
           timeCounter++;
         });
+      }).catchError((error) {
+        if (!mounted) return;
+        // Handle errors safely without calling setState unnecessarily
+        // debugPrint("Error fetching data: $error");
       });
     });
   }

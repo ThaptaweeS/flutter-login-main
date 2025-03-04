@@ -317,94 +317,53 @@ class _LineChartSample22State extends State<LineChartSample22> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2.5,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors.blue,
-                // You can also adjust the color of the dots if needed
+                color: Colors.white,
                 strokeColor: Colors.blue,
-                // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                strokeWidth: 2,
               );
             },
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            cutOffY: 33,
+            applyCutOffY: true,
             gradient: LinearGradient(
-              colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
-                  .toList(),
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
-          showingIndicators: [0, 1], // Indicate the index of spots for drawing
+          aboveBarData: BarAreaData(
+            show: true,
+            cutOffY: 33,
+            applyCutOffY: true,
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
         ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 33),
-        //     FlSpot(28, 33),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.green, Colors.green], // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 30),
-        //     FlSpot(28, 30),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.red, Colors.red],
-        //     // Customize colors as needed
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: const FlDotData(
-        //     show: false,
-        //   ),
-        //   belowBarData: BarAreaData(
-        //     show: false,
-        //   ),
-        //   dashArray: [5, 5], // This will create a dashed line
-        // ),
-        // LineChartBarData(
-        //   spots: const [
-        //     FlSpot(0, 40),
-        //     FlSpot(28, 40),
-        //   ],
-        //   isCurved: false,
-        //   gradient: LinearGradient(
-        //     colors: [Colors.red, Colors.red],
-        //   ),
-        //   barWidth: 1,
-        //   isStrokeCapRound: true,
-        //   dotData: FlDotData(
-        //     show: false,
-        //     getDotPainter: (spot, percent, barData, index) {
-        //       return FlDotCirclePainter(
-        //         radius: 4,
-        //         color: Colors.red,
-        //         strokeWidth: 2,
-        //         strokeColor: Colors.black,
-        //       );
-        //     },
-        //   ),
-        //   belowBarData: BarAreaData(
-        //     show: false,
-        //   ),
-        //   // dashArray: [5, 5],
-        // ),
       ],
       extraLinesData: ExtraLinesData(
         horizontalLines: [

@@ -158,7 +158,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
             'Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (error) {
-      print('Error fetching data: $error');
+      // print('Error fetching data: $error');
       // เพิ่ม Dialog แสดงข้อผิดพลาด
       if (context.mounted) {
         showDialog(
@@ -252,8 +252,25 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                   onChanged: (value) {
                     if (value.isNotEmpty) {
                       try {
-                        feedData.ac9feedQuantity = (value);
-                        print(feedData.ac9feedQuantity);
+                        if (tableData[index]['No'].toString() == "9" &&
+                            tableData[index]['Detail'].toString() == "AC-131") {
+                          feedData.ac9feedQuantity = value;
+                          print(
+                              "AC9 Feed Quantity Updated: ${feedData.ac9feedQuantity}");
+                        }
+                        if (tableData[index]['No'].toString() == "10" &&
+                            tableData[index]['Detail'].toString() == "AC-131") {
+                          feedData.ac10feedQuantity = value;
+                          print(
+                              "AC10 Feed Quantity Updated: ${feedData.ac10feedQuantity}");
+                        }
+                        if (tableData[index]['No'].toString() == "10" &&
+                            tableData[index]['Detail'].toString() ==
+                                "PB-181X(R)") {
+                          feedData.pb10feedQuantity = value;
+                          print(
+                              "PB10 Feed Quantity Updated: ${feedData.pb10feedQuantity}");
+                        }
                       } catch (e) {
                         debugPrint('Invalid input: $value');
                       }
@@ -268,9 +285,12 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
               onPressed: () async {
                 if (_formKey.currentState?.validate() ?? false) {
                   try {
-                    // ตรวจสอบค่าจาก tableData และ TextField
                     String lot = lotController.text.trim();
                     String quantity = valueController.text.trim();
+                    print("ID: ${tableData[index]['id']}");
+                    print("Request ID: ${tableData[index]['request_id']}");
+                    print("No: ${tableData[index]['No']}");
+                    print('Detail: ${tableData[index]['Detail']}');
                     print("Lot: $lot");
                     print("จำนวนที่เติม: $quantity");
 

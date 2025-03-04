@@ -326,28 +326,50 @@ class _LineChartSample23State extends State<LineChartSample23> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2.5,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors.blue,
-                // You can also adjust the color of the dots if needed
+                color: Colors.white,
                 strokeColor: Colors.blue,
-                // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                strokeWidth: 2,
               );
             },
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            cutOffY: 65,
+            applyCutOffY: true,
             gradient: LinearGradient(
-              colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
-                  .toList(),
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          aboveBarData: BarAreaData(
+            show: true,
+            cutOffY: 65,
+            applyCutOffY: true,
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
         ),

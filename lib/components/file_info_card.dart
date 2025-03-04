@@ -1,10 +1,9 @@
 import 'dart:async';
 
-import 'package:dartx/dartx.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/models/MyFiles.dart';
+import 'package:newmaster/presentation/widgets/LineGaugeTank.dart';
 
 import '../../../constants.dart';
 
@@ -30,13 +29,13 @@ class FileInfoCard extends StatefulWidget {
 
 class _FileInfoCardState extends State<FileInfoCard> {
   late Color iconColor;
-  late Timer timer;
+  late Timer _timer;
 
   @override
   void initState() {
     super.initState();
     iconColor = Colors.transparent;
-    timer = Timer.periodic(Duration(seconds: 1), (timer) {
+    _timer = Timer.periodic(Duration(seconds: 1), (timer) {
       setState(() {
         iconColor = (iconColor == const Color.fromARGB(40, 158, 158, 158))
             ? widget.info.color2!
@@ -47,7 +46,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
 
   @override
   void dispose() {
-    timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -62,190 +61,251 @@ class _FileInfoCardState extends State<FileInfoCard> {
         padding: const EdgeInsets.all(defaultPadding),
         height: widget.height,
         width: widget.width,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(5)),
+        decoration: BoxDecoration(
+          gradient: RadialGradient(
+            colors: [Colors.white, Colors.blueAccent],
+            center: Alignment.center, // จุดศูนย์กลาง
+            radius: 3, // ขนาดการไล่สี (1.0 = เต็มพื้นที่)
+          ),
+          borderRadius: BorderRadius.circular(16),
           boxShadow: [
             BoxShadow(
-              color: Colors.grey,
-              offset: Offset(2, 1),
+              color: Colors.black26,
+              blurRadius: 8,
+              spreadRadius: 2,
+              offset: Offset(2, 4),
             ),
           ],
         ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Container(
-                  padding: EdgeInsets.all(defaultPadding * 0.55),
-                  height: 40,
-                  width: 40,
-                  decoration: BoxDecoration(
-                    color: widget.info.color?.withOpacity(0.1) ??
-                        Colors.transparent,
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+        child: Expanded(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Container(
+                    padding: EdgeInsets.all(defaultPadding * 0.55),
+                    height: 35,
+                    width: 100,
+                    decoration: BoxDecoration(
+                      color: widget.info.color?.withOpacity(0.1) ??
+                          Colors.transparent,
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    child: Text(
+                      textAlign: TextAlign.center,
+                      widget.info.tank ?? '',
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                      style: GoogleFonts.ramabhadra(
+                        fontSize: 11,
+                        // fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    // child: widget.info.svgSrc != null
+                    //     ? SvgPicture.asset(
+                    //         widget.info.svgSrc!,
+                    //         colorFilter: ColorFilter.mode(
+                    //             widget.info.color ?? Colors.black,
+                    //             BlendMode.srcIn),
+                    //       )
+                    // : SizedBox(height: defaultPadding),
                   ),
-                  child: widget.info.svgSrc != null
-                      ? SvgPicture.asset(
-                          widget.info.svgSrc!,
-                          colorFilter: ColorFilter.mode(
-                              widget.info.color ?? Colors.black,
-                              BlendMode.srcIn),
-                        )
-                      : SizedBox(height: defaultPadding),
+                  Icon(Icons.circle, color: iconColor),
+                ],
+              ),
+              // SizedBox(height: defaultPadding),
+              // Text(
+              //   widget.info.tank ?? '',
+              //   maxLines: 1,
+              //   overflow: TextOverflow.ellipsis,
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 16,
+              //     // fontWeight: FontWeight.bold,
+              //     color: Colors.white,
+              //   ),
+              // ),
+
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    widget.info.totalStorage ?? '',
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: GoogleFonts.ramabhadra(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                  SizedBox(width: 4),
+                  Text(
+                    widget.info.title ?? '',
+                    style: GoogleFonts.ramabhadra(
+                      fontSize: 14,
+                      color: Colors.black,
+                    ),
+                  ),
+                ],
+              ),
+              // Text(
+              //   widget.info.title ?? '',
+              //   maxLines: 1,
+              //   overflow: TextOverflow.ellipsis,
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 14,
+              //     color: Colors.white,
+              //   ),
+              // ),
+              // SizedBox(height: defaultPadding / 2),
+              // Text(
+              //   widget.info.totalStorage ?? '',
+              //   style: GoogleFonts.ramabhadra(
+              //     fontSize: 12,
+              //     color: Colors.white,
+              //   ),
+              // ),
+              SizedBox(height: defaultPadding),
+              if (widget.info.falValue != null &&
+                  widget.info.tempValue != null &&
+                  widget.info.FC4360value != null)
+                _buildPieChartSection2(
+                  falValue: widget.info.falValue!,
+                  tempValue: widget.info.tempValue!,
+                  FC4360value: widget.info.FC4360value!,
+                  falColor: Colors.red,
+                  tempColor: Colors.greenAccent,
+                  falLabel: 'F.Al. :',
+                  tempLabel: 'Temperature :',
+                  FC4360Label: 'FC-4360 Refilled',
+                  Label: 'Temperature :',
+                  tankValue: widget.info.tempValue!,
+                  Unit1: 'Pt.',
+                  Unit2: '°C',
                 ),
-                Icon(Icons.circle, color: iconColor),
-              ],
-            ),
-            SizedBox(height: defaultPadding),
-            Text(
-              widget.info.tank ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.ramabhadra(
-                fontSize: 16,
-                // fontWeight: FontWeight.bold,
-                color: Colors.black,
-              ),
-            ),
-            Text(
-              widget.info.title ?? '',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: GoogleFonts.ramabhadra(
-                fontSize: 16,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: defaultPadding / 2),
-            Text(
-              widget.info.totalStorage ?? '',
-              style: GoogleFonts.ramabhadra(
-                fontSize: 14,
-                color: Colors.black,
-              ),
-            ),
-            SizedBox(height: defaultPadding),
-            if (widget.info.falValue != null &&
-                widget.info.tempValue != null &&
-                widget.info.FC4360value != null)
-              _buildPieChartSection2(
-                falValue: widget.info.falValue!,
-                tempValue: widget.info.tempValue!,
-                FC4360value: widget.info.FC4360value!,
-                falColor: Colors.blueAccent,
-                tempColor: Colors.greenAccent,
-                falLabel: 'F.Al. ',
-                tempLabel: 'Temp. ',
-                FC4360Label: 'FC-4360 Refilled',
-              ),
-            if (widget.info.feValue != null && widget.info.conValue != null)
-              _buildPieChartSection5(
-                feValue: widget.info.feValue!,
-                conValue: widget.info.conValue!,
-                HCIValue: widget.info.HCIValue!,
-                feColor: Colors.redAccent,
-                conColor: Colors.orangeAccent,
-                feLabel: 'Fe ',
-                conLabel: 'Con. ',
-                HCILable: 'HCI Refilled ',
-              ),
-            if (widget.info.talValue != null &&
-                widget.info.phValue != null &&
-                widget.info.PLZValue != null)
-              _buildPieChartSection8(
-                talValue: widget.info.talValue!,
-                phValue: widget.info.phValue!,
-                PLZValue: widget.info.PLZValue!,
-                talColor: Colors.blueAccent,
-                phColor: Colors.purpleAccent,
-                talLabel: 'T.Al. ',
-                phLabel: 'pH ',
-                PLZLabel: 'PL-ZN Refilled. ',
-              ),
-            if (widget.info.taValue != null &&
-                widget.info.faValue != null &&
-                widget.info.arValue != null &&
-                widget.info.acValue != null &&
-                widget.info.tank9tempValue != null &&
-                widget.info.pb3650Value != null &&
-                widget.info.ac9Value != null)
-              _buildPieChartSectionTank9(
-                taValue: widget.info.taValue!,
-                faValue: widget.info.faValue!,
-                arValue: widget.info.arValue!,
-                acValue: widget.info.acValue!,
-                tank9tempValue: widget.info.tank9tempValue!,
-                pb3650Value: widget.info.pb3650Value!,
-                ac9Value: widget.info.ac9Value!,
-                taColor: Colors.redAccent,
-                faColor: Colors.purpleAccent,
-                arColor: Colors.yellowAccent,
-                acColor: Colors.lightBlueAccent,
-                tank9tempColor: Colors.greenAccent,
-                pb3650Color: Colors.orangeAccent,
-                ac9Color: Colors.blueAccent,
-                taLabel: 'T.A. ',
-                faLabel: 'F.A. ',
-                arLabel: 'A.R. ',
-                acLabel: 'A.C. ',
-                tank9tempLabel: 'Temp. ',
-                pb3650Label: 'PB-3650X Refilled ',
-                ac9Label: 'AC-131 Refilled. ',
-              ),
-            if (widget.info.taValue10 != null &&
-                widget.info.faValue10 != null &&
-                widget.info.arValue10 != null &&
-                widget.info.acValue10 != null &&
-                widget.info.tank10tempValue != null)
-              _buildPieChartSectionTank10(
-                taValue: widget.info.taValue10!,
-                faValue: widget.info.faValue10!,
-                arValue: widget.info.arValue10!,
-                acValue: widget.info.acValue10!,
-                tank10tempValue: widget.info.tank10tempValue!,
-                taColor: Colors.redAccent,
-                faColor: Colors.purpleAccent,
-                arColor: Colors.yellowAccent,
-                acColor: Colors.lightBlueAccent,
-                tank10TempColor: Colors.greenAccent,
-                taLabel: 'T.A. ',
-                faLabel: 'F.A. ',
-                arLabel: 'A.R. ',
-                acLabel: 'A.C. ',
-                tank10TempLabel: 'Temp. ',
-              ),
-            if (widget.info.conValue13 != null &&
-                widget.info.faValue13 != null &&
-                widget.info.tank13TempValue != null)
-              _buildPieChartSectionTank13(
-                conValue: widget.info.conValue13!,
-                faValue: widget.info.faValue13!,
-                tank13TempValue: widget.info.tank13TempValue!,
-                conColor: Colors.orangeAccent,
-                faColor: Colors.purpleAccent,
-                tank13TempColor: Colors.greenAccent,
-                faLabel: 'F.A. ',
-                conLabel: 'Con. ',
-                tank13TempLabel: 'Temp. ',
-              ),
-            if (widget.info.conValue14 != null &&
-                widget.info.faValue14 != null &&
-                widget.info.tank14TempValue != null)
-              _buildPieChartSectionTank14(
-                faValue: widget.info.faValue14!,
-                conValue: widget.info.conValue14!,
-                tank14TempValue: widget.info.tank14TempValue!,
-                conColor: Colors.orangeAccent,
-                faColor: Colors.purpleAccent,
-                tank14TempColor: Colors.greenAccent,
-                faLabel: 'F.A. ',
-                conLabel: 'Con. ',
-                tank14TempLabel: 'Temp. ',
-              ),
-          ],
+              if (widget.info.feValue != null && widget.info.conValue != null)
+                _buildPieChartSection5(
+                  feValue: widget.info.feValue!,
+                  conValue: widget.info.conValue!,
+                  HCIValue: widget.info.HCIValue!,
+                  feColor: Colors.redAccent,
+                  conColor: Colors.orangeAccent,
+                  feLabel: 'Fe :',
+                  conLabel: 'Con. :',
+                  HCILable: 'HCI Refilled ',
+                  Label: 'Con :',
+                  Label2: 'Fe :',
+                  Unit: '%',
+                ),
+              if (widget.info.talValue != null &&
+                  widget.info.phValue != null &&
+                  widget.info.PLZValue != null)
+                _buildPieChartSection8(
+                  talValue: widget.info.talValue!,
+                  phValue: widget.info.phValue!,
+                  PLZValue: widget.info.PLZValue!,
+                  talColor: Colors.blueAccent,
+                  phColor: Colors.purpleAccent,
+                  talLabel: 'T.Al. :',
+                  phLabel: 'pH :',
+                  PLZLabel: 'PL-ZN Refilled. ',
+                  Unit: 'Pt.',
+                ),
+              if (widget.info.taValue != null &&
+                  widget.info.faValue != null &&
+                  widget.info.arValue != null &&
+                  widget.info.acValue != null &&
+                  widget.info.tank9tempValue != null &&
+                  widget.info.pb3650Value != null &&
+                  widget.info.ac9Value != null)
+                _buildPieChartSectionTank9(
+                  taValue: widget.info.taValue!,
+                  faValue: widget.info.faValue!,
+                  arValue: widget.info.arValue!,
+                  acValue: widget.info.acValue!,
+                  tank9tempValue: widget.info.tank9tempValue!,
+                  pb3650Value: widget.info.pb3650Value!,
+                  ac9Value: widget.info.ac9Value!,
+                  taColor: Colors.redAccent,
+                  faColor: Colors.purpleAccent,
+                  arColor: Colors.yellowAccent,
+                  acColor: Colors.lightBlueAccent,
+                  tank9tempColor: Colors.greenAccent,
+                  pb3650Color: Colors.orangeAccent,
+                  ac9Color: Colors.blueAccent,
+                  taLabel: 'T.A. :',
+                  faLabel: 'F.A. :',
+                  arLabel: 'A.R. :',
+                  acLabel: 'A.C. :',
+                  tank9tempLabel: 'Temperature :',
+                  pb3650Label: 'PB-3650X Refilled ',
+                  ac9Label: 'AC-131 Refilled. ',
+                  Unit: 'Pt.',
+                  Unit2: '°C',
+                ),
+              if (widget.info.taValue10 != null &&
+                  widget.info.faValue10 != null &&
+                  widget.info.arValue10 != null &&
+                  widget.info.acValue10 != null &&
+                  widget.info.tank10tempValue != null)
+                _buildPieChartSectionTank10(
+                  taValue: widget.info.taValue10!,
+                  faValue: widget.info.faValue10!,
+                  arValue: widget.info.arValue10!,
+                  acValue: widget.info.acValue10!,
+                  tank10tempValue: widget.info.tank10tempValue!,
+                  taColor: Colors.redAccent,
+                  faColor: Colors.purpleAccent,
+                  arColor: Colors.yellowAccent,
+                  acColor: Colors.lightBlueAccent,
+                  tank10TempColor: Colors.greenAccent,
+                  taLabel: 'T.A. :',
+                  faLabel: 'F.A. :',
+                  arLabel: 'A.R. :',
+                  acLabel: 'A.C. :',
+                  tank10TempLabel: 'Temperature :',
+                  Unit: 'Pt.',
+                  Unit2: '°C',
+                ),
+              if (widget.info.conValue13 != null &&
+                  widget.info.faValue13 != null &&
+                  widget.info.tank13TempValue != null)
+                _buildPieChartSectionTank13(
+                  conValue: widget.info.conValue13!,
+                  faValue: widget.info.faValue13!,
+                  tank13TempValue: widget.info.tank13TempValue!,
+                  conColor: Colors.orangeAccent,
+                  faColor: Colors.purpleAccent,
+                  tank13TempColor: Colors.greenAccent,
+                  faLabel: 'F.A. :',
+                  conLabel: 'Con. :',
+                  tank13TempLabel: 'Temperature :',
+                  Unit: 'Pt.',
+                  Unit2: '°C',
+                  Unit3: '%',
+                ),
+              if (widget.info.conValue14 != null &&
+                  widget.info.faValue14 != null &&
+                  widget.info.tank14TempValue != null)
+                _buildPieChartSectionTank14(
+                  faValue: widget.info.faValue14!,
+                  conValue: widget.info.conValue14!,
+                  tank14TempValue: widget.info.tank14TempValue!,
+                  conColor: Colors.orangeAccent,
+                  faColor: Colors.purpleAccent,
+                  tank14TempColor: Colors.greenAccent,
+                  faLabel: 'F.A. :',
+                  conLabel: 'Con. :',
+                  tank14TempLabel: 'Temperature :',
+                  Unit: 'Pt.',
+                  Unit2: '°C',
+                  Unit3: '%',
+                ),
+            ],
+          ),
         ),
       ),
     );
@@ -260,124 +320,128 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String falLabel,
     required String tempLabel,
     required String FC4360Label,
+    required String Label,
+    required double tankValue,
+    required String Unit1,
+    required String Unit2,
+  }) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: falValue == null || falValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: falLabel,
+                      value: falValue,
+                      Unit: Unit1,
+                      min: 25,
+                      max: 45,
+                      sp: 33,
+                      isRadialGauge: true,
+                      isFalScale: true,
+                      showThreshold: true,
+                    ),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center, // Center alignment
+                  child: tempValue == null || tempValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: Label,
+                          value: tempValue,
+                          Unit: Unit2,
+                          min: 40,
+                          max: 95,
+                          sp: 65,
+                          isRadialGauge: true,
+                          isTempScale: true,
+                        ),
+                )
+              ],
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Widget _buildPieChartSection5({
+    required double feValue,
+    required double conValue,
+    required Color feColor,
+    required Color conColor,
+    required String feLabel,
+    required String conLabel,
+    required double HCIValue,
+    required String HCILable,
+    required String Label,
+    required String Label2,
+    required String Unit,
   }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
-        Align(
-          alignment: Alignment.topLeft, // Align to the left
-          child: Text(
-            '$falLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.center, // Center alignment
-              child: Text(
-                '$falValue',
-                style: GoogleFonts.ramabhadra(
-                    fontSize: 35, color: Colors.blueAccent),
-              ),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.topRight, // Align to the left
-              child: Text(
-                'Pt.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 90), // Space between sections
-        Column(
-          children: [
-            Align(
-              alignment: Alignment.centerLeft, // Align to the left
-              child: Text(
-                '$tempLabel',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            // SizedBox(height: 5),
-            Row(
-              children: [
-                Align(
-                  alignment: Alignment.center, // Center alignment
-                  child: Text(
-                    '$tempValue',
-                    style: GoogleFonts.ramabhadra(
-                        fontSize: 35, color: Colors.blueAccent),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Align(
-                  alignment: Alignment.topRight, // Align to the left
-                  child: Text(
-                    '°C',
-                    style: GoogleFonts.ramabhadra(
-                      fontSize: 10,
-                      color: Colors.black,
+            Container(
+              width: 155,
+              height: 80,
+              decoration: BoxDecoration(),
+              alignment: Alignment.center,
+              child: conValue == null || conValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: Label,
+                      value: conValue,
+                      Unit: Unit,
+                      min: 5,
+                      max: 20,
+                      sp: 12.5,
+                      isRadialGauge: true,
+                      isConScale: true,
                     ),
-                  ),
-                ),
-              ],
             )
           ],
         ),
-        SizedBox(height: 10),
         Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft, // Align to the left
-              child: Text(
-                '$FC4360Label',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            // SizedBox(height: 5),
             Row(
               children: [
-                Align(
-                  alignment: Alignment.center, // Center alignment
-                  child: Center(
-                    child: Text(
-                      '$FC4360value',
-                      style: GoogleFonts.ramabhadra(
-                          fontSize: 35, color: Colors.blueAccent),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Align(
-                  alignment: Alignment.topRight, // Align to the left
-                  child: Text(
-                    'Kg.',
-                    style: GoogleFonts.ramabhadra(
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: feValue == null || feValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: Label2,
+                          value: feValue,
+                          Unit: Unit,
+                          min: 0,
+                          max: 100,
+                          sp: 55,
+                          isRadialGauge: true,
+                          isFeScale: true,
+                          showThreshold: false,
+                        ),
+                )
               ],
             ),
           ],
@@ -386,176 +450,66 @@ class _FileInfoCardState extends State<FileInfoCard> {
     );
   }
 
-  Widget _buildPieChartSection5(
-      {required double feValue,
-      required double conValue,
-      required Color feColor,
-      required Color conColor,
-      required String feLabel,
-      required String conLabel,
-      required double HCIValue,
-      required String HCILable}) {
+  Widget _buildPieChartSection8({
+    required double talValue,
+    required double phValue,
+    required Color talColor,
+    required Color phColor,
+    required String talLabel,
+    required String phLabel,
+    required double PLZValue,
+    required String PLZLabel,
+    required String Unit,
+  }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
-        Align(
-          alignment: Alignment.topLeft, // Align to the left
-          child: Text(
-            '$conLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.center, // Center alignment
-              child: Text(
-                '$conValue',
-                style: GoogleFonts.ramabhadra(
-                    fontSize: 35, color: Colors.blueAccent),
-              ),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.topRight, // Align to the left
-              child: Text(
-                '%',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
-            ),
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: talValue == null || talValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: talLabel,
+                      value: talValue,
+                      Unit: Unit,
+                      min: 0,
+                      max: 10,
+                      sp: 5,
+                      isRadialGauge: true,
+                      isTalScale: true,
+                      showThreshold: false,
+                    ),
+            )
           ],
         ),
-        SizedBox(height: 175),
         Column(
           children: [
-            Align(
-              alignment: Alignment.topLeft, // Align to the left
-              child: Text(
-                '$HCILable.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            // SizedBox(height: 5),
             Row(
               children: [
-                Align(
-                  alignment: Alignment.center, // Center alignment
-                  child: Center(
-                    child: Text(
-                      '$HCIValue',
-                      style: GoogleFonts.ramabhadra(
-                          fontSize: 35, color: Colors.blueAccent),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Align(
-                  alignment: Alignment.topRight, // Align to the left
-                  child: Text(
-                    'Kg.',
-                    style: GoogleFonts.ramabhadra(
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildPieChartSection8(
-      {required double talValue,
-      required double phValue,
-      required Color talColor,
-      required Color phColor,
-      required String talLabel,
-      required String phLabel,
-      required double PLZValue,
-      required String PLZLabel}) {
-    return Column(
-      crossAxisAlignment:
-          CrossAxisAlignment.center, // Default alignment to the start (left)
-      children: [
-        Align(
-          alignment: Alignment.topLeft, // Align to the left
-          child: Text(
-            '$phLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
-        Row(
-          children: [
-            // Spacer(), // Pushes content to the right
-            Align(
-              alignment: Alignment.center, // Right alignment within the Row
-              child: Text(
-                '$phValue'.toDouble().toStringAsFixed(1),
-                style: GoogleFonts.ramabhadra(
-                    fontSize: 35, color: Colors.blueAccent),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 175),
-        Column(
-          children: [
-            Align(
-              alignment: Alignment.topLeft, // Align to the left
-              child: Text(
-                '$PLZLabel',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 15,
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-            SizedBox(height: 5),
-            Row(
-              children: [
-                Align(
-                  alignment: Alignment.center, // Center alignment
-                  child: Center(
-                    child: Text(
-                      '$PLZValue',
-                      style: GoogleFonts.ramabhadra(
-                          fontSize: 35, color: Colors.blueAccent),
-                    ),
-                  ),
-                ),
-                SizedBox(width: 10),
-                Align(
-                  alignment: Alignment.topRight, // Align to the left
-                  child: Text(
-                    'Kg.',
-                    style: GoogleFonts.ramabhadra(
-                      fontSize: 10,
-                      color: Colors.black,
-                    ),
-                  ),
-                ),
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: phValue == null || phValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: phLabel,
+                          value: phValue,
+                          Unit: '',
+                          min: 7,
+                          max: 11,
+                          sp: 9,
+                          isRadialGauge: true,
+                          isPhScale: true,
+                          showThreshold: false,
+                        ),
+                )
               ],
             ),
           ],
@@ -586,173 +540,134 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String tank9tempLabel,
     required String pb3650Label,
     required String ac9Label,
+    required String Unit,
+    required String Unit2,
   }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Center alignment for Column
       children: [
-        // F.AL. Section
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$taLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$taValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Pt.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: taValue == null || taValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: taLabel,
+                      value: taValue,
+                      Unit: Unit,
+                      min: 20,
+                      max: 35,
+                      sp: 28,
+                      isRadialGauge: true,
+                      isTa9Scale: true,
+                    ),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: faValue == null || faValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: faLabel,
+                          value: faValue,
+                          Unit: Unit,
+                          min: 3,
+                          max: 5,
+                          sp: 4,
+                          isRadialGauge: true,
+                          isFa9Scale: true,
+                          showThreshold: false,
+                        ),
+                )
+              ],
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$acLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        // SizedBox(height: 5),
-        Row(
+        Column(
           children: [
-            Text(
-              '$acValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Pt.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: arValue == null || arValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: arLabel,
+                          value: arValue,
+                          Unit: Unit,
+                          min: 4,
+                          max: 8,
+                          sp: 6,
+                          isRadialGauge: true,
+                          isAR910Scale: true,
+                          showThreshold: false,
+                        ),
+                )
+              ],
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$tank9tempLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        // SizedBox(height: 5),
-        Row(
+        Column(
           children: [
-            Text(
-              '$tank9tempValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '°C',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: ac9Value == null || ac9Value == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: acLabel,
+                          value: ac9Value,
+                          Unit: Unit,
+                          min: 0,
+                          max: 4,
+                          sp: 1.5,
+                          isRadialGauge: true,
+                          isAC910Scale: true,
+                        ),
+                )
+              ],
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$pb3650Label',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-        Row(
+        Column(
           children: [
-            Text(
-              '$pb3650Value',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Kg.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
-            ),
-          ],
-        ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$ac9Label',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-
-        Row(
-          children: [
-            Text(
-              '$ac9Value',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Kg.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: tank9tempValue == null || tank9tempValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: tank9tempLabel,
+                          value: tank9tempValue,
+                          Unit: Unit2,
+                          min: 65,
+                          max: 85,
+                          sp: 75,
+                          isRadialGauge: true,
+                          isTemp910Scale: true,
+                        ),
+                )
+              ],
             ),
           ],
         ),
@@ -776,110 +691,137 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String arLabel,
     required String acLabel,
     required String tank10TempLabel,
+    required String Unit,
+    required String Unit2,
   }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Center alignment for Column
       children: [
-        // F.AL. Section
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'T.A.',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Text(
-              '$taValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Pt.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: taValue == null || taValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: taLabel,
+                      value: taValue,
+                      Unit: Unit,
+                      min: 20,
+                      max: 40,
+                      sp: 32,
+                      isRadialGauge: true,
+                      isTa10Scale: true,
+                    ),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: faValue == null || faValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: faLabel,
+                          value: faValue,
+                          Unit: Unit,
+                          min: 4,
+                          max: 7,
+                          sp: 30,
+                          isRadialGauge: true,
+                          isFa10Scale: true,
+                          showThreshold: false,
+                        ),
+                )
+              ],
             ),
           ],
         ),
-        SizedBox(height: 10), // Space between sections
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            'A.C.',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        // SizedBox(height: 5),
-        Row(
+        Column(
           children: [
-            Text(
-              '$acValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                'Pt.',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: arValue == null || arValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: arLabel,
+                          value: arValue,
+                          Unit: Unit,
+                          min: 4,
+                          max: 8,
+                          sp: 6,
+                          isRadialGauge: true,
+                          isAR910Scale: true,
+                          showThreshold: false,
+                        ),
+                )
+              ],
             ),
           ],
         ),
-        SizedBox(height: 10),
-        Align(
-          alignment: Alignment.centerLeft,
-          child: Text(
-            '$tank10TempLabel',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        // SizedBox(height: 5),
-        Row(
+        Column(
           children: [
-            Text(
-              '$tank10tempValue',
-              style: GoogleFonts.ramabhadra(
-                  fontSize: 35, color: Colors.blueAccent),
-            ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.centerRight,
-              child: Text(
-                '°C',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: acValue == null || acValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: acLabel,
+                          value: acValue,
+                          Unit: Unit,
+                          min: 0,
+                          max: 4,
+                          sp: 2,
+                          isRadialGauge: true,
+                          isAC910Scale: true,
+                        ),
+                )
+              ],
             ),
           ],
-        ), // Space between sections
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: tank10tempValue == null || tank10tempValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: tank10TempLabel,
+                          value: tank10tempValue,
+                          Unit: Unit2,
+                          min: 65,
+                          max: 85,
+                          sp: 75,
+                          isRadialGauge: true,
+                          isTemp910Scale: true,
+                        ),
+                )
+              ],
+            ),
+          ],
+        ),
       ],
     );
   }
@@ -894,43 +836,83 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String conLabel,
     required String faLabel,
     required String tank13TempLabel,
+    required String Unit,
+    required String Unit2,
+    required String Unit3,
   }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
-        Align(
-          alignment: Alignment.topLeft, // Align to the left
-          child: Text(
-            'Con.',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.center, // Center alignment
-              child: Text(
-                '$conValue',
-                style: GoogleFonts.ramabhadra(
-                    fontSize: 35, color: Colors.blueAccent),
-              ),
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: conValue == null || conValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: conLabel,
+                      value: conValue,
+                      Unit: Unit,
+                      min: 0,
+                      max: 3,
+                      sp: 1.7,
+                      isRadialGauge: true,
+                      isCon13Scale: true,
+                    ),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: faValue == null || faValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: faLabel,
+                          value: faValue,
+                          Unit: Unit,
+                          min: -2,
+                          max: 2,
+                          sp: 0.7,
+                          isRadialGauge: true,
+                          isFa1314Scale: true,
+                        ),
+                )
+              ],
             ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.topRight, // Align to the left
-              child: Text(
-                '%',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: tank13TempValue == null || tank13TempValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: tank13TempLabel,
+                          value: tank13TempValue,
+                          Unit: Unit,
+                          min: 70,
+                          max: 90,
+                          sp: 80,
+                          isRadialGauge: true,
+                          isTemp13Scale: true,
+                        ),
+                )
+              ],
             ),
           ],
         ),
@@ -948,43 +930,83 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String conLabel,
     required String faLabel,
     required String tank14TempLabel,
+    required String Unit,
+    required String Unit2,
+    required String Unit3,
   }) {
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Default alignment to the start (left)
       children: [
-        Align(
-          alignment: Alignment.topLeft, // Align to the left
-          child: Text(
-            'Con.',
-            style: GoogleFonts.ramabhadra(
-              fontSize: 15,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-        SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(
-              alignment: Alignment.center, // Center alignment
-              child: Text(
-                '$conValue',
-                style: GoogleFonts.ramabhadra(
-                    fontSize: 35, color: Colors.blueAccent),
-              ),
+            Container(
+              width: 155,
+              height: 80,
+              alignment: Alignment.center,
+              child: conValue == null || conValue == 0
+                  ? const Center(child: CircularProgressIndicator())
+                  : LineGaugeTank(
+                      Label: conLabel,
+                      value: conValue,
+                      Unit: Unit,
+                      min: 1,
+                      max: 3,
+                      sp: 2.1,
+                      isRadialGauge: true,
+                      isCon14Scale: true,
+                    ),
+            )
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: faValue == null || faValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: faLabel,
+                          value: faValue,
+                          Unit: Unit,
+                          min: -2,
+                          max: 2,
+                          sp: 0.7,
+                          isRadialGauge: true,
+                          isFa1314Scale: true,
+                        ),
+                )
+              ],
             ),
-            SizedBox(width: 10),
-            Align(
-              alignment: Alignment.topRight, // Align to the left
-              child: Text(
-                '%',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 10,
-                  color: Colors.black,
-                ),
-              ),
+          ],
+        ),
+        Column(
+          children: [
+            Row(
+              children: [
+                Container(
+                  width: 155,
+                  height: 80,
+                  alignment: Alignment.center,
+                  child: tank14TempValue == null || tank14TempValue == 0
+                      ? const Center(child: CircularProgressIndicator())
+                      : LineGaugeTank(
+                          Label: tank14TempLabel,
+                          value: tank14TempValue,
+                          Unit: Unit,
+                          min: 65,
+                          max: 85,
+                          sp: 75,
+                          isRadialGauge: true,
+                          isTemp14Scale: true,
+                        ),
+                )
+              ],
             ),
           ],
         ),

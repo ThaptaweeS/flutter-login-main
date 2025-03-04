@@ -222,105 +222,123 @@ List<CloudStorageInfo> demoMyFiles = [
 ];
 
 Future<void> fetchStatusAndUpdateColors() async {
-  try {
-    // print('Fetching API...');
-    final response = await http.post(
-      Uri.parse('http://172.23.10.51:1111/status'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, dynamic>{}),
-    );
-    // print('Response status: ${response.statusCode}');
-    // print('Response body: ${response.body}');
-    if (response.statusCode == 200) {
-      List<dynamic> data = jsonDecode(response.body);
+  // try {
+  print('Fetching API...');
+  final response = await http.post(
+    Uri.parse('http://172.23.10.51:1111/status'),
+    headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+    },
+    body: jsonEncode(<String, dynamic>{}),
+  );
+  // print('Response status: ${response.statusCode}');
+  // print('Response body: ${response.body}');
+  if (response.statusCode == 200) {
+    List<dynamic> data = jsonDecode(response.body);
 
-      for (var item in data) {
-        int id = item['id'];
-        int color = item['color'];
+    for (var item in data) {
+      int id = item['id'];
+      int color = item['color'];
 
-        CloudStorageInfo? cloudStorageInfo;
+      CloudStorageInfo? cloudStorageInfo;
 
-        for (var storageInfo in demoMyFiles) {
-          if (storageInfo.id == id) {
-            cloudStorageInfo = storageInfo;
+      for (var storageInfo in demoMyFiles) {
+        if (storageInfo.id == id) {
+          cloudStorageInfo = storageInfo;
+          break;
+        }
+      }
+
+      if (cloudStorageInfo != null) {
+        switch (color) {
+          case 0:
+            cloudStorageInfo.color2 = Color.fromARGB(255, 255, 28, 28);
             break;
-          }
+          case 1:
+            cloudStorageInfo.color2 = Color.fromARGB(255, 229, 156, 0);
+            break;
+          case 2:
+            cloudStorageInfo.color2 = Color.fromARGB(255, 28, 168, 61);
+            break;
+          default:
+            cloudStorageInfo.color2 = Colors.transparent;
         }
 
-        if (cloudStorageInfo != null) {
-          switch (color) {
-            case 0:
-              cloudStorageInfo.color2 = Color.fromARGB(255, 255, 28, 28);
-              break;
-            case 1:
-              cloudStorageInfo.color2 = Color.fromARGB(255, 229, 156, 0);
-              break;
-            case 2:
-              cloudStorageInfo.color2 = Color.fromARGB(255, 28, 168, 61);
-              break;
-            default:
-              cloudStorageInfo.color2 = Colors.transparent;
-          }
-
+        try {
           if (id == 2) {
             final responses = await Future.wait([
-              http.post(Uri.parse('http://172.23.10.51:1111/tank2-falui')),
+              http.post(Uri.parse('http://172.23.10.51:1111/tank2-falvalue')),
               http.post(Uri.parse('http://172.23.10.51:1111/tank2-rtemp')),
               http.post(Uri.parse('http://172.23.10.51:1111/chem-feed2')),
             ]);
 
-            if (responses.every((res) => res.statusCode == 200)) {
-              // print('Response body: ${response.body}');
+            for (int i = 0; i < responses.length; i++) {
+              // print('Response $i Status: ${responses[i].statusCode}');
+              // print('Response $i Body: ${responses[i].body}');
+            }
+
+            if (responses
+                .every((res) => res.statusCode == 200 && res.body.isNotEmpty)) {
               final responseDataFAL = json.decode(responses[0].body);
               final responseDataTemp = json.decode(responses[1].body);
               final responseDataFC4360 = json.decode(responses[2].body);
-              cloudStorageInfo.falValue =
-                  double.tryParse(responses[0].body.toString()) ?? 0.0;
 
+              cloudStorageInfo.falValue =
+                  double.tryParse(responseDataFAL.toString()) ?? 0.0;
               cloudStorageInfo.tempValue = double.tryParse(
                       responseDataTemp['value']?.toString() ?? '0') ??
                   0.0;
               cloudStorageInfo.FC4360value =
                   (responseDataFC4360.last['value'] ?? 0).toDouble();
+
               // print('FAL Value: ${cloudStorageInfo.falValue}');
-              // print('Temp Value: ${cloudStorageInfo.tempValue}');
-              // print('FC4360 Value: ${cloudStorageInfo.FC4360value}');
             } else {
-              throw Exception('Failed to fetch Tank 2 data');
+              throw Exception(
+                  'Failed to fetch Tank 2 data - One or more responses are invalid');
             }
           }
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 5) {
-            final responseFE = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank5-feui'));
+            final responses = await Future.wait([
+              http.post(Uri.parse('http://172.23.10.51:1111/tank5-fevalue')),
+              http.post(Uri.parse('http://172.23.10.51:1111/tank5-convalue')),
+              http.post(Uri.parse('http://172.23.10.51:1111/chem-feed5')),
+            ]);
 
-            final responseCON = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank5-conui'));
-            final responseHCI = await http
-                .post(Uri.parse('http://172.23.10.51:1111/chem-feed5'));
-            if (responseFE.statusCode == 200 &&
-                responseCON.statusCode == 200 &&
-                responseHCI.statusCode == 200) {
-              final responseDataFE = json.decode(responseFE.body);
-              final responseDataCON = json.decode(responseCON.body);
-              final List<dynamic> responseDataHCI =
-                  json.decode(responseHCI.body);
+            for (int i = 0; i < responses.length; i++) {
+              print('Response $i Status: ${responses[i].statusCode}');
+              print('Response $i Body: ${responses[i].body}');
+            }
+
+            if (responses
+                .every((res) => res.statusCode == 200 && res.body.isNotEmpty)) {
+              final responseDataFE = json.decode(responses[0].body);
+              final responseDataCON = json.decode(responses[1].body);
+              final responseDataHCI = json.decode(responses[2].body);
 
               cloudStorageInfo.feValue =
-                  double.tryParse(responseFE.body.toString()) ?? 0.0;
+                  double.tryParse(responseDataFE.toString()) ?? 0.0;
               cloudStorageInfo.conValue =
                   double.tryParse(responseDataCON.toString()) ?? 0.0;
               cloudStorageInfo.HCIValue =
                   (responseDataHCI.last['value'] ?? 0).toDouble();
+              print('FE Value: ${cloudStorageInfo.feValue}');
+              print('CON Value: ${cloudStorageInfo.conValue}');
+              print('HCI Value: ${cloudStorageInfo.HCIValue}');
             } else {
               throw Exception('Failed to fetch Tank 5 data');
             }
           }
-
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 8) {
             final responseTAL = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank8-talui'));
+                .post(Uri.parse('http://172.23.10.51:1111/tank8-talvalue'));
             final responsePH = await http
                 .post(Uri.parse('http://172.23.10.51:1111/tank8-phui'));
             final responsePLZ = await http
@@ -328,20 +346,22 @@ Future<void> fetchStatusAndUpdateColors() async {
             if (responseTAL.statusCode == 200 && responsePH.statusCode == 200) {
               final responseDataTAL = json.decode(responseTAL.body);
               final responseDataPH = json.decode(responsePH.body);
-              final List<dynamic> responseDataPLZ =
-                  json.decode(responsePLZ.body);
+              final responseDataPLZ = json.decode(responsePLZ.body);
 
               cloudStorageInfo.talValue =
-                  double.tryParse(responseDataTAL.toString()) ?? 0.0;
+                  double.tryParse(responseTAL.body.toString()) ?? 0.0;
               cloudStorageInfo.phValue =
-                  double.tryParse(responseDataPH.toString()) ?? 0.0;
+                  double.tryParse(responsePH.body.toString()) ?? 0.0;
               cloudStorageInfo.PLZValue =
                   (responseDataPLZ.last['value'] ?? 0).toDouble();
             } else {
               throw Exception('Failed to fetch Tank 8 data');
             }
           }
-
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 9) {
             final responseTA = await http
                 .post(Uri.parse('http://172.23.10.51:1111/tank9-TAui'));
@@ -394,7 +414,10 @@ Future<void> fetchStatusAndUpdateColors() async {
               throw Exception('Failed to fetch Tank 9 data');
             }
           }
-
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 10) {
             final responseTA = await http
                 .post(Uri.parse('http://172.23.10.51:1111/tank10-TAui'));
@@ -435,7 +458,10 @@ Future<void> fetchStatusAndUpdateColors() async {
               throw Exception('Failed to fetch Tank 10 data');
             }
           }
-
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 13) {
             final responseCON = await http
                 .post(Uri.parse('http://172.23.10.51:1111/tank13-conui'));
@@ -461,7 +487,10 @@ Future<void> fetchStatusAndUpdateColors() async {
               throw Exception('Failed to fetch Tank 13 data');
             }
           }
-
+        } catch (e) {
+          print('Error: $e');
+        }
+        try {
           if (id == 14) {
             final responseCON = await http
                 .post(Uri.parse('http://172.23.10.51:1111/tank14-conui'));
@@ -479,24 +508,28 @@ Future<void> fetchStatusAndUpdateColors() async {
               cloudStorageInfo.conValue14 =
                   double.tryParse(responseDataCON.toString()) ?? 0.0;
               cloudStorageInfo.faValue14 =
-                  double.tryParse(responseDataCON.toString()) ?? 0.0;
+                  double.tryParse(responseDataFA.toString()) ?? 0.0;
               cloudStorageInfo.tank14TempValue = double.tryParse(
                       responseDataTemp['value']?.toString() ?? '0') ??
                   0.0;
+              print(double.tryParse(responseDataCON.toString()) ?? 0.0);
             } else {
               throw Exception('Failed to fetch Tank 14 data');
             }
           }
-        } else {
-          print('CloudStorageInfo with ID $id not found');
+        } catch (e) {
+          print('Error: $e');
         }
+      } else {
+        print('CloudStorageInfo with ID $id not found');
       }
-    } else {
-      print('Failed to fetch data: ${response.statusCode}');
     }
-  } catch (e) {
-    print('Error: $e');
+  } else {
+    print('Failed to fetch data: ${response.statusCode}');
   }
+  // } catch (e) {
+  //   print('Error: $e');
+  // }
 }
 
 class MyFile {

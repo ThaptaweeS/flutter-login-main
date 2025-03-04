@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
 
+  syncfusion_flutter_gauges: 21.2.4
   flutter_bloc: ^8.1.1
   shared_preferences: ^2.0.15
   file_picker: ^5.2.2

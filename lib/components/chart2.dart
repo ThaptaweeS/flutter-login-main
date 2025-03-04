@@ -4,9 +4,7 @@ import 'dart:math' as math;
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:newmaster/constants.dart';
 import 'package:newmaster/presentation/resources/app_resources.dart';
-import 'package:newmaster/responsive.dart';
 
 class LineChartSample10 extends StatefulWidget {
   const LineChartSample10({super.key});
@@ -26,12 +24,12 @@ class _LineChartSample10State extends State<LineChartSample10> {
   double xValue = 0;
   double step = 0.05;
 
-  late Timer timer;
+  late Timer? _timer;
 
   @override
   void initState() {
     super.initState();
-    timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
+    _timer = Timer.periodic(const Duration(milliseconds: 40), (timer) {
       while (sinLitter.length > limitCount) {
         sinLitter.removeAt(0);
         cosLitter.removeAt(0);
@@ -147,7 +145,7 @@ class _LineChartSample10State extends State<LineChartSample10> {
 
   @override
   void dispose() {
-    timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 }

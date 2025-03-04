@@ -2,12 +2,13 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:newmaster/presentation/resources/app_resources.dart';
 
-class LineChartSample7 extends StatelessWidget {
-  LineChartSample7({
+class LineChartUI extends StatelessWidget {
+  LineChartUI({
     super.key,
     Color? line1Color,
     Color? line2Color,
     Color? betweenColor,
+    final dynamic chartData,
   })  : line1Color = line1Color ?? AppColors.contentColorGreen,
         line2Color = line2Color ?? AppColors.contentColorRed,
         betweenColor =
@@ -22,63 +23,149 @@ class LineChartSample7 extends StatelessWidget {
       fontSize: 10,
       fontWeight: FontWeight.bold,
     );
+
+    Widget text;
+    switch (value.toInt()) {
+      case 0:
+        text = const Text('', style: style);
+        break;
+      case 1:
+        text = const Text('01:00', style: style);
+        break;
+      case 2:
+        text = const Text('', style: style);
+        break;
+      case 3:
+        text = const Text('', style: style);
+        break;
+      case 4:
+        text = const Text('', style: style);
+        break;
+      case 5:
+        text = const Text('', style: style);
+        break;
+      case 6:
+        text = const Text('', style: style);
+        break;
+      case 7:
+        text = const Text('07:00', style: style);
+        break;
+      case 8:
+        text = const Text('', style: style);
+        break;
+      case 9:
+        text = const Text('', style: style);
+        break;
+      case 10:
+        text = const Text('', style: style);
+        break;
+      case 11:
+        text = const Text('', style: style);
+        break;
+      case 12:
+        text = const Text('', style: style);
+        break;
+      case 13:
+        text = const Text('13:00', style: style);
+        break;
+      case 14:
+        text = const Text('', style: style);
+        break;
+      case 15:
+        text = const Text('', style: style);
+        break;
+      case 16:
+        text = const Text('', style: style);
+        break;
+      case 17:
+        text = const Text('', style: style);
+        break;
+      case 18:
+        text = const Text('', style: style);
+        break;
+      case 19:
+        text = const Text('19:00', style: style);
+        break;
+      case 20:
+        text = const Text('', style: style);
+        break;
+      case 21:
+        text = const Text('', style: style);
+        break;
+      case 22:
+        text = const Text('', style: style);
+        break;
+      case 23:
+        text = const Text('23:00', style: style);
+        break;
+      default:
+        text = const Text('', style: style);
+        break;
+    }
+
+    return SideTitleWidget(
+      axisSide: meta.axisSide,
+      child: text,
+    );
+  }
+
+  Widget leftTitleWidgets(double value, TitleMeta meta) {
+    const style = TextStyle(
+      fontWeight: FontWeight.bold,
+      fontSize: 10,
+      color: Colors.black,
+    );
     String text;
     switch (value.toInt()) {
       case 0:
-        text = 'Jan';
-        break;
-      case 1:
-        text = 'Feb';
-        break;
-      case 2:
-        text = 'Mar';
-        break;
-      case 3:
-        text = 'Apr';
-        break;
-      case 4:
-        text = 'May';
+        text = '0';
         break;
       case 5:
-        text = 'Jun';
-        break;
-      case 6:
-        text = 'Jul';
-        break;
-      case 7:
-        text = 'Aug';
-        break;
-      case 8:
-        text = 'Sep';
-        break;
-      case 9:
-        text = 'Oct';
+        text = '5';
         break;
       case 10:
-        text = 'Nov';
+        text = '10';
         break;
-      case 11:
-        text = 'Dec';
+      case 15:
+        text = '15';
+        break;
+      case 20:
+        text = '20';
+        break;
+      case 25:
+        text = '25';
+        break;
+      case 30:
+        text = '30';
+        break;
+      case 33:
+        text = '33';
+        break;
+      case 35:
+        text = '35';
+        break;
+      case 40:
+        text = '40';
+        break;
+      case 45:
+        text = '45';
+        break;
+
+      case 50:
+        text = '50';
         break;
       default:
         return Container();
     }
 
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
-      space: 4,
-      child: Text(text, style: style, textAlign: TextAlign.center),
-    );
-  }
-
-  Widget leftTitleWidgets(double value, TitleMeta meta) {
-    const style = TextStyle(fontSize: 10);
-
-    return SideTitleWidget(
-      axisSide: meta.axisSide,
+    return Padding(
+      padding:
+          EdgeInsets.only(right: 3.0), // Adjust the padding to move the text
       child: Text(
-        '\$ ${value + 0.5}',
+        text,
         style: style,
+        textAlign:
+            TextAlign.right, // Text alignment inside the padded container
       ),
     );
   }

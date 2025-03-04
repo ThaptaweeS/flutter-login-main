@@ -5,9 +5,9 @@ import 'package:newmaster/data/global.dart';
 import 'package:newmaster/mainBody.dart';
 import 'package:newmaster/page/page02.dart';
 import 'package:newmaster/page/page2-data/autofeed-input2.dart';
+import 'package:newmaster/page/page2-data/autofeed-input3.dart';
 
 import '../../bloc/BlocEvent/ChangePageEvent.dart';
-import 'autofeed-input3.dart';
 import 'autofeed-input4.dart';
 import 'autofeed-input5.dart';
 
@@ -103,6 +103,15 @@ class Page02Autobody extends StatelessWidget {
                 ),
               ),
               ElevatedButton(
+                // onPressed: () {
+                //   CuPage = DataInput7Before();
+                //   MainBodyContext.read<ChangePage_Bloc>()
+                //       .add(ChangePage_nodrower());
+                // },
+                // style: ElevatedButton.styleFrom(
+                //   backgroundColor: Colors.green,
+                //   fixedSize: Size(200, 100), // Set background color
+                // ),
                 onPressed: () {
                   CuPage = Page033Autobody();
                   MainBodyContext.read<ChangePage_Bloc>()

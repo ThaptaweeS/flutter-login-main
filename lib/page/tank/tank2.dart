@@ -215,7 +215,6 @@ class _Tank2BodyPageState extends State<Tank2BodyPage> {
           dropdownValue!.toLowerCase();
     }).toList();
 
-    // Fixed header row
     Widget header = Table(
       defaultVerticalAlignment: TableCellVerticalAlignment.middle,
       border: TableBorder.all(),

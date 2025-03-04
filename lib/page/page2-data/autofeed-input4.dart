@@ -145,9 +145,30 @@ class Page044Autobody extends StatelessWidget {
       final message = jsonResponse['message'];
 
       if (message == 'success') {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => nextPage),
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: Text('Data Input',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+              content: Container(
+                width: 800,
+                height: 800, // ปรับขนาด popup ตามต้องการ
+                child: nextPage, // แสดง Widget แทนหน้าถัดไป
+              ),
+              actions: <Widget>[
+                TextButton(
+                  style:
+                      TextButton.styleFrom(backgroundColor: Colors.redAccent),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: Text('Close',
+                      style: GoogleFonts.ramabhadra(color: Colors.black)),
+                ),
+              ],
+            );
+          },
         );
       } else {
         showDialog(

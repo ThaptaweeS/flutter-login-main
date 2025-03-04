@@ -160,18 +160,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
       case 5:
         text = '5';
         break;
-      case 6:
-        text = '6';
-        break;
-      case 7:
-        text = '7';
-        break;
-      case 8:
-        text = '8';
-        break;
-      case 9:
-        text = '9';
-        break;
+
       default:
         return Container();
     }
@@ -264,8 +253,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 1,
-      maxY: maxResultApprove + 1,
+      minY: minResultApprove - 1.5,
+      maxY: maxResultApprove + 1.5,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -297,19 +286,17 @@ class _LineChartSample23State extends State<LineChartSample23> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2.5,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors
-                    .blue, // You can also adjust the color of the dots if needed
-                strokeColor:
-                    Colors.blue, // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                color: Colors.white,
+                strokeColor: Colors.blue,
+                strokeWidth: 2,
               );
             },
           ),

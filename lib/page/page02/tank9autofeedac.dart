@@ -217,6 +217,10 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
 
   void startFetchingFeedActualData() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      if (!mounted) {
+        _timer?.cancel(); // Cancel the timer if the widget is not mounted
+        return;
+      }
       fetchFeedDataFromAPI().then((newData) {
         setState(() {
           feedActualac9 = newData['feedActual'] ?? 0.0; // Update feed actual

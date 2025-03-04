@@ -118,6 +118,9 @@ class _Chart133State extends State<Chart133> {
                   ),
                 ],
               ),
+              SizedBox(
+                height: 15,
+              ),
               Responsive(
                 mobile: LineChartSample22(
                   crossAxisCount: _size.width < 650 ? 2 : 4,
@@ -381,7 +384,7 @@ class SimpleBarChart extends StatelessWidget {
             color: charts.ColorUtil.fromDartColor(Colors.black),
           ),
           labelAnchor: charts.TickLabelAnchor.centered,
-          labelOffsetFromAxisPx: 60, // เลื่อนข้อความออกจากแกนเล็กน้อย
+          labelOffsetFromAxisPx: 60,
           labelRotation: -90,
         ),
       ),

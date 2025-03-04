@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+
 class LineChartSample23 extends StatefulWidget {
   LineChartSample23({
     super.key,
@@ -141,18 +142,18 @@ class _LineChartSample23State extends State<LineChartSample23> {
         fontWeight: FontWeight.bold, fontSize: 10, color: Colors.black);
     String text;
     switch (value.toInt()) {
-      case 0:
-        text = '0';
-        break;
-      case 1:
-        text = '1';
-        break;
-      case 2:
-        text = '2';
-        break;
-      case 3:
-        text = '3';
-        break;
+      // case 0:
+      //   text = '0';
+      //   break;
+      // case 1:
+      //   text = '1';
+      //   break;
+      // case 2:
+      //   text = '2';
+      //   break;
+      // case 3:
+      //   text = '3';
+      //   break;
       case 4:
         text = '4';
         break;
@@ -165,30 +166,30 @@ class _LineChartSample23State extends State<LineChartSample23> {
       case 7:
         text = '7';
         break;
-      case 8:
-        text = '8';
-        break;
-      case 9:
-        text = '9';
-        break;
-      case 10:
-        text = '10';
-        break;
-      case 11:
-        text = '11';
-        break;
-      case 12:
-        text = '12';
-        break;
-      case 13:
-        text = '13';
-        break;
-      case 14:
-        text = '14';
-        break;
-      case 15:
-        text = '15';
-        break;
+      // case 8:
+      //   text = '8';
+      //   break;
+      // case 9:
+      //   text = '9';
+      //   break;
+      // case 10:
+      //   text = '10';
+      //   break;
+      // case 11:
+      //   text = '11';
+      //   break;
+      // case 12:
+      //   text = '12';
+      //   break;
+      // case 13:
+      //   text = '13';
+      //   break;
+      // case 14:
+      //   text = '14';
+      //   break;
+      // case 15:
+      //   text = '15';
+      //   break;
       default:
         return Container();
     }
@@ -281,8 +282,8 @@ class _LineChartSample23State extends State<LineChartSample23> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 1,
-      maxY: maxResultApprove + 1,
+      minY: minResultApprove - 1.5,
+      maxY: maxResultApprove + 2,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -313,19 +314,17 @@ class _LineChartSample23State extends State<LineChartSample23> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2.5,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors
-                    .blue, // You can also adjust the color of the dots if needed
-                strokeColor:
-                    Colors.blue, // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                color: Colors.white,
+                strokeColor: Colors.blue,
+                strokeWidth: 2,
               );
             },
           ),
@@ -508,7 +507,7 @@ class _LineChartSample23State extends State<LineChartSample23> {
             show: true,
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
             gradient: LinearGradient(
               colors: [
                 ColorTween(begin: gradientColors[0], end: gradientColors[1])

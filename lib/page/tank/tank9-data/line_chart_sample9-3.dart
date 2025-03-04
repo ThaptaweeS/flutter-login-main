@@ -565,18 +565,18 @@ class _LineChartSample32State extends State<LineChartSample32> {
     );
     String text;
     switch (value.toInt()) {
-      case 0:
-        text = '0';
-        break;
-      case 1:
-        text = '1';
-        break;
-      case 2:
-        text = '2';
-        break;
-      case 3:
-        text = '3';
-        break;
+      // case 0:
+      //   text = '0';
+      //   break;
+      // case 1:
+      //   text = '1';
+      //   break;
+      // case 2:
+      //   text = '2';
+      //   break;
+      // case 3:
+      //   text = '3';
+      //   break;
       case 4:
         text = '4';
         break;
@@ -592,27 +592,13 @@ class _LineChartSample32State extends State<LineChartSample32> {
       case 8:
         text = '8';
         break;
-      case 9:
-        text = '9';
-        break;
-      case 10:
-        text = '10';
-        break;
-      case 11:
-        text = '11';
-        break;
-      case 12:
-        text = '12';
-        break;
-      case 13:
-        text = '13';
-        break;
-      case 14:
-        text = '14';
-        break;
-      case 15:
-        text = '15';
-        break;
+      // case 9:
+      //   text = '9';
+      //   break;
+      // case 10:
+      //   text = '10';
+      //   break;
+
       default:
         return Container();
     }
@@ -707,8 +693,8 @@ class _LineChartSample32State extends State<LineChartSample32> {
       ),
       minX: 0,
       maxX: 28,
-      minY: minResultApprove - 2,
-      maxY: maxResultApprove + 2,
+      minY: minResultApprove - 1.5,
+      maxY: maxResultApprove + 1.5,
       lineBarsData: [
         LineChartBarData(
           spots: ((() {
@@ -739,19 +725,17 @@ class _LineChartSample32State extends State<LineChartSample32> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors.blue,
-                // You can also adjust the color of the dots if needed
-                strokeColor:
-                    Colors.blue, // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                color: Colors.white,
+                strokeColor: Colors.blue,
+                strokeWidth: 2,
               );
             },
           ),
@@ -1308,28 +1292,50 @@ class _LineChartSample33State extends State<LineChartSample33> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors
-                    .blue, // You can also adjust the color of the dots if needed
-                strokeColor:
-                    Colors.blue, // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                color: Colors.white,
+                strokeColor: Colors.blue,
+                strokeWidth: 2,
               );
             },
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            cutOffY: 75,
+            applyCutOffY: true,
             gradient: LinearGradient(
-              colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
-                  .toList(),
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          aboveBarData: BarAreaData(
+            show: true,
+            cutOffY: 75,
+            applyCutOffY: true,
+            gradient: LinearGradient(
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
+                Colors.grey.withOpacity(0.3),
+              ],
+              stops: [0.0, 0.5, 0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
         ),

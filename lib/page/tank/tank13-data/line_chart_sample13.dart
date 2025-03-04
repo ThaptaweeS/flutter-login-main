@@ -1,7 +1,8 @@
 import 'dart:convert';
-import 'package:google_fonts/google_fonts.dart';
+
 import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:newmaster/presentation/resources/app_colors.dart';
 
 class LineChartSample2 extends StatefulWidget {
@@ -576,42 +577,42 @@ class _LineChartSample22State extends State<LineChartSample22> {
       case 3:
         text = '3.0';
         break;
-      case 4:
-        text = '4.0';
-        break;
-      case 5:
-        text = '5.0';
-        break;
-      case 6:
-        text = '6.0';
-        break;
-      case 7:
-        text = '7.0';
-        break;
-      case 8:
-        text = '8.0';
-        break;
-      case 9:
-        text = '9.0';
-        break;
-      case 10:
-        text = '10.0';
-        break;
-      case 11:
-        text = '11';
-        break;
-      case 12:
-        text = '12';
-        break;
-      case 13:
-        text = '13';
-        break;
-      case 14:
-        text = '14';
-        break;
-      case 15:
-        text = '15';
-        break;
+      // case 4:
+      //   text = '4.0';
+      //   break;
+      // case 5:
+      //   text = '5.0';
+      //   break;
+      // case 6:
+      //   text = '6.0';
+      //   break;
+      // case 7:
+      //   text = '7.0';
+      //   break;
+      // case 8:
+      //   text = '8.0';
+      //   break;
+      // case 9:
+      //   text = '9.0';
+      //   break;
+      // case 10:
+      //   text = '10.0';
+      //   break;
+      // case 11:
+      //   text = '11';
+      //   break;
+      // case 12:
+      //   text = '12';
+      //   break;
+      // case 13:
+      //   text = '13';
+      //   break;
+      // case 14:
+      //   text = '14';
+      //   break;
+      // case 15:
+      //   text = '15';
+      //   break;
       default:
         return Container();
     }
@@ -737,28 +738,46 @@ class _LineChartSample22State extends State<LineChartSample22> {
           gradient: LinearGradient(
             colors: gradientColors,
           ),
-          barWidth: 2,
+          barWidth: 2.0,
           isStrokeCapRound: true,
           dotData: FlDotData(
             show: true,
             getDotPainter: (spot, percent, barData, index) {
-              final radius = 1.5; // Adjust the size of the dots here
+              final radius = 3.0;
               return FlDotCirclePainter(
                 radius: radius,
-                color: Colors
-                    .blue, // You can also adjust the color of the dots if needed
-                strokeColor:
-                    Colors.blue, // If you want to add border color to the dots
-                strokeWidth: 2, // If you want to add border to the dots
+                color: Colors.white,
+                strokeColor: Colors.blue,
+                strokeWidth: 2,
               );
             },
           ),
           belowBarData: BarAreaData(
-            show: false,
+            show: true,
+            cutOffY: 1.7,
+            applyCutOffY: true,
             gradient: LinearGradient(
-              colors: gradientColors
-                  .map((color) => color.withOpacity(0.3))
-                  .toList(),
+              colors: [
+                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+              ],
+              stops: [0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
+            ),
+          ),
+          aboveBarData: BarAreaData(
+            show: true,
+            cutOffY: 1.7,
+            applyCutOffY: true,
+            gradient: LinearGradient(
+              colors: [
+                Colors.grey.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
+                Colors.grey.withOpacity(0.3), // ลดความเข้มของสีฟ้า
+              ],
+              stops: [0.5, 1.0],
+              begin: Alignment.topCenter,
+              end: Alignment.bottomCenter,
             ),
           ),
         ),

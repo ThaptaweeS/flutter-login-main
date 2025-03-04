@@ -34,16 +34,19 @@ class P1DASHBOARDMAIN extends StatefulWidget {
 
 class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   late Timer _timer;
-  double falValue = 0;
-  double tempValue = 0;
-  double feValue = 0;
-  double conValue = 0;
+  // double falValue = 0;
+  // double tempValue = 0;
+  // double feValue = 0;
+  // double conValue = 0;
 
   @override
   void initState() {
     super.initState();
     _timer = Timer.periodic(Duration(seconds: 5), (timer) {
-      // print('Timer...'); // ตรวจสอบว่า Timer ทำงานจริง
+      if (!mounted) {
+        _timer?.cancel(); // Cancel the timer if the widget is not mounted
+        return;
+      }
       setState(() {
         fetchStatusAndUpdateColors() {}
       });
@@ -52,7 +55,7 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
 
   @override
   void dispose() {
-    _timer.cancel();
+    _timer?.cancel();
     super.dispose();
   }
 
@@ -138,168 +141,181 @@ class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   @override
   Widget build(BuildContext context) {
     fetchStatusAndUpdateColors();
+    // String selectedChart = 'Chart FAL_Tank2';
 
     // Filter out hidden items
     List<int> visibleKeys =
         visibilityStates.keys.where((key) => visibilityStates[key]!).toList();
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Colors.indigo[50],
-          title: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment:
-                CrossAxisAlignment.baseline, // ใช้ Baseline เดียวกัน
-            textBaseline: TextBaseline
-                .alphabetic, // ต้องเพิ่มสำหรับให้ align ด้วย baseline
-            children: [
-              Text(
-                'DASHBOARD',
-                style: GoogleFonts.ramabhadra(
-                  fontSize: 40,
-                  color: Colors.black,
-                ),
-              ),
-              const SizedBox(width: 20),
-              Row(
-                // mainAxisAlignment: MainAxisAlignment.center,
-                // crossAxisAlignment: CrossAxisAlignment.end,
-                // textBaseline: TextBaseline.alphabetic,
-                children: [
-                  // Text(
-                  //   "Select Tank",
-                  //   style: GoogleFonts.ramabhadra(
-                  //     fontSize: 20,
-                  //     color: Colors.black,
-                  //   ),
-                  // ),
-                  const SizedBox(width: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        backgroundColor: Colors.green,
-                        radius: 10,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Pass",
-                        style: GoogleFonts.ramabhadra(
-                          fontSize: 11,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.yellow,
-                        radius: 10,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        "Waiting Check",
-                        style: GoogleFonts.ramabhadra(
-                          fontSize: 11,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                  const SizedBox(width: 15),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const CircleAvatar(
-                        backgroundColor: Colors.red,
-                        radius: 10,
-                      ),
-                      const SizedBox(width: 5),
-                      Text(
-                        "NG Value",
-                        style: GoogleFonts.ramabhadra(
-                          fontSize: 11,
-                          color: Colors.black,
-                        ),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
-            ],
-          ),
-          actions: [
-            IconButton(
-              icon: const Icon(Icons.visibility),
-              onPressed: () => _showSettingsDialog(context),
-            ),
-          ],
-        ),
-        body: Stack(
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment:
+              CrossAxisAlignment.baseline, // ใช้ Baseline เดียวกัน
+          textBaseline:
+              TextBaseline.alphabetic, // ต้องเพิ่มสำหรับให้ align ด้วย baseline
           children: [
-            Positioned.fill(
-              child: Container(
-                color: Colors.indigo[50],
+            Text(
+              'DASHBOARD',
+              style: GoogleFonts.ramabhadra(
+                fontSize: 40,
+                color: Colors.black,
               ),
             ),
-            Positioned.fill(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Expanded(
-                    child: LayoutBuilder(
-                      builder: (context, constraints) {
-                        int crossAxisCount =
-                            (constraints.maxWidth / 200).floor();
-                        double cardWidth =
-                            constraints.maxWidth / crossAxisCount -
-                                defaultPadding;
-                        double cardHeight = 600;
-
-                        return SingleChildScrollView(
-                          padding: const EdgeInsets.all(defaultPadding),
-                          child: Column(
-                            children: [
-                              const SizedBox(height: defaultPadding),
-                              GridView.builder(
-                                physics: const NeverScrollableScrollPhysics(),
-                                shrinkWrap: true,
-                                itemCount: visibleKeys.length,
-                                gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: crossAxisCount,
-                                  crossAxisSpacing: defaultPadding,
-                                  mainAxisSpacing: defaultPadding,
-                                  childAspectRatio: cardWidth / cardHeight,
-                                ),
-                                itemBuilder: (context, index) {
-                                  int id = visibleKeys[index];
-                                  return HoverableCard(
-                                    onTap: () => _navigateToTank(id),
-                                    child: FileInfoCard(
-                                      info: demoMyFiles[id - 1],
-                                      onTap: () => _navigateToTank(id),
-                                      width: cardWidth,
-                                      height: cardHeight,
-                                    ),
-                                  );
-                                },
-                              ),
-                            ],
-                          ),
-                        );
-                      },
+            const SizedBox(width: 20),
+            Row(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              // crossAxisAlignment: CrossAxisAlignment.end,
+              // textBaseline: TextBaseline.alphabetic,
+              children: [
+                // Text(
+                //   "Select Tank",
+                //   style: GoogleFonts.ramabhadra(
+                //     fontSize: 20,
+                //     color: Colors.black,
+                //   ),
+                // ),
+                const SizedBox(width: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircleAvatar(
+                      backgroundColor: Colors.green,
+                      radius: 10,
                     ),
-                  ),
-                ],
-              ),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Pass",
+                      style: GoogleFonts.ramabhadra(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      backgroundColor: Colors.yellow,
+                      radius: 10,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      "Waiting Check",
+                      style: GoogleFonts.ramabhadra(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+                const SizedBox(width: 15),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const CircleAvatar(
+                      backgroundColor: Colors.red,
+                      radius: 10,
+                    ),
+                    const SizedBox(width: 5),
+                    Text(
+                      "NG Value",
+                      style: GoogleFonts.ramabhadra(
+                        fontSize: 11,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
             ),
           ],
         ),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.visibility),
+            onPressed: () => _showSettingsDialog(context),
+          ),
+        ],
+      ),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: Container(
+              color: Colors.white, // สีพื้นหลังหลัก
+            ),
+          ),
+
+          // 🌫 เอฟเฟกต์เบลอพื้นหลัง
+          // Positioned.fill(
+          //   child: BackdropFilter(
+          //     filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          //     child: Container(
+          //       color:
+          //           Colors.black.withOpacity(0.1), // เพิ่ม Overlay สีดำโปร่งแสง
+          //     ),
+          //   ),
+          // ),
+          Positioned.fill(
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: LayoutBuilder(
+                    builder: (context, constraints) {
+                      int crossAxisCount = (constraints.maxWidth / 205).floor();
+                      double cardWidth = constraints.maxWidth / crossAxisCount -
+                          defaultPadding;
+                      double cardHeight = 540;
+
+                      return SingleChildScrollView(
+                        // scrollDirection: Axis.horizontal,
+                        padding: const EdgeInsets.all(10),
+                        child: Column(
+                          children: [
+                            const SizedBox(height: defaultPadding),
+                            GridView.builder(
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: visibleKeys.length,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: crossAxisCount,
+                                crossAxisSpacing: defaultPadding,
+                                mainAxisSpacing: defaultPadding,
+                                childAspectRatio: cardWidth / cardHeight,
+                              ),
+                              itemBuilder: (context, index) {
+                                int id = visibleKeys[index];
+                                return HoverableCard(
+                                  onTap: () => _navigateToTank(id),
+                                  child: FileInfoCard(
+                                    info: demoMyFiles[id - 1],
+                                    onTap: () => _navigateToTank(id),
+                                    width: cardWidth,
+                                    height: cardHeight,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

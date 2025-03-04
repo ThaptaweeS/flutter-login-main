@@ -113,10 +113,10 @@ class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
           }
         });
       } else {
-        print('Failed to fetch data. Status code: ${response.statusCode}');
+        // print('Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      // print('Error fetching data: $e');
     }
 
     // เรียกใช้ซ้ำทุก 1 วินาที
@@ -126,6 +126,7 @@ class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
   @override
   void dispose() {
     _controller.dispose();
+
     super.dispose();
   }
 
@@ -217,7 +218,7 @@ class _Pump10acState extends State<Pump10ac>
         print('Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      // print('Error fetching data: $e');
     }
 
     // เรียกใช้ซ้ำทุก 1 วินาที
@@ -318,7 +319,7 @@ class _Pump10pbState extends State<Pump10pb>
         print('Failed to fetch data. Status code: ${response.statusCode}');
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      // print('Error fetching data: $e');
     }
 
     // เรียกใช้ซ้ำทุก 1 วินาที
@@ -521,7 +522,7 @@ class IconNew extends StatelessWidget {
         print('Failed to fetch data');
       }
     } catch (error) {
-      print('Error fetching data: $error');
+      // print('Error fetching data: $error');
     }
   }
 }
@@ -565,7 +566,7 @@ class _IconBellState extends State<IconBell> {
         throw Exception('Failed to load data');
       }
     } catch (e) {
-      print('Error fetching data: $e');
+      // print('Error fetching data: $e');
     }
   }
 
