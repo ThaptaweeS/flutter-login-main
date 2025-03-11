@@ -129,7 +129,8 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
                   onChanged: (value) {
                     setState(() {
                       feedData.ac10feedQuantity =
-                          double.tryParse(value)?.toString() ?? '0.0';
+                          '${double.tryParse(value) ?? 0.0}';
+                      print('Updated Quantity: ${feedData.ac10feedQuantity}');
                     });
                   },
                 ),
@@ -182,7 +183,7 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
       final response = await http.post(Uri.parse(url), body: {
         'Action': action,
         'Status': pump.toString(),
-        'FeedQuantity': ac10feedQuantity.toString(), // Send the feed quantity
+        'FeedQuantity': feedData.ac10feedQuantity.toString(),
       });
 
       print('Response status: ${response.statusCode}');

@@ -131,21 +131,21 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
               SizedBox(
                 width: 200,
                 child: TextFormField(
-                  controller: _controller,
-                  keyboardType: TextInputType.number,
-                  decoration: InputDecoration(
-                    labelText: 'Quantity Feed (kg)',
-                    labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
-                    border: OutlineInputBorder(),
-                  ),
-                  style: GoogleFonts.ramabhadra(color: Colors.black),
-                  onChanged: (value) {
-                    setState(() {
-                      feedData.ac9feedQuantity =
-                          double.tryParse(value)?.toString() ?? '0.0';
-                    });
-                  },
-                ),
+                    controller: _controller,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Quantity Feed (kg)',
+                      labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
+                      border: OutlineInputBorder(),
+                    ),
+                    style: GoogleFonts.ramabhadra(color: Colors.black),
+                    onChanged: (value) {
+                      setState(() {
+                        feedData.ac9feedQuantity =
+                            '${double.tryParse(value) ?? 0.0}';
+                        print('Updated Quantity: ${feedData.ac9feedQuantity}');
+                      });
+                    }),
               ),
               const SizedBox(height: 20),
               Row(
@@ -192,11 +192,14 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
 
     try {
       print('sending data');
-      final response = await http.post(Uri.parse(url), body: {
-        'Action': action,
-        'Status': pump.toString(),
-        'FeedQuantity': ac9feedQuantity.toString(),
-      });
+      final response = await http.post(
+        Uri.parse(url),
+        body: {
+          'Action': action,
+          'Status': pump.toString(),
+          'FeedQuantity': feedData.ac9feedQuantity.toString(),
+        },
+      );
 
       print('Response status: ${response.statusCode}');
       print('Response body: ${response.body}');

@@ -139,7 +139,6 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                   ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState?.validate() ?? false) {
-                        // Save values to API
                         saveValuesToAPI(context);
                       } else {
                         showDialog(
@@ -150,16 +149,21 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                                   style: GoogleFonts.ramabhadra(
                                       color: Colors.black)),
                               content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.AI. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.Al. (Point) ควรอยู่ระหว่าง 30 ถึง 40.\nTemp.(°C) ควรอยู่ระหว่าง 55 ถึง 70.',
                                 style:
                                     GoogleFonts.ramabhadra(color: Colors.black),
                               ),
                               actions: <Widget>[
                                 ElevatedButton(
                                   onPressed: () {
-                                    // เรียกใช้ saveValuesToAPI เมื่อกด "ยืนยัน"
-                                    saveValuesToAPI(context);
-                                    Navigator.of(context).pop(); // ปิด Dialog
+                                    if ((isFAlChecked &&
+                                            FAlController.text.isEmpty) &&
+                                        (isTempChecked &&
+                                            tempController.text.isEmpty))
+                                      saveValuesToAPI(context);
+                                    else {
+                                      showValidationDialog(context);
+                                    }
                                   },
                                   child: Text('ยืนยัน'),
                                 ),
@@ -196,24 +200,30 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
     );
   }
 
-  // Widget build(BuildContext context) {
-  //   return Form(
-  //     key: _formKey,
-  //     child: Column(
-  //       children: [
-  //         buildTable(),
-  //         ElevatedButton(
-  //           onPressed: () {
-  //             if (_formKey.currentState?.validate() ?? false) {
-  //               // ทำอะไรบางอย่างเมื่อค่าถูกต้อง
-  //             }
-  //           },
-  //           child: Text("ตรวจสอบค่า"),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
+  void showValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ข้อผิดพลาด',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'กรุณากรอกข้อมูลตามช่องที่กำหนด\nหากไม่ต้องการกรอกข้อมูลในช่องใด\nกรุณาทำเครื่องหมาย ✅ ในช่องนั้น',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ปิด',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+            ),
+          ],
+        );
+      },
+    );
+  }
 
   Widget buildTable() {
     return Table(
@@ -227,16 +237,18 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
         TableRow(
           children: [
             buildTableCell(
-              "F.Al (Point)",
+              "F.Al. (Point)",
               FAlController,
-              "ค่าต้องอยู่ระหว่าง 30 ถึง 40",
+              "F.Al. ต้องอยู่ระหว่าง 30 ถึง 40",
               30.0,
               40.0,
               isFAlChecked,
               (value) {
-                setState(() {
-                  isFAlChecked = value ?? false;
-                });
+                setState(
+                  () {
+                    isFAlChecked = value ?? false;
+                  },
+                );
               },
             ),
           ],
@@ -246,7 +258,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             buildTableCell(
               "Temp(°C)",
               tempController,
-              "ค่าต้องอยู่ระหว่าง 55 ถึง 70",
+              "Temp ต้องอยู่ระหว่าง 55 ถึง 70",
               55.0,
               70.0,
               isTempChecked,
@@ -305,7 +317,8 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
                   focusedErrorBorder: OutlineInputBorder(
                     borderSide: BorderSide(color: Colors.red),
                   ),
-                  errorStyle: GoogleFonts.ramabhadra(color: Colors.red),
+                  errorStyle:
+                      GoogleFonts.ramabhadra(fontSize: 11, color: Colors.red),
                 ),
                 validator: (value) {
                   if (isChecked) {
@@ -344,7 +357,7 @@ class _Tank21AfterPageState extends State<Tank21AfterPage> {
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
-                value: index + 1,
+                value: index + 1, // นับ index + 1 เสมอ
                 child: Text(
                   (index + 1).toString(),
                   style: GoogleFonts.ramabhadra(color: Colors.black),

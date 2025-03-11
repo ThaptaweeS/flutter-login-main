@@ -21,7 +21,11 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
   late TextEditingController roundFilterController;
   late int roundValue;
   List<Map<String, dynamic>> tableData = [];
-
+  bool isTAChecked = false;
+  bool isFAlChecked = false;
+  bool isACChecked = false;
+  bool isTempChecked = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     super.initState();
@@ -34,17 +38,6 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
     roundValue = 1; // Set default value for roundValue
     fetchRoundValue(); // Call the method to fetch roundValue from the API
     fetchDataFromAPI();
-  }
-
-  @override
-  void dispose() {
-    ACController.dispose();
-    tempController.dispose();
-    TAIController.dispose();
-    FAController.dispose();
-    ARController.dispose();
-    roundFilterController.dispose();
-    super.dispose();
   }
 
   void fetchRoundValue() async {
@@ -77,31 +70,101 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                buildTable(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (validateValues()) {
-                      saveValuesToAPI(context);
-                    } else {
-                      showInvalidValuesDialog(context);
-                    }
-                  },
-                  child: Text('Save Values',
-                      style: GoogleFonts.ramabhadra(color: Colors.black)),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildDataTable(),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTable(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        saveValuesToAPI(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('แจ้งเตือน',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              content: Text(
+                                  'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if ((isTAChecked &&
+                                            TAIController.text.isEmpty) &&
+                                        (isFAlChecked &&
+                                            FAController.text.isEmpty) &&
+                                        (isACChecked &&
+                                            ACController.text.isEmpty) &&
+                                        (isTempChecked &&
+                                            tempController.text.isEmpty))
+                                      saveValuesToAPI(context);
+                                    else {
+                                      showValidationDialog(context);
+                                    }
+                                  },
+                                  child: Text('ยืนยัน'),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.pink[50]),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ยกเลิก',
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Save Values',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: buildTable2(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void showValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ข้อผิดพลาด',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'กรุณากรอกข้อมูลตามช่องที่กำหนด\nหากไม่ต้องการกรอกข้อมูลในช่องใด\nกรุณาทำเครื่องหมาย ✅ ในช่องนั้น',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ปิด',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -116,19 +179,49 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
       children: [
         TableRow(
           children: [
-            buildTableCell("T.A (Point)", TAIController),
-            buildTableCell("F.A (Point)", FAController),
+            buildTableCell("T.A (Point)", TAIController,
+                'T.A. ต้องอยู่ระหว่าง 26 ถึง 30', 26, 30, isTAChecked, (value) {
+              setState(() {
+                isTAChecked = value ?? false;
+              });
+            }),
+            buildTableCell(
+                "F.A. (Point)",
+                FAController,
+                'F.A. ต้องอยู่ระหว่าง 4.4 ถึง 4.7',
+                4.0,
+                4.7,
+                isFAlChecked, (value) {
+              setState(() {
+                isFAlChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
           children: [
-            buildTableCell("A.C (Point)", ACController),
-            buildTableCell("Temp(°C)", tempController),
+            buildTableCell("A.C. (Point)", ACController,
+                'A.C. ต้องอยู่ระหว่าง 1 ถึง 3', 1, 3, isACChecked, (value) {
+              setState(() {
+                isACChecked = value ?? false;
+              });
+            }),
+            buildTableCell(
+                "Temp(°C)",
+                tempController,
+                'Temp. ต้องอยู่ระหว่าง 70 ถึง 80',
+                70,
+                80,
+                isTempChecked, (value) {
+              setState(() {
+                isTempChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
           children: [
-            buildAutoCalculateCell("A.R"),
+            buildAutoCalculateCell("A.R."),
             buildRoundTableRow(),
           ],
         ),
@@ -158,27 +251,67 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller) {
+  Widget buildTableCell(
+      String label,
+      TextEditingController controller,
+      String rangeMessage,
+      double min,
+      double max,
+      bool isChecked,
+      Function(bool?) onCheckboxChanged) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            onChanged: (_) {
-              if (label == "F.A (Point)" || label == "T.A (Point)") {
-                updateARValue();
-              }
-            },
-            decoration: InputDecoration(
-              labelText: label,
-              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
-              border: OutlineInputBorder(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: onCheckboxChanged,
+                ),
+              ],
             ),
-            style: GoogleFonts.ramabhadra(color: Colors.black),
-          ),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  errorStyle:
+                      GoogleFonts.ramabhadra(fontSize: 11, color: Colors.red),
+                ),
+                onChanged: (value) {
+                  if (label == "F.A. (Point)" || label == "T.A. (Point)") {
+                    updateARValue(); // อัปเดตค่า AR เมื่อค่าถูกเปลี่ยนใน TextFormField
+                  }
+                },
+                validator: (value) {
+                  if (isChecked) {
+                    return null;
+                  }
+                  double? numericValue = double.tryParse(value ?? '');
+                  if (numericValue == null ||
+                      numericValue < min ||
+                      numericValue > max) {
+                    return rangeMessage;
+                  }
+                  return null;
+                },
+                style: GoogleFonts.ramabhadra(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -199,19 +332,11 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
           width: 200,
           child: DropdownButtonFormField<int>(
             value: roundValue,
-            decoration: InputDecoration(
-              labelText: 'Round',
-              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
-              border: OutlineInputBorder(),
-            ),
             items: List.generate(
               10,
               (index) => DropdownMenuItem<int>(
                 value: index + 1,
-                child: Text(
-                  (index + 1).toString(),
-                  style: GoogleFonts.ramabhadra(color: Colors.black),
-                ),
+                child: Text((index + 1).toString()),
               ),
             ),
             onChanged: (value) {
@@ -219,8 +344,14 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
                 roundValue = value!;
               });
             },
-            dropdownColor: Colors.white,
+            dropdownColor:
+                Colors.white, // Set dropdown background color to white
             style: GoogleFonts.ramabhadra(color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Round',
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
+              border: OutlineInputBorder(),
+            ),
           ),
         ),
       ),
@@ -279,108 +410,80 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
     final ACValue = ACController.text;
     final Round = roundValue.toString();
 
-    final name = USERDATA.NAME;
+    final Name = USERDATA.NAME;
 
-    try {
-      final response = await http.post(
-        Uri.parse(url),
-        body: {
-          'T_AI': TAIValue,
-          'Temp': tempValue,
-          'FA': FAValue,
-          'AR': ARValue,
-          'AC': ACValue,
-          'Name': name,
-          'Range': '13.00',
-          'Round': Round,
+    final response = await http.post(
+      Uri.parse(url),
+      body: {
+        'T_AI': TAIValue,
+        'Temp': tempValue,
+        'FA': FAValue,
+        'AR': ARValue,
+        'AC': ACValue,
+        'Name': Name,
+        'Range': '01:00',
+        'Round': Round
+      },
+    );
+    if (response.statusCode == 200) {
+      // Clear text input fields
+      TAIController.clear();
+      tempController.clear();
+      FAController.clear();
+      ARController.clear();
+      ACController.clear();
+
+      // Show success popup
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Success',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('บันทึกค่าสำเร็จ.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
+                onPressed: () {
+                  Navigator.of(context).popUntil(ModalRoute.withName(
+                      '/')); // Navigate back to the home page
+                },
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
+              ),
+            ],
+          );
         },
       );
-
-      if (response.statusCode == 200) {
-        TAIController.clear();
-        tempController.clear();
-        FAController.clear();
-        ARController.clear();
-        ACController.clear();
-        showSuccessDialog(context);
-      } else {
-        showErrorDialog(context, 'Failed to save values to the API.');
-      }
-    } catch (error) {
-      showErrorDialog(context, 'Error: $error');
+    } else {
+      // Show error popup
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text('Failed to save values to the API.',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 
-  void showInvalidValuesDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('แจ้งเตือน',
-              style: GoogleFonts.ramabhadra(color: Colors.black)),
-          content: Text(
-            'กรุณากรอกค่าภายในช่วงที่ระบุ\nF.A. (Point) ควรอยู่ระหว่าง 4.0 ถึง 4.7.\nTemp.(°C) ควรอยู่ระหว่าง 70 ถึง 80.\nA.C. (Point) ควรอยู่ระหว่าง 1 ถึง 3.\nA.R. (Point) ควรอยู่ระหว่าง 5.5 ถึง 7.5.\nT.A. (Point) ควรอยู่ระหว่าง 26 ถึง 30.',
-            style: GoogleFonts.ramabhadra(color: Colors.black),
-          ),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK',
-                  style: GoogleFonts.ramabhadra(color: Colors.black)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void showSuccessDialog(BuildContext context) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Success'),
-          content: Text('บันทึกค่าสำเร็จ'),
-          actions: <Widget>[
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).popUntil(ModalRoute.withName('/'));
-              },
-              child: Text('OK',
-                  style: GoogleFonts.ramabhadra(color: Colors.black)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  void showErrorDialog(BuildContext context, String message) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Error'),
-          content: Text(message),
-          actions: <Widget>[
-            TextButton(
-              style: TextButton.styleFrom(backgroundColor: Colors.pink[50]),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Text('OK',
-                  style: GoogleFonts.ramabhadra(color: Colors.black)),
-            ),
-          ],
-        );
-      },
-    );
-  }
-
-  Widget buildDataTable() {
+  Widget buildTable2() {
+    // Filter the table data based on the entered round number
     List<Map<String, dynamic>> filteredData = tableData.where((data) {
       String round = roundFilterController.text.toLowerCase();
       return data['round'].toString().toLowerCase().contains(round);
@@ -398,10 +501,13 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
               prefixIcon: Icon(Icons.filter_list),
             ),
             onChanged: (value) {
-              setState(() {});
+              setState(() {
+                // Update the UI when the filter text changes
+              });
             },
           ),
         ),
+        // Display the filtered table data
         Table(
           defaultVerticalAlignment: TableCellVerticalAlignment.middle,
           border: TableBorder.all(),
@@ -416,91 +522,172 @@ class _Tank913AfterPageState extends State<Tank913AfterPage> {
           children: [
             TableRow(
               children: [
-                buildHeaderCell("Round"),
-                buildHeaderCell("Detail"),
-                buildHeaderCell("Value"),
-                buildHeaderCell("Username"),
-                buildHeaderCell("Time"),
-                buildHeaderCell("Date"),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Round",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Detail",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Value",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Username",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Time",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
+                TableCell(
+                    child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Text("Date",
+                            style:
+                                GoogleFonts.ramabhadra(color: Colors.black)))),
               ],
             ),
-            ...filteredData.map((data) => buildDataRow(
-                  data['round'],
-                  data['detail'],
-                  data['value'],
-                  data['Username'],
-                  data['time'],
-                  data['date'],
-                )),
+            // Map each data entry to a TableRow widget
+            ...filteredData.map((data) => buildTableRow2(
+                data['round'],
+                data['detail'],
+                data['value'],
+                data['Username'],
+                data['time'],
+                data['date'])),
           ],
         ),
       ],
     );
   }
 
-  TableCell buildHeaderCell(String text) {
-    return TableCell(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(text, style: GoogleFonts.ramabhadra(color: Colors.black)),
-      ),
-    );
-  }
-
-  TableRow buildDataRow(String? round, String? detail, String? value,
+  TableRow buildTableRow2(String? round, String? detail, String? value,
       String? username, String? time, String? date) {
+    // Define date and time format
     final dateFormat = DateFormat('dd-MM-yyyy');
     final timeFormat = DateFormat('HH:mm:ss');
 
     return TableRow(
       children: [
-        buildDataCell(round),
-        buildDataCell(detail),
-        buildDataCell(value),
-        buildDataCell(username),
-        buildDataCell(
-            time != null ? timeFormat.format(DateTime.parse(time)) : ''),
-        buildDataCell(
-            date != null ? dateFormat.format(DateTime.parse(date)) : ''),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              round ?? '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+              selectionColor: Colors.black,
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              detail ?? '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+              selectionColor: Colors.black,
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              value ?? '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+              selectionColor: Colors.black,
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              username ?? '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+              selectionColor: Colors.black,
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              time != null ? timeFormat.format(DateTime.parse(time)) : '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+            ),
+          ),
+        ),
+        TableCell(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Text(
+              date != null ? dateFormat.format(DateTime.parse(date)) : '',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+            ),
+          ),
+        ),
       ],
-    );
-  }
-
-  TableCell buildDataCell(String? text) {
-    return TableCell(
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Text(text ?? '',
-            style: GoogleFonts.ramabhadra(color: Colors.black)),
-      ),
     );
   }
 
   void fetchDataFromAPI() async {
     final url = 'http://172.23.10.51:1111/tank9afterdata13';
-    try {
-      final response = await http.post(Uri.parse(url));
-      if (response.statusCode == 200) {
-        final List<dynamic> decodedData = json.decode(response.body);
-        setState(() {
-          tableData = decodedData
-              .where((entry) => entry['data'] == 'after')
-              .map((entry) => {
-                    'round': entry['round'] ?? '',
-                    'detail': entry['detail'] ?? '',
-                    'value': entry['value']?.toString() ?? '',
-                    'Username': entry['username'] ?? '',
-                    'time': entry['time'] ?? '',
-                    'date': entry['date'] ?? '',
-                  })
-              .toList();
-        });
-      } else {
-        showErrorDialog(context,
-            'Failed to fetch data from the API. Status code: ${response.statusCode}');
-      }
-    } catch (error) {
-      showErrorDialog(context, 'Error: $error');
+    final response = await http.post(Uri.parse(url));
+
+    if (response.statusCode == 200) {
+      final List<dynamic> decodedData = json.decode(response.body);
+      setState(() {
+        tableData = decodedData
+            .where((entry) => entry['data'] == 'after')
+            .map((entry) => {
+                  'round': entry['round'] ?? '',
+                  'detail': entry['detail'] ?? '',
+                  'value': entry['value']?.toString() ?? '',
+                  'Username': entry['username'] ?? '',
+                  'time': entry['time'] ?? '',
+                  'date': entry['date'] ?? '',
+                })
+            .toList();
+      });
+    } else {
+      // Handle error
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error',
+                style: GoogleFonts.ramabhadra(color: Colors.black)),
+            content: Text(
+              'Failed to fetch data from the API. Status code: ${response.statusCode}',
+              style: GoogleFonts.ramabhadra(color: Colors.black),
+            ),
+            actions: <Widget>[
+              TextButton(
+                style: TextButton.styleFrom(backgroundColor: Colors.grey),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('OK',
+                    style: GoogleFonts.ramabhadra(color: Colors.black)),
+              ),
+            ],
+          );
+        },
+      );
     }
   }
 }

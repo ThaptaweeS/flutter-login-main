@@ -131,7 +131,8 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
                   onChanged: (value) {
                     setState(() {
                       feedData.pb10feedQuantity =
-                          double.tryParse(value)?.toString() ?? '0.0';
+                          '${double.tryParse(value) ?? 0.0}';
+                      print('Updated Quantity: ${feedData.pb10feedQuantity}');
                     });
                   },
                 ),
@@ -182,7 +183,7 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
       final response = await http.post(Uri.parse(url), body: {
         'Action': action,
         'Status': pump.toString(),
-        'FeedQuantity': pb10feedQuantity.toString(),
+        'FeedQuantity': feedData.pb10feedQuantity.toString(),
       });
 
       print('Response status: ${response.statusCode}');

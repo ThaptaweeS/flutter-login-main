@@ -17,6 +17,9 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
   late TextEditingController pHController;
   late TextEditingController roundFilterController;
   late int roundValue;
+  bool isTAlChecked = false;
+  bool ispHChecked = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> tableData = [];
 
   @override
@@ -31,7 +34,6 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
     fetchdataValue();
   }
 
-  // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
       final response = await http
@@ -39,7 +41,6 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
-          // Set roundValue based on the length of the data array
           roundValue =
               data.length + 1; // Increment by 1 to set the default value
         });
@@ -133,59 +134,98 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                buildTable(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (validateValues()) {
-                      // Save values to API
-                      saveValuesToAPI(context);
-                    } else {
-                      // Show popup for แจ้งเตือน',
-
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('แจ้งเตือน',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nT.AI.(Point) ควรอยู่ระหว่าง 2 ถึง 8\npH ควรอยู่ระหว่าง 8.5 ถึง 9.5',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            actions: <Widget>[
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.pink[50]),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('OK',
-                                    style: GoogleFonts.ramabhadra(
-                                        color: Colors.black)),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTable(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        saveValuesToAPI(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('แจ้งเตือน',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              content: Text(
+                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nT.Al.(Point) ควรอยู่ระหว่าง 2 ถึง 8\npH ควรอยู่ระหว่าง 8.5 ถึง 9.5',
+                                style:
+                                    GoogleFonts.ramabhadra(color: Colors.black),
                               ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text('Save Values',
-                      style: GoogleFonts.ramabhadra(color: Colors.black)),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if ((isTAlChecked &&
+                                            TAIController.text.isEmpty) &&
+                                        (ispHChecked &&
+                                            pHController.text.isEmpty))
+                                      saveValuesToAPI(context);
+                                    else {
+                                      showValidationDialog(context);
+                                    }
+                                  },
+                                  child: Text('ยืนยัน'),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.pink[50]),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ยกเลิก',
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Save Values',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: buildTable2(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void showValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ข้อผิดพลาด',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'กรุณากรอกข้อมูลตามช่องที่กำหนด\nหากไม่ต้องการกรอกข้อมูลในช่องใด\nกรุณาทำเครื่องหมาย ✅ ในช่องนั้น',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ปิด',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -200,12 +240,33 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
       children: [
         TableRow(
           children: [
-            buildTableCell("T.AI.(Point)", TAIController),
+            buildTableCell(
+              "T.Al.(Point)",
+              TAIController,
+              "T.Al. ต้องอยู่ระหว่าง 2 ถึง 8",
+              2.0,
+              8.0,
+              isTAlChecked,
+              (value) {
+                setState(
+                  () {
+                    isTAlChecked = value ?? false;
+                  },
+                );
+              },
+            )
           ],
         ),
         TableRow(
           children: [
-            buildTableCell("pH", pHController),
+            buildTableCell("pH", pHController, "pH ต้องอยู่ระหว่าง 8.5 ถึง 9.5",
+                8.5, 9.5, ispHChecked, (value) {
+              setState(
+                () {
+                  ispHChecked = value ?? false;
+                },
+              );
+            }),
           ],
         ),
         TableRow(
@@ -217,22 +278,63 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller) {
+  Widget buildTableCell(
+      String label,
+      TextEditingController controller,
+      String rangeMessage,
+      double min,
+      double max,
+      bool isChecked,
+      Function(bool?) onCheckboxChanged // ฟังก์ชัน callback สำหรับอัปเดตค่า
+      ) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: label,
-              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
-              border: OutlineInputBorder(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: onCheckboxChanged, // อัปเดตค่า Checkbox
+                ),
+              ],
             ),
-            style: GoogleFonts.ramabhadra(color: Colors.black),
-          ),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  errorStyle:
+                      GoogleFonts.ramabhadra(fontSize: 11, color: Colors.red),
+                ),
+                validator: (value) {
+                  if (isChecked) {
+                    return null;
+                  }
+                  double? numericValue = double.tryParse(value ?? '');
+                  if (numericValue == null ||
+                      numericValue < min ||
+                      numericValue > max) {
+                    return rangeMessage;
+                  }
+                  return null;
+                },
+                style: GoogleFonts.ramabhadra(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );

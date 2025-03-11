@@ -339,10 +339,8 @@ class _LineChartSample22State extends State<LineChartSample22> {
               colors: [
                 Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
                 Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
-                Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
-                Colors.grey.withOpacity(0.3),
               ],
-              stops: [0.0, 0.5, 0.5, 1.0],
+              stops: [0.0, 1.0],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),
@@ -353,12 +351,10 @@ class _LineChartSample22State extends State<LineChartSample22> {
             applyCutOffY: true,
             gradient: LinearGradient(
               colors: [
-                Colors.blue.withOpacity(0.5), // สีฟ้าสำหรับด้านบน cutoff
-                Colors.blue.withOpacity(0.3), // ลดความเข้มของสีฟ้า
                 Colors.grey.withOpacity(0.5), // สีแดงสำหรับด้านล่าง cutoff
                 Colors.grey.withOpacity(0.3),
               ],
-              stops: [0.0, 0.5, 0.5, 1.0],
+              stops: [0.0, 1.0],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
             ),

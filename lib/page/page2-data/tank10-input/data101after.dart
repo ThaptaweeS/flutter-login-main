@@ -20,6 +20,11 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
   late TextEditingController ARController;
   late TextEditingController roundFilterController;
   late int roundValue;
+  bool isTAChecked = false;
+  bool isFAlChecked = false;
+  bool isACChecked = false;
+  bool isTempChecked = false;
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   List<Map<String, dynamic>> tableData = [];
 
   @override
@@ -69,58 +74,101 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                buildTable(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (validateValues()) {
-                      // Save values to API
-                      saveValuesToAPI(context);
-                    } else {
-                      // Show popup for แจ้งเตือน
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('แจ้งเตือน',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.0 และ 4.7\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            actions: <Widget>[
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.pink[50]),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('OK',
-                                    style: GoogleFonts.ramabhadra(
-                                        color: Colors.black)),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text('Save Values',
-                      style: GoogleFonts.ramabhadra(color: Colors.black)),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTable(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        saveValuesToAPI(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('แจ้งเตือน',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              content: Text(
+                                  'กรุณากรอกค่าภายในช่วงที่ระบุ \nT.A. (Point) ควรอยู่ระหว่าง 30.0 และ 36.0 \nF.A. (Point) ควรอยู่ระหว่าง 4.8 และ 6.5\nA.C. (Point) ควรอยู่ระหว่าง 1 และ 3\nTemp.(°C) ควรอยู่ระหว่าง 70 และ 80.',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if ((isTAChecked &&
+                                            TAIController.text.isEmpty) &&
+                                        (isFAlChecked &&
+                                            FAController.text.isEmpty) &&
+                                        (isACChecked &&
+                                            ACController.text.isEmpty) &&
+                                        (isTempChecked &&
+                                            tempController.text.isEmpty))
+                                      saveValuesToAPI(context);
+                                    else {
+                                      showValidationDialog(context);
+                                    }
+                                  },
+                                  child: Text('ยืนยัน'),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.pink[50]),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ยกเลิก',
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Save Values',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: buildTable2(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void showValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ข้อผิดพลาด',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'กรุณากรอกข้อมูลตามช่องที่กำหนด\nหากไม่ต้องการกรอกข้อมูลในช่องใด\nกรุณาทำเครื่องหมาย ✅ ในช่องนั้น',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ปิด',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -135,19 +183,49 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
       children: [
         TableRow(
           children: [
-            buildTableCell("T.A (Point)", TAIController),
-            buildTableCell("F.A (Point)", FAController),
+            buildTableCell("T.A (Point)", TAIController,
+                'T.A. ต้องอยู่ระหว่าง 30 ถึง 36', 30, 36, isTAChecked, (value) {
+              setState(() {
+                isTAChecked = value ?? false;
+              });
+            }),
+            buildTableCell(
+                "F.A. (Point)",
+                FAController,
+                'F.A. ต้องอยู่ระหว่าง 4.8 ถึง 6.5',
+                4.8,
+                6.5,
+                isFAlChecked, (value) {
+              setState(() {
+                isFAlChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
           children: [
-            buildTableCell("A.C (Point)", ACController),
-            buildTableCell("Temp(°C)", tempController),
+            buildTableCell("A.C. (Point)", ACController,
+                'A.C. ต้องอยู่ระหว่าง 1 ถึง 3', 1, 3, isACChecked, (value) {
+              setState(() {
+                isACChecked = value ?? false;
+              });
+            }),
+            buildTableCell(
+                "Temp(°C)",
+                tempController,
+                'Temp. ต้องอยู่ระหว่าง 70 ถึง 80',
+                70,
+                80,
+                isTempChecked, (value) {
+              setState(() {
+                isTempChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
           children: [
-            buildAutoCalculateCell("A.R"),
+            buildAutoCalculateCell("A.R."),
             buildRoundTableRow(),
           ],
         ),
@@ -177,28 +255,67 @@ class _Tank101AfterPageState extends State<Tank101AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller) {
+  Widget buildTableCell(
+      String label,
+      TextEditingController controller,
+      String rangeMessage,
+      double min,
+      double max,
+      bool isChecked,
+      Function(bool?) onCheckboxChanged) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            onChanged: (_) {
-              if (label == "F.A (Point)" || label == "T.A (Point)") {
-                // Call the method to update AR value when FA or TA changes
-                updateARValue();
-              }
-            },
-            decoration: InputDecoration(
-              labelText: label,
-              border: OutlineInputBorder(),
-              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: onCheckboxChanged,
+                ),
+              ],
             ),
-            style: GoogleFonts.ramabhadra(color: Colors.black),
-          ),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  errorStyle:
+                      GoogleFonts.ramabhadra(fontSize: 11, color: Colors.red),
+                ),
+                onChanged: (value) {
+                  if (label == "F.A. (Point)" || label == "T.A. (Point)") {
+                    updateARValue(); // อัปเดตค่า AR เมื่อค่าถูกเปลี่ยนใน TextFormField
+                  }
+                },
+                validator: (value) {
+                  if (isChecked) {
+                    return null;
+                  }
+                  double? numericValue = double.tryParse(value ?? '');
+                  if (numericValue == null ||
+                      numericValue < min ||
+                      numericValue > max) {
+                    return rangeMessage;
+                  }
+                  return null;
+                },
+                style: GoogleFonts.ramabhadra(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );

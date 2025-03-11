@@ -17,7 +17,10 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
   late TextEditingController FeController;
   late TextEditingController roundFilterController;
   late int roundValue;
+  bool isConChecked = false;
+  bool isFeChecked = false;
   List<Map<String, dynamic>> tableData = [];
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -133,59 +136,97 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
         child: Center(
           child: Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Column(
-              children: [
-                buildTable(),
-                SizedBox(height: 10),
-                ElevatedButton(
-                  onPressed: () {
-                    if (validateValues()) {
-                      // Save values to API
-                      saveValuesToAPI(context);
-                    } else {
-                      // Show popup for แจ้งเตือน',
-
-                      showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return AlertDialog(
-                            title: Text('แจ้งเตือน',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            content: Text(
-                                'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.',
-                                style: GoogleFonts.ramabhadra(
-                                    color: Colors.black)),
-                            actions: <Widget>[
-                              TextButton(
-                                style: TextButton.styleFrom(
-                                    backgroundColor: Colors.pink[50]),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text('OK',
-                                    style: GoogleFonts.ramabhadra(
-                                        color: Colors.black)),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  },
-                  child: Text('Save Values',
-                      style: GoogleFonts.ramabhadra(color: Colors.black)),
-                ),
-                Expanded(
-                  child: SingleChildScrollView(
-                    child: buildTable2(),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                children: [
+                  buildTable(),
+                  SizedBox(height: 10),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_formKey.currentState?.validate() ?? false) {
+                        saveValuesToAPI(context);
+                      } else {
+                        showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              title: Text('แจ้งเตือน',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              content: Text(
+                                  'กรุณากรอกค่าภายในช่วงที่ระบุ\nConcentration (%) ควรอยู่ระหว่าง 10 ถึง 15.\nFe(%) ควรอยู่ระหว่าง 0 ถึง 80.',
+                                  style: GoogleFonts.ramabhadra(
+                                      color: Colors.black)),
+                              actions: <Widget>[
+                                ElevatedButton(
+                                  onPressed: () {
+                                    if ((isFeChecked &&
+                                            FeController.text.isEmpty) &&
+                                        (isConChecked &&
+                                            ConController.text.isEmpty))
+                                      saveValuesToAPI(context);
+                                    else {
+                                      showValidationDialog(context);
+                                    }
+                                  },
+                                  child: Text('ยืนยัน'),
+                                ),
+                                TextButton(
+                                  style: TextButton.styleFrom(
+                                      backgroundColor: Colors.pink[50]),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                  child: Text('ยกเลิก',
+                                      style: GoogleFonts.ramabhadra(
+                                          color: Colors.black)),
+                                ),
+                              ],
+                            );
+                          },
+                        );
+                      }
+                    },
+                    child: Text('Save Values',
+                        style: GoogleFonts.ramabhadra(color: Colors.black)),
                   ),
-                ),
-              ],
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: buildTable2(),
+                    ),
+                  ),
+                ],
+              ),
             ),
           ),
         ),
       ),
+    );
+  }
+
+  void showValidationDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('ข้อผิดพลาด',
+              style: GoogleFonts.ramabhadra(color: Colors.black)),
+          content: Text(
+            'กรุณากรอกข้อมูลตามช่องที่กำหนด\nหากไม่ต้องการกรอกข้อมูลในช่องใด\nกรุณาทำเครื่องหมาย ✅ ในช่องนั้น',
+            style: GoogleFonts.ramabhadra(color: Colors.black),
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: Text('ปิด',
+                  style: GoogleFonts.ramabhadra(color: Colors.black)),
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -200,12 +241,22 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
       children: [
         TableRow(
           children: [
-            buildTableCell("Concentration (%)", ConController),
+            buildTableCell("Concentration (%)", ConController,
+                "Con ต้องอยู่ระหว่าง 10 ถึง 15", 10, 15, isConChecked, (value) {
+              setState(() {
+                isConChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
           children: [
-            buildTableCell("Fe (%)", FeController),
+            buildTableCell("Fe (%)", FeController,
+                "Fe ต้องอยู่ระหว่าง 0 ถึง 80", 0, 80, isFeChecked, (value) {
+              setState(() {
+                isFeChecked = value ?? false;
+              });
+            }),
           ],
         ),
         TableRow(
@@ -217,22 +268,63 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
     );
   }
 
-  Widget buildTableCell(String label, TextEditingController controller) {
+  Widget buildTableCell(
+      String label,
+      TextEditingController controller,
+      String rangeMessage,
+      double min,
+      double max,
+      bool isChecked, // เพิ่มตัวแปรสำหรับสถานะของ Checkbox
+      Function(bool?) onCheckboxChanged // ฟังก์ชัน callback สำหรับอัปเดตค่า
+      ) {
     return TableCell(
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: SizedBox(
-          width: 200,
-          child: TextFormField(
-            controller: controller,
-            keyboardType: TextInputType.number,
-            decoration: InputDecoration(
-              labelText: label,
-              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
-              border: OutlineInputBorder(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(label, style: GoogleFonts.ramabhadra(color: Colors.black)),
+                Checkbox(
+                  value: isChecked,
+                  onChanged: onCheckboxChanged, // อัปเดตค่า Checkbox
+                ),
+              ],
             ),
-            style: GoogleFonts.ramabhadra(color: Colors.black),
-          ),
+            SizedBox(
+              width: 200,
+              child: TextFormField(
+                controller: controller,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(color: Colors.red),
+                  ),
+                  errorStyle:
+                      GoogleFonts.ramabhadra(fontSize: 11, color: Colors.red),
+                ),
+                validator: (value) {
+                  if (isChecked) {
+                    return null;
+                  }
+                  double? numericValue = double.tryParse(value ?? '');
+                  if (numericValue == null ||
+                      numericValue < min ||
+                      numericValue > max) {
+                    return rangeMessage;
+                  }
+                  return null;
+                },
+                style: GoogleFonts.ramabhadra(color: Colors.black),
+              ),
+            ),
+          ],
         ),
       ),
     );
@@ -271,35 +363,6 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
           ),
         ),
       ),
-    );
-  }
-
-  TableRow buildTableRow(String label, TextEditingController controller) {
-    return TableRow(
-      children: [
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(label),
-          ),
-        ),
-        TableCell(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: SizedBox(
-              width: 200,
-              child: TextFormField(
-                controller: controller,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintText: 'Enter value',
-                  border: OutlineInputBorder(),
-                ),
-              ),
-            ),
-          ),
-        ),
-      ],
     );
   }
 
@@ -395,9 +458,12 @@ class _Tank57AfterPageState extends State<Tank57AfterPage> {
             controller: roundFilterController,
             decoration: InputDecoration(
               labelText: 'Filter Round',
+              labelStyle: GoogleFonts.ramabhadra(color: Colors.black),
               hintText: 'Enter round number',
-              prefixIcon: Icon(Icons.filter_list),
+              hintStyle: GoogleFonts.ramabhadra(color: Colors.black),
+              prefixIcon: Icon(Icons.filter_list, color: Colors.black),
             ),
+            style: GoogleFonts.ramabhadra(color: Colors.black),
             onChanged: (value) {
               setState(() {
                 // Update the UI when the filter text changes

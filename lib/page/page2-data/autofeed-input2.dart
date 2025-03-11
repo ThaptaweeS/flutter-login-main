@@ -163,7 +163,7 @@ class Page022Autobody extends StatelessWidget {
                   onPressed: () {
                     Navigator.of(context).pop();
                   },
-                  child: Text('Close',
+                  child: Text('ปิด',
                       style: GoogleFonts.ramabhadra(color: Colors.black)),
                 ),
               ],
