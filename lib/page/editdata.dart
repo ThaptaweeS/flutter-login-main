@@ -57,7 +57,7 @@ class _EditdataBodyState extends State<EditdataBody> {
       isLoading = true; // แสดง Animation Loading
     });
 
-    final String url = 'http://172.23.10.51:1111/edit$tankNumber';
+    final String url = 'http://127.0.0.1:1882/edit$tankNumber';
     final Map<String, dynamic> payload = {
       "tankNumber": tankNumber,
     };
@@ -112,7 +112,7 @@ class _EditdataBodyState extends State<EditdataBody> {
 
   Future<void> callEditDataAPI(
       String id, String value, String tankNumber) async {
-    final url = Uri.parse('http://172.23.10.51:1111/calleditdata');
+    final url = Uri.parse('http://127.0.0.1:1882/calleditdata');
     try {
       final response = await http.post(
         url,

@@ -34,10 +34,10 @@ class P1DASHBOARDMAIN extends StatefulWidget {
 
 class _P1DASHBOARDMAINState extends State<P1DASHBOARDMAIN> {
   late Timer _timer;
-  // double falValue = 0;
-  // double tempValue = 0;
-  // double feValue = 0;
-  // double conValue = 0;
+  double falValue = 0;
+  double tempValue = 0;
+  double feValue = 0;
+  double conValue = 0;
 
   @override
   void initState() {

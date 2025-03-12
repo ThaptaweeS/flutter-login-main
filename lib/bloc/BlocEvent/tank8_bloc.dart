@@ -58,7 +58,7 @@
 //     emit(Tank8Loading());
 //     try {
 //       final response = await http.get(
-//         Uri.parse("http://172.23.10.51:1111/tank8-talui"),
+//         Uri.parse("http://127.0.0.1:1882/tank8-talui"),
 //       );
 
 //       if (response.statusCode == 200) {

@@ -377,7 +377,7 @@ class _Tank5BodyPageState extends State<Tank5BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/tank5task';
+    final url = 'http://127.0.0.1:1882/tank5task';
     String startDate = startDateController.text;
     String endDate = endDateController.text;
 

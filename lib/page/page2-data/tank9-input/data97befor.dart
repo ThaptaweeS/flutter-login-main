@@ -39,8 +39,8 @@ class _Tank97BeforePageState extends State<Tank97BeforePage> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response = await http
-          .post(Uri.parse('http://172.23.10.51:1111/tank9beforecheck7'));
+      final response =
+          await http.post(Uri.parse('http://127.0.0.1:1882/tank9beforecheck7'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -268,7 +268,7 @@ class _Tank97BeforePageState extends State<Tank97BeforePage> {
   }
 
   void sendDataToAPI(BuildContext context) async {
-    final url = 'http://172.23.10.51:1111/t97b';
+    final url = 'http://127.0.0.1:1882/t97b';
     final TAIValue = TAIController.text;
     final tempValue = tempController.text;
     final FAValue = FAController.text;
@@ -504,7 +504,7 @@ class _Tank97BeforePageState extends State<Tank97BeforePage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/tank9beforedata7';
+    final url = 'http://127.0.0.1:1882/tank9beforedata7';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

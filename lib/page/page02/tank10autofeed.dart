@@ -177,7 +177,7 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
   // Function to send data to API when start/stop button is pressed
   void sendDataToAPIac10(BuildContext context, String action, bool pump,
       double ac10feedQuantity) async {
-    final url = 'http://172.23.10.51:1111/ac10'; // Update this URL as needed
+    final url = 'http://127.0.0.1:1882/ac10'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
@@ -229,8 +229,7 @@ class _PumpControlWidgetState extends State<PumpControlWidget> {
   }
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
-    const url =
-        'http://172.23.10.51:1111/ac10acual'; // Update this URL as needed
+    const url = 'http://127.0.0.1:1882/ac10acual'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {

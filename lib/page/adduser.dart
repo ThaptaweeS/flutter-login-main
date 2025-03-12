@@ -188,11 +188,10 @@ class UserManagementPage extends StatefulWidget {
 
 class _UserManagementPageState extends State<UserManagementPage> {
   late Future<List<Map<String, dynamic>>> _usersFuture;
-
+  // final users = snapshot.data ?? [];
   // ฟังก์ชันดึงข้อมูลจาก API
   Future<List<Map<String, dynamic>>> fetchUsers() async {
-    const url =
-        'http://172.23.10.51:1111/users'; // Replace with Node-RED API URL
+    const url = 'http://127.0.0.1:1882/users'; // Replace with Node-RED API URL
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -291,18 +290,21 @@ class _UserManagementPageState extends State<UserManagementPage> {
             itemCount: users.length,
             itemBuilder: (context, index) {
               final user = users[index];
+              final userName = user["name"] ?? "Unknown";
+              final userInitial = userName.isNotEmpty ? userName[0] : "?";
+
               return Card(
                 child: ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.green,
                     child: Text(
-                      user["name"][0], // Display the first letter of the name
+                      userInitial,
                       style: const TextStyle(color: Colors.white),
                     ),
                   ),
-                  title: Text(user["name"]),
+                  title: Text(userName),
                   subtitle: Text(
-                      'Username: ${user["username"]}\nRole: ${user["role"]}'),
+                      'Username: ${user["username"] ?? "N/A"}\nRole: ${user["role"] ?? "N/A"}'),
                   trailing: Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -350,7 +352,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<void> _addUser(Map<String, String> newUser) async {
-    const url = 'http://172.23.10.51:1111/addUser'; // Node-RED API URL
+    const url = 'http://127.0.0.1:1882/addUser'; // Node-RED API URL
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -492,7 +494,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<void> _deleteUser(int id) async {
-    const url = 'http://172.23.10.51:1111/deleteUser'; // Node-RED API URL
+    const url = 'http://127.0.0.1:1882/deleteUser'; // Node-RED API URL
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -537,7 +539,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
   Future<void> _updateUser(
       int id, String name, String username, String role) async {
-    const url = 'http://172.23.10.51:1111/updateUser'; // URL ของ Node-RED API
+    const url = 'http://127.0.0.1:1882/updateUser'; // URL ของ Node-RED API
     try {
       final response = await http.post(
         Uri.parse(url),

@@ -177,7 +177,7 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
 
   void sendDataToAPIPB181X(BuildContext context, String action, bool pump,
       double pb10feedQuantity) async {
-    final url = 'http://172.23.10.51:1111/pb181x'; // Update this URL as needed
+    final url = 'http://127.0.0.1:1882/pb181x'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {
@@ -228,7 +228,7 @@ class _PumpControlWidgetState extends State<PumpControlWidgetpb10> {
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
     final url =
-        'http://172.23.10.51:1111/pb181xacual'; // Update this URL as needed
+        'http://127.0.0.1:1882/pb181xacual'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {});

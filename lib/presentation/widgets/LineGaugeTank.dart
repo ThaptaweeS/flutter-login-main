@@ -136,8 +136,8 @@ class LineGaugeTank extends StatelessWidget {
                 position: LinearElementPosition.cross,
                 child: Container(
                   width: 2,
-                  height: 15,
-                  color: Colors.green,
+                  height: 10,
+                  color: Colors.black,
                 ),
               ),
           ],
@@ -341,20 +341,20 @@ class LineGaugeTank extends StatelessWidget {
   }
 }
 
-void main() => runApp(
-      const MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: LineGaugeTank(
-          value: 35.0,
-          min: 25.0,
-          max: 45.0,
-          sp: 65,
-          Label: "Tank Pressure",
-          Unit: "Pt.",
-          isRadialGauge: true,
-        ),
-      ),
-    );
+// void main() => runApp(
+//       const MaterialApp(
+//         debugShowCheckedModeBanner: false,
+//         home: LineGaugeTank(
+//           value: 35.0,
+//           min: 25.0,
+//           max: 45.0,
+//           sp: 65,
+//           Label: "Tank Pressure",
+//           Unit: "Pt.",
+//           isRadialGauge: true,
+//         ),
+//       ),
+//     );
 
 class TrianglePainter extends CustomPainter {
   @override

@@ -225,7 +225,7 @@ Future<void> fetchStatusAndUpdateColors() async {
   // try {
   print('Fetching API...');
   final response = await http.post(
-    Uri.parse('http://172.23.10.51:1111/status'),
+    Uri.parse('http://127.0.0.1:1882/status'),
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -267,9 +267,9 @@ Future<void> fetchStatusAndUpdateColors() async {
         try {
           if (id == 2) {
             final responses = await Future.wait([
-              http.post(Uri.parse('http://172.23.10.51:1111/tank2-falvalue')),
-              http.post(Uri.parse('http://172.23.10.51:1111/tank2-rtemp')),
-              http.post(Uri.parse('http://172.23.10.51:1111/chem-feed2')),
+              http.post(Uri.parse('http://127.0.0.1:1882/tank2-falvalue')),
+              http.post(Uri.parse('http://127.0.0.1:1882/tank2-rtemp')),
+              http.post(Uri.parse('http://127.0.0.1:1882/chem-feed2')),
             ]);
 
             for (int i = 0; i < responses.length; i++) {
@@ -303,9 +303,9 @@ Future<void> fetchStatusAndUpdateColors() async {
         try {
           if (id == 5) {
             final responses = await Future.wait([
-              http.post(Uri.parse('http://172.23.10.51:1111/tank5-fevalue')),
-              http.post(Uri.parse('http://172.23.10.51:1111/tank5-convalue')),
-              http.post(Uri.parse('http://172.23.10.51:1111/chem-feed5')),
+              http.post(Uri.parse('http://127.0.0.1:1882/tank5-fevalue')),
+              http.post(Uri.parse('http://127.0.0.1:1882/tank5-convalue')),
+              http.post(Uri.parse('http://127.0.0.1:1882/chem-feed5')),
             ]);
 
             for (int i = 0; i < responses.length; i++) {
@@ -338,11 +338,11 @@ Future<void> fetchStatusAndUpdateColors() async {
         try {
           if (id == 8) {
             final responseTAL = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank8-talvalue'));
-            final responsePH = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank8-phui'));
-            final responsePLZ = await http
-                .post(Uri.parse('http://172.23.10.51:1111/chem-feed8'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank8-talvalue'));
+            final responsePH =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank8-phui'));
+            final responsePLZ =
+                await http.post(Uri.parse('http://127.0.0.1:1882/chem-feed8'));
             if (responseTAL.statusCode == 200 && responsePH.statusCode == 200) {
               final responseDataTAL = json.decode(responseTAL.body);
               final responseDataPH = json.decode(responsePH.body);
@@ -363,20 +363,20 @@ Future<void> fetchStatusAndUpdateColors() async {
         }
         try {
           if (id == 9) {
-            final responseTA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank9-TAui'));
-            final responseFA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank9-FAui'));
-            final responseAR = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank9-ARui'));
-            final responseAC = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank9-ACui'));
-            final responseTemp = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank9-rtemp'));
-            final responseAC131 = await http
-                .post(Uri.parse('http://172.23.10.51:1111/chem-feed92'));
-            final responsePB3650 = await http
-                .post(Uri.parse('http://172.23.10.51:1111/chem-feed91'));
+            final responseTA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank9-TAui'));
+            final responseFA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank9-FAui'));
+            final responseAR =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank9-ARui'));
+            final responseAC =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank9-ACui'));
+            final responseTemp =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank9-rtemp'));
+            final responseAC131 =
+                await http.post(Uri.parse('http://127.0.0.1:1882/chem-feed92'));
+            final responsePB3650 =
+                await http.post(Uri.parse('http://127.0.0.1:1882/chem-feed91'));
             if (responseTA.statusCode == 200 &&
                 responseFA.statusCode == 200 &&
                 responseAR.statusCode == 200 &&
@@ -419,16 +419,16 @@ Future<void> fetchStatusAndUpdateColors() async {
         }
         try {
           if (id == 10) {
-            final responseTA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank10-TAui'));
-            final responseFA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank10-FAui'));
-            final responseAR = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank10-ARui'));
-            final responseAC = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank10-ACui'));
+            final responseTA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank10-TAui'));
+            final responseFA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank10-FAui'));
+            final responseAR =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank10-ARui'));
+            final responseAC =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank10-ACui'));
             final responseTemp = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank10-rtemp'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank10-rtemp'));
             if (responseTA.statusCode == 200 &&
                 responseFA.statusCode == 200 &&
                 responseAR.statusCode == 200 &&
@@ -464,11 +464,11 @@ Future<void> fetchStatusAndUpdateColors() async {
         try {
           if (id == 13) {
             final responseCON = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank13-conui'));
-            final responseFA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank13-FAui'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank13-conui'));
+            final responseFA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank13-FAui'));
             final responseTemp = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank13-rtemp'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank13-rtemp'));
             if (responseCON.statusCode == 200 &&
                 responseFA.statusCode == 200 &&
                 responseTemp.statusCode == 200) {
@@ -493,11 +493,11 @@ Future<void> fetchStatusAndUpdateColors() async {
         try {
           if (id == 14) {
             final responseCON = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank14-conui'));
-            final responseFA = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank14-FAui'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank14-conui'));
+            final responseFA =
+                await http.post(Uri.parse('http://127.0.0.1:1882/tank14-FAui'));
             final responseTemp = await http
-                .post(Uri.parse('http://172.23.10.51:1111/tank14-rtemp'));
+                .post(Uri.parse('http://127.0.0.1:1882/tank14-rtemp'));
             if (responseCON.statusCode == 200 &&
                 responseFA.statusCode == 200 &&
                 responseTemp.statusCode == 200) {

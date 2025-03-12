@@ -77,235 +77,233 @@ class _FileInfoCardState extends State<FileInfoCard> {
             ),
           ],
         ),
-        child: Expanded(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    padding: EdgeInsets.all(defaultPadding * 0.55),
-                    height: 35,
-                    width: 100,
-                    decoration: BoxDecoration(
-                      color: widget.info.color?.withOpacity(0.1) ??
-                          Colors.transparent,
-                      borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    ),
-                    child: Text(
-                      textAlign: TextAlign.center,
-                      widget.info.tank ?? '',
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: GoogleFonts.ramabhadra(
-                        fontSize: 11,
-                        // fontWeight: FontWeight.bold,
-                        color: Colors.black,
-                      ),
-                    ),
-                    // child: widget.info.svgSrc != null
-                    //     ? SvgPicture.asset(
-                    //         widget.info.svgSrc!,
-                    //         colorFilter: ColorFilter.mode(
-                    //             widget.info.color ?? Colors.black,
-                    //             BlendMode.srcIn),
-                    //       )
-                    // : SizedBox(height: defaultPadding),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  padding: EdgeInsets.all(defaultPadding * 0.55),
+                  height: 35,
+                  width: 100,
+                  decoration: BoxDecoration(
+                    color: widget.info.color?.withOpacity(0.1) ??
+                        Colors.transparent,
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
-                  Icon(Icons.circle, color: iconColor),
-                ],
-              ),
-              // SizedBox(height: defaultPadding),
-              // Text(
-              //   widget.info.tank ?? '',
-              //   maxLines: 1,
-              //   overflow: TextOverflow.ellipsis,
-              //   style: GoogleFonts.ramabhadra(
-              //     fontSize: 16,
-              //     // fontWeight: FontWeight.bold,
-              //     color: Colors.white,
-              //   ),
-              // ),
-
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.info.totalStorage ?? '',
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    widget.info.tank ?? '',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: GoogleFonts.ramabhadra(
-                      fontSize: 14,
+                      fontSize: 11,
+                      // fontWeight: FontWeight.bold,
                       color: Colors.black,
                     ),
                   ),
-                  SizedBox(width: 4),
-                  Text(
-                    widget.info.title ?? '',
-                    style: GoogleFonts.ramabhadra(
-                      fontSize: 14,
-                      color: Colors.black,
-                    ),
+                  // child: widget.info.svgSrc != null
+                  //     ? SvgPicture.asset(
+                  //         widget.info.svgSrc!,
+                  //         colorFilter: ColorFilter.mode(
+                  //             widget.info.color ?? Colors.black,
+                  //             BlendMode.srcIn),
+                  //       )
+                  // : SizedBox(height: defaultPadding),
+                ),
+                Icon(Icons.circle, color: iconColor),
+              ],
+            ),
+            // SizedBox(height: defaultPadding),
+            // Text(
+            //   widget.info.tank ?? '',
+            //   maxLines: 1,
+            //   overflow: TextOverflow.ellipsis,
+            //   style: GoogleFonts.ramabhadra(
+            //     fontSize: 16,
+            //     // fontWeight: FontWeight.bold,
+            //     color: Colors.white,
+            //   ),
+            // ),
+
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.info.totalStorage ?? '',
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: GoogleFonts.ramabhadra(
+                    fontSize: 14,
+                    color: Colors.black,
                   ),
-                ],
+                ),
+                SizedBox(width: 4),
+                Text(
+                  widget.info.title ?? '',
+                  style: GoogleFonts.ramabhadra(
+                    fontSize: 14,
+                    color: Colors.black,
+                  ),
+                ),
+              ],
+            ),
+            // Text(
+            //   widget.info.title ?? '',
+            //   maxLines: 1,
+            //   overflow: TextOverflow.ellipsis,
+            //   style: GoogleFonts.ramabhadra(
+            //     fontSize: 14,
+            //     color: Colors.white,
+            //   ),
+            // ),
+            // SizedBox(height: defaultPadding / 2),
+            // Text(
+            //   widget.info.totalStorage ?? '',
+            //   style: GoogleFonts.ramabhadra(
+            //     fontSize: 12,
+            //     color: Colors.white,
+            //   ),
+            // ),
+            SizedBox(height: defaultPadding),
+            if (widget.info.falValue != null &&
+                widget.info.tempValue != null &&
+                widget.info.FC4360value != null)
+              _buildPieChartSection2(
+                falValue: widget.info.falValue!,
+                tempValue: widget.info.tempValue!,
+                FC4360value: widget.info.FC4360value!,
+                falColor: Colors.red,
+                tempColor: Colors.greenAccent,
+                falLabel: 'F.Al. :',
+                tempLabel: 'Temperature :',
+                FC4360Label: 'FC-4360 Refilled',
+                Label: 'Temperature :',
+                tankValue: widget.info.tempValue!,
+                Unit1: 'Pt.',
+                Unit2: '°C',
               ),
-              // Text(
-              //   widget.info.title ?? '',
-              //   maxLines: 1,
-              //   overflow: TextOverflow.ellipsis,
-              //   style: GoogleFonts.ramabhadra(
-              //     fontSize: 14,
-              //     color: Colors.white,
-              //   ),
-              // ),
-              // SizedBox(height: defaultPadding / 2),
-              // Text(
-              //   widget.info.totalStorage ?? '',
-              //   style: GoogleFonts.ramabhadra(
-              //     fontSize: 12,
-              //     color: Colors.white,
-              //   ),
-              // ),
-              SizedBox(height: defaultPadding),
-              if (widget.info.falValue != null &&
-                  widget.info.tempValue != null &&
-                  widget.info.FC4360value != null)
-                _buildPieChartSection2(
-                  falValue: widget.info.falValue!,
-                  tempValue: widget.info.tempValue!,
-                  FC4360value: widget.info.FC4360value!,
-                  falColor: Colors.red,
-                  tempColor: Colors.greenAccent,
-                  falLabel: 'F.Al. :',
-                  tempLabel: 'Temperature :',
-                  FC4360Label: 'FC-4360 Refilled',
-                  Label: 'Temperature :',
-                  tankValue: widget.info.tempValue!,
-                  Unit1: 'Pt.',
-                  Unit2: '°C',
-                ),
-              if (widget.info.feValue != null && widget.info.conValue != null)
-                _buildPieChartSection5(
-                  feValue: widget.info.feValue!,
-                  conValue: widget.info.conValue!,
-                  HCIValue: widget.info.HCIValue!,
-                  feColor: Colors.redAccent,
-                  conColor: Colors.orangeAccent,
-                  feLabel: 'Fe :',
-                  conLabel: 'Con. :',
-                  HCILable: 'HCI Refilled ',
-                  Label: 'Con :',
-                  Label2: 'Fe :',
-                  Unit: '%',
-                ),
-              if (widget.info.talValue != null &&
-                  widget.info.phValue != null &&
-                  widget.info.PLZValue != null)
-                _buildPieChartSection8(
-                  talValue: widget.info.talValue!,
-                  phValue: widget.info.phValue!,
-                  PLZValue: widget.info.PLZValue!,
-                  talColor: Colors.blueAccent,
-                  phColor: Colors.purpleAccent,
-                  talLabel: 'T.Al. :',
-                  phLabel: 'pH :',
-                  PLZLabel: 'PL-ZN Refilled. ',
-                  Unit: 'Pt.',
-                ),
-              if (widget.info.taValue != null &&
-                  widget.info.faValue != null &&
-                  widget.info.arValue != null &&
-                  widget.info.acValue != null &&
-                  widget.info.tank9tempValue != null &&
-                  widget.info.pb3650Value != null &&
-                  widget.info.ac9Value != null)
-                _buildPieChartSectionTank9(
-                  taValue: widget.info.taValue!,
-                  faValue: widget.info.faValue!,
-                  arValue: widget.info.arValue!,
-                  acValue: widget.info.acValue!,
-                  tank9tempValue: widget.info.tank9tempValue!,
-                  pb3650Value: widget.info.pb3650Value!,
-                  ac9Value: widget.info.ac9Value!,
-                  taColor: Colors.redAccent,
-                  faColor: Colors.purpleAccent,
-                  arColor: Colors.yellowAccent,
-                  acColor: Colors.lightBlueAccent,
-                  tank9tempColor: Colors.greenAccent,
-                  pb3650Color: Colors.orangeAccent,
-                  ac9Color: Colors.blueAccent,
-                  taLabel: 'T.A. :',
-                  faLabel: 'F.A. :',
-                  arLabel: 'A.R. :',
-                  acLabel: 'A.C. :',
-                  tank9tempLabel: 'Temperature :',
-                  pb3650Label: 'PB-3650X Refilled ',
-                  ac9Label: 'AC-131 Refilled. ',
-                  Unit: 'Pt.',
-                  Unit2: '°C',
-                ),
-              if (widget.info.taValue10 != null &&
-                  widget.info.faValue10 != null &&
-                  widget.info.arValue10 != null &&
-                  widget.info.acValue10 != null &&
-                  widget.info.tank10tempValue != null)
-                _buildPieChartSectionTank10(
-                  taValue: widget.info.taValue10!,
-                  faValue: widget.info.faValue10!,
-                  arValue: widget.info.arValue10!,
-                  acValue: widget.info.acValue10!,
-                  tank10tempValue: widget.info.tank10tempValue!,
-                  taColor: Colors.redAccent,
-                  faColor: Colors.purpleAccent,
-                  arColor: Colors.yellowAccent,
-                  acColor: Colors.lightBlueAccent,
-                  tank10TempColor: Colors.greenAccent,
-                  taLabel: 'T.A. :',
-                  faLabel: 'F.A. :',
-                  arLabel: 'A.R. :',
-                  acLabel: 'A.C. :',
-                  tank10TempLabel: 'Temperature :',
-                  Unit: 'Pt.',
-                  Unit2: '°C',
-                ),
-              if (widget.info.conValue13 != null &&
-                  widget.info.faValue13 != null &&
-                  widget.info.tank13TempValue != null)
-                _buildPieChartSectionTank13(
-                  conValue: widget.info.conValue13!,
-                  faValue: widget.info.faValue13!,
-                  tank13TempValue: widget.info.tank13TempValue!,
-                  conColor: Colors.orangeAccent,
-                  faColor: Colors.purpleAccent,
-                  tank13TempColor: Colors.greenAccent,
-                  faLabel: 'F.A. :',
-                  conLabel: 'Con. :',
-                  tank13TempLabel: 'Temperature :',
-                  Unit: 'Pt.',
-                  Unit2: '°C',
-                  Unit3: '%',
-                ),
-              if (widget.info.conValue14 != null &&
-                  widget.info.faValue14 != null &&
-                  widget.info.tank14TempValue != null)
-                _buildPieChartSectionTank14(
-                  faValue: widget.info.faValue14!,
-                  conValue: widget.info.conValue14!,
-                  tank14TempValue: widget.info.tank14TempValue!,
-                  conColor: Colors.orangeAccent,
-                  faColor: Colors.purpleAccent,
-                  tank14TempColor: Colors.greenAccent,
-                  faLabel: 'F.A. :',
-                  conLabel: 'Con. :',
-                  tank14TempLabel: 'Temperature :',
-                  Unit: 'Pt.',
-                  Unit2: '°C',
-                  Unit3: '%',
-                ),
-            ],
-          ),
+            if (widget.info.feValue != null && widget.info.conValue != null)
+              _buildPieChartSection5(
+                feValue: widget.info.feValue!,
+                conValue: widget.info.conValue!,
+                HCIValue: widget.info.HCIValue!,
+                feColor: Colors.redAccent,
+                conColor: Colors.orangeAccent,
+                feLabel: 'Fe :',
+                conLabel: 'Con. :',
+                HCILable: 'HCI Refilled ',
+                Label: 'Con :',
+                Label2: 'Fe :',
+                Unit: '%',
+              ),
+            if (widget.info.talValue != null &&
+                widget.info.phValue != null &&
+                widget.info.PLZValue != null)
+              _buildPieChartSection8(
+                talValue: widget.info.talValue!,
+                phValue: widget.info.phValue!,
+                PLZValue: widget.info.PLZValue!,
+                talColor: Colors.blueAccent,
+                phColor: Colors.purpleAccent,
+                talLabel: 'T.Al. :',
+                phLabel: 'pH :',
+                PLZLabel: 'PL-ZN Refilled. ',
+                Unit: 'Pt.',
+              ),
+            if (widget.info.taValue != null &&
+                widget.info.faValue != null &&
+                widget.info.arValue != null &&
+                widget.info.acValue != null &&
+                widget.info.tank9tempValue != null &&
+                widget.info.pb3650Value != null &&
+                widget.info.ac9Value != null)
+              _buildPieChartSectionTank9(
+                taValue: widget.info.taValue!,
+                faValue: widget.info.faValue!,
+                arValue: widget.info.arValue!,
+                acValue: widget.info.acValue!,
+                tank9tempValue: widget.info.tank9tempValue!,
+                pb3650Value: widget.info.pb3650Value!,
+                ac9Value: widget.info.ac9Value!,
+                taColor: Colors.redAccent,
+                faColor: Colors.purpleAccent,
+                arColor: Colors.yellowAccent,
+                acColor: Colors.lightBlueAccent,
+                tank9tempColor: Colors.greenAccent,
+                pb3650Color: Colors.orangeAccent,
+                ac9Color: Colors.blueAccent,
+                taLabel: 'T.A. :',
+                faLabel: 'F.A. :',
+                arLabel: 'A.R. :',
+                acLabel: 'A.C. :',
+                tank9tempLabel: 'Temperature :',
+                pb3650Label: 'PB-3650X Refilled ',
+                ac9Label: 'AC-131 Refilled. ',
+                Unit: 'Pt.',
+                Unit2: '°C',
+              ),
+            if (widget.info.taValue10 != null &&
+                widget.info.faValue10 != null &&
+                widget.info.arValue10 != null &&
+                widget.info.acValue10 != null &&
+                widget.info.tank10tempValue != null)
+              _buildPieChartSectionTank10(
+                taValue: widget.info.taValue10!,
+                faValue: widget.info.faValue10!,
+                arValue: widget.info.arValue10!,
+                acValue: widget.info.acValue10!,
+                tank10tempValue: widget.info.tank10tempValue!,
+                taColor: Colors.redAccent,
+                faColor: Colors.purpleAccent,
+                arColor: Colors.yellowAccent,
+                acColor: Colors.lightBlueAccent,
+                tank10TempColor: Colors.greenAccent,
+                taLabel: 'T.A. :',
+                faLabel: 'F.A. :',
+                arLabel: 'A.R. :',
+                acLabel: 'A.C. :',
+                tank10TempLabel: 'Temperature :',
+                Unit: 'Pt.',
+                Unit2: '°C',
+              ),
+            if (widget.info.conValue13 != null &&
+                widget.info.faValue13 != null &&
+                widget.info.tank13TempValue != null)
+              _buildPieChartSectionTank13(
+                conValue: widget.info.conValue13!,
+                faValue: widget.info.faValue13!,
+                tank13TempValue: widget.info.tank13TempValue!,
+                conColor: Colors.orangeAccent,
+                faColor: Colors.purpleAccent,
+                tank13TempColor: Colors.greenAccent,
+                faLabel: 'F.A. :',
+                conLabel: 'Con. :',
+                tank13TempLabel: 'Temperature :',
+                Unit: 'Pt.',
+                Unit2: '°C',
+                Unit3: '%',
+              ),
+            if (widget.info.conValue14 != null &&
+                widget.info.faValue14 != null &&
+                widget.info.tank14TempValue != null)
+              _buildPieChartSectionTank14(
+                faValue: widget.info.faValue14!,
+                conValue: widget.info.conValue14!,
+                tank14TempValue: widget.info.tank14TempValue!,
+                conColor: Colors.orangeAccent,
+                faColor: Colors.purpleAccent,
+                tank14TempColor: Colors.greenAccent,
+                faLabel: 'F.A. :',
+                conLabel: 'Con. :',
+                tank14TempLabel: 'Temperature :',
+                Unit: 'Pt.',
+                Unit2: '°C',
+                Unit3: '%',
+              ),
+          ],
         ),
       ),
     );
@@ -332,7 +330,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: falValue == null || falValue == 0
@@ -356,7 +354,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center, // Center alignment
                   child: tempValue == null || tempValue == 0
@@ -401,7 +399,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               decoration: BoxDecoration(),
               alignment: Alignment.center,
@@ -425,7 +423,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: feValue == null || feValue == 0
@@ -469,7 +467,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: talValue == null || talValue == 0
@@ -493,7 +491,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: phValue == null || phValue == 0
@@ -551,7 +549,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: taValue == null || taValue == 0
@@ -574,7 +572,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: faValue == null || faValue == 0
@@ -600,7 +598,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: arValue == null || arValue == 0
@@ -626,7 +624,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: ac9Value == null || ac9Value == 0
@@ -651,7 +649,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: tank9tempValue == null || tank9tempValue == 0
@@ -702,7 +700,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: taValue == null || taValue == 0
@@ -725,7 +723,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: faValue == null || faValue == 0
@@ -751,7 +749,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: arValue == null || arValue == 0
@@ -777,7 +775,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: acValue == null || acValue == 0
@@ -802,7 +800,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: tank10tempValue == null || tank10tempValue == 0
@@ -848,7 +846,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: conValue == null || conValue == 0
@@ -871,7 +869,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: faValue == null || faValue == 0
@@ -896,7 +894,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: tank13TempValue == null || tank13TempValue == 0
@@ -942,7 +940,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-              width: 155,
+              width: 150,
               height: 80,
               alignment: Alignment.center,
               child: conValue == null || conValue == 0
@@ -965,7 +963,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
             Row(
               children: [
                 Container(
-                  width: 155,
+                  width: 150,
                   height: 80,
                   alignment: Alignment.center,
                   child: faValue == null || faValue == 0

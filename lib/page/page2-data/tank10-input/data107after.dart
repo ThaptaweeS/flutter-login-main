@@ -42,8 +42,8 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
 
   void fetchRoundValue() async {
     try {
-      final response = await http
-          .post(Uri.parse('http://172.23.10.51:1111/tank10aftercheck7'));
+      final response =
+          await http.post(Uri.parse('http://127.0.0.1:1882/tank10aftercheck7'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -410,7 +410,7 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://172.23.10.51:1111/t107a';
+    final url = 'http://127.0.0.1:1882/t107a';
     final TAIValue = TAIController.text;
     final tempValue = tempController.text;
     final FAValue = FAController.text;
@@ -638,7 +638,7 @@ class _Tank107AfterPageState extends State<Tank107AfterPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/tank10afterdata';
+    final url = 'http://127.0.0.1:1882/tank10afterdata';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

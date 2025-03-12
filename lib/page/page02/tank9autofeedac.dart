@@ -188,7 +188,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
 
   void sendDataToAPIac9(BuildContext context, String action, bool pump,
       double ac9feedQuantity) async {
-    final url = 'http://172.23.10.51:1111/acfeed9'; // Update this URL as needed
+    final url = 'http://127.0.0.1:1882/acfeed9'; // Update this URL as needed
 
     try {
       print('sending data');
@@ -236,8 +236,7 @@ class _PumpControlWidgetac9State extends State<PumpControlWidgetac9> {
   }
 
   Future<Map<String, double>> fetchFeedDataFromAPI() async {
-    const url =
-        'http://172.23.10.51:1111/ac9acual'; // Update this URL as needed
+    const url = 'http://127.0.0.1:1882/ac9acual'; // Update this URL as needed
 
     try {
       final response = await http.post(Uri.parse(url), body: {});

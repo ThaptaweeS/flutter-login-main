@@ -43,7 +43,7 @@ class _PasswordSettingPageState extends State<PasswordSettingPage> {
 
     try {
       final response = await http.post(
-        Uri.parse('http://172.23.10.51:1111/setting'),
+        Uri.parse('http://127.0.0.1:1882/setting'),
         headers: {'Content-Type': 'application/json'},
         body: json.encode(requestData),
       );
@@ -221,7 +221,7 @@ class User {
 
 // Future<List<User>> fetchUsers() async {
 //   final response =
-//       await http.get(Uri.parse('http://172.23.10.51:1111/manual-feed-user'));
+//       await http.get(Uri.parse('http://127.0.0.1:1882/manual-feed-user'));
 
 //   if (response.statusCode == 200) {
 //     // Parse the JSON response

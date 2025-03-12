@@ -552,7 +552,7 @@ class _Tank13BodyPageState extends State<Tank13BodyPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://172.23.10.51:1111/tank13task';
+    final url = 'http://127.0.0.1:1882/tank13task';
     String startDate = startDateController.text;
     String endDate = endDateController.text;
 

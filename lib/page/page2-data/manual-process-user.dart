@@ -144,7 +144,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    const url = 'http://172.23.10.51:1111/manual-feed-user';
+    const url = 'http://127.0.0.1:1882/manual-feed-user';
     try {
       final response = await http.post(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -394,7 +394,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
       };
 
       final response = await http.post(
-        Uri.parse('http://172.23.10.51:1111/$endpoint'),
+        Uri.parse('http://127.0.0.1:1882/$endpoint'),
         body: body,
       );
 
