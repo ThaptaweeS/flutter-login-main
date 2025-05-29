@@ -78,7 +78,6 @@ class LineGaugeTank extends StatelessWidget {
   Widget _getLinearGauge1() {
     double gaugeMin = min; // ✅ ถ้าเป็น pH ให้ใช้ช่วง 0-14
     double gaugeMax = max;
-    double gaugesp = sp;
 
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,

@@ -58,7 +58,7 @@
 //     emit(Tank2Loading());
 //     try {
 //       final response = await http.get(
-//         Uri.parse("http://127.0.0.1:1882/tank2-falui"),
+//         Uri.parse("http://172.23.10.51:1111/tank2-falui"),
 //       );
 
 //       if (response.statusCode == 200) {

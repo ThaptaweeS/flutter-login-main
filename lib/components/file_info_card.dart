@@ -40,6 +40,12 @@ class _FileInfoCardState extends State<FileInfoCard> {
         iconColor = (iconColor == const Color.fromARGB(40, 158, 158, 158))
             ? widget.info.color2!
             : const Color.fromARGB(40, 158, 158, 158);
+        // CloudStorageInfo cloudStorageInfo = widget.info;
+        // widget.info.taValue = cloudStorageInfo.taValue;
+        // widget.info.faValue = cloudStorageInfo.faValue;
+        // widget.info.arValue = cloudStorageInfo.arValue;
+        // widget.info.acValue = cloudStorageInfo.acValue;
+        // widget.info.tank9tempValue = cloudStorageInfo.tank9tempValue;
       });
     });
   }
@@ -168,28 +174,29 @@ class _FileInfoCardState extends State<FileInfoCard> {
             //   ),
             // ),
             SizedBox(height: defaultPadding),
-            if (widget.info.falValue != null &&
-                widget.info.tempValue != null &&
-                widget.info.FC4360value != null)
+            if (widget.info.falValue != null && widget.info.tempValue != null)
+              // widget.info.FC4360value != null)
+              // print("Building LineGaugeTank: falValue=${ widget.info.falValue}, tempValue=${ widget.info.tempValue}")
               _buildPieChartSection2(
                 falValue: widget.info.falValue!,
                 tempValue: widget.info.tempValue!,
-                FC4360value: widget.info.FC4360value!,
+                // FC4360value: widget.info.FC4360value!,
                 falColor: Colors.red,
                 tempColor: Colors.greenAccent,
                 falLabel: 'F.Al. :',
                 tempLabel: 'Temperature :',
-                FC4360Label: 'FC-4360 Refilled',
+                // FC4360Label: 'FC-4360 Refilled',
                 Label: 'Temperature :',
                 tankValue: widget.info.tempValue!,
                 Unit1: 'Pt.',
                 Unit2: '°C',
+                // print("Building LineGaugeTank: falValue=${falValue}, tempValue=${tempValue}, FC4360value=${FC4360value}");
               ),
             if (widget.info.feValue != null && widget.info.conValue != null)
               _buildPieChartSection5(
                 feValue: widget.info.feValue!,
                 conValue: widget.info.conValue!,
-                HCIValue: widget.info.HCIValue!,
+                // HCIValue: widget.info.HCIValue!,
                 feColor: Colors.redAccent,
                 conColor: Colors.orangeAccent,
                 feLabel: 'Fe :',
@@ -199,62 +206,48 @@ class _FileInfoCardState extends State<FileInfoCard> {
                 Label2: 'Fe :',
                 Unit: '%',
               ),
-            if (widget.info.talValue != null &&
-                widget.info.phValue != null &&
-                widget.info.PLZValue != null)
+            if (widget.info.talValue != null && widget.info.phValue != null)
               _buildPieChartSection8(
                 talValue: widget.info.talValue!,
                 phValue: widget.info.phValue!,
-                PLZValue: widget.info.PLZValue!,
+                // PLZValue: widget.info.PLZValue!,
                 talColor: Colors.blueAccent,
                 phColor: Colors.purpleAccent,
                 talLabel: 'T.Al. :',
                 phLabel: 'pH :',
-                PLZLabel: 'PL-ZN Refilled. ',
+                // PLZLabel: 'PL-ZN Refilled. ',
                 Unit: 'Pt.',
               ),
             if (widget.info.taValue != null &&
                 widget.info.faValue != null &&
                 widget.info.arValue != null &&
                 widget.info.acValue != null &&
-                widget.info.tank9tempValue != null &&
-                widget.info.pb3650Value != null &&
-                widget.info.ac9Value != null)
+                widget.info.tank9tempValue != null)
               _buildPieChartSectionTank9(
-                taValue: widget.info.taValue!,
-                faValue: widget.info.faValue!,
-                arValue: widget.info.arValue!,
-                acValue: widget.info.acValue!,
-                tank9tempValue: widget.info.tank9tempValue!,
-                pb3650Value: widget.info.pb3650Value!,
-                ac9Value: widget.info.ac9Value!,
-                taColor: Colors.redAccent,
-                faColor: Colors.purpleAccent,
-                arColor: Colors.yellowAccent,
-                acColor: Colors.lightBlueAccent,
-                tank9tempColor: Colors.greenAccent,
-                pb3650Color: Colors.orangeAccent,
-                ac9Color: Colors.blueAccent,
+                taValue: widget.info.taValue ?? 0.0,
+                faValue: widget.info.faValue ?? 0.0,
+                arValue: widget.info.arValue ?? 0.0,
+                acValue: widget.info.acValue ?? 0.0,
+                tank9tempValue: widget.info.tank9tempValue ?? 0.0,
                 taLabel: 'T.A. :',
                 faLabel: 'F.A. :',
                 arLabel: 'A.R. :',
                 acLabel: 'A.C. :',
                 tank9tempLabel: 'Temperature :',
-                pb3650Label: 'PB-3650X Refilled ',
-                ac9Label: 'AC-131 Refilled. ',
                 Unit: 'Pt.',
                 Unit2: '°C',
               ),
+
             if (widget.info.taValue10 != null &&
                 widget.info.faValue10 != null &&
                 widget.info.arValue10 != null &&
                 widget.info.acValue10 != null &&
                 widget.info.tank10tempValue != null)
               _buildPieChartSectionTank10(
-                taValue: widget.info.taValue10!,
-                faValue: widget.info.faValue10!,
-                arValue: widget.info.arValue10!,
-                acValue: widget.info.acValue10!,
+                taValue10: widget.info.taValue10!,
+                faValue10: widget.info.faValue10!,
+                arValue10: widget.info.arValue10!,
+                acValue10: widget.info.acValue10!,
                 tank10tempValue: widget.info.tank10tempValue!,
                 taColor: Colors.redAccent,
                 faColor: Colors.purpleAccent,
@@ -312,17 +305,18 @@ class _FileInfoCardState extends State<FileInfoCard> {
   Widget _buildPieChartSection2({
     required double falValue,
     required double tempValue,
-    required double FC4360value,
+    // required double FC4360value,
     required Color falColor,
     required Color tempColor,
     required String falLabel,
     required String tempLabel,
-    required String FC4360Label,
+    // required String FC4360Label,
     required String Label,
     required double tankValue,
     required String Unit1,
     required String Unit2,
   }) {
+    // print('Tank2 FAL: $falValue');
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
@@ -333,7 +327,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
               width: 150,
               height: 80,
               alignment: Alignment.center,
-              child: falValue == null || falValue == 0
+              child: falValue == null || falValue == 0.0 || falValue == 0
                   ? const Center(child: CircularProgressIndicator())
                   : LineGaugeTank(
                       Label: falLabel,
@@ -346,18 +340,19 @@ class _FileInfoCardState extends State<FileInfoCard> {
                       isFalScale: true,
                       showThreshold: true,
                     ),
-            )
+            ),
           ],
         ),
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center, // Center alignment
-                  child: tempValue == null || tempValue == 0
+                  child: tempValue == null || tempValue == 0.0 || tempValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: Label,
@@ -385,7 +380,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required Color conColor,
     required String feLabel,
     required String conLabel,
-    required double HCIValue,
+    // required double HCIValue,
     required String HCILable,
     required String Label,
     required String Label2,
@@ -403,7 +398,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
               height: 80,
               decoration: BoxDecoration(),
               alignment: Alignment.center,
-              child: conValue == null || conValue == 0
+              child: conValue == null || conValue == 0.0 || conValue == 0
                   ? const Center(child: CircularProgressIndicator())
                   : LineGaugeTank(
                       Label: Label,
@@ -421,12 +416,13 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: feValue == null || feValue == 0
+                  child: feValue == null || feValue == 0.0 || feValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: Label2,
@@ -455,10 +451,11 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required Color phColor,
     required String talLabel,
     required String phLabel,
-    required double PLZValue,
-    required String PLZLabel,
     required String Unit,
   }) {
+    // print('Building _buildPieChartSection8');
+    // print('Tank8 TAL: $talValue');
+    // print('Tank8 PH: $phValue');
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Default alignment to the start (left)
@@ -470,7 +467,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
               width: 150,
               height: 80,
               alignment: Alignment.center,
-              child: talValue == null || talValue == 0
+              child: talValue == null || talValue == 0.0 || talValue == 0
                   ? const Center(child: CircularProgressIndicator())
                   : LineGaugeTank(
                       Label: talLabel,
@@ -489,12 +486,13 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: phValue == null || phValue == 0
+                  child: phValue == null || phValue == 0.0 || phValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: phLabel,
@@ -522,25 +520,20 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required double arValue,
     required double acValue,
     required double tank9tempValue,
-    required double pb3650Value,
-    required double ac9Value,
-    required Color taColor,
-    required Color faColor,
-    required Color arColor,
-    required Color acColor,
-    required Color tank9tempColor,
-    required Color pb3650Color,
-    required Color ac9Color,
     required String taLabel,
     required String faLabel,
     required String arLabel,
     required String acLabel,
     required String tank9tempLabel,
-    required String pb3650Label,
-    required String ac9Label,
     required String Unit,
     required String Unit2,
   }) {
+    print('Building _buildPieChartSection9');
+    print('Tank9 TA: $taValue');
+    print('Tank9 FA: $faValue');
+    print('Tank9 AR: $arValue');
+    print('Tank9 AC: $acValue');
+    print('Tank9 Temp: $tank9tempValue');
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Center alignment for Column
@@ -552,7 +545,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
               width: 150,
               height: 80,
               alignment: Alignment.center,
-              child: taValue == null || taValue == 0
+              child: taValue == null || taValue == 0.0 || taValue == 0
                   ? const Center(child: CircularProgressIndicator())
                   : LineGaugeTank(
                       Label: taLabel,
@@ -570,12 +563,13 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: faValue == null || faValue == 0
+                  child: faValue == null || faValue == 0.0 || faValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: faLabel,
@@ -596,12 +590,13 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: arValue == null || arValue == 0
+                  child: arValue == null || arValue == 0.0 || arValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: arLabel,
@@ -622,16 +617,17 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: ac9Value == null || ac9Value == 0
+                  child: acValue == null || acValue == 0.0 || acValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: acLabel,
-                          value: ac9Value,
+                          value: acValue,
                           Unit: Unit,
                           min: 0,
                           max: 4,
@@ -647,12 +643,15 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: tank9tempValue == null || tank9tempValue == 0
+                  child: tank9tempValue == null ||
+                          tank9tempValue == 0.0 ||
+                          tank9tempValue == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: tank9tempLabel,
@@ -674,10 +673,10 @@ class _FileInfoCardState extends State<FileInfoCard> {
   }
 
   Widget _buildPieChartSectionTank10({
-    required double taValue,
-    required double faValue,
-    required double arValue,
-    required double acValue,
+    required double taValue10,
+    required double faValue10,
+    required double arValue10,
+    required double acValue10,
     required double tank10tempValue,
     required Color taColor,
     required Color faColor,
@@ -692,6 +691,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
     required String Unit,
     required String Unit2,
   }) {
+    print('Building _buildPieChartSection8');
     return Column(
       crossAxisAlignment:
           CrossAxisAlignment.center, // Center alignment for Column
@@ -703,11 +703,11 @@ class _FileInfoCardState extends State<FileInfoCard> {
               width: 150,
               height: 80,
               alignment: Alignment.center,
-              child: taValue == null || taValue == 0
+              child: taValue10 == null || taValue10 == 0
                   ? const Center(child: CircularProgressIndicator())
                   : LineGaugeTank(
                       Label: taLabel,
-                      value: taValue,
+                      value: taValue10,
                       Unit: Unit,
                       min: 20,
                       max: 40,
@@ -721,16 +721,17 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: faValue == null || faValue == 0
+                  child: faValue10 == null || faValue10 == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: faLabel,
-                          value: faValue,
+                          value: faValue10,
                           Unit: Unit,
                           min: 4,
                           max: 7,
@@ -747,16 +748,17 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: arValue == null || arValue == 0
+                  child: arValue10 == null || arValue10 == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: arLabel,
-                          value: arValue,
+                          value: arValue10,
                           Unit: Unit,
                           min: 4,
                           max: 8,
@@ -773,16 +775,17 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
                   height: 80,
                   alignment: Alignment.center,
-                  child: acValue == null || acValue == 0
+                  child: acValue10 == null || acValue10 == 0
                       ? const Center(child: CircularProgressIndicator())
                       : LineGaugeTank(
                           Label: acLabel,
-                          value: acValue,
+                          value: acValue10,
                           Unit: Unit,
                           min: 0,
                           max: 4,
@@ -798,6 +801,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
@@ -867,6 +871,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
@@ -892,6 +897,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
@@ -961,6 +967,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 150,
@@ -986,6 +993,7 @@ class _FileInfoCardState extends State<FileInfoCard> {
         Column(
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Container(
                   width: 155,

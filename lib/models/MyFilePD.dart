@@ -192,7 +192,7 @@
 // Future<void> fetchStatusAndUpdateColors() async {
 //   try {
 //     final response = await http.post(
-//       Uri.parse('http://127.0.0.1:1882/status'),
+//       Uri.parse('http://172.23.10.51:1111/status'),
 //       headers: <String, String>{
 //         'Content-Type': 'application/json; charset=UTF-8',
 //       },
@@ -232,9 +232,9 @@
 
 //           if (id == 2) {
 //             final responseFAL =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank2-fal'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank2-fal'));
 //             final responseTemp =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank2-temp'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank2-temp'));
 //             if (responseFAL.statusCode == 200 &&
 //                 responseTemp.statusCode == 200) {
 //               final List<dynamic> responseDataFAL =
@@ -253,9 +253,9 @@
 
 //           if (id == 5) {
 //             final responseFE =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank5-fe'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank5-fe'));
 //             final responseCON =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank5-con'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank5-con'));
 //             if (responseFE.statusCode == 200 && responseCON.statusCode == 200) {
 //               final List<dynamic> responseDataFE = json.decode(responseFE.body);
 //               final List<dynamic> responseDataCON =
@@ -272,9 +272,9 @@
 
 //           if (id == 8) {
 //             final responseTAL =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank8-tal'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank8-tal'));
 //             final responsePH =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank8-ph'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank8-ph'));
 //             if (responseTAL.statusCode == 200 && responsePH.statusCode == 200) {
 //               final List<dynamic> responseDataTAL =
 //                   json.decode(responseTAL.body);
@@ -291,15 +291,15 @@
 
 //           if (id == 9) {
 //             final responseTA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank9-TA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank9-TA'));
 //             final responseFA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank9-FA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank9-FA'));
 //             final responseAR =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank9-AR'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank9-AR'));
 //             final responseAC =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank9-AC'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank9-AC'));
 //             final responseTemp =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank9-temp'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank9-temp'));
 //             if (responseTA.statusCode == 200 &&
 //                 responseFA.statusCode == 200 &&
 //                 responseAR.statusCode == 200 &&
@@ -329,15 +329,15 @@
 
 //           if (id == 10) {
 //             final responseTA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank10-TA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank10-TA'));
 //             final responseFA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank10-FA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank10-FA'));
 //             final responseAR =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank10-AR'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank10-AR'));
 //             final responseAC =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank10-AC'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank10-AC'));
 //             final responseTemp = await http
-//                 .post(Uri.parse('http://127.0.0.1:1882/tank10-rtemp'));
+//                 .post(Uri.parse('http://172.23.10.51:1111/tank10-rtemp'));
 //             if (responseTA.statusCode == 200 &&
 //                 responseFA.statusCode == 200 &&
 //                 responseAR.statusCode == 200 &&
@@ -369,11 +369,11 @@
 //           }
 //           if (id == 13) {
 //             final responseCON =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank13-con'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank13-con'));
 //             final responseFA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank13-FA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank13-FA'));
 //             final responseTemp =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank13-temp'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank13-temp'));
 //             if (responseCON.statusCode == 200 &&
 //                 responseFA.statusCode == 200 &&
 //                 responseTemp.statusCode == 200) {
@@ -395,11 +395,11 @@
 
 //           if (id == 14) {
 //             final responseCON =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank14-con'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank14-con'));
 //             final responseFA =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank14-FA'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank14-FA'));
 //             final responseTemp =
-//                 await http.post(Uri.parse('http://127.0.0.1:1882/tank14-temp'));
+//                 await http.post(Uri.parse('http://172.23.10.51:1111/tank14-temp'));
 //             if (responseCON.statusCode == 200 &&
 //                 responseFA.statusCode == 200 &&
 //                 responseTemp.statusCode == 200) {

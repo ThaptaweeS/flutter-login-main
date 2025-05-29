@@ -88,7 +88,7 @@ class _Pump9acState extends State<Pump9ac> with SingleTickerProviderStateMixin {
   }
 
   Future<void> fetchPlcStatus() async {
-    const url = 'http://127.0.0.1:1882/status9ac'; // URL ของ API ของคุณ
+    const url = 'http://172.23.10.51:1111/status9ac'; // URL ของ API ของคุณ
     try {
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
@@ -190,7 +190,7 @@ class _Pump10acState extends State<Pump10ac>
   }
 
   Future<void> fetchPlcStatus() async {
-    const url = 'http://127.0.0.1:1882/status10ac'; // URL ของ API ของคุณ
+    const url = 'http://172.23.10.51:1111/status10ac'; // URL ของ API ของคุณ
     try {
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
@@ -291,7 +291,7 @@ class _Pump10pbState extends State<Pump10pb>
   }
 
   Future<void> fetchPlcStatus() async {
-    const url = 'http://127.0.0.1:1882/status10pb'; // URL ของ API ของคุณ
+    const url = 'http://172.23.10.51:1111/status10pb'; // URL ของ API ของคุณ
     try {
       // ส่งคำขอ GET ไปยัง API
       final response = await http.get(Uri.parse(url));
@@ -486,7 +486,7 @@ class IconNew extends StatelessWidget {
   Future<void> _callFeedAPI(
       String endpoint, String no, String no2, String value) async {
     // URL of your Node-RED endpoint
-    final url = 'http://127.0.0.1:1882/$endpoint';
+    final url = 'http://172.23.10.51:1111/$endpoint';
 
     try {
       final response = await http.post(
@@ -511,7 +511,7 @@ class IconNew extends StatelessWidget {
   }
 
   Future<void> fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/manual-feed';
+    final url = 'http://172.23.10.51:1111/manual-feed';
 
     try {
       final response = await http.post(Uri.parse(url));
@@ -550,8 +550,9 @@ class _IconBellState extends State<IconBell> {
     try {
       // Make a GET request to the API
       final response =
-          // await http.post(Uri.parse('http://127.0.0.1:1882/notify'));
-          await http.post(Uri.parse('http://127.0.0.1:1882/manual-feed-user'));
+          // await http.post(Uri.parse('http://172.23.10.51:1111/notify'));
+          await http
+              .post(Uri.parse('http://172.23.10.51:1111/manual-feed-user'));
       if (response.statusCode == 200) {
         // Parse the response body
         final jsonData = jsonDecode(response.body);

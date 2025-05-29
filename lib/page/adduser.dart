@@ -191,7 +191,8 @@ class _UserManagementPageState extends State<UserManagementPage> {
   // final users = snapshot.data ?? [];
   // ฟังก์ชันดึงข้อมูลจาก API
   Future<List<Map<String, dynamic>>> fetchUsers() async {
-    const url = 'http://127.0.0.1:1882/users'; // Replace with Node-RED API URL
+    const url =
+        'http://172.23.10.51:1111/users'; // Replace with Node-RED API URL
     final response = await http.get(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -335,24 +336,35 @@ class _UserManagementPageState extends State<UserManagementPage> {
     );
   }
 
-  void _navigateToAddUser(BuildContext context) async {
-    await Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (context) => AddUser(
-          onAddUser: (newUser) {
-            _addUser(newUser);
-          },
-        ),
-      ),
+  void _navigateToAddUser(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(16), // ขอบมน
+          ),
+          child: Container(
+            width: 400, // กำหนดความกว้าง
+            height: 600, // กำหนดความสูง
+            padding: const EdgeInsets.all(16), // เพิ่มระยะห่างภายใน
+            child: AddUser(
+              onAddUser: (newUser) {
+                _addUser(newUser);
+                Navigator.of(context).pop(); // ปิด Popup หลังเพิ่มผู้ใช้
+                setState(() {
+                  _usersFuture = fetchUsers(); // โหลดรายชื่อผู้ใช้ใหม่
+                });
+              },
+            ),
+          ),
+        );
+      },
     );
-    setState(() {
-      _usersFuture = fetchUsers(); // Reload the user list
-    });
   }
 
   Future<void> _addUser(Map<String, String> newUser) async {
-    const url = 'http://127.0.0.1:1882/addUser'; // Node-RED API URL
+    const url = 'http://172.23.10.51:1111/addUser'; // Node-RED API URL
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -494,7 +506,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
   }
 
   Future<void> _deleteUser(int id) async {
-    const url = 'http://127.0.0.1:1882/deleteUser'; // Node-RED API URL
+    const url = 'http://172.23.10.51:1111/deleteUser'; // Node-RED API URL
     try {
       final response = await http.post(
         Uri.parse(url),
@@ -539,7 +551,7 @@ class _UserManagementPageState extends State<UserManagementPage> {
 
   Future<void> _updateUser(
       int id, String name, String username, String role) async {
-    const url = 'http://127.0.0.1:1882/updateUser'; // URL ของ Node-RED API
+    const url = 'http://172.23.10.51:1111/updateUser'; // URL ของ Node-RED API
     try {
       final response = await http.post(
         Uri.parse(url),

@@ -292,7 +292,7 @@
 
 //   Future<void> fetchData() async {
 //     final response = await http.post(
-//       Uri.parse('http://127.0.0.1:1882/chem-feed'),
+//       Uri.parse('http://172.23.10.51:1111/chem-feed'),
 //       headers: <String, String>{
 //         'Content-Type': 'application/json',
 //       },

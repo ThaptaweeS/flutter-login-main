@@ -37,8 +37,8 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank5aftercheck19'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank5aftercheck19'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -60,8 +60,8 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
       return;
     }
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank5fetchdata19'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank5fetchdata19'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
 
@@ -404,7 +404,7 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1882/t519a';
+    final url = 'http://172.23.10.51:1111/t519a';
     final ConValue = ConController.text;
     final FeValue = FeController.text;
     final Round = roundValue.toString(); // Convert to string
@@ -621,7 +621,7 @@ class _Tank519AfterPageState extends State<Tank519AfterPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/tank5afterdata19';
+    final url = 'http://172.23.10.51:1111/tank5afterdata19';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

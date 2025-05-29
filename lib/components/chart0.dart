@@ -1,9 +1,9 @@
 
-import 'package:newmaster/responsive.dart';
-import 'package:flutter/material.dart';
-import 'package:newmaster/models/MyFiles.dart';
-import '../../../constants.dart';
-import 'file_info_card.dart';
+// import 'package:newmaster/responsive.dart';
+// import 'package:flutter/material.dart';
+// import 'package:newmaster/models/MyFiles.dart';
+// import '../../../constants.dart';
+// import 'file_info_card.dart';
 
 // class Chart0 extends StatelessWidget {
 //   const Chart0({

@@ -78,7 +78,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/manual-feed';
+    final url = 'http://172.23.10.51:1111/manual-feed';
     try {
       final response = await http.post(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -228,7 +228,7 @@ class _ManualfeedBodyState extends State<ManualfeedBody> {
   Future<void> _callAPI(String endpoint, int id, String updatedValue) async {
     try {
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:1882/$endpoint'),
+        Uri.parse('http://172.23.10.51:1111/$endpoint'),
         body: {
           'id': id.toString(),
           'value': updatedValue, // Send the updated value

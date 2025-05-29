@@ -36,8 +36,8 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
 
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank8aftercheck'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank8aftercheck'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -58,8 +58,8 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
       return;
     }
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank8fetchdata1'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank8fetchdata1'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
 
@@ -387,7 +387,7 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1882/t81a';
+    final url = 'http://172.23.10.51:1111/t81a';
     final TAIValue = TAIController.text;
     final pHValue = pHController.text;
     final Round = roundValue.toString(); // Convert to string
@@ -607,7 +607,7 @@ class _Tank81AfterPageState extends State<Tank81AfterPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/tank8afterdata';
+    final url = 'http://172.23.10.51:1111/tank8afterdata';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

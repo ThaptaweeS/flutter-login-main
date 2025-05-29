@@ -62,7 +62,7 @@ class Chart134 extends StatefulWidget {
 class _Chart134State extends State<Chart134> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1882/tank9-AR'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank9-AR'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -156,7 +156,7 @@ class Chart135 extends StatefulWidget {
 class _Chart135State extends State<Chart135> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1882/tank9-AC'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank9-AC'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =
@@ -288,7 +288,7 @@ class _BarChartBodyState extends State<BarChartBody> {
 
   Future<void> fetchData() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:1882/chem-feed2'),
+      Uri.parse('http://172.23.10.51:1111/chem-feed2'),
       headers: <String, String>{
         'Content-Type': 'application/json',
       },
@@ -405,7 +405,7 @@ class Chart136 extends StatefulWidget {
 class _Chart136State extends State<Chart136> {
   Future<List<Map<String, dynamic>>> fetchDataFromAPI() async {
     final response =
-        await http.post(Uri.parse('http://127.0.0.1:1882/tank9-temp'));
+        await http.post(Uri.parse('http://172.23.10.51:1111/tank9-temp'));
     if (response.statusCode == 200) {
       final List<dynamic> responseData = json.decode(response.body);
       final List<Map<String, dynamic>> data =

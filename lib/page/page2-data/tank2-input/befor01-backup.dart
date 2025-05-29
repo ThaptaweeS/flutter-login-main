@@ -204,7 +204,7 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/tank2beforedata';
+    final url = 'http://172.23.10.51:1111/tank2beforedata';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {
@@ -256,7 +256,7 @@ class _Tank2BeforePageState extends State<Tank2BeforePage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1882/t21b';
+    final url = 'http://172.23.10.51:1111/t21b';
     final fAIValue = fAIController.text;
     final tempValue = tempController.text;
 

@@ -29,8 +29,8 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank2aftercheck'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank2aftercheck'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -197,7 +197,7 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1882/t21a';
+    final url = 'http://172.23.10.51:1111/t21a';
     final fAIValue = fAIController.text;
     final tempValue = tempController.text;
 
@@ -360,7 +360,7 @@ class _Tank2AfterPageState extends State<Tank2AfterPage> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/tank2afterdata';
+    final url = 'http://172.23.10.51:1111/tank2afterdata';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

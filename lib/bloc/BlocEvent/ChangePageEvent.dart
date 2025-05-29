@@ -33,7 +33,7 @@ class ChangePage_Bloc extends Bloc<ChangePage_Event, Widget> {
   }
 
   Future<void> _ChangePage_Function(Widget toAdd, Emitter<Widget> emit) async {
-    Widget output = Page0();
+    // Widget output = Page0();
 
     if (USERDATA.UserLV >= CuPageLV) {
     } else {
@@ -47,7 +47,7 @@ class ChangePage_Bloc extends Bloc<ChangePage_Event, Widget> {
 
   Future<void> _ChangePage_Function_no_drower(
       Widget toAdd, Emitter<Widget> emit) async {
-    Widget output = Page0();
+    // Widget output = Page0();
 
     if (USERDATA.UserLV >= CuPageLV) {
     } else {

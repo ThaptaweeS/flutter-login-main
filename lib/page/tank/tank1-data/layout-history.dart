@@ -149,8 +149,8 @@ class _DataHistory2State extends State<DataHistory2> {
   // Method to fetch roundValue from the API
   void fetchRoundValue() async {
     try {
-      final response =
-          await http.post(Uri.parse('http://127.0.0.1:1882/tank2aftercheck'));
+      final response = await http
+          .post(Uri.parse('http://172.23.10.51:1111/tank2aftercheck'));
       if (response.statusCode == 200) {
         final List<dynamic> data = json.decode(response.body);
         setState(() {
@@ -288,7 +288,7 @@ class _DataHistory2State extends State<DataHistory2> {
   }
 
   void saveValuesToAPI(BuildContext context) async {
-    final url = 'http://127.0.0.1:1882/t21a';
+    final url = 'http://172.23.10.51:1111/t21a';
     final FAlValue = FAlController.text;
     final tempValue = tempController.text;
     final Round = roundValue.toString(); // Convert to string
@@ -505,7 +505,7 @@ class _DataHistory2State extends State<DataHistory2> {
   }
 
   void fetchDataFromAPI() async {
-    final url = 'http://127.0.0.1:1882/tank2';
+    final url = 'http://172.23.10.51:1111/tank2';
     final response = await http.post(Uri.parse(url));
 
     if (response.statusCode == 200) {

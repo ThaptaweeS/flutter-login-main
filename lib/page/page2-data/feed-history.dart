@@ -86,7 +86,7 @@ class _FeedHistoryBodyState extends State<FeedHistoryBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    String url = 'http://127.0.0.1:1882/chem-feed';
+    String url = 'http://172.23.10.51:1111/chem-feed';
     Map<String, String> body = {};
 
     if (selectedTank.isNotEmpty) {

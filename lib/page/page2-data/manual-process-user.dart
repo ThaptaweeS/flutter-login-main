@@ -144,7 +144,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
   }
 
   Future<void> fetchDataFromAPI() async {
-    const url = 'http://127.0.0.1:1882/manual-feed-user';
+    const url = 'http://172.23.10.51:1111/manual-feed-user';
     try {
       final response = await http.post(Uri.parse(url));
       if (response.statusCode == 200) {
@@ -306,6 +306,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                       tableData[index]['RoundTime'] ?? '',
                       tableData[index]['Date'] ?? '',
                       tableData[index]['Time'] ?? '',
+                      tableData[index]['Chemicals'] ?? '',
                     );
 
                     await Future.delayed(const Duration(milliseconds: 300));
@@ -347,6 +348,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
     String roundtime,
     String date,
     String ordertime,
+    String chemicals,
   ) async {
     await _callAPI(
       'User-Feed',
@@ -361,6 +363,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
       roundtime,
       date,
       ordertime,
+      chemicals,
     );
   }
 
@@ -377,6 +380,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
     String roundtime,
     String date,
     String ordertime,
+    String chemicals,
   ) async {
     try {
       final Map<String, String> body = {
@@ -394,7 +398,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
       };
 
       final response = await http.post(
-        Uri.parse('http://127.0.0.1:1882/$endpoint'),
+        Uri.parse('http://172.23.10.51:1111/$endpoint'),
         body: body,
       );
 
@@ -514,7 +518,7 @@ class _ManualfeedUserBodyState extends State<ManualfeedUserBody> {
                           return DataRow(
                             cells: [
                               DataCell(Text(
-                                tableData[index]['No'].toString(),
+                                tableData[index]['Chemicals'].toString(),
                                 style:
                                     GoogleFonts.ramabhadra(color: Colors.black),
                               )),

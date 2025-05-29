@@ -385,7 +385,7 @@ class _HoverableCardState extends State<HoverableCard> {
       onExit: (_) => setState(() => _isHovered = false),
       child: GestureDetector(
         onTap: () {
-          print("Card tapped");
+          // print("Card tapped");
           widget.onTap();
         },
         child: AnimatedContainer(
